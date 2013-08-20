@@ -12,12 +12,13 @@ catList = ['1','2','3','4']
 massList = ['120','125','130','135','140','145','150']
 
 #rooWsFile = TFile('testRooFitOut.root')
-rooWsFile = TFile('exampleCards/hzg.inputbkg_8TeV.root')
+#rooWsFile = TFile('exampleCards/hzg.inputbkg_8TeV.root')
 #rooWsFile = TFile('exampleCards/hzg.mH122.0.inputsig_8TeV.root')
-#rooWsFile = TFile('testCardSignal_125.0.root')
+#rooWsFile = TFile('testCards/testCardSignal_125.0.root')
+rooWsFile = TFile('testCards/testCardBackground.root')
 #myWs = rooWsFile.Get('ws')
-myWs = rooWsFile.Get('w_all')
-#myWs = rooWsFile.Get('ws_card')
+#myWs = rooWsFile.Get('w_all')
+myWs = rooWsFile.Get('ws_card')
 print 'printing rooWsFile'
 myWs.Print()
 

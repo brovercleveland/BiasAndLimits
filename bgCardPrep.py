@@ -6,7 +6,73 @@ import numpy as np
 #import pdb
 from rooFitBuilder import *
 
-gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
+
+leptonList = ['mu','el']
+yearList = ['2012','2011']
+catList = ['1','2','3','4']
+
+rooWsFile = TFile('testRooFitOut.root')
+myWs = rooWsFile.Get('ws')
+card_ws = RooWorkspace('ws_card')
+
+c = TCanvas("c","c",0,0,500,400)
+c.cd()
+mzg = myWs.var('CMS_hzg_mass')
+
+########################################
+# prep the background and data card    #
+# we're going to the extend the bg pdf #
+# and rename the parameters to work    #
+# with the higgs combination tool      #
+########################################
+
+
+for year in yearList:
+  for lepton in leptonList:
+    for cat in catList:
+      dataName = '_'.join(['data',lepton,year,'cat'+cat])
+      suffix = '_'.join([year,lepton,'cat'+cat])
+      if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
+        fitName = '_'.join(['GaussBern4',year,lepton,'cat'+cat])
+        normName = 'normGaussBern4_'+suffix
+      else:
+        fitName = '_'.join(['GaussBern5',year,lepton,'cat'+cat])
+        normName = 'normGaussBern5_'+suffix
+
+      data = myWs.data(dataName)
+      fit = myWs.pdf(fitName)
+
+      ###### Extend the fit (give it a normalization parameter)
+      sumEntries = data.sumEntries()
+      dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
+      dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
+      norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+      fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
+      fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
+
+      fit_ext.fitTo(data,RooFit.Range('fullRegion'))
+
+      testFrame = mzg.frame()
+      data.plotOn(testFrame)
+      fit_ext.plotOn(testFrame)
+      testFrame.Draw()
+      c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
+
+      ###### Import the fit and data, and rename them to the card convention
+      dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+cat])
+
+      getattr(card_ws,'import')(data,RooFit.RenameVariable(dataName,dataNameNew))
+      getattr(card_ws,'import')(fit_ext)
+      getattr(card_ws,'import')(dataYield)
+      card_ws.commitTransaction()
+      BackgroundNameFixer(year,lepton,cat,card_ws)
+
+card_ws.writeToFile('testCards/testCardBackground.root')
+
+
+
+
+
 

@@ -119,6 +119,9 @@ for year in yearList:
           interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', CBG_Low, CBG_Hi, mzg, beta)
           interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
           normList.append(sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+          yieldName = '_'.join(['sig',prod,'yield',lepton,year,'cat'+cat])
+          yieldVar = RooRealVar(yieldName,yieldName,sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+
 
           sigNameInterp = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(mass)])
           CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
@@ -127,6 +130,7 @@ for year in yearList:
             param.setConstant(True)
           fitList.append(CBG_Interp)
           getattr(cardDict[str(mass)],'import')(CBG_Interp)
+          getattr(cardDict[str(mass)],'import')(yieldVar)
           cardDict[str(mass)].commitTransaction()
 
         testFrame = mzg.frame(110,130)
