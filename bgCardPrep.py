@@ -63,7 +63,8 @@ for year in yearList:
       ###### Import the fit and data, and rename them to the card convention
       dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+cat])
 
-      getattr(card_ws,'import')(data,RooFit.RenameVariable(dataName,dataNameNew))
+      #getattr(card_ws,'import')(data,RooFit.RenameVariable(dataName,dataNameNew))
+      getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
       getattr(card_ws,'import')(fit_ext)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()

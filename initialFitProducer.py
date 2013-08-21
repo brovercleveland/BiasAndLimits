@@ -91,13 +91,20 @@ def doInitialFits():
               signalTree.GetEntry(i)
               if tmpSigMass[0]> 100 and tmpSigMass[0]<190:
                 mzg.setVal(tmpSigMass[0])
-                sig_ds.add(sig_argSW, tmpSigWeight[0]*tmpSigLumiXS[0])
+                if prod in ['wh','zh']:
+                  sigWeight = tmpSigWeight[0]*tmpSigLumiXS[0]*(1/0.100974)
+                else:
+                  sigWeight = tmpSigWeight[0]*tmpSigLumiXS[0]
+                sig_ds.add(sig_argSW, sigWeight)
                 #sig_argSW.Print()
 
             signalListDS.append(sig_ds)
             getattr(ws,'import')(signalListDS[-1])
             signalTree.ResetBranchAddresses()
 # do some histogramming for gg signal for bias study
+# we don't need or use unbinned signal or complicated fits
+# but this is mostly for compatibility, we may change to unbinned
+# during a future iteration
             if prod is 'gg':
               if verbose: print 'signal mass loop', mass
               histName = '_'.join(['sig',lepton,year,'cat'+cat,'M'+mass])
