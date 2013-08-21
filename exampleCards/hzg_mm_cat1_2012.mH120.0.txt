@@ -1,0 +1,54 @@
+#CMS-HZG DataCard for Unbinned Limit Setting, 19617.7 pb-1 
+# Lumi =  19617.7 pb-1
+imax *
+jmax *
+kmax *
+---------------
+shapes *       * hzg.inputbkg_8TeV.root w_all:$PROCESS_$CHANNEL
+shapes MzgBkg  * hzg.inputbkg_8TeV.root w_all:CMS_hzg_bkg_$CHANNEL
+shapes ggH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigGGH_$CHANNEL
+shapes qqH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigVBFH_$CHANNEL
+shapes WH_hzg  * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigWH_$CHANNEL
+shapes ZH_hzg  * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigZH_$CHANNEL
+shapes ttH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigTTH_$CHANNEL
+---------------
+bin            cat31
+observation    2628
+------------------------------
+bin                 cat31       cat31      cat31      cat31       cat31       cat31
+process            ttH_hzg     ZH_hzg     WH_hzg     qqH_hzg     ggH_hzg     MzgBkg        
+process               -4         -3         -2          -1          0           1          
+---------------------------------------------------------------------------------------    
+rate                0.010419    0.04833      0.050229      0.1289       1.5039        1 
+---------------------------------------------------------------------------------------    
+pdf_gg                    lnN    0.915/1.085        -             -             -        0.923/1.079   -  
+pdf_qqbar                 lnN         -        0.963/1.037   0.965/1.035   0.979/1.027        -        -  
+QCDscale_ggH              lnN         -             -             -             -        0.918/1.125   -  
+QCDscale_qqH              lnN         -             -             -        0.997/1.005        -        -  
+QCDscale_VH               lnN         -        0.984/1.017   0.992/1.007        -             -        -  
+QCDscale_ttH              lnN    0.906/1.034        -             -             -             -        -  
+lumi_8TeV                 lnN       1.044         1.044         1.044         1.044         1.044      -  
+CMS_eff_m_8TeV            lnN       1.014         1.014         1.014         1.014         1.014      -  
+CMS_eff_mTrg_8TeV         lnN       1.035         1.035         1.035         1.035         1.035      -  
+pdf_PU_mu_8TeV            lnN       1.004         1.004         1.004         1.004         1.004      -  
+CMS_eff_g_EB_8TeV         lnN       1.006         1.006         1.006         1.006         1.006      -  
+CMS_eff_gR9_EB_8TeV       lnN       1.050         1.050         1.050         1.050         1.050      -  
+CMS_BRhiggs_hzg           lnN    0.907/1.094   0.907/1.094   0.907/1.094   0.907/1.094   0.907/1.094   -  
+CMS_hzg_sigGGH_mshift_cat31      param   1   0.01   
+CMS_hzg_sigGGH_sigmaScale_cat31  param   1   0.05   
+CMS_hzg_sigVBFH_mshift_cat31     param   1   0.01   
+CMS_hzg_sigVBFH_sigmaScale_cat31 param   1   0.05   
+CMS_hzg_sigWH_mshift_cat31       param   1   0.01   
+CMS_hzg_sigWH_sigmaScale_cat31   param   1   0.05   
+CMS_hzg_sigZH_mshift_cat31       param   1   0.01   
+CMS_hzg_sigZH_sigmaScale_cat31   param   1   0.05   
+CMS_hzg_sigTTH_mshift_cat31      param   1   0.01   
+CMS_hzg_sigTTH_sigmaScale_cat31  param   1   0.05   
+CMS_hzg_bkg_c2_cat31                 flatParam
+CMS_hzg_bkg_c3_cat31                 flatParam
+CMS_hzg_bkg_c4_cat31                 flatParam
+CMS_hzg_bkg_c5_cat31                 flatParam
+CMS_hzg_bkg_c6_cat31                 flatParam
+CMS_hzg_bkg_cat31_norm               flatParam
+CMS_hzg_bkg_stepSigma_cat31          flatParam
+CMS_hzg_bkg_stepValTest_cat31        flatParam

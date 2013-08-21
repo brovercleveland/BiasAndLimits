@@ -14,14 +14,17 @@ massList = ['120','125','130','135','140','145','150']
 #rooWsFile = TFile('testRooFitOut.root')
 #rooWsFile = TFile('exampleCards/hzg.inputbkg_8TeV.root')
 #rooWsFile = TFile('exampleCards/hzg.mH122.0.inputsig_8TeV.root')
-rooWsFile = TFile('testCards/testCardSignal_125.0.root')
-#rooWsFile = TFile('testCards/testCardBackground.root')
+rooWsFile_sig = TFile('testCards/testCardSignal_125.0.root')
+rooWsFile_bkg = TFile('testCards/testCardBackground.root')
 #myWs = rooWsFile.Get('ws')
 #myWs = rooWsFile.Get('w_all')
-myWs = rooWsFile.Get('ws_card')
+myWs_sig = rooWsFile_sig.Get('ws_card')
+myWs_bkg = rooWsFile_bkg.Get('ws_card')
 print 'printing rooWsFile'
-myWs.Print()
+myWs_sig.Print()
+myWs_bkg.Print()
 
+'''
 mzg = myWs.var("CMS_hzg_mass")
 mzg.Print()
 
@@ -42,3 +45,4 @@ for year in yearList:
         pdf_sig.plotOn(testFrame,RooFit.LineColor(color),RooFit.LineStyle(int(cat)))
 testFrame.Draw()
 c.Print('debugPlots/test_ws_signal.pdf')
+'''

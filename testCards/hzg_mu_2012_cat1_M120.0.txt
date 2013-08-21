@@ -1,3 +1,5 @@
+#some bullshit
+#more comments
 imax *
 jmax *
 kmax *
@@ -6,9 +8,16 @@ shapes *        * testCardBackground.root ws_card:$PROCESS_$CHANNEL
 shapes bkg      * testCardBackground.root ws_card:bkg_$CHANNEL
 shapes sig_gg   * testCardSignal_120.0.root ws_card:sig_gg_$CHANNEL
 shapes sig_vbf  * testCardSignal_120.0.root ws_card:sig_vbf_$CHANNEL
-shapes sig_tth  * testCardSignal_120.0.root ws_card:sig_tth_$CHANNEL
 shapes sig_wh   * testCardSignal_120.0.root ws_card:sig_wh_$CHANNEL
 shapes sig_zh   * testCardSignal_120.0.root ws_card:sig_zh_$CHANNEL
+shapes sig_tth  * testCardSignal_120.0.root ws_card:sig_tth_$CHANNEL
 ---------------
 bin          mu_2012_cat1
 observation  2725
+------------------------------
+bin                  mu_2012_cat1    mu_2012_cat1    mu_2012_cat1    mu_2012_cat1    mu_2012_cat1    mu_2012_cat1  
+process                 sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
+process                   -4              -3              -2              -1               0               1       
+---------------------------------------------------------------------------------------
+rate                   0.010439        0.0049331       0.0051207        0.12785         1.5023             1       
+---------------------------------------------------------------------------------------
