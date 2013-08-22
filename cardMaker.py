@@ -43,9 +43,9 @@ def makeCards():
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,year,'cat'+cat])
         if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
-          bkgParams = ['p1','p2','p3','p4','norm','sigma','step']
+          bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
         else:
-          bkgParams = ['p1','p2','p3','p4','p5','norm','sigma','step']
+          bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
 
         for mass in massList:
           sigFileName = 'testCardSignal_'+mass+'.root'
@@ -94,10 +94,11 @@ def makeCards():
 
           for sig in prefixSigList:
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
-            card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.01))
+            card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
 
-          for param in bkgParams:
+          for param in bkgParams[:-1]:
             card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))
+          card.write('{0:<45} {1:<15}\n'.format('bkg_'+channel+'_'+bkgParams[-1],'flatParam'))
 
 
           card.close()

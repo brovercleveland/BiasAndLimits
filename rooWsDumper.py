@@ -12,17 +12,41 @@ catList = ['1','2','3','4']
 massList = ['120','125','130','135','140','145','150']
 
 #rooWsFile = TFile('testRooFitOut.root')
-#rooWsFile = TFile('exampleCards/hzg.inputbkg_8TeV.root')
-#rooWsFile = TFile('exampleCards/hzg.mH122.0.inputsig_8TeV.root')
-rooWsFile_sig = TFile('testCards/testCardSignal_125.0.root')
-rooWsFile_bkg = TFile('testCards/testCardBackground.root')
+rooWsFile_bkg = TFile('exampleCards/hzg.inputbkg_8TeV.root')
+rooWsFile_sig = TFile('exampleCards/hzg.mH120.0.inputsig_8TeV.root')
+#rooWsFile_sig = TFile('testCards/testCardSignal_125.0.root')
+#rooWsFile_bkg = TFile('testCards/testCardBackground.root')
 #myWs = rooWsFile.Get('ws')
-#myWs = rooWsFile.Get('w_all')
-myWs_sig = rooWsFile_sig.Get('ws_card')
-myWs_bkg = rooWsFile_bkg.Get('ws_card')
+myWs_sig = rooWsFile_sig.Get('w_all')
+myWs_bkg = rooWsFile_bkg.Get('w_all')
+#myWs_sig = rooWsFile_sig.Get('ws_card')
+#myWs_bkg = rooWsFile_bkg.Get('ws_card')
 print 'printing rooWsFile'
 myWs_sig.Print()
 myWs_bkg.Print()
+
+testVar = myWs_bkg.var('mzg_bkg_norm_cat31')
+testVar.Print()
+
+mzg = myWs_bkg.var("CMS_hzg_mass")
+mzg.setRange(100,190)
+mzg.Print()
+c = TCanvas("c","c",0,0,500,400)
+c.cd()
+data = myWs_bkg.data('data_obs_mu_2012_cat1')
+pdf = myWs_bkg.pdf('bkg_mu_2012_cat1')
+testFrame1 = mzg.frame()
+data.plotOn(testFrame1)
+pdf.plotOn(testFrame1)
+testFrame1.Draw()
+c.Print('debugPlots/test_ws_bkg.pdf')
+c.Clear()
+testFrame2 = mzg.frame()
+sig = myWs_sig.pdf('sig_gg_mu_2012_cat1')
+sig.plotOn(testFrame2)
+testFrame2.Draw()
+c.Print('debugPlots/test_ws_signal.pdf')
+
 
 '''
 mzg = myWs.var("CMS_hzg_mass")

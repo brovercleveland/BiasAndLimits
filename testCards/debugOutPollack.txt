@@ -1,0 +1,522 @@
+>>> including systematics
+>>> method used to compute upper limit is Asymptotic
+>>> random number generator seed is 123456
+Will try to work with unbinned datasets
+Observables: ['CMS_hzg_mass']
+Will use category 'CMS_channel' to identify the 1 channels
+Creating RooAddPdf pdf_binmu_2012_cat1 with 6 elements
+Computing limit starting from observation
+Set default minimizer to Minuit2
+Will compute both limit(s) using minimizer Minuit2 with strategy 0 and tolerance 0.01
+Nuisance parameters after fit for asimov dataset: 
+  1) RooRealVar::                          pdf_gg = 0 +/- 0.996602
+  2) RooRealVar::                       pdf_qqbar = 0 +/- 0.996602
+  3) RooRealVar::                    QCDscale_ggH = 0 +/- 0.996602
+  4) RooRealVar::                    QCDscale_qqH = 0 +/- 0.996602
+  5) RooRealVar::                     QCDscale_VH = 0 +/- 0.996602
+  6) RooRealVar::                    QCDscale_ttH = 0 +/- 0.996602
+  7) RooRealVar::                       lumi_2012 = 0 +/- 0.996602
+  8) RooRealVar::                     eff_mu_2012 = 0 +/- 0.996602
+  9) RooRealVar::                eff_trig_mu_2012 = 0 +/- 0.996602
+ 10) RooRealVar::                  eff_PU_mu_2012 = 0 +/- 0.996602
+ 11) RooRealVar::                   eff_g_EB_2012 = 0 +/- 0.996602
+ 12) RooRealVar::                     eff_R9_2012 = 0 +/- 0.996602
+ 13) RooRealVar::                     err_BR_2012 = 0 +/- 0.996602
+ 14) RooRealVar::      sig_gg_mShift_mu_2012_cat1 = 1 +/- 0.00989616
+ 15) RooRealVar::  sig_gg_sigmaShift_mu_2012_cat1 = 1 +/- 0.0494808
+ 16) RooRealVar::     sig_vbf_mShift_mu_2012_cat1 = 1 +/- 0.00989616
+ 17) RooRealVar:: sig_vbf_sigmaShift_mu_2012_cat1 = 1 +/- 0.0494808
+ 18) RooRealVar::      sig_wh_mShift_mu_2012_cat1 = 1 +/- 0.00989616
+ 19) RooRealVar::  sig_wh_sigmaShift_mu_2012_cat1 = 1 +/- 0.0494808
+ 20) RooRealVar::      sig_zh_mShift_mu_2012_cat1 = 1 +/- 0.00989616
+ 21) RooRealVar::  sig_zh_sigmaShift_mu_2012_cat1 = 1 +/- 0.0494808
+ 22) RooRealVar::     sig_tth_mShift_mu_2012_cat1 = 1 +/- 0.00989616
+ 23) RooRealVar:: sig_tth_sigmaShift_mu_2012_cat1 = 1 +/- 0.0494808
+[#1] INFO:NumericIntegration -- RooRealIntegral::init(GaussBern5_2012_mu_cat1_bkg_mu_2012_cat1_Int[CMS_hzg_mass]) using numeric integrator RooIntegrator1D to calculate Int(CMS_hzg_mass)
+Global observables for data: 
+  1) RooRealVar::                          pdf_gg_In = 0
+  2) RooRealVar::                       pdf_qqbar_In = 0
+  3) RooRealVar::                    QCDscale_ggH_In = 0
+  4) RooRealVar::                    QCDscale_qqH_In = 0
+  5) RooRealVar::                     QCDscale_VH_In = 0
+  6) RooRealVar::                    QCDscale_ttH_In = 0
+  7) RooRealVar::                       lumi_2012_In = 0
+  8) RooRealVar::                     eff_mu_2012_In = 0
+  9) RooRealVar::                eff_trig_mu_2012_In = 0
+ 10) RooRealVar::                  eff_PU_mu_2012_In = 0
+ 11) RooRealVar::                   eff_g_EB_2012_In = 0
+ 12) RooRealVar::                     eff_R9_2012_In = 0
+ 13) RooRealVar::                     err_BR_2012_In = 0
+ 14) RooRealVar::      sig_gg_mShift_mu_2012_cat1_In = 1
+ 15) RooRealVar::  sig_gg_sigmaShift_mu_2012_cat1_In = 1
+ 16) RooRealVar::     sig_vbf_mShift_mu_2012_cat1_In = 1
+ 17) RooRealVar:: sig_vbf_sigmaShift_mu_2012_cat1_In = 1
+ 18) RooRealVar::      sig_wh_mShift_mu_2012_cat1_In = 1
+ 19) RooRealVar::  sig_wh_sigmaShift_mu_2012_cat1_In = 1
+ 20) RooRealVar::      sig_zh_mShift_mu_2012_cat1_In = 1
+ 21) RooRealVar::  sig_zh_sigmaShift_mu_2012_cat1_In = 1
+ 22) RooRealVar::     sig_tth_mShift_mu_2012_cat1_In = 1
+ 23) RooRealVar:: sig_tth_sigmaShift_mu_2012_cat1_In = 1
+Global observables for asimov: 
+  1) RooRealVar::                          pdf_gg_In = 0
+  2) RooRealVar::                       pdf_qqbar_In = 0
+  3) RooRealVar::                    QCDscale_ggH_In = 0
+  4) RooRealVar::                    QCDscale_qqH_In = 0
+  5) RooRealVar::                     QCDscale_VH_In = 0
+  6) RooRealVar::                    QCDscale_ttH_In = 0
+  7) RooRealVar::                       lumi_2012_In = 0
+  8) RooRealVar::                     eff_mu_2012_In = 0
+  9) RooRealVar::                eff_trig_mu_2012_In = 0
+ 10) RooRealVar::                  eff_PU_mu_2012_In = 0
+ 11) RooRealVar::                   eff_g_EB_2012_In = 0
+ 12) RooRealVar::                     eff_R9_2012_In = 0
+ 13) RooRealVar::                     err_BR_2012_In = 0
+ 14) RooRealVar::      sig_gg_mShift_mu_2012_cat1_In = 1
+ 15) RooRealVar::  sig_gg_sigmaShift_mu_2012_cat1_In = 1
+ 16) RooRealVar::     sig_vbf_mShift_mu_2012_cat1_In = 1
+ 17) RooRealVar:: sig_vbf_sigmaShift_mu_2012_cat1_In = 1
+ 18) RooRealVar::      sig_wh_mShift_mu_2012_cat1_In = 1
+ 19) RooRealVar::  sig_wh_sigmaShift_mu_2012_cat1_In = 1
+ 20) RooRealVar::      sig_zh_mShift_mu_2012_cat1_In = 1
+ 21) RooRealVar::  sig_zh_sigmaShift_mu_2012_cat1_In = 1
+ 22) RooRealVar::     sig_tth_mShift_mu_2012_cat1_In = 1
+ 23) RooRealVar:: sig_tth_sigmaShift_mu_2012_cat1_In = 1
+[#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset _Asymptotic_asimovDataset_
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binmu_2012_cat1_nuis) WARNING: component PDF shapeBkg_bkg_mu_2012_cat1   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+Fit to asimov dataset:
+
+  RooFitResult: minimized FCN value: -0.139818, estimated distance to minimum: 6.83635e-06
+                covariance matrix quality: Approximation only, not accurate
+                Status : MINIMIZE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+        QCDscale_VH_In    0.0000e+00
+       QCDscale_ggH_In    0.0000e+00
+       QCDscale_qqH_In    0.0000e+00
+       QCDscale_ttH_In    0.0000e+00
+  alphaCBG_2012_mu_cat1_gg_120.0_Interp    5.0000e-01
+  alphaCBG_2012_mu_cat1_tth_120.0_Interp    1.1617e+00
+  alphaCBG_2012_mu_cat1_vbf_120.0_Interp    1.3199e+00
+  alphaCBG_2012_mu_cat1_wh_120.0_Interp    1.2181e+00
+  alphaCBG_2012_mu_cat1_zh_120.0_Interp    8.5692e-01
+  bkg_mean_mu_2012_cat1    0.0000e+00
+   bkg_p0_mu_2012_cat1    1.5000e+01
+     eff_PU_mu_2012_In    0.0000e+00
+        eff_R9_2012_In    0.0000e+00
+      eff_g_EB_2012_In    0.0000e+00
+        eff_mu_2012_In    0.0000e+00
+   eff_trig_mu_2012_In    0.0000e+00
+        err_BR_2012_In    0.0000e+00
+  fracCBG_2012_mu_cat1_gg_120.0_Interp    6.4165e-01
+  fracCBG_2012_mu_cat1_tth_120.0_Interp    7.9760e-02
+  fracCBG_2012_mu_cat1_vbf_120.0_Interp    6.1263e-03
+  fracCBG_2012_mu_cat1_wh_120.0_Interp    1.8170e-01
+  fracCBG_2012_mu_cat1_zh_120.0_Interp    1.1817e-01
+          lumi_2012_In    0.0000e+00
+  meanCBG_2012_mu_cat1_gg_120.0_Interp    1.1968e+02
+  meanCBG_2012_mu_cat1_tth_120.0_Interp    1.1986e+02
+  meanCBG_2012_mu_cat1_vbf_120.0_Interp    1.1983e+02
+  meanCBG_2012_mu_cat1_wh_120.0_Interp    1.1986e+02
+  meanCBG_2012_mu_cat1_zh_120.0_Interp    1.1983e+02
+  nCBG_2012_mu_cat1_gg_120.0_Interp    5.0000e-01
+  nCBG_2012_mu_cat1_tth_120.0_Interp    3.0983e+00
+  nCBG_2012_mu_cat1_vbf_120.0_Interp    2.7774e+00
+  nCBG_2012_mu_cat1_wh_120.0_Interp    5.4262e+00
+  nCBG_2012_mu_cat1_zh_120.0_Interp    4.9628e+00
+  n_exp_binmu_2012_cat1_proc_bkg    1.0000e+00
+             pdf_gg_In    0.0000e+00
+          pdf_qqbar_In    0.0000e+00
+  sig_gg_mShift_mu_2012_cat1_In    1.0000e+00
+  sig_gg_sigmaShift_mu_2012_cat1_In    1.0000e+00
+  sig_tth_mShift_mu_2012_cat1_In    1.0000e+00
+  sig_tth_sigmaShift_mu_2012_cat1_In    1.0000e+00
+  sig_vbf_mShift_mu_2012_cat1_In    1.0000e+00
+  sig_vbf_sigmaShift_mu_2012_cat1_In    1.0000e+00
+  sig_wh_mShift_mu_2012_cat1_In    1.0000e+00
+  sig_wh_sigmaShift_mu_2012_cat1_In    1.0000e+00
+  sig_zh_mShift_mu_2012_cat1_In    1.0000e+00
+  sig_zh_sigmaShift_mu_2012_cat1_In    1.0000e+00
+  sigmaCBCBG_2012_mu_cat1_gg_120.0_Interp    2.1297e+00
+  sigmaCBCBG_2012_mu_cat1_tth_120.0_Interp    1.4575e+00
+  sigmaCBCBG_2012_mu_cat1_vbf_120.0_Interp    1.4346e+00
+  sigmaCBCBG_2012_mu_cat1_wh_120.0_Interp    1.1783e+00
+  sigmaCBCBG_2012_mu_cat1_zh_120.0_Interp    1.3416e+00
+  sigmaGCBG_2012_mu_cat1_gg_120.0_Interp    1.2715e+00
+  sigmaGCBG_2012_mu_cat1_tth_120.0_Interp    2.0000e+01
+  sigmaGCBG_2012_mu_cat1_vbf_120.0_Interp    1.9999e+01
+  sigmaGCBG_2012_mu_cat1_wh_120.0_Interp    2.7342e+00
+  sigmaGCBG_2012_mu_cat1_zh_120.0_Interp    6.0289e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+           QCDscale_VH    0.0000e+00    3.0547e-06 +/-  1.93e+00  <none>
+          QCDscale_ggH    0.0000e+00    4.4459e-04 +/-  1.93e+00  <none>
+          QCDscale_qqH    0.0000e+00    9.4137e-07 +/-  1.93e+00  <none>
+          QCDscale_ttH    0.0000e+00    2.4273e-06 +/-  1.93e+00  <none>
+  bkg_norm_mu_2012_cat1    2.7250e+03    2.7250e+03 +/-  2.99e+03  <none>
+   bkg_p1_mu_2012_cat1    5.5425e-01    3.7652e+00 +/-  8.64e+02  <none>
+   bkg_p2_mu_2012_cat1    5.6668e+00    3.0776e+00 +/-  5.73e+02  <none>
+   bkg_p3_mu_2012_cat1   -2.4082e-07    1.8953e+00 +/-  5.66e+02  <none>
+   bkg_p4_mu_2012_cat1    1.3023e+00    1.1447e+00 +/-  5.82e+02  <none>
+   bkg_p5_mu_2012_cat1    1.0507e+00    7.5423e-01 +/-  8.70e+02  <none>
+  bkg_sigma_mu_2012_cat1    5.4592e+00    5.1786e+00 +/-  5.49e+01  <none>
+  bkg_step_mu_2012_cat1    1.0755e+02    1.0705e+02 +/-  2.65e+01  <none>
+        eff_PU_mu_2012    0.0000e+00    2.3311e-05 +/-  1.93e+00  <none>
+           eff_R9_2012    0.0000e+00    2.7984e-04 +/-  1.93e+00  <none>
+         eff_g_EB_2012    0.0000e+00    3.4927e-05 +/-  1.93e+00  <none>
+           eff_mu_2012    0.0000e+00    8.1076e-05 +/-  1.93e+00  <none>
+      eff_trig_mu_2012    0.0000e+00    1.9912e-04 +/-  1.93e+00  <none>
+           err_BR_2012    0.0000e+00    5.9726e-04 +/-  1.93e+00  <none>
+             lumi_2012    0.0000e+00    2.4796e-04 +/-  1.93e+00  <none>
+                pdf_gg    0.0000e+00    3.4424e-04 +/-  1.93e+00  <none>
+             pdf_qqbar    0.0000e+00    2.5146e-05 +/-  1.93e+00  <none>
+                     r    2.0000e-01    1.9488e-03 +/-  1.52e+01  <none>
+  sig_gg_mShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  1.89e-02  <none>
+  sig_gg_sigmaShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  sig_tth_mShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  sig_tth_sigmaShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  sig_vbf_mShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  1.89e-02  <none>
+  sig_vbf_sigmaShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  sig_wh_mShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  sig_wh_sigmaShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  sig_zh_mShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  sig_zh_sigmaShift_mu_2012_cat1    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+
+Will search for NLL crossing by stepping.
+At r = 1.000000:  delta(nll) = 1.05666
+At r = 1.500000:  delta(nll) = 1.71723
+At r = 1.750000:  delta(nll) = 2.05821
+At r = 1.625000:  delta(nll) = 1.88557
+At r = 1.687500:  delta(nll) = 1.97171
+At r = 1.656250:  delta(nll) = 1.92859
+At r = 1.640625:  delta(nll) = 1.90706
+At r = 1.656250:  delta(nll) = 1.92857
+Median for expected limits: 1.64844
+Sigma  for expected limits: 0.841055
+Will search for NLL crossing by bisection
+At r = 0.824219:  delta(nll) = 0.84276
+At r = 0.412109:  delta(nll) = 0.43246
+At r = 0.618164:  delta(nll) = 0.61496
+At r = 0.515137:  delta(nll) = 0.51559
+At r = 0.566650:  delta(nll) = 0.56362
+At r = 0.592407:  delta(nll) = 0.58861
+At r = 0.579529:  delta(nll) = 0.57590
+At r = 0.573090:  delta(nll) = 0.56961
+At r = 0.569870:  delta(nll) = 0.56649
+Will search for NLL crossing by bisection
+At r = 1.108349:  delta(nll) = 1.20517
+At r = 0.838305:  delta(nll) = 0.85967
+At r = 0.973327:  delta(nll) = 1.02345
+At r = 0.905816:  delta(nll) = 0.94057
+At r = 0.939571:  delta(nll) = 0.98173
+At r = 0.956449:  delta(nll) = 1.00253
+At r = 0.948010:  delta(nll) = 0.99211
+Will search for NLL crossing by bisection
+At r = 2.489493:  delta(nll) = 3.09755
+At r = 2.910020:  delta(nll) = 3.69388
+At r = 3.120284:  delta(nll) = 3.99207
+At r = 3.015152:  delta(nll) = 3.84298
+At r = 2.962586:  delta(nll) = 3.76844
+At r = 2.936303:  delta(nll) = 3.73115
+Will search for NLL crossing by bisection
+At r = 3.967910:  delta(nll) = 5.18917
+At r = 4.490284:  delta(nll) = 5.92045
+At r = 4.751471:  delta(nll) = 6.28366
+At r = 4.882064:  delta(nll) = 6.46464
+At r = 4.947361:  delta(nll) = 6.55506
+At r = 4.914713:  delta(nll) = 6.50983
+Restricting r to positive values.
+  1) RooRealVar::                              QCDscale_VH = 0
+  2) RooRealVar::                           QCDscale_VH_In = 0
+  3) RooRealVar::                             QCDscale_ggH = 0
+  4) RooRealVar::                          QCDscale_ggH_In = 0
+  5) RooRealVar::                             QCDscale_qqH = 0
+  6) RooRealVar::                          QCDscale_qqH_In = 0
+  7) RooRealVar::                             QCDscale_ttH = 0
+  8) RooRealVar::                          QCDscale_ttH_In = 0
+  9) RooRealVar::    alphaCBG_2012_mu_cat1_gg_120.0_Interp = 0.5 +/- 0.0283063
+ 10) RooRealVar::   alphaCBG_2012_mu_cat1_tth_120.0_Interp = 1.16172 +/- 0.105858
+ 11) RooRealVar::   alphaCBG_2012_mu_cat1_vbf_120.0_Interp = 1.31986 +/- 0.113743
+ 12) RooRealVar::    alphaCBG_2012_mu_cat1_wh_120.0_Interp = 1.21811 +/- 0.147385
+ 13) RooRealVar::    alphaCBG_2012_mu_cat1_zh_120.0_Interp = 0.856924 +/- 0.0836156
+ 14) RooRealVar::                    bkg_mean_mu_2012_cat1 = 0
+ 15) RooRealVar::                    bkg_norm_mu_2012_cat1 = 2725
+ 16) RooRealVar::                      bkg_p0_mu_2012_cat1 = 15
+ 17) RooRealVar::                      bkg_p1_mu_2012_cat1 = 0.551415
+ 18) RooRealVar::                      bkg_p2_mu_2012_cat1 = 5.6678
+ 19) RooRealVar::                      bkg_p3_mu_2012_cat1 = -9.85028e-07
+ 20) RooRealVar::                      bkg_p4_mu_2012_cat1 = 1.30167
+ 21) RooRealVar::                      bkg_p5_mu_2012_cat1 = 1.05057
+ 22) RooRealVar::                   bkg_sigma_mu_2012_cat1 = 5.45944
+ 23) RooRealVar::                    bkg_step_mu_2012_cat1 = 107.547
+ 24) RooRealVar::                           eff_PU_mu_2012 = 0
+ 25) RooRealVar::                        eff_PU_mu_2012_In = 0
+ 26) RooRealVar::                              eff_R9_2012 = 0
+ 27) RooRealVar::                           eff_R9_2012_In = 0
+ 28) RooRealVar::                            eff_g_EB_2012 = 0
+ 29) RooRealVar::                         eff_g_EB_2012_In = 0
+ 30) RooRealVar::                              eff_mu_2012 = 0
+ 31) RooRealVar::                           eff_mu_2012_In = 0
+ 32) RooRealVar::                         eff_trig_mu_2012 = 0
+ 33) RooRealVar::                      eff_trig_mu_2012_In = 0
+ 34) RooRealVar::                              err_BR_2012 = 0
+ 35) RooRealVar::                           err_BR_2012_In = 0
+ 36) RooRealVar::     fracCBG_2012_mu_cat1_gg_120.0_Interp = 0.641648 +/- 0.0198509
+ 37) RooRealVar::    fracCBG_2012_mu_cat1_tth_120.0_Interp = 0.0797603 +/- 0.0109646
+ 38) RooRealVar::    fracCBG_2012_mu_cat1_vbf_120.0_Interp = 0.00612629 +/- 0.00370869
+ 39) RooRealVar::     fracCBG_2012_mu_cat1_wh_120.0_Interp = 0.181704 +/- 0.0230948
+ 40) RooRealVar::     fracCBG_2012_mu_cat1_zh_120.0_Interp = 0.118172 +/- 0.00900647
+ 41) RooRealVar::                                lumi_2012 = 0
+ 42) RooRealVar::                             lumi_2012_In = 0
+ 43) RooRealVar::     meanCBG_2012_mu_cat1_gg_120.0_Interp = 119.68 +/- 0.017808
+ 44) RooRealVar::    meanCBG_2012_mu_cat1_tth_120.0_Interp = 119.86 +/- 0.0244653
+ 45) RooRealVar::    meanCBG_2012_mu_cat1_vbf_120.0_Interp = 119.831 +/- 0.0211407
+ 46) RooRealVar::     meanCBG_2012_mu_cat1_wh_120.0_Interp = 119.857 +/- 0.0229786
+ 47) RooRealVar::     meanCBG_2012_mu_cat1_zh_120.0_Interp = 119.83 +/- 0.0299904
+ 48) RooRealVar::        nCBG_2012_mu_cat1_gg_120.0_Interp = 0.5 +/- 0.0827575
+ 49) RooRealVar::       nCBG_2012_mu_cat1_tth_120.0_Interp = 3.09835 +/- 1.58823
+ 50) RooRealVar::       nCBG_2012_mu_cat1_vbf_120.0_Interp = 2.77743 +/- 1.32205
+ 51) RooRealVar::        nCBG_2012_mu_cat1_wh_120.0_Interp = 5.42615 +/- 3.85182
+ 52) RooRealVar::        nCBG_2012_mu_cat1_zh_120.0_Interp = 4.96282 +/- 3.25838
+ 53) RooRealVar::           n_exp_binmu_2012_cat1_proc_bkg = 1
+ 54) RooRealVar::                                   pdf_gg = 0
+ 55) RooRealVar::                                pdf_gg_In = 0
+ 56) RooRealVar::                                pdf_qqbar = 0
+ 57) RooRealVar::                             pdf_qqbar_In = 0
+ 58) RooRealVar::                                        r = 2
+ 59) RooRealVar::               sig_gg_mShift_mu_2012_cat1 = 1
+ 60) RooRealVar::            sig_gg_mShift_mu_2012_cat1_In = 1
+ 61) RooRealVar::           sig_gg_sigmaShift_mu_2012_cat1 = 1
+ 62) RooRealVar::        sig_gg_sigmaShift_mu_2012_cat1_In = 1
+ 63) RooRealVar::              sig_tth_mShift_mu_2012_cat1 = 1
+ 64) RooRealVar::           sig_tth_mShift_mu_2012_cat1_In = 1
+ 65) RooRealVar::          sig_tth_sigmaShift_mu_2012_cat1 = 1
+ 66) RooRealVar::       sig_tth_sigmaShift_mu_2012_cat1_In = 1
+ 67) RooRealVar::              sig_vbf_mShift_mu_2012_cat1 = 1
+ 68) RooRealVar::           sig_vbf_mShift_mu_2012_cat1_In = 1
+ 69) RooRealVar::          sig_vbf_sigmaShift_mu_2012_cat1 = 1
+ 70) RooRealVar::       sig_vbf_sigmaShift_mu_2012_cat1_In = 1
+ 71) RooRealVar::               sig_wh_mShift_mu_2012_cat1 = 1
+ 72) RooRealVar::            sig_wh_mShift_mu_2012_cat1_In = 1
+ 73) RooRealVar::           sig_wh_sigmaShift_mu_2012_cat1 = 1
+ 74) RooRealVar::        sig_wh_sigmaShift_mu_2012_cat1_In = 1
+ 75) RooRealVar::               sig_zh_mShift_mu_2012_cat1 = 1
+ 76) RooRealVar::            sig_zh_mShift_mu_2012_cat1_In = 1
+ 77) RooRealVar::           sig_zh_sigmaShift_mu_2012_cat1 = 1
+ 78) RooRealVar::        sig_zh_sigmaShift_mu_2012_cat1_In = 1
+ 79) RooRealVar::  sigmaCBCBG_2012_mu_cat1_gg_120.0_Interp = 2.1297 +/- 0.0605107
+ 80) RooRealVar:: sigmaCBCBG_2012_mu_cat1_tth_120.0_Interp = 1.4575 +/- 0.0200195
+ 81) RooRealVar:: sigmaCBCBG_2012_mu_cat1_vbf_120.0_Interp = 1.43457 +/- 0.0165713
+ 82) RooRealVar::  sigmaCBCBG_2012_mu_cat1_wh_120.0_Interp = 1.17827 +/- 0.0273221
+ 83) RooRealVar::  sigmaCBCBG_2012_mu_cat1_zh_120.0_Interp = 1.34159 +/- 0.0276928
+ 84) RooRealVar::   sigmaGCBG_2012_mu_cat1_gg_120.0_Interp = 1.27151 +/- 0.0191048
+ 85) RooRealVar::  sigmaGCBG_2012_mu_cat1_tth_120.0_Interp = 20 +/- 14.289
+ 86) RooRealVar::  sigmaGCBG_2012_mu_cat1_vbf_120.0_Interp = 19.9992 +/- 11.0781
+ 87) RooRealVar::   sigmaGCBG_2012_mu_cat1_wh_120.0_Interp = 2.73423 +/- 0.121728
+ 88) RooRealVar::   sigmaGCBG_2012_mu_cat1_zh_120.0_Interp = 6.0289 +/- 0.620502
+
+Make global fit of real data
+NLL at global minimum of data: 1913.67 (r = 20)
+   0) QCDscale_VH                    =   2.15801
+   1) QCDscale_VH_In                 =         0
+   2) QCDscale_ggH                   =         7
+   3) QCDscale_ggH_In                =         0
+   4) QCDscale_qqH                   =  0.333297
+   5) QCDscale_qqH_In                =         0
+   6) QCDscale_ttH                   =   3.55161
+   7) QCDscale_ttH_In                =         0
+   8) alphaCBG_2012_mu_cat1_gg_120.0_Interp =       0.5
+   9) alphaCBG_2012_mu_cat1_tth_120.0_Interp =   1.16172
+  10) alphaCBG_2012_mu_cat1_vbf_120.0_Interp =   1.31986
+  11) alphaCBG_2012_mu_cat1_wh_120.0_Interp =   1.21811
+  12) alphaCBG_2012_mu_cat1_zh_120.0_Interp =  0.856924
+  13) bkg_mean_mu_2012_cat1          =         0
+  14) bkg_norm_mu_2012_cat1          =      2725
+  15) bkg_p0_mu_2012_cat1            =        15
+  16) bkg_p1_mu_2012_cat1            =   17.0223
+  17) bkg_p2_mu_2012_cat1            =   66.5314
+  18) bkg_p3_mu_2012_cat1            =   4.39228
+  19) bkg_p4_mu_2012_cat1            =    88.986
+  20) bkg_p5_mu_2012_cat1            = 1.91356e-06
+  21) bkg_sigma_mu_2012_cat1         = 0.0521961
+  22) bkg_step_mu_2012_cat1          =   108.028
+  23) eff_PU_mu_2012                 =   5.61815
+  24) eff_PU_mu_2012_In              =         0
+  25) eff_R9_2012                    =         7
+  26) eff_R9_2012_In                 =         0
+  27) eff_g_EB_2012                  =         7
+  28) eff_g_EB_2012_In               =         0
+  29) eff_mu_2012                    =         7
+  30) eff_mu_2012_In                 =         0
+  31) eff_trig_mu_2012               =         7
+  32) eff_trig_mu_2012_In            =         0
+  33) err_BR_2012                    =         7
+  34) err_BR_2012_In                 =         0
+  35) fracCBG_2012_mu_cat1_gg_120.0_Interp =  0.641648
+  36) fracCBG_2012_mu_cat1_tth_120.0_Interp = 0.0797603
+  37) fracCBG_2012_mu_cat1_vbf_120.0_Interp = 0.00612629
+  38) fracCBG_2012_mu_cat1_wh_120.0_Interp =  0.181704
+  39) fracCBG_2012_mu_cat1_zh_120.0_Interp =  0.118172
+  40) lumi_2012                      =         7
+  41) lumi_2012_In                   =         0
+  42) meanCBG_2012_mu_cat1_gg_120.0_Interp =    119.68
+  43) meanCBG_2012_mu_cat1_tth_120.0_Interp =    119.86
+  44) meanCBG_2012_mu_cat1_vbf_120.0_Interp =   119.831
+  45) meanCBG_2012_mu_cat1_wh_120.0_Interp =   119.857
+  46) meanCBG_2012_mu_cat1_zh_120.0_Interp =    119.83
+  47) nCBG_2012_mu_cat1_gg_120.0_Interp =       0.5
+  48) nCBG_2012_mu_cat1_tth_120.0_Interp =   3.09835
+  49) nCBG_2012_mu_cat1_vbf_120.0_Interp =   2.77743
+  50) nCBG_2012_mu_cat1_wh_120.0_Interp =   5.42615
+  51) nCBG_2012_mu_cat1_zh_120.0_Interp =   4.96282
+  52) n_exp_binmu_2012_cat1_proc_bkg =         1
+  53) pdf_gg                         =         7
+  54) pdf_gg_In                      =         0
+  55) pdf_qqbar                      =         7
+  56) pdf_qqbar_In                   =         0
+  57) r                              =        20
+  58) sig_gg_mShift_mu_2012_cat1     =      1.04
+  59) sig_gg_mShift_mu_2012_cat1_In  =         1
+  60) sig_gg_sigmaShift_mu_2012_cat1 =       1.2
+  61) sig_gg_sigmaShift_mu_2012_cat1_In =         1
+  62) sig_tth_mShift_mu_2012_cat1    =   1.00334
+  63) sig_tth_mShift_mu_2012_cat1_In =         1
+  64) sig_tth_sigmaShift_mu_2012_cat1 =   1.13487
+  65) sig_tth_sigmaShift_mu_2012_cat1_In =         1
+  66) sig_vbf_mShift_mu_2012_cat1    =      0.96
+  67) sig_vbf_mShift_mu_2012_cat1_In =         1
+  68) sig_vbf_sigmaShift_mu_2012_cat1 =   1.13256
+  69) sig_vbf_sigmaShift_mu_2012_cat1_In =         1
+  70) sig_wh_mShift_mu_2012_cat1     =  0.980816
+  71) sig_wh_mShift_mu_2012_cat1_In  =         1
+  72) sig_wh_sigmaShift_mu_2012_cat1 =   1.00066
+  73) sig_wh_sigmaShift_mu_2012_cat1_In =         1
+  74) sig_zh_mShift_mu_2012_cat1     =      1.04
+  75) sig_zh_mShift_mu_2012_cat1_In  =         1
+  76) sig_zh_sigmaShift_mu_2012_cat1 =       1.2
+  77) sig_zh_sigmaShift_mu_2012_cat1_In =         1
+  78) sigmaCBCBG_2012_mu_cat1_gg_120.0_Interp =    2.1297
+  79) sigmaCBCBG_2012_mu_cat1_tth_120.0_Interp =    1.4575
+  80) sigmaCBCBG_2012_mu_cat1_vbf_120.0_Interp =   1.43457
+  81) sigmaCBCBG_2012_mu_cat1_wh_120.0_Interp =   1.17827
+  82) sigmaCBCBG_2012_mu_cat1_zh_120.0_Interp =   1.34159
+  83) sigmaGCBG_2012_mu_cat1_gg_120.0_Interp =   1.27151
+  84) sigmaGCBG_2012_mu_cat1_tth_120.0_Interp =        20
+  85) sigmaGCBG_2012_mu_cat1_vbf_120.0_Interp =   19.9992
+  86) sigmaGCBG_2012_mu_cat1_wh_120.0_Interp =   2.73423
+  87) sigmaGCBG_2012_mu_cat1_zh_120.0_Interp =    6.0289
+
+
+Make global fit of asimov data
+NLL at global minimum of asimov: 5.37157 (r = 0.0615813)
+   0) QCDscale_VH                    = -0.000230264
+   1) QCDscale_VH_In                 =         0
+   2) QCDscale_ggH                   = 0.000351752
+   3) QCDscale_ggH_In                =         0
+   4) QCDscale_qqH                   = -1.98653e-06
+   5) QCDscale_qqH_In                =         0
+   6) QCDscale_ttH                   = -0.000472104
+   7) QCDscale_ttH_In                =         0
+   8) alphaCBG_2012_mu_cat1_gg_120.0_Interp =       0.5
+   9) alphaCBG_2012_mu_cat1_tth_120.0_Interp =   1.16172
+  10) alphaCBG_2012_mu_cat1_vbf_120.0_Interp =   1.31986
+  11) alphaCBG_2012_mu_cat1_wh_120.0_Interp =   1.21811
+  12) alphaCBG_2012_mu_cat1_zh_120.0_Interp =  0.856924
+  13) bkg_mean_mu_2012_cat1          =         0
+  14) bkg_norm_mu_2012_cat1          =      2725
+  15) bkg_p0_mu_2012_cat1            =        15
+  16) bkg_p1_mu_2012_cat1            =   17.0049
+  17) bkg_p2_mu_2012_cat1            =   4.42801
+  18) bkg_p3_mu_2012_cat1            = 0.0997322
+  19) bkg_p4_mu_2012_cat1            =   5.45492
+  20) bkg_p5_mu_2012_cat1            = 9.63859e-05
+  21) bkg_sigma_mu_2012_cat1         = 0.00535709
+  22) bkg_step_mu_2012_cat1          =   105.763
+  23) eff_PU_mu_2012                 = 5.64821e-05
+  24) eff_PU_mu_2012_In              =         0
+  25) eff_R9_2012                    = 1.47059e-05
+  26) eff_R9_2012_In                 =         0
+  27) eff_g_EB_2012                  = 1.38897e-06
+  28) eff_g_EB_2012_In               =         0
+  29) eff_mu_2012                    = 6.05873e-06
+  30) eff_mu_2012_In                 =         0
+  31) eff_trig_mu_2012               = 3.58456e-06
+  32) eff_trig_mu_2012_In            =         0
+  33) err_BR_2012                    = -0.000236471
+  34) err_BR_2012_In                 =         0
+  35) fracCBG_2012_mu_cat1_gg_120.0_Interp =  0.641648
+  36) fracCBG_2012_mu_cat1_tth_120.0_Interp = 0.0797603
+  37) fracCBG_2012_mu_cat1_vbf_120.0_Interp = 0.00612629
+  38) fracCBG_2012_mu_cat1_wh_120.0_Interp =  0.181704
+  39) fracCBG_2012_mu_cat1_zh_120.0_Interp =  0.118172
+  40) lumi_2012                      = 1.33677e-05
+  41) lumi_2012_In                   =         0
+  42) meanCBG_2012_mu_cat1_gg_120.0_Interp =    119.68
+  43) meanCBG_2012_mu_cat1_tth_120.0_Interp =    119.86
+  44) meanCBG_2012_mu_cat1_vbf_120.0_Interp =   119.831
+  45) meanCBG_2012_mu_cat1_wh_120.0_Interp =   119.857
+  46) meanCBG_2012_mu_cat1_zh_120.0_Interp =    119.83
+  47) nCBG_2012_mu_cat1_gg_120.0_Interp =       0.5
+  48) nCBG_2012_mu_cat1_tth_120.0_Interp =   3.09835
+  49) nCBG_2012_mu_cat1_vbf_120.0_Interp =   2.77743
+  50) nCBG_2012_mu_cat1_wh_120.0_Interp =   5.42615
+  51) nCBG_2012_mu_cat1_zh_120.0_Interp =   4.96282
+  52) n_exp_binmu_2012_cat1_proc_bkg =         1
+  53) pdf_gg                         = 0.000422464
+  54) pdf_gg_In                      =         0
+  55) pdf_qqbar                      = -0.000122399
+  56) pdf_qqbar_In                   =         0
+  57) r                              = 0.0615813
+  58) sig_gg_mShift_mu_2012_cat1     =  0.999967
+  59) sig_gg_mShift_mu_2012_cat1_In  =         1
+  60) sig_gg_sigmaShift_mu_2012_cat1 =   1.00002
+  61) sig_gg_sigmaShift_mu_2012_cat1_In =         1
+  62) sig_tth_mShift_mu_2012_cat1    =         1
+  63) sig_tth_mShift_mu_2012_cat1_In =         1
+  64) sig_tth_sigmaShift_mu_2012_cat1 =   1.00001
+  65) sig_tth_sigmaShift_mu_2012_cat1_In =         1
+  66) sig_vbf_mShift_mu_2012_cat1    =  0.999999
+  67) sig_vbf_mShift_mu_2012_cat1_In =         1
+  68) sig_vbf_sigmaShift_mu_2012_cat1 =         1
+  69) sig_vbf_sigmaShift_mu_2012_cat1_In =         1
+  70) sig_wh_mShift_mu_2012_cat1     =  0.999995
+  71) sig_wh_mShift_mu_2012_cat1_In  =         1
+  72) sig_wh_sigmaShift_mu_2012_cat1 =         1
+  73) sig_wh_sigmaShift_mu_2012_cat1_In =         1
+  74) sig_zh_mShift_mu_2012_cat1     =  0.999999
+  75) sig_zh_mShift_mu_2012_cat1_In  =         1
+  76) sig_zh_sigmaShift_mu_2012_cat1 =         1
+  77) sig_zh_sigmaShift_mu_2012_cat1_In =         1
+  78) sigmaCBCBG_2012_mu_cat1_gg_120.0_Interp =    2.1297
+  79) sigmaCBCBG_2012_mu_cat1_tth_120.0_Interp =    1.4575
+  80) sigmaCBCBG_2012_mu_cat1_vbf_120.0_Interp =   1.43457
+  81) sigmaCBCBG_2012_mu_cat1_wh_120.0_Interp =   1.17827
+  82) sigmaCBCBG_2012_mu_cat1_zh_120.0_Interp =   1.34159
+  83) sigmaGCBG_2012_mu_cat1_gg_120.0_Interp =   1.27151
+  84) sigmaGCBG_2012_mu_cat1_tth_120.0_Interp =        20
+  85) sigmaGCBG_2012_mu_cat1_vbf_120.0_Interp =   19.9992
+  86) sigmaGCBG_2012_mu_cat1_wh_120.0_Interp =   2.73423
+  87) sigmaGCBG_2012_mu_cat1_zh_120.0_Interp =    6.0289
+
+At r = 21.200000: q_mu = 0.00000  q_A  = 51.54044 CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 42.400000: q_mu = 0.00000  q_A  = 89.20501 CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 84.800000: q_mu = 0.00000  q_A  = 145.12574  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 169.600000:  q_mu = 0.00000  q_A  = 223.35444  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 339.200000:  q_mu = 0.00000  q_A  = 330.00358  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 349.200000:  q_mu = 0.00000  q_A  = 335.33785  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 513.800000:  q_mu = 0.00000  q_A  = 413.77568  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 596.100000:  q_mu = 0.00000  q_A  = 447.89237  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 637.250000:  q_mu = 0.00000  q_A  = 463.98376  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 657.825000:  q_mu = 0.00000  q_A  = 471.83232  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 668.112500:  q_mu = 0.00000  q_A  = 475.71052  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 673.256250:  q_mu = 0.00000  q_A  = 477.63829  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+At r = 675.828125:  q_mu = 0.00000  q_A  = 478.59942  CLsb = 0.50000  CLb  = 1.00000  CLs  = 0.50000
+
+ -- Asymptotic -- 
+Observed Limit: r < 675.8281
+Expected  2.5%: r < 0.5683
+Expected 16.0%: r < 0.9522
+Expected 50.0%: r < 1.6484
+Expected 84.0%: r < 2.9232
+Expected 97.5%: r < 4.9310

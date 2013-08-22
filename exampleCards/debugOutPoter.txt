@@ -1,0 +1,545 @@
+>>> including systematics
+>>> method used to compute upper limit is Asymptotic
+>>> random number generator seed is 123456
+Will try to work with unbinned datasets
+Observables: ['CMS_hzg_mass']
+Will use category 'CMS_channel' to identify the 1 channels
+Creating RooAddPdf pdf_bincat31 with 6 elements
+Computing limit starting from observation
+Set default minimizer to Minuit2
+Will compute both limit(s) using minimizer Minuit2 with strategy 0 and tolerance 0.01
+Nuisance parameters after fit for asimov dataset: 
+  1) RooRealVar::                           pdf_gg = 0 +/- 0.996602
+  2) RooRealVar::                        pdf_qqbar = 0 +/- 0.996602
+  3) RooRealVar::                     QCDscale_ggH = 0 +/- 0.996602
+  4) RooRealVar::                     QCDscale_qqH = 0 +/- 0.996602
+  5) RooRealVar::                      QCDscale_VH = 0 +/- 0.996602
+  6) RooRealVar::                     QCDscale_ttH = 0 +/- 0.996602
+  7) RooRealVar::                        lumi_8TeV = 0 +/- 0.996602
+  8) RooRealVar::                   CMS_eff_m_8TeV = 0 +/- 0.996602
+  9) RooRealVar::                CMS_eff_mTrg_8TeV = 0 +/- 0.996602
+ 10) RooRealVar::                   pdf_PU_mu_8TeV = 0 +/- 0.996602
+ 11) RooRealVar::                CMS_eff_g_EB_8TeV = 0 +/- 0.996602
+ 12) RooRealVar::              CMS_eff_gR9_EB_8TeV = 0 +/- 0.996602
+ 13) RooRealVar::                  CMS_BRhiggs_hzg = 0 +/- 0.996602
+ 14) RooRealVar::      CMS_hzg_sigGGH_mshift_cat31 = 1 +/- 0.00989616
+ 15) RooRealVar::  CMS_hzg_sigGGH_sigmaScale_cat31 = 1 +/- 0.0494808
+ 16) RooRealVar::     CMS_hzg_sigVBFH_mshift_cat31 = 1 +/- 0.00989616
+ 17) RooRealVar:: CMS_hzg_sigVBFH_sigmaScale_cat31 = 1 +/- 0.0494808
+ 18) RooRealVar::       CMS_hzg_sigWH_mshift_cat31 = 1 +/- 0.00989616
+ 19) RooRealVar::   CMS_hzg_sigWH_sigmaScale_cat31 = 1 +/- 0.0494808
+ 20) RooRealVar::       CMS_hzg_sigZH_mshift_cat31 = 1 +/- 0.00989616
+ 21) RooRealVar::   CMS_hzg_sigZH_sigmaScale_cat31 = 1 +/- 0.0494808
+ 22) RooRealVar::      CMS_hzg_sigTTH_mshift_cat31 = 1 +/- 0.00989616
+ 23) RooRealVar::  CMS_hzg_sigTTH_sigmaScale_cat31 = 1 +/- 0.0494808
+[#1] INFO:NumericIntegration -- RooRealIntegral::init(MzgBkgBern_cat31_CMS_hzg_bkg_cat31_Int[CMS_hzg_mass]) using numeric integrator RooIntegrator1D to calculate Int(CMS_hzg_mass)
+Global observables for data: 
+  1) RooRealVar::                           pdf_gg_In = 0
+  2) RooRealVar::                        pdf_qqbar_In = 0
+  3) RooRealVar::                     QCDscale_ggH_In = 0
+  4) RooRealVar::                     QCDscale_qqH_In = 0
+  5) RooRealVar::                      QCDscale_VH_In = 0
+  6) RooRealVar::                     QCDscale_ttH_In = 0
+  7) RooRealVar::                        lumi_8TeV_In = 0
+  8) RooRealVar::                   CMS_eff_m_8TeV_In = 0
+  9) RooRealVar::                CMS_eff_mTrg_8TeV_In = 0
+ 10) RooRealVar::                   pdf_PU_mu_8TeV_In = 0
+ 11) RooRealVar::                CMS_eff_g_EB_8TeV_In = 0
+ 12) RooRealVar::              CMS_eff_gR9_EB_8TeV_In = 0
+ 13) RooRealVar::                  CMS_BRhiggs_hzg_In = 0
+ 14) RooRealVar::      CMS_hzg_sigGGH_mshift_cat31_In = 1
+ 15) RooRealVar::  CMS_hzg_sigGGH_sigmaScale_cat31_In = 1
+ 16) RooRealVar::     CMS_hzg_sigVBFH_mshift_cat31_In = 1
+ 17) RooRealVar:: CMS_hzg_sigVBFH_sigmaScale_cat31_In = 1
+ 18) RooRealVar::       CMS_hzg_sigWH_mshift_cat31_In = 1
+ 19) RooRealVar::   CMS_hzg_sigWH_sigmaScale_cat31_In = 1
+ 20) RooRealVar::       CMS_hzg_sigZH_mshift_cat31_In = 1
+ 21) RooRealVar::   CMS_hzg_sigZH_sigmaScale_cat31_In = 1
+ 22) RooRealVar::      CMS_hzg_sigTTH_mshift_cat31_In = 1
+ 23) RooRealVar::  CMS_hzg_sigTTH_sigmaScale_cat31_In = 1
+Global observables for asimov: 
+  1) RooRealVar::                           pdf_gg_In = 0
+  2) RooRealVar::                        pdf_qqbar_In = 0
+  3) RooRealVar::                     QCDscale_ggH_In = 0
+  4) RooRealVar::                     QCDscale_qqH_In = 0
+  5) RooRealVar::                      QCDscale_VH_In = 0
+  6) RooRealVar::                     QCDscale_ttH_In = 0
+  7) RooRealVar::                        lumi_8TeV_In = 0
+  8) RooRealVar::                   CMS_eff_m_8TeV_In = 0
+  9) RooRealVar::                CMS_eff_mTrg_8TeV_In = 0
+ 10) RooRealVar::                   pdf_PU_mu_8TeV_In = 0
+ 11) RooRealVar::                CMS_eff_g_EB_8TeV_In = 0
+ 12) RooRealVar::              CMS_eff_gR9_EB_8TeV_In = 0
+ 13) RooRealVar::                  CMS_BRhiggs_hzg_In = 0
+ 14) RooRealVar::      CMS_hzg_sigGGH_mshift_cat31_In = 1
+ 15) RooRealVar::  CMS_hzg_sigGGH_sigmaScale_cat31_In = 1
+ 16) RooRealVar::     CMS_hzg_sigVBFH_mshift_cat31_In = 1
+ 17) RooRealVar:: CMS_hzg_sigVBFH_sigmaScale_cat31_In = 1
+ 18) RooRealVar::       CMS_hzg_sigWH_mshift_cat31_In = 1
+ 19) RooRealVar::   CMS_hzg_sigWH_sigmaScale_cat31_In = 1
+ 20) RooRealVar::       CMS_hzg_sigZH_mshift_cat31_In = 1
+ 21) RooRealVar::   CMS_hzg_sigZH_sigmaScale_cat31_In = 1
+ 22) RooRealVar::      CMS_hzg_sigTTH_mshift_cat31_In = 1
+ 23) RooRealVar::  CMS_hzg_sigTTH_sigmaScale_cat31_In = 1
+[#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset _Asymptotic_asimovDataset_
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_bincat31_nuis) WARNING: component PDF shapeBkg_MzgBkg_cat31   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+Fit to asimov dataset:
+
+  RooFitResult: minimized FCN value: -0.000104542, estimated distance to minimum: 8.1593e-06
+                covariance matrix quality: Approximation only, not accurate
+                Status : MINIMIZE=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+    CMS_BRhiggs_hzg_In    0.0000e+00
+  CMS_eff_gR9_EB_8TeV_In    0.0000e+00
+  CMS_eff_g_EB_8TeV_In    0.0000e+00
+  CMS_eff_mTrg_8TeV_In    0.0000e+00
+     CMS_eff_m_8TeV_In    0.0000e+00
+  CMS_hzg_sigGGH_mshift_cat31_In    1.0000e+00
+  CMS_hzg_sigGGH_sigmaScale_cat31_In    1.0000e+00
+  CMS_hzg_sigTTH_mshift_cat31_In    1.0000e+00
+  CMS_hzg_sigTTH_sigmaScale_cat31_In    1.0000e+00
+  CMS_hzg_sigVBFH_mshift_cat31_In    1.0000e+00
+  CMS_hzg_sigVBFH_sigmaScale_cat31_In    1.0000e+00
+  CMS_hzg_sigWH_mshift_cat31_In    1.0000e+00
+  CMS_hzg_sigWH_sigmaScale_cat31_In    1.0000e+00
+  CMS_hzg_sigZH_mshift_cat31_In    1.0000e+00
+  CMS_hzg_sigZH_sigmaScale_cat31_In    1.0000e+00
+        QCDscale_VH_In    0.0000e+00
+       QCDscale_ggH_In    0.0000e+00
+       QCDscale_qqH_In    0.0000e+00
+       QCDscale_ttH_In    0.0000e+00
+          lumi_8TeV_In    0.0000e+00
+  mzg_bkg_stepMean_cat31    0.0000e+00
+  mzg_sigGGH_CBm0_cat31    1.1972e+02
+  mzg_sigGGH_alpha_cat31    1.5069e+00
+  mzg_sigGGH_frac_cat31    3.3234e-02
+  mzg_sigGGH_gsigma_cat31    3.8073e+00
+    mzg_sigGGH_n_cat31    1.6538e+00
+  mzg_sigGGH_sigma_cat31    1.3647e+00
+  mzg_sigTTH_CBm0_cat31    1.1982e+02
+  mzg_sigTTH_alpha_cat31    1.0334e+00
+  mzg_sigTTH_frac_cat31    1.5884e-01
+  mzg_sigTTH_gsigma_cat31    3.2799e+00
+    mzg_sigTTH_n_cat31    3.6654e+00
+  mzg_sigTTH_sigma_cat31    1.2212e+00
+  mzg_sigVBFH_CBm0_cat31    1.1979e+02
+  mzg_sigVBFH_alpha_cat31    1.4097e+00
+  mzg_sigVBFH_frac_cat31    2.9168e-02
+  mzg_sigVBFH_gsigma_cat31    3.5926e+00
+   mzg_sigVBFH_n_cat31    1.9542e+00
+  mzg_sigVBFH_sigma_cat31    1.4311e+00
+  mzg_sigWH_CBm0_cat31    1.1985e+02
+  mzg_sigWH_alpha_cat31    1.5942e+00
+  mzg_sigWH_frac_cat31    6.2476e-01
+  mzg_sigWH_gsigma_cat31    2.0596e+00
+     mzg_sigWH_n_cat31    6.9808e-01
+  mzg_sigWH_sigma_cat31    8.6543e-01
+  mzg_sigZH_CBm0_cat31    1.2006e+02
+  mzg_sigZH_alpha_cat31    6.7965e-01
+  mzg_sigZH_frac_cat31    3.1600e-01
+  mzg_sigZH_gsigma_cat31    5.0101e+00
+     mzg_sigZH_n_cat31    1.3215e+01
+  mzg_sigZH_sigma_cat31    1.3516e+00
+  n_exp_bincat31_proc_MzgBkg    1.0000e+00
+     pdf_PU_mu_8TeV_In    0.0000e+00
+             pdf_gg_In    0.0000e+00
+          pdf_qqbar_In    0.0000e+00
+
+    Floating Parameter  InitialValue    FinalValue +/-  Error     GblCorr.
+  --------------------  ------------  --------------------------  --------
+       CMS_BRhiggs_hzg    0.0000e+00   -1.5016e-05 +/-  1.93e+00  <none>
+   CMS_eff_gR9_EB_8TeV    0.0000e+00   -7.8162e-06 +/-  1.93e+00  <none>
+     CMS_eff_g_EB_8TeV    0.0000e+00   -9.6188e-07 +/-  1.93e+00  <none>
+     CMS_eff_mTrg_8TeV    0.0000e+00   -5.5043e-06 +/-  1.93e+00  <none>
+        CMS_eff_m_8TeV    0.0000e+00   -2.2291e-06 +/-  1.93e+00  <none>
+  CMS_hzg_bkg_c2_cat31    2.6041e+00    2.6038e+00 +/-  1.91e+00  <none>
+  CMS_hzg_bkg_c3_cat31    3.4319e+00    3.4331e+00 +/-  1.09e+00  <none>
+  CMS_hzg_bkg_c4_cat31    3.4396e+00    3.4401e+00 +/-  7.38e-01  <none>
+  CMS_hzg_bkg_c5_cat31   -9.9995e-07    8.2566e-04 +/-  2.77e+01  <none>
+  CMS_hzg_bkg_c6_cat31    8.1901e-01    8.1767e-01 +/-  1.05e+00  <none>
+  CMS_hzg_bkg_stepSigma_cat31    5.4651e+00    5.4666e+00 +/-  7.03e-01  <none>
+  CMS_hzg_bkg_stepValTest_cat31    1.0754e+02    1.0754e+02 +/-  5.88e-01  <none>
+  CMS_hzg_sigGGH_mshift_cat31    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  CMS_hzg_sigGGH_sigmaScale_cat31    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  CMS_hzg_sigTTH_mshift_cat31    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  CMS_hzg_sigTTH_sigmaScale_cat31    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  CMS_hzg_sigVBFH_mshift_cat31    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  CMS_hzg_sigVBFH_sigmaScale_cat31    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  CMS_hzg_sigWH_mshift_cat31    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  CMS_hzg_sigWH_sigmaScale_cat31    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+  CMS_hzg_sigZH_mshift_cat31    1.0000e+00    1.0000e+00 +/-  1.88e-02  <none>
+  CMS_hzg_sigZH_sigmaScale_cat31    1.0000e+00    1.0000e+00 +/-  9.41e-02  <none>
+           QCDscale_VH    0.0000e+00   -1.0604e-07 +/-  1.93e+00  <none>
+          QCDscale_ggH    0.0000e+00   -1.4294e-05 +/-  1.93e+00  <none>
+          QCDscale_qqH    0.0000e+00   -4.3619e-08 +/-  1.93e+00  <none>
+          QCDscale_ttH    0.0000e+00   -4.5123e-08 +/-  1.93e+00  <none>
+             lumi_8TeV    0.0000e+00   -6.8949e-06 +/-  1.93e+00  <none>
+        pdf_PU_mu_8TeV    0.0000e+00   -6.4527e-07 +/-  1.93e+00  <none>
+                pdf_gg    0.0000e+00   -1.1039e-05 +/-  1.93e+00  <none>
+             pdf_qqbar    0.0000e+00   -5.4524e-07 +/-  1.93e+00  <none>
+                     r    2.0000e-01    1.2898e-01 +/-  1.99e+01  <none>
+  shapeBkg_MzgBkg_cat31__norm    2.6280e+03    2.6277e+03 +/-  9.62e+01  <none>
+
+WARNING: Best fit of asimov dataset is at r = 0.128979 (0.006449 times rMax), while it should be at zero
+Will search for NLL crossing by stepping.
+At r = 1.000000:  delta(nll) = 0.00145
+At r = 2.000000:  delta(nll) = 0.00591
+At r = 3.000000:  delta(nll) = 0.01459
+At r = 4.000000:  delta(nll) = 0.02714
+At r = 5.000000:  delta(nll) = 0.04254
+At r = 6.000000:  delta(nll) = 0.06221
+At r = 7.000000:  delta(nll) = 0.08567
+At r = 8.000000:  delta(nll) = 0.11193
+At r = 9.000000:  delta(nll) = 0.14234
+At r = 10.000000: delta(nll) = 0.17643
+At r = 11.000000: delta(nll) = 0.21339
+At r = 12.000000: delta(nll) = 0.25425
+At r = 13.000000: delta(nll) = 0.29866
+At r = 14.000000: delta(nll) = 0.34592
+At r = 15.000000: delta(nll) = 0.39691
+At r = 16.000000: delta(nll) = 0.45126
+At r = 17.000000: delta(nll) = 0.50833
+At r = 18.000000: delta(nll) = 0.56895
+At r = 19.000000: delta(nll) = 0.63275
+At r = 20.000000: delta(nll) = 0.69963
+At r = 21.000000: delta(nll) = 0.76890
+At r = 22.000000: delta(nll) = 0.84156
+At r = 23.000000: delta(nll) = 0.91714
+At r = 24.000000: delta(nll) = 0.99556
+At r = 25.000000: delta(nll) = 1.07671
+At r = 26.000000: delta(nll) = 1.16003
+At r = 27.000000: delta(nll) = 1.24639
+At r = 28.000000: delta(nll) = 1.33533
+At r = 29.000000: delta(nll) = 1.42677
+At r = 30.000000: delta(nll) = 1.52063
+At r = 31.000000: delta(nll) = 1.61646
+At r = 32.000000: delta(nll) = 1.71491
+At r = 33.000000: delta(nll) = 1.81562
+At r = 34.000000: delta(nll) = 1.91851
+At r = 34.500000: delta(nll) = 1.97071
+At r = 34.250000: delta(nll) = 1.94450
+Median for expected limits: 34.125
+Sigma  for expected limits: 17.411
+Will search for NLL crossing by bisection
+At r = 17.062500: delta(nll) = 0.51188
+At r = 25.593750: delta(nll) = 1.12568
+At r = 21.328125: delta(nll) = 0.79296
+At r = 19.195312: delta(nll) = 0.64514
+At r = 18.128906: delta(nll) = 0.57677
+At r = 17.595703: delta(nll) = 0.54393
+At r = 17.862305: delta(nll) = 0.56020
+At r = 17.995605: delta(nll) = 0.56843
+Will search for NLL crossing by bisection
+At r = 26.026978: delta(nll) = 1.16224
+At r = 21.977966: delta(nll) = 0.84028
+At r = 24.002472: delta(nll) = 0.99545
+At r = 25.014725: delta(nll) = 1.07744
+At r = 24.508598: delta(nll) = 1.03608
+At r = 24.255535: delta(nll) = 1.01568
+At r = 24.129004: delta(nll) = 1.00552
+Will search for NLL crossing by bisection
+At r = 51.536035: delta(nll) = 3.90818
+At r = 42.830518: delta(nll) = 2.86621
+At r = 47.183276: delta(nll) = 3.37558
+At r = 49.359656: delta(nll) = 3.63934
+At r = 50.447845: delta(nll) = 3.77283
+At r = 49.903751: delta(nll) = 3.70576
+Will search for NLL crossing by bisection
+At r = 76.836446: delta(nll) = 7.15989
+At r = 63.370099: delta(nll) = 5.44052
+At r = 70.103272: delta(nll) = 6.28960
+At r = 73.469859: delta(nll) = 6.72256
+At r = 71.786566: delta(nll) = 6.50547
+At r = 72.628212: delta(nll) = 6.61387
+At r = 72.207389: delta(nll) = 6.55964
+Restricting r to positive values.
+  1) RooRealVar::                     CMS_BRhiggs_hzg = 0
+  2) RooRealVar::                  CMS_BRhiggs_hzg_In = 0
+  3) RooRealVar::                 CMS_eff_gR9_EB_8TeV = 0
+  4) RooRealVar::              CMS_eff_gR9_EB_8TeV_In = 0
+  5) RooRealVar::                   CMS_eff_g_EB_8TeV = 0
+  6) RooRealVar::                CMS_eff_g_EB_8TeV_In = 0
+  7) RooRealVar::                   CMS_eff_mTrg_8TeV = 0
+  8) RooRealVar::                CMS_eff_mTrg_8TeV_In = 0
+  9) RooRealVar::                      CMS_eff_m_8TeV = 0
+ 10) RooRealVar::                   CMS_eff_m_8TeV_In = 0
+ 11) RooRealVar::                CMS_hzg_bkg_c2_cat31 = 2.5757
+ 12) RooRealVar::                CMS_hzg_bkg_c3_cat31 = 3.4566
+ 13) RooRealVar::                CMS_hzg_bkg_c4_cat31 = 3.42314
+ 14) RooRealVar::                CMS_hzg_bkg_c5_cat31 = 0.000437345
+ 15) RooRealVar::                CMS_hzg_bkg_c6_cat31 = 0.825187
+ 16) RooRealVar::         CMS_hzg_bkg_stepSigma_cat31 = 5.46512
+ 17) RooRealVar::       CMS_hzg_bkg_stepValTest_cat31 = 107.545
+ 18) RooRealVar::         CMS_hzg_sigGGH_mshift_cat31 = 1
+ 19) RooRealVar::      CMS_hzg_sigGGH_mshift_cat31_In = 1
+ 20) RooRealVar::     CMS_hzg_sigGGH_sigmaScale_cat31 = 1
+ 21) RooRealVar::  CMS_hzg_sigGGH_sigmaScale_cat31_In = 1
+ 22) RooRealVar::         CMS_hzg_sigTTH_mshift_cat31 = 1
+ 23) RooRealVar::      CMS_hzg_sigTTH_mshift_cat31_In = 1
+ 24) RooRealVar::     CMS_hzg_sigTTH_sigmaScale_cat31 = 1
+ 25) RooRealVar::  CMS_hzg_sigTTH_sigmaScale_cat31_In = 1
+ 26) RooRealVar::        CMS_hzg_sigVBFH_mshift_cat31 = 1
+ 27) RooRealVar::     CMS_hzg_sigVBFH_mshift_cat31_In = 1
+ 28) RooRealVar::    CMS_hzg_sigVBFH_sigmaScale_cat31 = 1
+ 29) RooRealVar:: CMS_hzg_sigVBFH_sigmaScale_cat31_In = 1
+ 30) RooRealVar::          CMS_hzg_sigWH_mshift_cat31 = 1
+ 31) RooRealVar::       CMS_hzg_sigWH_mshift_cat31_In = 1
+ 32) RooRealVar::      CMS_hzg_sigWH_sigmaScale_cat31 = 1
+ 33) RooRealVar::   CMS_hzg_sigWH_sigmaScale_cat31_In = 1
+ 34) RooRealVar::          CMS_hzg_sigZH_mshift_cat31 = 1
+ 35) RooRealVar::       CMS_hzg_sigZH_mshift_cat31_In = 1
+ 36) RooRealVar::      CMS_hzg_sigZH_sigmaScale_cat31 = 1
+ 37) RooRealVar::   CMS_hzg_sigZH_sigmaScale_cat31_In = 1
+ 38) RooRealVar::                         QCDscale_VH = 0
+ 39) RooRealVar::                      QCDscale_VH_In = 0
+ 40) RooRealVar::                        QCDscale_ggH = 0
+ 41) RooRealVar::                     QCDscale_ggH_In = 0
+ 42) RooRealVar::                        QCDscale_qqH = 0
+ 43) RooRealVar::                     QCDscale_qqH_In = 0
+ 44) RooRealVar::                        QCDscale_ttH = 0
+ 45) RooRealVar::                     QCDscale_ttH_In = 0
+ 46) RooRealVar::                           lumi_8TeV = 0
+ 47) RooRealVar::                        lumi_8TeV_In = 0
+ 48) RooRealVar::              mzg_bkg_stepMean_cat31 = 0
+ 49) RooRealVar::               mzg_sigGGH_CBm0_cat31 = 119.722 +/- 0.740851
+ 50) RooRealVar::              mzg_sigGGH_alpha_cat31 = 1.50694 +/- 8.27582
+ 51) RooRealVar::               mzg_sigGGH_frac_cat31 = 0.0332338 +/- 1.52542
+ 52) RooRealVar::             mzg_sigGGH_gsigma_cat31 = 3.80725 +/- 29.2009
+ 53) RooRealVar::                  mzg_sigGGH_n_cat31 = 1.65381 +/- 64.6751
+ 54) RooRealVar::              mzg_sigGGH_sigma_cat31 = 1.36469 +/- 1.38142
+ 55) RooRealVar::               mzg_sigTTH_CBm0_cat31 = 119.816 +/- 17.7475
+ 56) RooRealVar::              mzg_sigTTH_alpha_cat31 = 1.03342 +/- 12.4033
+ 57) RooRealVar::               mzg_sigTTH_frac_cat31 = 0.15884 +/- 1.80292
+ 58) RooRealVar::             mzg_sigTTH_gsigma_cat31 = 3.27987 +/- 12.3341
+ 59) RooRealVar::                  mzg_sigTTH_n_cat31 = 3.66537 +/- 120.718
+ 60) RooRealVar::              mzg_sigTTH_sigma_cat31 = 1.22124 +/- 38.3139
+ 61) RooRealVar::              mzg_sigVBFH_CBm0_cat31 = 119.789 +/- 7.48185
+ 62) RooRealVar::             mzg_sigVBFH_alpha_cat31 = 1.40972 +/- 12.2477
+ 63) RooRealVar::              mzg_sigVBFH_frac_cat31 = 0.0291679 +/- 0.302692
+ 64) RooRealVar::            mzg_sigVBFH_gsigma_cat31 = 3.59261 +/- 7.54941
+ 65) RooRealVar::                 mzg_sigVBFH_n_cat31 = 1.95418 +/- 41.1581
+ 66) RooRealVar::             mzg_sigVBFH_sigma_cat31 = 1.43114 +/- 9.19946
+ 67) RooRealVar::                mzg_sigWH_CBm0_cat31 = 119.851 +/- 16.1933
+ 68) RooRealVar::               mzg_sigWH_alpha_cat31 = 1.59422 +/- 36.4765
+ 69) RooRealVar::                mzg_sigWH_frac_cat31 = 0.62476 +/- 2.14904
+ 70) RooRealVar::              mzg_sigWH_gsigma_cat31 = 2.05958 +/- 32.0618
+ 71) RooRealVar::                   mzg_sigWH_n_cat31 = 0.69808 +/- 240.411
+ 72) RooRealVar::               mzg_sigWH_sigma_cat31 = 0.865434 +/- 51.6032
+ 73) RooRealVar::                mzg_sigZH_CBm0_cat31 = 120.062 +/- 3.3341
+ 74) RooRealVar::               mzg_sigZH_alpha_cat31 = 0.679652 +/- 8.23554
+ 75) RooRealVar::                mzg_sigZH_frac_cat31 = 0.315997 +/- 0.470097
+ 76) RooRealVar::              mzg_sigZH_gsigma_cat31 = 5.01013 +/- 25.7951
+ 77) RooRealVar::                   mzg_sigZH_n_cat31 = 13.2145 +/- 628.921
+ 78) RooRealVar::               mzg_sigZH_sigma_cat31 = 1.35158 +/- 4.93206
+ 79) RooRealVar::          n_exp_bincat31_proc_MzgBkg = 1
+ 80) RooRealVar::                      pdf_PU_mu_8TeV = 0
+ 81) RooRealVar::                   pdf_PU_mu_8TeV_In = 0
+ 82) RooRealVar::                              pdf_gg = 0
+ 83) RooRealVar::                           pdf_gg_In = 0
+ 84) RooRealVar::                           pdf_qqbar = 0
+ 85) RooRealVar::                        pdf_qqbar_In = 0
+ 86) RooRealVar::                                   r = 8.45201
+ 87) RooRealVar::         shapeBkg_MzgBkg_cat31__norm = 2628
+
+Make global fit of real data
+NLL at global minimum of data: -6968.8 (r = 8.60506)
+   0) CMS_BRhiggs_hzg                = 0.000440988
+   1) CMS_BRhiggs_hzg_In             =         0
+   2) CMS_eff_gR9_EB_8TeV            = 0.000259152
+   3) CMS_eff_gR9_EB_8TeV_In         =         0
+   4) CMS_eff_g_EB_8TeV              = 2.97623e-05
+   5) CMS_eff_g_EB_8TeV_In           =         0
+   6) CMS_eff_mTrg_8TeV              = 0.000177314
+   7) CMS_eff_mTrg_8TeV_In           =         0
+   8) CMS_eff_m_8TeV                 = 6.94183e-05
+   9) CMS_eff_m_8TeV_In              =         0
+  10) CMS_hzg_bkg_c2_cat31           =   4.43187
+  11) CMS_hzg_bkg_c3_cat31           =   2.51007
+  12) CMS_hzg_bkg_c4_cat31           =    4.2251
+  13) CMS_hzg_bkg_c5_cat31           = 0.000150133
+  14) CMS_hzg_bkg_c6_cat31           =  0.734091
+  15) CMS_hzg_bkg_stepSigma_cat31    =   5.23457
+  16) CMS_hzg_bkg_stepValTest_cat31  =    107.16
+  17) CMS_hzg_sigGGH_mshift_cat31    =   1.00028
+  18) CMS_hzg_sigGGH_mshift_cat31_In =         1
+  19) CMS_hzg_sigGGH_sigmaScale_cat31 =  0.999616
+  20) CMS_hzg_sigGGH_sigmaScale_cat31_In =         1
+  21) CMS_hzg_sigTTH_mshift_cat31    =  0.999998
+  22) CMS_hzg_sigTTH_mshift_cat31_In =         1
+  23) CMS_hzg_sigTTH_sigmaScale_cat31 =  0.999997
+  24) CMS_hzg_sigTTH_sigmaScale_cat31_In =         1
+  25) CMS_hzg_sigVBFH_mshift_cat31   =   1.00002
+  26) CMS_hzg_sigVBFH_mshift_cat31_In =         1
+  27) CMS_hzg_sigVBFH_sigmaScale_cat31 =  0.999979
+  28) CMS_hzg_sigVBFH_sigmaScale_cat31_In =         1
+  29) CMS_hzg_sigWH_mshift_cat31     =  0.999989
+  30) CMS_hzg_sigWH_mshift_cat31_In  =         1
+  31) CMS_hzg_sigWH_sigmaScale_cat31 =  0.999995
+  32) CMS_hzg_sigWH_sigmaScale_cat31_In =         1
+  33) CMS_hzg_sigZH_mshift_cat31     =  0.999987
+  34) CMS_hzg_sigZH_mshift_cat31_In  =         1
+  35) CMS_hzg_sigZH_sigmaScale_cat31 =  0.999994
+  36) CMS_hzg_sigZH_sigmaScale_cat31_In =         1
+  37) QCDscale_VH                    = 3.92554e-05
+  38) QCDscale_VH_In                 =         0
+  39) QCDscale_ggH                   = -0.000179268
+  40) QCDscale_ggH_In                =         0
+  41) QCDscale_qqH                   = 4.79529e-07
+  42) QCDscale_qqH_In                =         0
+  43) QCDscale_ttH                   = 2.14023e-05
+  44) QCDscale_ttH_In                =         0
+  45) lumi_8TeV                      = 0.000225286
+  46) lumi_8TeV_In                   =         0
+  47) mzg_bkg_stepMean_cat31         =         0
+  48) mzg_sigGGH_CBm0_cat31          =   119.722
+  49) mzg_sigGGH_alpha_cat31         =   1.50694
+  50) mzg_sigGGH_frac_cat31          = 0.0332338
+  51) mzg_sigGGH_gsigma_cat31        =   3.80725
+  52) mzg_sigGGH_n_cat31             =   1.65381
+  53) mzg_sigGGH_sigma_cat31         =   1.36469
+  54) mzg_sigTTH_CBm0_cat31          =   119.816
+  55) mzg_sigTTH_alpha_cat31         =   1.03342
+  56) mzg_sigTTH_frac_cat31          =   0.15884
+  57) mzg_sigTTH_gsigma_cat31        =   3.27987
+  58) mzg_sigTTH_n_cat31             =   3.66537
+  59) mzg_sigTTH_sigma_cat31         =   1.22124
+  60) mzg_sigVBFH_CBm0_cat31         =   119.789
+  61) mzg_sigVBFH_alpha_cat31        =   1.40972
+  62) mzg_sigVBFH_frac_cat31         = 0.0291679
+  63) mzg_sigVBFH_gsigma_cat31       =   3.59261
+  64) mzg_sigVBFH_n_cat31            =   1.95418
+  65) mzg_sigVBFH_sigma_cat31        =   1.43114
+  66) mzg_sigWH_CBm0_cat31           =   119.851
+  67) mzg_sigWH_alpha_cat31          =   1.59422
+  68) mzg_sigWH_frac_cat31           =   0.62476
+  69) mzg_sigWH_gsigma_cat31         =   2.05958
+  70) mzg_sigWH_n_cat31              =   0.69808
+  71) mzg_sigWH_sigma_cat31          =  0.865434
+  72) mzg_sigZH_CBm0_cat31           =   120.062
+  73) mzg_sigZH_alpha_cat31          =  0.679652
+  74) mzg_sigZH_frac_cat31           =  0.315997
+  75) mzg_sigZH_gsigma_cat31         =   5.01013
+  76) mzg_sigZH_n_cat31              =   13.2145
+  77) mzg_sigZH_sigma_cat31          =   1.35158
+  78) n_exp_bincat31_proc_MzgBkg     =         1
+  79) pdf_PU_mu_8TeV                 = 1.9643e-05
+  80) pdf_PU_mu_8TeV_In              =         0
+  81) pdf_gg                         = 8.01605e-05
+  82) pdf_gg_In                      =         0
+  83) pdf_qqbar                      = 0.000140475
+  84) pdf_qqbar_In                   =         0
+  85) r                              =   8.60506
+  86) shapeBkg_MzgBkg_cat31__norm    =   2613.03
+
+
+Make global fit of asimov data
+NLL at global minimum of asimov: -6968.39 (r = 0.216204)
+   0) CMS_BRhiggs_hzg                = -0.00036752
+   1) CMS_BRhiggs_hzg_In             =         0
+   2) CMS_eff_gR9_EB_8TeV            = -0.000204273
+   3) CMS_eff_gR9_EB_8TeV_In         =         0
+   4) CMS_eff_g_EB_8TeV              = -2.36655e-05
+   5) CMS_eff_g_EB_8TeV_In           =         0
+   6) CMS_eff_mTrg_8TeV              = -0.000140005
+   7) CMS_eff_mTrg_8TeV_In           =         0
+   8) CMS_eff_m_8TeV                 = -5.52169e-05
+   9) CMS_eff_m_8TeV_In              =         0
+  10) CMS_hzg_bkg_c2_cat31           =   2.69226
+  11) CMS_hzg_bkg_c3_cat31           =   3.36554
+  12) CMS_hzg_bkg_c4_cat31           =   3.49155
+  13) CMS_hzg_bkg_c5_cat31           = 0.0016251
+  14) CMS_hzg_bkg_c6_cat31           =  0.800162
+  15) CMS_hzg_bkg_stepSigma_cat31    =   5.45792
+  16) CMS_hzg_bkg_stepValTest_cat31  =   107.528
+  17) CMS_hzg_sigGGH_mshift_cat31    =         1
+  18) CMS_hzg_sigGGH_mshift_cat31_In =         1
+  19) CMS_hzg_sigGGH_sigmaScale_cat31 =   1.00005
+  20) CMS_hzg_sigGGH_sigmaScale_cat31_In =         1
+  21) CMS_hzg_sigTTH_mshift_cat31    =         1
+  22) CMS_hzg_sigTTH_mshift_cat31_In =         1
+  23) CMS_hzg_sigTTH_sigmaScale_cat31 =         1
+  24) CMS_hzg_sigTTH_sigmaScale_cat31_In =         1
+  25) CMS_hzg_sigVBFH_mshift_cat31   =  0.999998
+  26) CMS_hzg_sigVBFH_mshift_cat31_In =         1
+  27) CMS_hzg_sigVBFH_sigmaScale_cat31 =         1
+  28) CMS_hzg_sigVBFH_sigmaScale_cat31_In =         1
+  29) CMS_hzg_sigWH_mshift_cat31     =         1
+  30) CMS_hzg_sigWH_mshift_cat31_In  =         1
+  31) CMS_hzg_sigWH_sigmaScale_cat31 =         1
+  32) CMS_hzg_sigWH_sigmaScale_cat31_In =         1
+  33) CMS_hzg_sigZH_mshift_cat31     =         1
+  34) CMS_hzg_sigZH_mshift_cat31_In  =         1
+  35) CMS_hzg_sigZH_sigmaScale_cat31 =         1
+  36) CMS_hzg_sigZH_sigmaScale_cat31_In =         1
+  37) QCDscale_VH                    = -2.30401e-06
+  38) QCDscale_VH_In                 =         0
+  39) QCDscale_ggH                   = -0.000455845
+  40) QCDscale_ggH_In                =         0
+  41) QCDscale_qqH                   = -9.41746e-07
+  42) QCDscale_qqH_In                =         0
+  43) QCDscale_ttH                   = -2.64481e-06
+  44) QCDscale_ttH_In                =         0
+  45) lumi_8TeV                      = -0.000178033
+  46) lumi_8TeV_In                   =         0
+  47) mzg_bkg_stepMean_cat31         =         0
+  48) mzg_sigGGH_CBm0_cat31          =   119.722
+  49) mzg_sigGGH_alpha_cat31         =   1.50694
+  50) mzg_sigGGH_frac_cat31          = 0.0332338
+  51) mzg_sigGGH_gsigma_cat31        =   3.80725
+  52) mzg_sigGGH_n_cat31             =   1.65381
+  53) mzg_sigGGH_sigma_cat31         =   1.36469
+  54) mzg_sigTTH_CBm0_cat31          =   119.816
+  55) mzg_sigTTH_alpha_cat31         =   1.03342
+  56) mzg_sigTTH_frac_cat31          =   0.15884
+  57) mzg_sigTTH_gsigma_cat31        =   3.27987
+  58) mzg_sigTTH_n_cat31             =   3.66537
+  59) mzg_sigTTH_sigma_cat31         =   1.22124
+  60) mzg_sigVBFH_CBm0_cat31         =   119.789
+  61) mzg_sigVBFH_alpha_cat31        =   1.40972
+  62) mzg_sigVBFH_frac_cat31         = 0.0291679
+  63) mzg_sigVBFH_gsigma_cat31       =   3.59261
+  64) mzg_sigVBFH_n_cat31            =   1.95418
+  65) mzg_sigVBFH_sigma_cat31        =   1.43114
+  66) mzg_sigWH_CBm0_cat31           =   119.851
+  67) mzg_sigWH_alpha_cat31          =   1.59422
+  68) mzg_sigWH_frac_cat31           =   0.62476
+  69) mzg_sigWH_gsigma_cat31         =   2.05958
+  70) mzg_sigWH_n_cat31              =   0.69808
+  71) mzg_sigWH_sigma_cat31          =  0.865434
+  72) mzg_sigZH_CBm0_cat31           =   120.062
+  73) mzg_sigZH_alpha_cat31          =  0.679652
+  74) mzg_sigZH_frac_cat31           =  0.315997
+  75) mzg_sigZH_gsigma_cat31         =   5.01013
+  76) mzg_sigZH_n_cat31              =   13.2145
+  77) mzg_sigZH_sigma_cat31          =   1.35158
+  78) n_exp_bincat31_proc_MzgBkg     =         1
+  79) pdf_PU_mu_8TeV                 = -1.57827e-05
+  80) pdf_PU_mu_8TeV_In              =         0
+  81) pdf_gg                         = -0.000273272
+  82) pdf_gg_In                      =         0
+  83) pdf_qqbar                      = -1.57147e-05
+  84) pdf_qqbar_In                   =         0
+  85) r                              =  0.216204
+  86) shapeBkg_MzgBkg_cat31__norm    =    2627.6
+
+At r = 58.384686: q_mu = 7.13730  q_A  = 9.57144  CLsb = 0.00377  CLb  = 0.66356  CLs  = 0.00569
+At r = 33.494874: q_mu = 2.09368  q_A  = 3.74488  CLsb = 0.07395  CLb  = 0.68730  CLs  = 0.10760
+At r = 45.939780: q_mu = 4.35985  q_A  = 6.45462  CLsb = 0.01840  CLb  = 0.67457  CLs  = 0.02727
+At r = 39.054215: q_mu = 3.01554  q_A  = 4.89249  CLsb = 0.04124  CLb  = 0.68274  CLs  = 0.06040
+At r = 41.740226: q_mu = 3.51964  q_A  = 5.48528  CLsb = 0.03032  CLb  = 0.67939  CLs  = 0.04463
+At r = 40.396252: q_mu = 3.26372  q_A  = 5.18569  CLsb = 0.03541  CLb  = 0.68105  CLs  = 0.05200
+At r = 40.940986: q_mu = 3.36660  q_A  = 5.30639  CLsb = 0.03327  CLb  = 0.68037  CLs  = 0.04889
+At r = 40.673670: q_mu = 3.31596  q_A  = 5.24705  CLsb = 0.03431  CLb  = 0.68070  CLs  = 0.05040
+At r = 40.782926: q_mu = 3.33660  q_A  = 5.27125  CLsb = 0.03388  CLb  = 0.68057  CLs  = 0.04978
+
+ -- Asymptotic -- 
+Observed Limit: r < 40.7829
+Expected  2.5%: r < 17.9290
+Expected 16.0%: r < 24.0657
+Expected 50.0%: r < 34.1250
+Expected 84.0%: r < 49.9038
+Expected 97.5%: r < 71.9970
+
+Done in 0.64 min (cpu), 0.64 min (real)

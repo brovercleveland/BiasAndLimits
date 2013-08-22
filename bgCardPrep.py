@@ -16,6 +16,7 @@ catList = ['1','2','3','4']
 rooWsFile = TFile('testRooFitOut.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
+card_ws.autoImportClassCode(True)
 
 c = TCanvas("c","c",0,0,500,400)
 c.cd()
@@ -68,6 +69,7 @@ for year in yearList:
       getattr(card_ws,'import')(fit_ext)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
+      fit_ext.Print()
       BackgroundNameFixer(year,lepton,cat,card_ws)
 
 card_ws.writeToFile('testCards/testCardBackground.root')

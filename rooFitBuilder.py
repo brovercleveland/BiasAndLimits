@@ -311,7 +311,7 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p3Name = 'p3GaussBern4_'+suffix
     p4Name = 'p4GaussBern4_'+suffix
 
-    normNameNew  = '_'.join(['bkg','norm',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
     meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+cat])
     sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+cat])
     stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+cat])
@@ -321,16 +321,16 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+cat])
     p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+cat])
 
-    ws.factory(normNameNew+'[{0},0.,10000]'.format(ws.function(normName).getVal()))
-    ws.factory(meanNameNew+'[{0},50,150]'.format(ws.function(meanName).getVal()))
-    ws.factory(sigmaNameNew+'[{0},-50,50]'.format(ws.function(sigmaName).getVal()))
-    ws.factory(stepNameNew+'[{0},-10,10]'.format(ws.function(stepName).getVal()))
-    ws.factory(p0NameNew+'[{0},-10,10]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},-10,10]'.format(ws.function(p1Name).getVal()))
-    ws.factory(p2NameNew+'[{0},-10,10]'.format(ws.function(p2Name).getVal()))
-    ws.factory(p3NameNew+'[{0},-10,10]'.format(ws.function(p3Name).getVal()))
-    ws.factory(p4NameNew+'[{0},-10,10]'.format(ws.function(p4Name).getVal()))
-    ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+sigmaNameNew+','+normName+'='+normNameNew+','
+    ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+    ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
+    ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
+    ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
+    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+    ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
+    ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
         +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+')')
 
   else:
@@ -346,7 +346,7 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p4Name = 'p4GaussBern5_'+suffix
     p5Name = 'p5GaussBern5_'+suffix
 
-    normNameNew  = '_'.join(['bkg','norm',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
     meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+cat])
     sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+cat])
     stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+cat])
@@ -357,18 +357,21 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+cat])
     p5NameNew  = '_'.join(['bkg','p5',lepton,year,'cat'+cat])
 
-    ws.factory(normNameNew+'[{0},0.,10000]'.format(ws.function(normName).getVal()))
-    ws.factory(meanNameNew+'[{0},50,150]'.format(ws.function(meanName).getVal()))
-    ws.factory(sigmaNameNew+'[{0},-50,50]'.format(ws.function(sigmaName).getVal()))
-    ws.factory(stepNameNew+'[{0},-10,10]'.format(ws.function(stepName).getVal()))
-    ws.factory(p0NameNew+'[{0},-10,10]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},-10,10]'.format(ws.function(p1Name).getVal()))
-    ws.factory(p2NameNew+'[{0},-10,10]'.format(ws.function(p2Name).getVal()))
-    ws.factory(p3NameNew+'[{0},-10,10]'.format(ws.function(p3Name).getVal()))
-    ws.factory(p4NameNew+'[{0},-10,10]'.format(ws.function(p4Name).getVal()))
-    ws.factory(p5NameNew+'[{0},-10,10]'.format(ws.function(p5Name).getVal()))
-    ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+sigmaNameNew+','+normName+'='+normNameNew+','
+    ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+    ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
+    ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
+    ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
+    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+    ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
+    ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(),ws.function(p5Name).getMax()))
+    ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
         +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
+    print ('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
+    #raw_input()
 
 
 

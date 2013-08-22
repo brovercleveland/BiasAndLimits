@@ -35,20 +35,20 @@ eff_g_EB_2012     lnN          1.006           1.006           1.006           1
 eff_R9_2012       lnN          1.050           1.050           1.050           1.050           1.050             -       
 err_BR_2012       lnN       0.907/1.094     0.907/1.094     0.907/1.094     0.907/1.094     0.907/1.094          -       
 sig_gg_mShift_mu_2012_cat1               param          1         0.01   
-sig_gg_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_gg_sigmaShift_mu_2012_cat1           param          1         0.05   
 sig_vbf_mShift_mu_2012_cat1              param          1         0.01   
-sig_vbf_sigmaShift_mu_2012_cat1          param          1         0.01   
+sig_vbf_sigmaShift_mu_2012_cat1          param          1         0.05   
 sig_wh_mShift_mu_2012_cat1               param          1         0.01   
-sig_wh_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_wh_sigmaShift_mu_2012_cat1           param          1         0.05   
 sig_zh_mShift_mu_2012_cat1               param          1         0.01   
-sig_zh_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_zh_sigmaShift_mu_2012_cat1           param          1         0.05   
 sig_tth_mShift_mu_2012_cat1              param          1         0.01   
-sig_tth_sigmaShift_mu_2012_cat1          param          1         0.01   
+sig_tth_sigmaShift_mu_2012_cat1          param          1         0.05   
 bkg_p1_mu_2012_cat1                           flatParam      
 bkg_p2_mu_2012_cat1                           flatParam      
 bkg_p3_mu_2012_cat1                           flatParam      
 bkg_p4_mu_2012_cat1                           flatParam      
 bkg_p5_mu_2012_cat1                           flatParam      
-bkg_norm_mu_2012_cat1                         flatParam      
 bkg_sigma_mu_2012_cat1                        flatParam      
 bkg_step_mu_2012_cat1                         flatParam      
+bkg_mu_2012_cat1_norm                         flatParam      

@@ -1,0 +1,23 @@
+#CMS-HZG DataCard for Unbinned Limit Setting, 19617.7 pb-1 
+# Lumi =  19617.7 pb-1
+imax *
+jmax *
+kmax *
+---------------
+shapes *       * hzg.inputbkg_8TeV.root w_all:$PROCESS_$CHANNEL
+shapes MzgBkg  * hzg.inputbkg_8TeV.root w_all:CMS_hzg_bkg_$CHANNEL
+shapes ggH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigGGH_$CHANNEL
+shapes qqH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigVBFH_$CHANNEL
+shapes WH_hzg  * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigWH_$CHANNEL
+shapes ZH_hzg  * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigZH_$CHANNEL
+shapes ttH_hzg * hzg.mH120.0.inputsig_8TeV.root w_all:CMS_hzg_sigTTH_$CHANNEL
+---------------
+bin            cat31
+observation    2628
+------------------------------
+bin                 cat31       cat31      cat31      cat31       cat31       cat31
+process            ttH_hzg     ZH_hzg     WH_hzg     qqH_hzg     ggH_hzg     MzgBkg        
+process               -4         -3         -2          -1          0           1          
+---------------------------------------------------------------------------------------    
+rate                0.010419    0.04833      0.050229      0.1289       1.5039        1 
+---------------------------------------------------------------------------------------    
