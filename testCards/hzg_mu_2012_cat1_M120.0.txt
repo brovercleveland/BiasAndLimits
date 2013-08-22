@@ -26,4 +26,29 @@ pdf_qqbar         lnN            -          0.965/1.035     0.966/1.034     0.97
 QCDscale_ggH      lnN            -               -               -               -          0.921/1.073          -       
 QCDscale_qqH      lnN            -               -               -          0.998/1.002          -               -       
 QCDscale_VH       lnN            -          0.986/1.015     0.994/1.001          -               -               -       
-QCDscale_qqH      lnN       0.907/1.039          -               -               -               -               -       
+QCDscale_ttH      lnN       0.907/1.039          -               -               -               -               -       
+lumi_2012         lnN          1.044           1.044           1.044           1.044           1.044             -       
+eff_mu_2012       lnN          1.014           1.014           1.014           1.014           1.014             -       
+eff_trig_mu_2012  lnN          1.035           1.035           1.035           1.035           1.035             -       
+eff_PU_mu_2012    lnN          1.004           1.004           1.004           1.004           1.004             -       
+eff_g_EB_2012     lnN          1.006           1.006           1.006           1.006           1.006             -       
+eff_R9_2012       lnN          1.050           1.050           1.050           1.050           1.050             -       
+err_BR_2012       lnN       0.907/1.094     0.907/1.094     0.907/1.094     0.907/1.094     0.907/1.094          -       
+sig_gg_mShift_mu_2012_cat1               param          1         0.01   
+sig_gg_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_vbf_mShift_mu_2012_cat1              param          1         0.01   
+sig_vbf_sigmaShift_mu_2012_cat1          param          1         0.01   
+sig_wh_mShift_mu_2012_cat1               param          1         0.01   
+sig_wh_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_zh_mShift_mu_2012_cat1               param          1         0.01   
+sig_zh_sigmaShift_mu_2012_cat1           param          1         0.01   
+sig_tth_mShift_mu_2012_cat1              param          1         0.01   
+sig_tth_sigmaShift_mu_2012_cat1          param          1         0.01   
+bkg_p1_mu_2012_cat1                           flatParam      
+bkg_p2_mu_2012_cat1                           flatParam      
+bkg_p3_mu_2012_cat1                           flatParam      
+bkg_p4_mu_2012_cat1                           flatParam      
+bkg_p5_mu_2012_cat1                           flatParam      
+bkg_norm_mu_2012_cat1                         flatParam      
+bkg_sigma_mu_2012_cat1                        flatParam      
+bkg_step_mu_2012_cat1                         flatParam      
