@@ -1,0 +1,78 @@
+Combination of testCards/hzg_mu_2012_cat1_M121.0.txt  testCards/hzg_mu_2012_cat2_M121.0.txt
+imax 2 number of bins
+jmax 5 number of processes minus 1
+kmax 34 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *        ch1      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat1
+shapes bkg      ch1      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat1
+shapes sig_gg   ch1      testCards/SignalOutput_mu_2012_cat1_121.0.root ws_card:sig_gg_mu_2012_cat1
+shapes sig_tth  ch1      testCards/SignalOutput_mu_2012_cat1_121.0.root ws_card:sig_tth_mu_2012_cat1
+shapes sig_vbf  ch1      testCards/SignalOutput_mu_2012_cat1_121.0.root ws_card:sig_vbf_mu_2012_cat1
+shapes sig_wh   ch1      testCards/SignalOutput_mu_2012_cat1_121.0.root ws_card:sig_wh_mu_2012_cat1
+shapes sig_zh   ch1      testCards/SignalOutput_mu_2012_cat1_121.0.root ws_card:sig_zh_mu_2012_cat1
+shapes *        ch2      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat2
+shapes bkg      ch2      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat2
+shapes sig_gg   ch2      testCards/SignalOutput_mu_2012_cat2_121.0.root ws_card:sig_gg_mu_2012_cat2
+shapes sig_tth  ch2      testCards/SignalOutput_mu_2012_cat2_121.0.root ws_card:sig_tth_mu_2012_cat2
+shapes sig_vbf  ch2      testCards/SignalOutput_mu_2012_cat2_121.0.root ws_card:sig_vbf_mu_2012_cat2
+shapes sig_wh   ch2      testCards/SignalOutput_mu_2012_cat2_121.0.root ws_card:sig_wh_mu_2012_cat2
+shapes sig_zh   ch2      testCards/SignalOutput_mu_2012_cat2_121.0.root ws_card:sig_zh_mu_2012_cat2
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1          ch2        
+observation  2725.0       2747.0     
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                 ch1          ch1          ch1          ch1          ch1          ch1          ch2          ch2          ch2          ch2          ch2          ch2        
+process                             sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg        
+process                             -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1          
+rate                                0.0112       0.0534       0.0516       1.6259       0.1408       1.0000       0.0037       0.0271       0.0285       0.8538       0.0620       1.0000     
+----------------------------------------------------------------------------------------------------------------------------------
+QCDscale_VH             lnN         -            0.994/1.001  0.986/1.015  -            -            -            -            0.994/1.001  0.986/1.015  -            -            -          
+QCDscale_ggH            lnN         -            -            -            0.921/1.073  -            -            -            -            -            0.921/1.073  -            -          
+QCDscale_qqH            lnN         -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -          
+QCDscale_ttH            lnN         0.907/1.039  -            -            -            -            -            0.907/1.039  -            -            -            -            -          
+eff_PU_mu_2012          lnN         1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -          
+eff_R9_2012             lnN         1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -          
+eff_g_EB_2012           lnN         1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -          
+eff_g_EE_2012           lnN         -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -          
+eff_mu_2012             lnN         1.014        1.014        1.014        1.014        1.014        -            1.014        1.014        1.014        1.014        1.014        -          
+eff_trig_mu_2012        lnN         1.035        1.035        1.035        1.035        1.035        -            1.035        1.035        1.035        1.035        1.035        -          
+err_BR_2012             lnN         0.908/1.093  0.908/1.093  0.908/1.093  0.908/1.093  0.908/1.093  -            0.908/1.093  0.908/1.093  0.908/1.093  0.908/1.093  0.908/1.093  -          
+lumi_2012               lnN         1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -          
+pdf_gg                  lnN         0.922/1.078  -            -            0.931/1.075  -            -            0.922/1.078  -            -            0.931/1.075  -            -          
+pdf_qqbar               lnN         -            0.966/1.034  0.965/1.035  -            0.972/1.026  -            -            0.966/1.034  0.965/1.035  -            0.972/1.026  -          
+sig_vbf_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_gg_mShift_mu_2012_cat1  param  1 0.01
+sig_wh_mShift_mu_2012_cat1  param  1 0.01
+sig_vbf_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_gg_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_zh_mShift_mu_2012_cat1  param  1 0.01
+sig_wh_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_zh_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_vbf_mShift_mu_2012_cat1  param  1 0.01
+sig_zh_mShift_mu_2012_cat2  param  1 0.01
+sig_vbf_mShift_mu_2012_cat2  param  1 0.01
+sig_gg_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_tth_mShift_mu_2012_cat1  param  1 0.01
+sig_tth_mShift_mu_2012_cat2  param  1 0.01
+sig_zh_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_gg_mShift_mu_2012_cat2  param  1 0.01
+sig_tth_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_wh_mShift_mu_2012_cat2  param  1 0.01
+bkg_step_mu_2012_cat1  flatParam
+bkg_p1_mu_2012_cat1  flatParam
+bkg_p4_mu_2012_cat2  flatParam
+bkg_p1_mu_2012_cat2  flatParam
+bkg_p3_mu_2012_cat1  flatParam
+bkg_p2_mu_2012_cat2  flatParam
+bkg_p3_mu_2012_cat2  flatParam
+bkg_sigma_mu_2012_cat1  flatParam
+bkg_sigma_mu_2012_cat2  flatParam
+bkg_mu_2012_cat1_norm  flatParam
+bkg_step_mu_2012_cat2  flatParam
+bkg_mu_2012_cat2_norm  flatParam
+bkg_p4_mu_2012_cat1  flatParam
+bkg_p5_mu_2012_cat1  flatParam
+bkg_p5_mu_2012_cat2  flatParam
+bkg_p2_mu_2012_cat1  flatParam

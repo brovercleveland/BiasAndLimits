@@ -7,7 +7,7 @@ byParts = False
 leptonList = ['mu']
 yearList = ['2012']
 catList = ['1','2']
-massList = ['120.0']
+massList = ['120.0','120.5','121.0','138.0']
 
 if fullCombo:
   for mass in massList:
@@ -21,5 +21,5 @@ if fullCombo:
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
-    print 'running limit software'
+    print 'running limit software, M:',mass
     os.system('combine -M Asymptotic '+comboName+' > '+outputName)

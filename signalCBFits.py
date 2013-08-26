@@ -33,11 +33,12 @@ massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124
 #massList = ['120','125','130','135','140','145','150']
 sigNameList = ['gg','vbf','tth','wh','zh']
 '''
-leptonList = ['mu','el']
+leptonList = ['mu']
 yearList = ['2012']
 catList = ['1','2']
 #massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0']
-massList = ['120.0','120.5','121.0']
+#massList = ['120.0','120.5','121.0']
+massList = ['138.0']
 #massList = ['120','125','130','135','140','145','150']
 sigNameList = ['gg','vbf','tth','wh','zh']
 #sigNameList = ['zh']
@@ -168,7 +169,7 @@ for year in yearList:
           getattr(cardDict[lepton][year][cat][str(mass)],'import')(yieldVar)
           cardDict[lepton][year][cat][str(mass)].commitTransaction()
 
-        testFrame = mzg.frame(110,130)
+        testFrame = mzg.frame(float(massList[0])-10,float(massList[-1])+5)
         for i,fit in enumerate(fitList):
           regionName = fit.GetName().split('_')[-1]
           #fit.plotOn(testFrame)

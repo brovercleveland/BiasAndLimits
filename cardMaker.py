@@ -28,7 +28,7 @@ def makeCards():
   leptonList = ['mu']
   yearList = ['2012']
   catList = ['1','2']
-  massList = ['120.0']
+  massList = ['120.0','120.5','121.0','138.0']
   sigNameList = ['gg','vbf','wh','zh','tth']
 
   bgFile = TFile('testCards/testCardBackground.root')
