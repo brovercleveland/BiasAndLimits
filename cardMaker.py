@@ -27,7 +27,7 @@ def makeCards():
   '''
   leptonList = ['mu']
   yearList = ['2012']
-  catList = ['1']
+  catList = ['1','2']
   massList = ['120.0']
   sigNameList = ['gg','vbf','wh','zh','tth']
 
@@ -48,7 +48,7 @@ def makeCards():
           bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
 
         for mass in massList:
-          sigFileName = 'testCardSignal_'+mass+'.root'
+          sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
           sigFile = TFile('testCards/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]

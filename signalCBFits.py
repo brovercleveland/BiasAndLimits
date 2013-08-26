@@ -10,8 +10,19 @@ gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
+# rounding function for interpolation
 def roundTo5(x, base=5):
   return int(base * round(float(x)/base))
+
+# class for multi-layered nested dictionaries, pretty cool
+class AutoVivification(dict):
+    """Implementation of perl's autovivification feature."""
+    def __getitem__(self, item):
+        try:
+            return dict.__getitem__(self, item)
+        except KeyError:
+            value = self[item] = type(self)()
+            return value
 
 '''
 leptonList = ['mu','el']
@@ -22,24 +33,30 @@ massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124
 #massList = ['120','125','130','135','140','145','150']
 sigNameList = ['gg','vbf','tth','wh','zh']
 '''
-leptonList = ['mu']
+leptonList = ['mu','el']
 yearList = ['2012']
-catList = ['1']
-massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0']
-#massList = ['120.0','120.5','121.0']
+catList = ['1','2']
+#massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0']
+massList = ['120.0','120.5','121.0']
 #massList = ['120','125','130','135','140','145','150']
 sigNameList = ['gg','vbf','tth','wh','zh']
+#sigNameList = ['zh']
 
 rooWsFile = TFile('testRooFitOut.root')
 myWs = rooWsFile.Get('ws')
 #myWs.Print()
 
+RooRandom.randomGenerator().SetSeed(8675309)
+
 c = TCanvas("c","c",0,0,500,400)
 c.cd()
 mzg = myWs.var('CMS_hzg_mass')
-cardDict = {}
-for mass in massList:
-  cardDict[mass] = RooWorkspace('ws_card')
+cardDict = AutoVivification()
+for year in yearList:
+  for lepton in leptonList:
+    for cat in catList:
+      for mass in massList:
+        cardDict[lepton][year][cat][mass] = RooWorkspace('ws_card')
 
 
 # we need crystal ball + gaussian fits for all mass points, and for all production methods.
@@ -84,29 +101,42 @@ for year in yearList:
             oldMassHi = massHi
 
             ###### fit the low mass point
-            if massLow<=125:
+            #if massLow<=125:
+            if massLow<=100:
               mzg.setRange('fitRegion1',115,int(massLow)+10)
             else:
               mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+10)
             sigNameLow = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(massLow)])
             sig_ds_Low = myWs.data(sigNameLow)
             if massLow == massHi: dsList.append(sig_ds_Low)
-            CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
+
+            if prod is 'zh':
+              CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow, sigmaCB = 1.65, sigmaG = 2, alpha  = 0.7)[0]
+            else:
+              CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
+
             CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
 
             ###### fit the hi mass point
-            if massHi<=125:
+            #if massHi<=125:
+            if massHi<=100:
               mzg.setRange('fitRegion2',115,int(massHi)+10)
             else:
               mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+10)
             sigNameHi = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(massHi)])
             sig_ds_Hi = myWs.data(sigNameHi)
-            CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
+
+            if prod is 'zh':
+              CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi, sigmaCB = 1.65, sigmaG = 2, alpha = 0.7)[0]
+            else:
+              CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
+
             CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
 
           ###### interpolate the two mass points
           massDiff = (massHi - mass)/5.
-          if mass<=125:
+          #if mass<=125:
+          if mass<=100:
             mzg.setRange('fitRegion_'+massString,115,mass+10)
           else:
             mzg.setRange('fitRegion_'+massString,mass-15,mass+10)
@@ -124,14 +154,19 @@ for year in yearList:
 
 
           sigNameInterp = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(mass)])
-          CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
+
+          if prod is 'zh':
+            CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass, sigmaCB = 1.65, sigmaG = 2.0, alpha = 0.7)
+          else:
+            CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
+
           CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
           for param in paramList:
             param.setConstant(True)
           fitList.append(CBG_Interp)
-          getattr(cardDict[str(mass)],'import')(CBG_Interp)
-          getattr(cardDict[str(mass)],'import')(yieldVar)
-          cardDict[str(mass)].commitTransaction()
+          getattr(cardDict[lepton][year][cat][str(mass)],'import')(CBG_Interp)
+          getattr(cardDict[lepton][year][cat][str(mass)],'import')(yieldVar)
+          cardDict[lepton][year][cat][str(mass)].commitTransaction()
 
         testFrame = mzg.frame(110,130)
         for i,fit in enumerate(fitList):
@@ -149,10 +184,14 @@ for year in yearList:
     for cat in catList:
       for prod in sigNameList:
         for mass in massList:
-          SignalNameParamFixer(year,lepton,cat,prod,mass,cardDict[mass])
+          SignalNameParamFixer(year,lepton,cat,prod,mass,cardDict[lepton][year][cat][mass])
 
-for mass in massList:
-  cardDict[mass].writeToFile('testCards/testCardSignal_'+mass+'.root')
+for year in yearList:
+  for lepton in leptonList:
+    for cat in catList:
+      for mass in massList:
+        fileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])
+        cardDict[lepton][year][cat][mass].writeToFile('testCards/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')
