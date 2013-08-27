@@ -159,6 +159,40 @@ def BuildGaussStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.00
   SetOwnership(p5Var,0)
   return GaussBern5
 
+def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 0.1, stepLow = 0, stepHigh = 10,
+    p0 = 15, p1 = 0.5, p1Low = -1e-6, p1High = 900,p2 = 0.5, p2Low = -1e-6, p2High = 900,p3 = 0.5, p3Low = -1e-6, p3High = 900,
+    p4 = 0.5, p4Low = -1e-6, p4High = 900, p5 = 0.5, p5Low = -1e-6, p5High = 900, p6 = 0.5, p6Low = -1e-6, p6High = 900):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  meanVar = RooRealVar('meanGaussBern6_'+suffix,'meanGaussBern6_'+suffix, mean)
+  sigmaVar = RooRealVar('sigmaGaussBern6_'+suffix,'sigmaGaussBern6_'+suffix,sigma,sigmaLow,sigmaHigh)
+  stepVar = RooRealVar('stepGaussBern6_'+suffix,'stepGaussBern6_'+suffix,step,stepLow,stepHigh)
+  p0Var = RooRealVar('p0GaussBern6_'+suffix,'p0GaussBern6_'+suffix, p0)
+  p1Var = RooRealVar('p1GaussBern6_'+suffix,'p1GaussBern6_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2GaussBern6_'+suffix,'p2GaussBern6_'+suffix,p2,p2Low,p2High)
+  p3Var = RooRealVar('p3GaussBern6_'+suffix,'p3GaussBern6_'+suffix,p3,p3Low,p3High)
+  p4Var = RooRealVar('p4GaussBern6_'+suffix,'p4GaussBern6_'+suffix,p4,p4Low,p4High)
+  p5Var = RooRealVar('p5GaussBern6_'+suffix,'p5GaussBern6_'+suffix,p5,p5Low,p5High)
+  p6Var = RooRealVar('p6GaussBern6_'+suffix,'p6GaussBern6_'+suffix,p6,p6Low,p6High)
+
+  pArgs = RooArgList(p0Var,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var)
+  turnOn = RooGaussian('turnOnGaussBern6_'+suffix,'turnOnGaussBern6_'+suffix,mzg,meanVar,sigmaVar)
+  tail = RooStepBernstein('tailGaussBern6_'+suffix,'tailGaussBern6_'+suffix,mzg,stepVar,pArgs)
+  GaussBern6 = RooFFTConvPdf('GaussBern6_'+suffix,'GaussBern6_'+suffix,mzg,tail,turnOn)
+
+  SetOwnership(meanVar,0)
+  SetOwnership(sigmaVar,0)
+  SetOwnership(stepVar,0)
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  SetOwnership(p4Var,0)
+  SetOwnership(p5Var,0)
+  SetOwnership(p6Var,0)
+  SetOwnership(turnOn,0)
+  SetOwnership(tail,0)
+  return GaussBern6
+
 def BuildSechStepBern3(year,lepton,cat,mzg,mean = 0, sigma = 3, sigmaLow = 0.01, sigmaHigh = 20, step = 0.1, stepLow = 0, stepHigh = 10,
     p0 = 15, p1 = 0.3, p1Low = -1e-6, p1High = 900,p2 = 0.3, p2Low = -1e-6, p2High = 900,p3 = 0.3, p3Low = -1e-6, p3High = 900):
   suffix = '_'.join([year,lepton,'cat'+cat])
