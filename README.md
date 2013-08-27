@@ -13,10 +13,10 @@ Flow goes like this:
     <td>TBD</td><td>signalCBFits.py</td><td>TBD</td>
   </tr>
   <tr>
-    <td>TBD</td><td>bgCardPrep.py</td><td>TBD</td>
+    <td>plotPulls.py</td><td>bgCardPrep.py</td><td>TBD</td>
   </tr>
   <tr>
-    <td>TBD</td><td>cardMaker.py</td><td>TBD</td>
+    <td>makeTables.py</td><td>cardMaker.py</td><td>TBD</td>
   </tr>
   <tr>
     <td>TBD</td><td>limitProducer.py</td><td>TBD</td>
