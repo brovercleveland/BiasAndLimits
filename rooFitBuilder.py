@@ -308,6 +308,7 @@ def BuildCrystalBallGauss(year,lepton,cat,sig,mass,piece,mzg, mean = 125,meanLow
   SetOwnership(gauss,0)
   paramList = [meanVar,sigmaCBVar,alphaVar,nVar,sigmaGVar,fracVar]
   return CBG, paramList
+  return CBG
 
 def SignalNameParamFixer(year,lepton,cat,sig,mass,ws):
   fitName = '_'.join(['CBG',year,lepton,'cat'+cat,sig,mass,'Interp'])

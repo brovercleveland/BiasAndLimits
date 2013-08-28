@@ -35,10 +35,11 @@ sigNameList = ['gg','vbf','tth','wh','zh']
 '''
 leptonList = ['mu']
 yearList = ['2012']
-catList = ['1','2']
-#massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0']
+catList = ['1']
+massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
+ '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0']
 #massList = ['120.0','120.5','121.0']
-massList = ['138.0']
+#massList = ['138.0']
 #massList = ['120','125','130','135','140','145','150']
 sigNameList = ['gg','vbf','tth','wh','zh']
 #sigNameList = ['zh']
@@ -116,7 +117,7 @@ for year in yearList:
             else:
               CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
 
-            CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
+            CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
 
             ###### fit the hi mass point
             #if massHi<=125:
@@ -132,7 +133,7 @@ for year in yearList:
             else:
               CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
 
-            CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
+            CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
 
           ###### interpolate the two mass points
           massDiff = (massHi - mass)/5.
@@ -161,7 +162,7 @@ for year in yearList:
           else:
             CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
 
-          CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2),RooFit.PrintLevel(-1))
+          CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
           for param in paramList:
             param.setConstant(True)
           fitList.append(CBG_Interp)
@@ -188,11 +189,11 @@ for year in yearList:
           SignalNameParamFixer(year,lepton,cat,prod,mass,cardDict[lepton][year][cat][mass])
 
 for year in yearList:
-  for lepton in leptonList:
+  for lep in leptonList:
     for cat in catList:
       for mass in massList:
-        fileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])
-        cardDict[lepton][year][cat][mass].writeToFile('testCards/'+fileName+'.root')
+        fileName = '_'.join(['SignalOutput',lep,year,'cat'+cat,mass])
+        cardDict[lep][year][cat][mass].writeToFile('testCards/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')
