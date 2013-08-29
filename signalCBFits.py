@@ -35,7 +35,7 @@ sigNameList = ['gg','vbf','tth','wh','zh']
 '''
 leptonList = ['mu']
 yearList = ['2012']
-catList = ['1']
+catList = ['4']
 massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
  '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0']
 #massList = ['120.0','120.5','121.0']
@@ -112,10 +112,7 @@ for year in yearList:
             sig_ds_Low = myWs.data(sigNameLow)
             if massLow == massHi: dsList.append(sig_ds_Low)
 
-            if prod is 'zh':
-              CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow, sigmaCB = 1.65, sigmaG = 2, alpha  = 0.7)[0]
-            else:
-              CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
+            CBG_Low = BuildCrystalBallGauss(year,lepton,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
 
             CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
 
@@ -128,10 +125,7 @@ for year in yearList:
             sigNameHi = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(massHi)])
             sig_ds_Hi = myWs.data(sigNameHi)
 
-            if prod is 'zh':
-              CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi, sigmaCB = 1.65, sigmaG = 2, alpha = 0.7)[0]
-            else:
-              CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
+            CBG_Hi = BuildCrystalBallGauss(year,lepton,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
 
             CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
 
@@ -157,10 +151,7 @@ for year in yearList:
 
           sigNameInterp = '_'.join(['ds','sig',prod,lepton,year,'cat'+cat,'M'+str(mass)])
 
-          if prod is 'zh':
-            CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass, sigmaCB = 1.65, sigmaG = 2.0, alpha = 0.7)
-          else:
-            CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
+          CBG_Interp,paramList = BuildCrystalBallGauss(year,lepton,cat,prod,str(mass),'Interp',mzg,mean = mass)
 
           CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
           for param in paramList:
