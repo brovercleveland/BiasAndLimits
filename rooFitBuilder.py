@@ -280,6 +280,62 @@ def BuildSechStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001
   SetOwnership(tail,0)
   return SechBern5
 
+def BuildExp(year,lepton,cat,mzg,tau = 1, tauLow = -50, tauHigh = 50):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  tauVar = RooRealVar('tauExp_'+suffix,'tauExp_'+suffix,tau,tauLow,tauHigh)
+  Exp = RooExponential('Exp_'+suffix,'Exp_'+suffix,mzg,tauVar)
+  SetOwnership(tauVar,0)
+  return Exp
+
+def BuildPow(year,lepton,cat,mzg,alpha = 115, alphaLow = 50, alphaHigh = 200, beta = 3, betaLow = -20, betaHigh = 20):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  alphaVar = RooRealVar('alphaPow_'+suffix,'alphaPow_'+suffix,alpha,alphaLow,alphaHigh)
+  betaVar = RooRealVar('betaPow_'+suffix,'betaPow_'+suffix,beta,betaLow,betaHigh)
+  Pow = RooGenericPdf('Pow_'+suffix,'Pow_'+suffix,'1e-20 + (@1)*((@0)^(-@2)',RooArgList(mzg,alphaVar,betaVar))
+  SetOwnership(alphaVar,0)
+  SetOwnership(betaVar,0)
+  return Pow
+
+def BuildBern2(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  p0Var = RooRealVar('p0Bern2_'+suffix, 'p0Bern2_'+suffix,p0)
+  p1Var = RooRealVar('p1Bern2_'+suffix, 'p1Bern2_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2Bern2_'+suffix, 'p2Bern2_'+suffix,p2,p2Low,p2High)
+  Bern2 = RooBernstein('Bern2_'+suffix,'Bern2_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var))
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  return Bern2
+
+def BuildBern3(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  p0Var = RooRealVar('p0Bern3_'+suffix, 'p0Bern3_'+suffix,p0)
+  p1Var = RooRealVar('p1Bern3_'+suffix, 'p1Bern3_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2Bern3_'+suffix, 'p2Bern3_'+suffix,p2,p2Low,p2High)
+  p3Var = RooRealVar('p3Bern3_'+suffix, 'p3Bern3_'+suffix,p3,p3Low,p3High)
+  Bern3 = RooBernstein('Bern3_'+suffix,'Bern3_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  return Bern3
+
+def BuildBern4(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  p0Var = RooRealVar('p0Bern4_'+suffix, 'p0Bern4_'+suffix,p0)
+  p1Var = RooRealVar('p1Bern4_'+suffix, 'p1Bern4_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2Bern4_'+suffix, 'p2Bern4_'+suffix,p2,p2Low,p2High)
+  p3Var = RooRealVar('p3Bern4_'+suffix, 'p3Bern4_'+suffix,p3,p3Low,p3High)
+  p4Var = RooRealVar('p4Bern4_'+suffix, 'p4Bern4_'+suffix,p4,p4Low,p4High)
+  Bern4 = RooBernstein('Bern4_'+suffix,'Bern4_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var, p3Var, p4Var))
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  SetOwnership(p4Var,0)
+  return Bern4
+
+
 def BuildCrystalBallGauss(year,lepton,cat,sig,mass,piece,mzg, mean = 125,meanLow = -1, meanHigh = -1, sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 20, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
     n = 4, nLow = 0.5, nHigh = 50, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 20, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):
   suffix = '_'.join([year,lepton,'cat'+cat,sig,mass,piece])
@@ -309,6 +365,7 @@ def BuildCrystalBallGauss(year,lepton,cat,sig,mass,piece,mzg, mean = 125,meanLow
   paramList = [meanVar,sigmaCBVar,alphaVar,nVar,sigmaGVar,fracVar]
   return CBG, paramList
   return CBG
+
 
 def SignalNameParamFixer(year,lepton,cat,sig,mass,ws):
   fitName = '_'.join(['CBG',year,lepton,'cat'+cat,sig,mass,'Interp'])
