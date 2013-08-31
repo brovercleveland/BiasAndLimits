@@ -34,7 +34,8 @@ def doInitialFits():
 
   leptonList = ['mu','el']
   yearList = ['2011','2012']
-  catList = ['1','2','3','4','5']
+  catList = ['0','1','2','3','4','5']
+  #catList = ['0']
   massList = ['120','125','130','135','140','145','150','155','160']
   sigNameList = ['gg','vbf','tth','wh','zh']
   '''
@@ -96,7 +97,10 @@ def doInitialFits():
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
               if tmpSigMass[0]> 100 and tmpSigMass[0]<190:
-                mzg.setVal(tmpSigMass[0])
+                if year is '2012' and mass is '160' and prod is 'gg':
+                  mzg.setVal(tmpSigMass[0]+5)
+                else:
+                  mzg.setVal(tmpSigMass[0])
                 if prod is 'wh':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0]*0.655)
                 elif prod is 'zh':
@@ -128,10 +132,16 @@ def doInitialFits():
                 signalTree.Print()
                 print
 
-              if cat is '0':
-                signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
+              if year is '2012' and mass is '160':
+                if cat is '0':
+                  signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'+5.0>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
+                else:
+                  signalTree.Draw('m_llgCAT'+cat+'_Signal'+year+'ggM'+mass+'+5.0>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
               else:
-                signalTree.Draw('m_llgCAT'+cat+'_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
+                if cat is '0':
+                  signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
+                else:
+                  signalTree.Draw('m_llgCAT'+cat+'_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
               signalList[-1].Scale(1/signalList[-1].Integral())
               signalList[-1].Smooth(2)
 
@@ -157,7 +167,7 @@ def doInitialFits():
             if debugPlots:
               testFrame = mzg.frame()
               for signal in signalListDS:
-                signal.plotOn(testFrame)
+                signal.plotOn(testFrame, RooFit.DrawOption('pl'))
               testFrame.Draw()
               c.Print('debugPlots/'+'_'.join(['test','ds','sig',prod,year,lepton,'cat'+cat])+'.pdf')
             del signalTree

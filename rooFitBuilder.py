@@ -7,6 +7,7 @@ import numpy as np
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
+#gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
 
 def BuildGaussExp(year,lepton,cat,mzg,mean = 120, meanLow = 90, meanHigh = 150, sigma = 1, sigmaLow = 0.01, sigmaHigh = 10, tau = 5, tauLow = 0, tauHigh = 50):
   suffix = '_'.join([year,lepton,'cat'+cat])
@@ -159,7 +160,7 @@ def BuildGaussStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.00
   SetOwnership(p5Var,0)
   return GaussBern5
 
-def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 0.1, stepLow = 0, stepHigh = 10,
+def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
     p0 = 15, p1 = 0.5, p1Low = -1e-6, p1High = 900,p2 = 0.5, p2Low = -1e-6, p2High = 900,p3 = 0.5, p3Low = -1e-6, p3High = 900,
     p4 = 0.5, p4Low = -1e-6, p4High = 900, p5 = 0.5, p5Low = -1e-6, p5High = 900, p6 = 0.5, p6Low = -1e-6, p6High = 900):
   suffix = '_'.join([year,lepton,'cat'+cat])
@@ -175,9 +176,7 @@ def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.00
   p6Var = RooRealVar('p6GaussBern6_'+suffix,'p6GaussBern6_'+suffix,p6,p6Low,p6High)
 
   pArgs = RooArgList(p0Var,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var)
-  turnOn = RooGaussian('turnOnGaussBern6_'+suffix,'turnOnGaussBern6_'+suffix,mzg,meanVar,sigmaVar)
-  tail = RooStepBernstein('tailGaussBern6_'+suffix,'tailGaussBern6_'+suffix,mzg,stepVar,pArgs)
-  GaussBern6 = RooFFTConvPdf('GaussBern6_'+suffix,'GaussBern6_'+suffix,mzg,tail,turnOn)
+  GaussBern6 = RooGaussStepBernstein('GaussBern6_'+suffix,'GaussBern6_'+suffix,mzg,meanVar,sigmaVar,stepVar,pArgs)
 
   SetOwnership(meanVar,0)
   SetOwnership(sigmaVar,0)
@@ -189,8 +188,6 @@ def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.00
   SetOwnership(p4Var,0)
   SetOwnership(p5Var,0)
   SetOwnership(p6Var,0)
-  SetOwnership(turnOn,0)
-  SetOwnership(tail,0)
   return GaussBern6
 
 def BuildSechStepBern3(year,lepton,cat,mzg,mean = 0, sigma = 3, sigmaLow = 0.01, sigmaHigh = 20, step = 0.1, stepLow = 0, stepHigh = 10,
