@@ -11,9 +11,9 @@ CMSStyle()
 
 leptonList = ['mu','el']
 yearList = ['2012','2011']
-catList = ['1','2','3','4']
+catList = ['0','1','2','3','4','5']
 
-rooWsFile = TFile('testRooFitOut.root')
+rooWsFile = TFile('testRooFitOut_Poter.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -33,11 +33,19 @@ mzg = myWs.var('CMS_hzg_mass')
 for year in yearList:
   for lepton in leptonList:
     for cat in catList:
+      if cat is '5' and year is '2011' and lepton is 'mu': continue
+      elif cat is '5' and year is '2011' and lepton is 'el': lepton = 'all'
       dataName = '_'.join(['data',lepton,year,'cat'+cat])
       suffix = '_'.join([year,lepton,'cat'+cat])
       if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
         fitName = '_'.join(['GaussBern4',year,lepton,'cat'+cat])
         normName = 'normGaussBern4_'+suffix
+      elif cat is '5':
+        fitName = '_'.join(['Bern3',year,lepton,'cat'+cat])
+        normName = 'normBern3_'+suffix
+      elif cat is '0':
+        fitName = '_'.join(['GaussBern6',year,lepton,'cat'+cat])
+        normName = 'normGaussBern6_'+suffix
       else:
         fitName = '_'.join(['GaussBern5',year,lepton,'cat'+cat])
         normName = 'normGaussBern5_'+suffix
@@ -46,6 +54,7 @@ for year in yearList:
       fit = myWs.pdf(fitName)
 
       ###### Extend the fit (give it a normalization parameter)
+      print dataName
       sumEntries = data.sumEntries()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
