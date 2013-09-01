@@ -30,12 +30,12 @@ def doInitialFits():
   #dataDict = {'mu2012_4cat':TFile('inputFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/data_El2011.root','r')}
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
   dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r')}
+  signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
   leptonList = ['mu','el']
   yearList = ['2011','2012']
   catList = ['0','1','2','3','4','5']
-  #catList = ['0']
+  #catList = ['5']
   massList = ['120','125','130','135','140','145','150','155','160']
   sigNameList = ['gg','vbf','tth','wh','zh']
   '''
@@ -65,6 +65,8 @@ def doInitialFits():
   for year in yearList:
     for lepton in leptonList:
       for cat in catList:
+        if year is '2011' and cat is '5' and lepton is 'el': lepton = 'all'
+        elif year is '2011' and cat is '5' and lepton is 'mu': continue
         if rootrace:
           RooTrace.dump()
           raw_input()
@@ -178,8 +180,6 @@ def doInitialFits():
 ################
         if verbose: print 'starting data section'
 
-        if year is '2011' and cat is '5' and lepton is 'el': lepton = 'all'
-        elif year is '2011' and cat is '5' and lepton is 'mu': continue
 
         dataName = '_'.join(['data',lepton,year,'cat'+cat])
         dataTree = dataDict[lepton+year+'_4cat'].Get('m_llg_DATA')

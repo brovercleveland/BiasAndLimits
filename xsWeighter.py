@@ -60,6 +60,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
 
     if (lepton=='mu'): LumiXSWeight = 5.05/(LumiXSWeight)
     if (lepton=='el'): LumiXSWeight = 4.98/(LumiXSWeight)
+    if (lepton=='all'): LumiXSWeight = 10.03/(LumiXSWeight)
 
   elif(year is '2012'):
 
