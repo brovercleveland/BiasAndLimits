@@ -1,0 +1,56 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * testCardBackground.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * testCardBackground.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_mu_2011_cat1_149.0.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_mu_2011_cat1_149.0.root ws_card:sig_vbf_$CHANNEL
+shapes sig_wh   * SignalOutput_mu_2011_cat1_149.0.root ws_card:sig_wh_$CHANNEL
+shapes sig_zh   * SignalOutput_mu_2011_cat1_149.0.root ws_card:sig_zh_$CHANNEL
+shapes sig_tth  * SignalOutput_mu_2011_cat1_149.0.root ws_card:sig_tth_$CHANNEL
+---------------
+bin          mu_2011_cat1
+observation  688
+------------------------------
+bin                        mu_2011_cat1    mu_2011_cat1    mu_2011_cat1    mu_2011_cat1    mu_2011_cat1    mu_2011_cat1  
+process                       sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.0023162       0.015108        0.014514        0.048805         0.58243            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       0.916/1.084          -               -               -         0.9252/1.076          -       
+pdf_qqbar         lnN            -          0.963/1.037     0.966/1.034     0.979/1.027          -               -       
+QCDscale_ggH      lnN            -               -               -               -         0.9257/1.0662         -       
+QCDscale_qqH      lnN            -               -               -          0.999/1.003          -               -       
+QCDscale_VH       lnN            -          0.984/1.018     0.992/1.004          -               -               -       
+QCDscale_ttH      lnN       0.909/1.029          -               -               -               -               -       
+lumi_2011         lnN          1.022           1.022           1.022           1.022           1.022             -       
+eff_mu_2011       lnN          1.007           1.007           1.007           1.007           1.007             -       
+eff_trig_mu_2011  lnN          1.005           1.005           1.005           1.005           1.005             -       
+eff_PU_mu_2011    lnN          1.004           1.004           1.004           1.004           1.004             -       
+eff_g_EB_2011     lnN          1.005           1.005           1.005           1.005           1.005             -       
+JES               lnN            -               -               -             1.028           1.001             -       
+JER               lnN            -               -               -             1.010           1.001             -       
+UEPS              lnN            -               -               -             1.026           1.002             -       
+eff_R9_2011       lnN          1.050           1.050           1.050           1.050           1.050             -       
+err_BR_2011       lnN       0.938/1.061     0.938/1.061     0.938/1.061     0.938/1.061     0.938/1.061          -       
+sig_gg_mShift_mu_2011_cat1               param          1         0.01   
+sig_gg_sigmaShift_mu_2011_cat1           param          1         0.05   
+sig_vbf_mShift_mu_2011_cat1              param          1         0.01   
+sig_vbf_sigmaShift_mu_2011_cat1          param          1         0.05   
+sig_wh_mShift_mu_2011_cat1               param          1         0.01   
+sig_wh_sigmaShift_mu_2011_cat1           param          1         0.05   
+sig_zh_mShift_mu_2011_cat1               param          1         0.01   
+sig_zh_sigmaShift_mu_2011_cat1           param          1         0.05   
+sig_tth_mShift_mu_2011_cat1              param          1         0.01   
+sig_tth_sigmaShift_mu_2011_cat1          param          1         0.05   
+bkg_p1_mu_2011_cat1                           flatParam      
+bkg_p2_mu_2011_cat1                           flatParam      
+bkg_p3_mu_2011_cat1                           flatParam      
+bkg_p4_mu_2011_cat1                           flatParam      
+bkg_sigma_mu_2011_cat1                        flatParam      
+bkg_step_mu_2011_cat1                         flatParam      
+bkg_mu_2011_cat1_norm                         flatParam      

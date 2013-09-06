@@ -1,0 +1,43 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * testCardBackground.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * testCardBackground.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_all_2011_cat5_127.5.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_all_2011_cat5_127.5.root ws_card:sig_vbf_$CHANNEL
+---------------
+bin          all_2011_cat5
+observation  9
+------------------------------
+bin                        all_2011_cat5   all_2011_cat5   all_2011_cat5 
+process                       sig_vbf         sig_gg            bkg      
+process                         -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.098951        0.031576            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN            -         0.9285/1.076          -       
+pdf_qqbar         lnN       0.979/1.025          -               -       
+QCDscale_ggH      lnN            -         0.9225/1.0705         -       
+QCDscale_qqH      lnN       0.998/1.003          -               -       
+lumi_2011         lnN          1.022           1.022             -       
+eff_all_2011      lnN          1.008           1.008             -       
+eff_trig_all_2011 lnN          1.005           1.005             -       
+eff_PU_all_2011   lnN          1.006           1.006             -       
+eff_g_EE_2011     lnN          1.010           1.010             -       
+JES               lnN          1.046           1.110             -       
+JER               lnN          1.019           1.060             -       
+UEPS              lnN          1.070           1.249             -       
+JetID             lnN          1.016           1.017             -       
+JetAcc            lnN          1.009           1.021             -       
+err_BR_2011       lnN       0.914/1.087     0.914/1.087          -       
+sig_gg_mShift_all_2011_cat5              param          1         0.01   
+sig_gg_sigmaShift_all_2011_cat5          param          1         0.05   
+sig_vbf_mShift_all_2011_cat5             param          1         0.01   
+sig_vbf_sigmaShift_all_2011_cat5         param          1         0.05   
+bkg_p1_all_2011_cat5                          flatParam      
+bkg_p2_all_2011_cat5                          flatParam      
+bkg_p3_all_2011_cat5                          flatParam      
+bkg_all_2011_cat5_norm                        flatParam      

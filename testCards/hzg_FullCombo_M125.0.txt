@@ -1,0 +1,505 @@
+Combination of testCards/hzg_mu_2012_cat1_M125.0.txt  testCards/hzg_mu_2012_cat2_M125.0.txt  testCards/hzg_mu_2012_cat3_M125.0.txt  testCards/hzg_mu_2012_cat4_M125.0.txt  testCards/hzg_mu_2012_cat5_M125.0.txt  testCards/hzg_el_2012_cat1_M125.0.txt  testCards/hzg_el_2012_cat2_M125.0.txt  testCards/hzg_el_2012_cat3_M125.0.txt  testCards/hzg_el_2012_cat4_M125.0.txt  testCards/hzg_el_2012_cat5_M125.0.txt  testCards/hzg_mu_2011_cat1_M125.0.txt  testCards/hzg_mu_2011_cat2_M125.0.txt  testCards/hzg_mu_2011_cat3_M125.0.txt  testCards/hzg_mu_2011_cat4_M125.0.txt  testCards/hzg_el_2011_cat1_M125.0.txt  testCards/hzg_el_2011_cat2_M125.0.txt  testCards/hzg_el_2011_cat3_M125.0.txt  testCards/hzg_el_2011_cat4_M125.0.txt  testCards/hzg_all_2011_cat5_M125.0.txt
+imax 19 number of bins
+jmax 5 number of processes minus 1
+kmax 221 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *        ch1      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat1
+shapes bkg      ch1      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat1
+shapes sig_gg   ch1      testCards/SignalOutput_mu_2012_cat1_125.0.root ws_card:sig_gg_mu_2012_cat1
+shapes sig_tth  ch1      testCards/SignalOutput_mu_2012_cat1_125.0.root ws_card:sig_tth_mu_2012_cat1
+shapes sig_vbf  ch1      testCards/SignalOutput_mu_2012_cat1_125.0.root ws_card:sig_vbf_mu_2012_cat1
+shapes sig_wh   ch1      testCards/SignalOutput_mu_2012_cat1_125.0.root ws_card:sig_wh_mu_2012_cat1
+shapes sig_zh   ch1      testCards/SignalOutput_mu_2012_cat1_125.0.root ws_card:sig_zh_mu_2012_cat1
+shapes *        ch10     testCards/testCardBackground.root ws_card:$PROCESS_el_2012_cat5
+shapes bkg      ch10     testCards/testCardBackground.root ws_card:bkg_el_2012_cat5
+shapes sig_gg   ch10     testCards/SignalOutput_el_2012_cat5_125.0.root ws_card:sig_gg_el_2012_cat5
+shapes sig_tth  ch10     testCards/SignalOutput_el_2012_cat5_125.0.root ws_card:sig_tth_el_2012_cat5
+shapes sig_vbf  ch10     testCards/SignalOutput_el_2012_cat5_125.0.root ws_card:sig_vbf_el_2012_cat5
+shapes sig_wh   ch10     testCards/SignalOutput_el_2012_cat5_125.0.root ws_card:sig_wh_el_2012_cat5
+shapes sig_zh   ch10     testCards/SignalOutput_el_2012_cat5_125.0.root ws_card:sig_zh_el_2012_cat5
+shapes *        ch11     testCards/testCardBackground.root ws_card:$PROCESS_mu_2011_cat1
+shapes bkg      ch11     testCards/testCardBackground.root ws_card:bkg_mu_2011_cat1
+shapes sig_gg   ch11     testCards/SignalOutput_mu_2011_cat1_125.0.root ws_card:sig_gg_mu_2011_cat1
+shapes sig_tth  ch11     testCards/SignalOutput_mu_2011_cat1_125.0.root ws_card:sig_tth_mu_2011_cat1
+shapes sig_vbf  ch11     testCards/SignalOutput_mu_2011_cat1_125.0.root ws_card:sig_vbf_mu_2011_cat1
+shapes sig_wh   ch11     testCards/SignalOutput_mu_2011_cat1_125.0.root ws_card:sig_wh_mu_2011_cat1
+shapes sig_zh   ch11     testCards/SignalOutput_mu_2011_cat1_125.0.root ws_card:sig_zh_mu_2011_cat1
+shapes *        ch12     testCards/testCardBackground.root ws_card:$PROCESS_mu_2011_cat2
+shapes bkg      ch12     testCards/testCardBackground.root ws_card:bkg_mu_2011_cat2
+shapes sig_gg   ch12     testCards/SignalOutput_mu_2011_cat2_125.0.root ws_card:sig_gg_mu_2011_cat2
+shapes sig_tth  ch12     testCards/SignalOutput_mu_2011_cat2_125.0.root ws_card:sig_tth_mu_2011_cat2
+shapes sig_vbf  ch12     testCards/SignalOutput_mu_2011_cat2_125.0.root ws_card:sig_vbf_mu_2011_cat2
+shapes sig_wh   ch12     testCards/SignalOutput_mu_2011_cat2_125.0.root ws_card:sig_wh_mu_2011_cat2
+shapes sig_zh   ch12     testCards/SignalOutput_mu_2011_cat2_125.0.root ws_card:sig_zh_mu_2011_cat2
+shapes *        ch13     testCards/testCardBackground.root ws_card:$PROCESS_mu_2011_cat3
+shapes bkg      ch13     testCards/testCardBackground.root ws_card:bkg_mu_2011_cat3
+shapes sig_gg   ch13     testCards/SignalOutput_mu_2011_cat3_125.0.root ws_card:sig_gg_mu_2011_cat3
+shapes sig_tth  ch13     testCards/SignalOutput_mu_2011_cat3_125.0.root ws_card:sig_tth_mu_2011_cat3
+shapes sig_vbf  ch13     testCards/SignalOutput_mu_2011_cat3_125.0.root ws_card:sig_vbf_mu_2011_cat3
+shapes sig_wh   ch13     testCards/SignalOutput_mu_2011_cat3_125.0.root ws_card:sig_wh_mu_2011_cat3
+shapes sig_zh   ch13     testCards/SignalOutput_mu_2011_cat3_125.0.root ws_card:sig_zh_mu_2011_cat3
+shapes *        ch14     testCards/testCardBackground.root ws_card:$PROCESS_mu_2011_cat4
+shapes bkg      ch14     testCards/testCardBackground.root ws_card:bkg_mu_2011_cat4
+shapes sig_gg   ch14     testCards/SignalOutput_mu_2011_cat4_125.0.root ws_card:sig_gg_mu_2011_cat4
+shapes sig_tth  ch14     testCards/SignalOutput_mu_2011_cat4_125.0.root ws_card:sig_tth_mu_2011_cat4
+shapes sig_vbf  ch14     testCards/SignalOutput_mu_2011_cat4_125.0.root ws_card:sig_vbf_mu_2011_cat4
+shapes sig_wh   ch14     testCards/SignalOutput_mu_2011_cat4_125.0.root ws_card:sig_wh_mu_2011_cat4
+shapes sig_zh   ch14     testCards/SignalOutput_mu_2011_cat4_125.0.root ws_card:sig_zh_mu_2011_cat4
+shapes *        ch15     testCards/testCardBackground.root ws_card:$PROCESS_el_2011_cat1
+shapes bkg      ch15     testCards/testCardBackground.root ws_card:bkg_el_2011_cat1
+shapes sig_gg   ch15     testCards/SignalOutput_el_2011_cat1_125.0.root ws_card:sig_gg_el_2011_cat1
+shapes sig_tth  ch15     testCards/SignalOutput_el_2011_cat1_125.0.root ws_card:sig_tth_el_2011_cat1
+shapes sig_vbf  ch15     testCards/SignalOutput_el_2011_cat1_125.0.root ws_card:sig_vbf_el_2011_cat1
+shapes sig_wh   ch15     testCards/SignalOutput_el_2011_cat1_125.0.root ws_card:sig_wh_el_2011_cat1
+shapes sig_zh   ch15     testCards/SignalOutput_el_2011_cat1_125.0.root ws_card:sig_zh_el_2011_cat1
+shapes *        ch16     testCards/testCardBackground.root ws_card:$PROCESS_el_2011_cat2
+shapes bkg      ch16     testCards/testCardBackground.root ws_card:bkg_el_2011_cat2
+shapes sig_gg   ch16     testCards/SignalOutput_el_2011_cat2_125.0.root ws_card:sig_gg_el_2011_cat2
+shapes sig_tth  ch16     testCards/SignalOutput_el_2011_cat2_125.0.root ws_card:sig_tth_el_2011_cat2
+shapes sig_vbf  ch16     testCards/SignalOutput_el_2011_cat2_125.0.root ws_card:sig_vbf_el_2011_cat2
+shapes sig_wh   ch16     testCards/SignalOutput_el_2011_cat2_125.0.root ws_card:sig_wh_el_2011_cat2
+shapes sig_zh   ch16     testCards/SignalOutput_el_2011_cat2_125.0.root ws_card:sig_zh_el_2011_cat2
+shapes *        ch17     testCards/testCardBackground.root ws_card:$PROCESS_el_2011_cat3
+shapes bkg      ch17     testCards/testCardBackground.root ws_card:bkg_el_2011_cat3
+shapes sig_gg   ch17     testCards/SignalOutput_el_2011_cat3_125.0.root ws_card:sig_gg_el_2011_cat3
+shapes sig_tth  ch17     testCards/SignalOutput_el_2011_cat3_125.0.root ws_card:sig_tth_el_2011_cat3
+shapes sig_vbf  ch17     testCards/SignalOutput_el_2011_cat3_125.0.root ws_card:sig_vbf_el_2011_cat3
+shapes sig_wh   ch17     testCards/SignalOutput_el_2011_cat3_125.0.root ws_card:sig_wh_el_2011_cat3
+shapes sig_zh   ch17     testCards/SignalOutput_el_2011_cat3_125.0.root ws_card:sig_zh_el_2011_cat3
+shapes *        ch18     testCards/testCardBackground.root ws_card:$PROCESS_el_2011_cat4
+shapes bkg      ch18     testCards/testCardBackground.root ws_card:bkg_el_2011_cat4
+shapes sig_gg   ch18     testCards/SignalOutput_el_2011_cat4_125.0.root ws_card:sig_gg_el_2011_cat4
+shapes sig_tth  ch18     testCards/SignalOutput_el_2011_cat4_125.0.root ws_card:sig_tth_el_2011_cat4
+shapes sig_vbf  ch18     testCards/SignalOutput_el_2011_cat4_125.0.root ws_card:sig_vbf_el_2011_cat4
+shapes sig_wh   ch18     testCards/SignalOutput_el_2011_cat4_125.0.root ws_card:sig_wh_el_2011_cat4
+shapes sig_zh   ch18     testCards/SignalOutput_el_2011_cat4_125.0.root ws_card:sig_zh_el_2011_cat4
+shapes *        ch19     testCards/testCardBackground.root ws_card:$PROCESS_all_2011_cat5
+shapes bkg      ch19     testCards/testCardBackground.root ws_card:bkg_all_2011_cat5
+shapes sig_gg   ch19     testCards/SignalOutput_all_2011_cat5_125.0.root ws_card:sig_gg_all_2011_cat5
+shapes sig_tth  ch19     testCards/SignalOutput_all_2011_cat5_125.0.root ws_card:sig_tth_all_2011_cat5
+shapes sig_vbf  ch19     testCards/SignalOutput_all_2011_cat5_125.0.root ws_card:sig_vbf_all_2011_cat5
+shapes sig_wh   ch19     testCards/SignalOutput_all_2011_cat5_125.0.root ws_card:sig_wh_all_2011_cat5
+shapes sig_zh   ch19     testCards/SignalOutput_all_2011_cat5_125.0.root ws_card:sig_zh_all_2011_cat5
+shapes *        ch2      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat2
+shapes bkg      ch2      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat2
+shapes sig_gg   ch2      testCards/SignalOutput_mu_2012_cat2_125.0.root ws_card:sig_gg_mu_2012_cat2
+shapes sig_tth  ch2      testCards/SignalOutput_mu_2012_cat2_125.0.root ws_card:sig_tth_mu_2012_cat2
+shapes sig_vbf  ch2      testCards/SignalOutput_mu_2012_cat2_125.0.root ws_card:sig_vbf_mu_2012_cat2
+shapes sig_wh   ch2      testCards/SignalOutput_mu_2012_cat2_125.0.root ws_card:sig_wh_mu_2012_cat2
+shapes sig_zh   ch2      testCards/SignalOutput_mu_2012_cat2_125.0.root ws_card:sig_zh_mu_2012_cat2
+shapes *        ch3      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat3
+shapes bkg      ch3      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat3
+shapes sig_gg   ch3      testCards/SignalOutput_mu_2012_cat3_125.0.root ws_card:sig_gg_mu_2012_cat3
+shapes sig_tth  ch3      testCards/SignalOutput_mu_2012_cat3_125.0.root ws_card:sig_tth_mu_2012_cat3
+shapes sig_vbf  ch3      testCards/SignalOutput_mu_2012_cat3_125.0.root ws_card:sig_vbf_mu_2012_cat3
+shapes sig_wh   ch3      testCards/SignalOutput_mu_2012_cat3_125.0.root ws_card:sig_wh_mu_2012_cat3
+shapes sig_zh   ch3      testCards/SignalOutput_mu_2012_cat3_125.0.root ws_card:sig_zh_mu_2012_cat3
+shapes *        ch4      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat4
+shapes bkg      ch4      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat4
+shapes sig_gg   ch4      testCards/SignalOutput_mu_2012_cat4_125.0.root ws_card:sig_gg_mu_2012_cat4
+shapes sig_tth  ch4      testCards/SignalOutput_mu_2012_cat4_125.0.root ws_card:sig_tth_mu_2012_cat4
+shapes sig_vbf  ch4      testCards/SignalOutput_mu_2012_cat4_125.0.root ws_card:sig_vbf_mu_2012_cat4
+shapes sig_wh   ch4      testCards/SignalOutput_mu_2012_cat4_125.0.root ws_card:sig_wh_mu_2012_cat4
+shapes sig_zh   ch4      testCards/SignalOutput_mu_2012_cat4_125.0.root ws_card:sig_zh_mu_2012_cat4
+shapes *        ch5      testCards/testCardBackground.root ws_card:$PROCESS_mu_2012_cat5
+shapes bkg      ch5      testCards/testCardBackground.root ws_card:bkg_mu_2012_cat5
+shapes sig_gg   ch5      testCards/SignalOutput_mu_2012_cat5_125.0.root ws_card:sig_gg_mu_2012_cat5
+shapes sig_tth  ch5      testCards/SignalOutput_mu_2012_cat5_125.0.root ws_card:sig_tth_mu_2012_cat5
+shapes sig_vbf  ch5      testCards/SignalOutput_mu_2012_cat5_125.0.root ws_card:sig_vbf_mu_2012_cat5
+shapes sig_wh   ch5      testCards/SignalOutput_mu_2012_cat5_125.0.root ws_card:sig_wh_mu_2012_cat5
+shapes sig_zh   ch5      testCards/SignalOutput_mu_2012_cat5_125.0.root ws_card:sig_zh_mu_2012_cat5
+shapes *        ch6      testCards/testCardBackground.root ws_card:$PROCESS_el_2012_cat1
+shapes bkg      ch6      testCards/testCardBackground.root ws_card:bkg_el_2012_cat1
+shapes sig_gg   ch6      testCards/SignalOutput_el_2012_cat1_125.0.root ws_card:sig_gg_el_2012_cat1
+shapes sig_tth  ch6      testCards/SignalOutput_el_2012_cat1_125.0.root ws_card:sig_tth_el_2012_cat1
+shapes sig_vbf  ch6      testCards/SignalOutput_el_2012_cat1_125.0.root ws_card:sig_vbf_el_2012_cat1
+shapes sig_wh   ch6      testCards/SignalOutput_el_2012_cat1_125.0.root ws_card:sig_wh_el_2012_cat1
+shapes sig_zh   ch6      testCards/SignalOutput_el_2012_cat1_125.0.root ws_card:sig_zh_el_2012_cat1
+shapes *        ch7      testCards/testCardBackground.root ws_card:$PROCESS_el_2012_cat2
+shapes bkg      ch7      testCards/testCardBackground.root ws_card:bkg_el_2012_cat2
+shapes sig_gg   ch7      testCards/SignalOutput_el_2012_cat2_125.0.root ws_card:sig_gg_el_2012_cat2
+shapes sig_tth  ch7      testCards/SignalOutput_el_2012_cat2_125.0.root ws_card:sig_tth_el_2012_cat2
+shapes sig_vbf  ch7      testCards/SignalOutput_el_2012_cat2_125.0.root ws_card:sig_vbf_el_2012_cat2
+shapes sig_wh   ch7      testCards/SignalOutput_el_2012_cat2_125.0.root ws_card:sig_wh_el_2012_cat2
+shapes sig_zh   ch7      testCards/SignalOutput_el_2012_cat2_125.0.root ws_card:sig_zh_el_2012_cat2
+shapes *        ch8      testCards/testCardBackground.root ws_card:$PROCESS_el_2012_cat3
+shapes bkg      ch8      testCards/testCardBackground.root ws_card:bkg_el_2012_cat3
+shapes sig_gg   ch8      testCards/SignalOutput_el_2012_cat3_125.0.root ws_card:sig_gg_el_2012_cat3
+shapes sig_tth  ch8      testCards/SignalOutput_el_2012_cat3_125.0.root ws_card:sig_tth_el_2012_cat3
+shapes sig_vbf  ch8      testCards/SignalOutput_el_2012_cat3_125.0.root ws_card:sig_vbf_el_2012_cat3
+shapes sig_wh   ch8      testCards/SignalOutput_el_2012_cat3_125.0.root ws_card:sig_wh_el_2012_cat3
+shapes sig_zh   ch8      testCards/SignalOutput_el_2012_cat3_125.0.root ws_card:sig_zh_el_2012_cat3
+shapes *        ch9      testCards/testCardBackground.root ws_card:$PROCESS_el_2012_cat4
+shapes bkg      ch9      testCards/testCardBackground.root ws_card:bkg_el_2012_cat4
+shapes sig_gg   ch9      testCards/SignalOutput_el_2012_cat4_125.0.root ws_card:sig_gg_el_2012_cat4
+shapes sig_tth  ch9      testCards/SignalOutput_el_2012_cat4_125.0.root ws_card:sig_tth_el_2012_cat4
+shapes sig_vbf  ch9      testCards/SignalOutput_el_2012_cat4_125.0.root ws_card:sig_vbf_el_2012_cat4
+shapes sig_wh   ch9      testCards/SignalOutput_el_2012_cat4_125.0.root ws_card:sig_wh_el_2012_cat4
+shapes sig_zh   ch9      testCards/SignalOutput_el_2012_cat4_125.0.root ws_card:sig_zh_el_2012_cat4
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1          ch2          ch3          ch4          ch5          ch6          ch7          ch8          ch9          ch10         ch11         ch12         ch13         ch14         ch15         ch16         ch17         ch18         ch19       
+observation  2725.0       2747.0       4076.0       4291.0       21.0         2040.0       4038.0       3609.0       3193.0       19.0         688.0        589.0        805.0        760.0        526.0        631.0        576.0        617.0        9.0        
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                  ch1          ch1          ch1          ch1          ch1          ch1          ch2          ch2          ch2          ch2          ch2          ch2          ch3          ch3          ch3          ch3          ch3          ch3          ch4          ch4          ch4          ch4          ch4          ch4          ch5          ch5          ch5          ch5          ch5          ch5          ch6          ch6          ch6          ch6          ch6          ch6          ch7          ch7          ch7          ch7          ch7          ch7          ch8          ch8          ch8          ch8          ch8          ch8          ch9          ch9          ch9          ch9          ch9          ch9          ch10         ch10         ch10         ch10         ch10         ch10         ch11         ch11         ch11         ch11         ch11         ch11         ch12         ch12         ch12         ch12         ch12         ch12         ch13         ch13         ch13         ch13         ch13         ch13         ch14         ch14         ch14         ch14         ch14         ch14         ch15         ch15         ch15         ch15         ch15         ch15         ch16         ch16         ch16         ch16         ch16         ch16         ch17         ch17         ch17         ch17         ch17         ch17         ch18         ch18         ch18         ch18         ch18         ch18         ch19         ch19         ch19         ch19         ch19         ch19       
+process                              sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg          sig_tth      sig_wh       sig_zh       sig_gg       sig_vbf      bkg        
+process                              -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1          
+rate                                 0.0140       0.0639       0.0646       2.1100       0.1426       1.0000       0.0045       0.0380       0.0426       1.1140       0.0655       1.0000       0.0042       0.0433       0.0448       1.0628       0.0719       1.0000       0.0110       0.0493       0.0473       1.7831       0.1156       1.0000       0.0001026    0.0001405    0.0008255    0.0339       0.1180       1.0000       0.0112       0.0512       0.0546       1.6120       0.1108       1.0000       0.0064       0.0428       0.0491       1.4071       0.0935       1.0000       0.0038       0.0383       0.0360       1.0522       0.0645       1.0000       0.0081       0.0396       0.0390       1.4064       0.0875       1.0000       0.0001235    0.0010       0.0000       0.0338       0.1085       1.0000       0.0021       0.0127       0.0145       0.4494       0.0315       1.0000       0.0006267    0.0057       0.0059       0.2056       0.0128       1.0000       0.0006122    0.0078       0.0073       0.2099       0.0135       1.0000       0.0014       0.0096       0.0106       0.3328       0.0206       1.0000       0.0020       0.0117       0.0112       0.3641       0.0249       1.0000       0.0008353    0.0071       0.0082       0.2262       0.0135       1.0000       0.0005407    0.0069       0.0074       0.1727       0.0107       1.0000       0.0012       0.0060       0.0079       0.2654       0.0174       1.0000       4.194e-05    0.0003213    0.0001343    0.0294       0.0844       1.0000     
+----------------------------------------------------------------------------------------------------------------------------------
+QCDscale_VH             lnN          -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.994/1.002  0.985/1.016  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -            -            0.992/1.002  0.984/1.014  -            -            -          
+QCDscale_ggH            lnN          -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.931/1.075  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -            -            -            -            0.922/1.071  -            -          
+QCDscale_qqH            lnN          -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -            -            -            -            -            0.997/1.003  -          
+QCDscale_ttH            lnN          0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -          
+eff_PU_all_2011         lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.006        1.006        1.006        1.006        1.006        -          
+eff_PU_el_2011          lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -          
+eff_PU_el_2012          lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_PU_mu_2011          lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_PU_mu_2012          lnN          1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            1.004        1.004        1.004        1.004        1.004        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_R9_2011             lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -          
+eff_R9_2012             lnN          1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_all_2011            lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.008        1.008        1.008        1.008        1.008        -          
+eff_el_2011             lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            -            -            -            -            -            -          
+eff_el_2012             lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            1.008        1.008        1.008        1.008        1.008        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_g_EB_2011           lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -            -            -            -            -            -            -          
+eff_g_EB_2012           lnN          1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -            -            -            -            -            -            -            1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -            1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -            -            -            -            -            -            -            1.006        1.006        1.006        1.006        1.006        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_g_EE_2011           lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -          
+eff_g_EE_2012           lnN          -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            1.01         1.01         1.01         1.01         1.01         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_mu_2011             lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.007        1.007        1.007        1.007        1.007        -            1.007        1.007        1.007        1.007        1.007        -            1.007        1.007        1.007        1.007        1.007        -            1.007        1.007        1.007        1.007        1.007        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_mu_2012             lnN          1.014        1.014        1.014        1.014        1.014        -            1.014        1.014        1.014        1.014        1.014        -            1.014        1.014        1.014        1.014        1.014        -            1.014        1.014        1.014        1.014        1.014        -            1.014        1.014        1.014        1.014        1.014        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_trig_all_2011       lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -          
+eff_trig_el_2011        lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            -            -            -            -            -            -          
+eff_trig_el_2012        lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.02         1.02         1.02         1.02         1.02         -            1.02         1.02         1.02         1.02         1.02         -            1.02         1.02         1.02         1.02         1.02         -            1.02         1.02         1.02         1.02         1.02         -            1.02         1.02         1.02         1.02         1.02         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_trig_mu_2011        lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+eff_trig_mu_2012        lnN          1.035        1.035        1.035        1.035        1.035        -            1.035        1.035        1.035        1.035        1.035        -            1.035        1.035        1.035        1.035        1.035        -            1.035        1.035        1.035        1.035        1.035        -            1.035        1.035        1.035        1.035        1.035        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+err_BR_2011             lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -          
+err_BR_2012             lnN          0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  0.912/1.090  -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+lumi_2011               lnN          -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -          
+lumi_2012               lnN          1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+pdf_gg                  lnN          0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -          
+pdf_qqbar               lnN          -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -          
+sig_gg_mShift_el_2011_cat4  param  1 0.01
+sig_zh_mShift_el_2012_cat4  param  1 0.01
+sig_zh_mShift_mu_2011_cat4  param  1 0.01
+sig_zh_mShift_mu_2011_cat1  param  1 0.01
+sig_zh_mShift_mu_2011_cat3  param  1 0.01
+sig_zh_mShift_mu_2011_cat2  param  1 0.01
+sig_wh_mShift_el_2012_cat2  param  1 0.01
+sig_wh_mShift_el_2012_cat3  param  1 0.01
+sig_wh_mShift_el_2012_cat1  param  1 0.01
+sig_gg_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_gg_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_gg_sigmaShift_mu_2012_cat3  param  1 0.05
+sig_vbf_mShift_all_2011_cat5  param  1 0.01
+sig_zh_sigmaShift_el_2012_cat1  param  1 0.05
+sig_tth_mShift_all_2011_cat5  param  1 0.01
+sig_zh_sigmaShift_el_2012_cat3  param  1 0.05
+sig_zh_sigmaShift_el_2012_cat2  param  1 0.05
+sig_zh_sigmaShift_el_2012_cat5  param  1 0.05
+sig_zh_sigmaShift_el_2012_cat4  param  1 0.05
+sig_vbf_sigmaShift_all_2011_cat5  param  1 0.05
+sig_gg_mShift_el_2012_cat1  param  1 0.01
+sig_gg_mShift_el_2012_cat3  param  1 0.01
+sig_gg_mShift_el_2012_cat2  param  1 0.01
+sig_gg_mShift_el_2012_cat5  param  1 0.01
+sig_gg_mShift_el_2012_cat4  param  1 0.01
+sig_gg_sigmaShift_all_2011_cat5  param  1 0.05
+sig_tth_sigmaShift_all_2011_cat5  param  1 0.05
+sig_gg_sigmaShift_el_2012_cat1  param  1 0.05
+sig_gg_mShift_all_2011_cat5  param  1 0.01
+sig_gg_sigmaShift_el_2012_cat3  param  1 0.05
+sig_gg_sigmaShift_el_2012_cat2  param  1 0.05
+sig_gg_sigmaShift_el_2012_cat5  param  1 0.05
+sig_gg_sigmaShift_el_2012_cat4  param  1 0.05
+sig_vbf_sigmaShift_el_2012_cat4  param  1 0.05
+sig_vbf_sigmaShift_el_2012_cat5  param  1 0.05
+sig_vbf_sigmaShift_el_2012_cat1  param  1 0.05
+sig_vbf_sigmaShift_el_2012_cat2  param  1 0.05
+sig_vbf_sigmaShift_el_2012_cat3  param  1 0.05
+sig_wh_mShift_mu_2012_cat5  param  1 0.01
+sig_wh_mShift_mu_2012_cat4  param  1 0.01
+sig_wh_mShift_mu_2012_cat3  param  1 0.01
+sig_wh_mShift_mu_2012_cat2  param  1 0.01
+sig_wh_mShift_mu_2012_cat1  param  1 0.01
+sig_zh_mShift_el_2012_cat1  param  1 0.01
+sig_vbf_mShift_el_2012_cat5  param  1 0.01
+sig_zh_mShift_el_2012_cat3  param  1 0.01
+sig_zh_mShift_el_2012_cat2  param  1 0.01
+sig_zh_mShift_el_2012_cat5  param  1 0.01
+sig_vbf_mShift_el_2012_cat1  param  1 0.01
+sig_vbf_mShift_el_2012_cat2  param  1 0.01
+sig_vbf_mShift_el_2012_cat3  param  1 0.01
+sig_vbf_sigmaShift_mu_2011_cat1  param  1 0.05
+sig_vbf_sigmaShift_mu_2011_cat2  param  1 0.05
+sig_vbf_sigmaShift_mu_2011_cat3  param  1 0.05
+sig_vbf_sigmaShift_mu_2011_cat4  param  1 0.05
+sig_wh_mShift_el_2011_cat4  param  1 0.01
+sig_wh_mShift_el_2011_cat3  param  1 0.01
+sig_wh_mShift_el_2011_cat2  param  1 0.01
+sig_wh_mShift_el_2011_cat1  param  1 0.01
+sig_gg_sigmaShift_el_2011_cat1  param  1 0.05
+sig_wh_sigmaShift_mu_2011_cat2  param  1 0.05
+sig_wh_sigmaShift_mu_2011_cat3  param  1 0.05
+sig_wh_sigmaShift_mu_2011_cat1  param  1 0.05
+sig_wh_sigmaShift_mu_2011_cat4  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat5  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat4  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat3  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_tth_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat5  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat4  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat3  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_wh_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_wh_sigmaShift_el_2012_cat2  param  1 0.05
+sig_tth_sigmaShift_mu_2011_cat1  param  1 0.05
+sig_wh_mShift_all_2011_cat5  param  1 0.01
+sig_wh_sigmaShift_el_2012_cat3  param  1 0.05
+sig_tth_mShift_mu_2011_cat2  param  1 0.01
+sig_tth_mShift_mu_2011_cat3  param  1 0.01
+sig_tth_mShift_mu_2011_cat1  param  1 0.01
+sig_tth_mShift_mu_2011_cat4  param  1 0.01
+sig_vbf_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_vbf_sigmaShift_mu_2012_cat3  param  1 0.05
+sig_vbf_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_vbf_sigmaShift_mu_2012_cat5  param  1 0.05
+sig_vbf_sigmaShift_mu_2012_cat4  param  1 0.05
+sig_gg_sigmaShift_mu_2012_cat4  param  1 0.05
+sig_gg_sigmaShift_el_2011_cat2  param  1 0.05
+sig_gg_sigmaShift_el_2011_cat3  param  1 0.05
+sig_gg_sigmaShift_el_2011_cat4  param  1 0.05
+sig_wh_sigmaShift_el_2012_cat4  param  1 0.05
+sig_gg_sigmaShift_mu_2012_cat5  param  1 0.05
+sig_tth_sigmaShift_mu_2011_cat2  param  1 0.05
+sig_tth_sigmaShift_mu_2011_cat3  param  1 0.05
+sig_wh_sigmaShift_el_2012_cat5  param  1 0.05
+sig_tth_sigmaShift_mu_2011_cat4  param  1 0.05
+sig_wh_sigmaShift_all_2011_cat5  param  1 0.05
+sig_zh_mShift_el_2011_cat1  param  1 0.01
+sig_zh_mShift_el_2011_cat2  param  1 0.01
+sig_zh_mShift_el_2011_cat3  param  1 0.01
+sig_zh_mShift_el_2011_cat4  param  1 0.01
+sig_vbf_sigmaShift_el_2011_cat3  param  1 0.05
+sig_tth_mShift_el_2012_cat2  param  1 0.01
+sig_tth_mShift_el_2012_cat3  param  1 0.01
+sig_tth_mShift_el_2012_cat1  param  1 0.01
+sig_tth_mShift_el_2012_cat4  param  1 0.01
+sig_tth_mShift_el_2012_cat5  param  1 0.01
+sig_wh_mShift_el_2012_cat4  param  1 0.01
+sig_wh_mShift_el_2012_cat5  param  1 0.01
+sig_tth_sigmaShift_el_2011_cat3  param  1 0.05
+sig_tth_sigmaShift_el_2011_cat2  param  1 0.05
+sig_tth_sigmaShift_el_2011_cat1  param  1 0.05
+sig_vbf_mShift_mu_2012_cat1  param  1 0.01
+sig_vbf_mShift_mu_2012_cat3  param  1 0.01
+sig_vbf_mShift_mu_2012_cat2  param  1 0.01
+sig_vbf_mShift_mu_2012_cat5  param  1 0.01
+sig_vbf_mShift_mu_2012_cat4  param  1 0.01
+sig_tth_sigmaShift_el_2012_cat2  param  1 0.05
+sig_tth_sigmaShift_el_2012_cat3  param  1 0.05
+sig_tth_sigmaShift_el_2012_cat1  param  1 0.05
+sig_wh_sigmaShift_el_2011_cat3  param  1 0.05
+sig_tth_sigmaShift_el_2012_cat4  param  1 0.05
+sig_tth_sigmaShift_el_2012_cat5  param  1 0.05
+sig_gg_mShift_mu_2011_cat4  param  1 0.01
+sig_gg_mShift_mu_2011_cat1  param  1 0.01
+sig_gg_mShift_mu_2011_cat3  param  1 0.01
+sig_gg_mShift_mu_2011_cat2  param  1 0.01
+sig_tth_mShift_mu_2012_cat5  param  1 0.01
+sig_tth_mShift_mu_2012_cat4  param  1 0.01
+sig_tth_mShift_mu_2012_cat3  param  1 0.01
+sig_tth_mShift_mu_2012_cat2  param  1 0.01
+sig_tth_mShift_mu_2012_cat1  param  1 0.01
+sig_zh_sigmaShift_el_2011_cat1  param  1 0.05
+sig_zh_sigmaShift_el_2011_cat2  param  1 0.05
+sig_zh_sigmaShift_el_2011_cat3  param  1 0.05
+sig_zh_sigmaShift_el_2011_cat4  param  1 0.05
+sig_gg_mShift_mu_2012_cat4  param  1 0.01
+sig_gg_mShift_mu_2012_cat5  param  1 0.01
+sig_wh_sigmaShift_el_2012_cat1  param  1 0.05
+sig_gg_mShift_mu_2012_cat1  param  1 0.01
+sig_gg_mShift_mu_2012_cat2  param  1 0.01
+sig_gg_mShift_mu_2012_cat3  param  1 0.01
+sig_zh_mShift_mu_2012_cat4  param  1 0.01
+sig_zh_mShift_mu_2012_cat5  param  1 0.01
+sig_zh_mShift_mu_2012_cat1  param  1 0.01
+sig_zh_mShift_mu_2012_cat2  param  1 0.01
+sig_zh_mShift_mu_2012_cat3  param  1 0.01
+sig_wh_mShift_mu_2011_cat2  param  1 0.01
+sig_wh_mShift_mu_2011_cat3  param  1 0.01
+sig_wh_mShift_mu_2011_cat1  param  1 0.01
+sig_zh_mShift_all_2011_cat5  param  1 0.01
+sig_wh_mShift_mu_2011_cat4  param  1 0.01
+sig_zh_sigmaShift_mu_2011_cat4  param  1 0.05
+sig_zh_sigmaShift_mu_2011_cat1  param  1 0.05
+sig_zh_sigmaShift_mu_2011_cat3  param  1 0.05
+sig_zh_sigmaShift_mu_2011_cat2  param  1 0.05
+sig_gg_sigmaShift_mu_2011_cat4  param  1 0.05
+sig_gg_mShift_el_2011_cat2  param  1 0.01
+sig_gg_mShift_el_2011_cat3  param  1 0.01
+sig_gg_sigmaShift_mu_2011_cat1  param  1 0.05
+sig_gg_sigmaShift_mu_2011_cat3  param  1 0.05
+sig_gg_sigmaShift_mu_2011_cat2  param  1 0.05
+sig_vbf_mShift_el_2011_cat4  param  1 0.01
+sig_tth_sigmaShift_el_2011_cat4  param  1 0.05
+sig_vbf_mShift_el_2011_cat1  param  1 0.01
+sig_vbf_mShift_el_2011_cat3  param  1 0.01
+sig_vbf_mShift_el_2011_cat2  param  1 0.01
+sig_vbf_mShift_mu_2011_cat1  param  1 0.01
+sig_vbf_mShift_mu_2011_cat2  param  1 0.01
+sig_vbf_mShift_mu_2011_cat3  param  1 0.01
+sig_vbf_mShift_mu_2011_cat4  param  1 0.01
+sig_zh_sigmaShift_all_2011_cat5  param  1 0.05
+sig_vbf_sigmaShift_el_2011_cat4  param  1 0.05
+sig_wh_sigmaShift_el_2011_cat4  param  1 0.05
+sig_vbf_sigmaShift_el_2011_cat1  param  1 0.05
+sig_wh_sigmaShift_el_2011_cat2  param  1 0.05
+sig_wh_sigmaShift_el_2011_cat1  param  1 0.05
+sig_vbf_sigmaShift_el_2011_cat2  param  1 0.05
+sig_tth_mShift_el_2011_cat4  param  1 0.01
+sig_tth_mShift_el_2011_cat3  param  1 0.01
+sig_tth_mShift_el_2011_cat2  param  1 0.01
+sig_tth_mShift_el_2011_cat1  param  1 0.01
+sig_zh_sigmaShift_mu_2012_cat4  param  1 0.05
+sig_zh_sigmaShift_mu_2012_cat5  param  1 0.05
+sig_zh_sigmaShift_mu_2012_cat1  param  1 0.05
+sig_zh_sigmaShift_mu_2012_cat2  param  1 0.05
+sig_zh_sigmaShift_mu_2012_cat3  param  1 0.05
+sig_vbf_mShift_el_2012_cat4  param  1 0.01
+sig_gg_mShift_el_2011_cat1  param  1 0.01
+bkg_p1_el_2012_cat4  flatParam
+bkg_p1_el_2012_cat5  flatParam
+bkg_p1_el_2012_cat2  flatParam
+bkg_p1_el_2012_cat3  flatParam
+bkg_p1_el_2012_cat1  flatParam
+bkg_p2_el_2012_cat3  flatParam
+bkg_p2_el_2012_cat2  flatParam
+bkg_p2_el_2012_cat1  flatParam
+bkg_p2_el_2012_cat5  flatParam
+bkg_p2_el_2012_cat4  flatParam
+bkg_p5_mu_2012_cat4  flatParam
+bkg_p5_mu_2012_cat3  flatParam
+bkg_p5_mu_2012_cat2  flatParam
+bkg_p5_mu_2012_cat1  flatParam
+bkg_sigma_el_2011_cat1  flatParam
+bkg_sigma_el_2011_cat2  flatParam
+bkg_sigma_el_2011_cat3  flatParam
+bkg_sigma_el_2011_cat4  flatParam
+bkg_el_2011_cat1_norm  flatParam
+bkg_el_2012_cat1_norm  flatParam
+bkg_sigma_mu_2011_cat4  flatParam
+bkg_el_2011_cat3_norm  flatParam
+bkg_p1_el_2011_cat3  flatParam
+bkg_p3_mu_2011_cat1  flatParam
+bkg_p3_mu_2011_cat2  flatParam
+bkg_p3_mu_2011_cat3  flatParam
+bkg_p3_mu_2011_cat4  flatParam
+bkg_p1_el_2011_cat4  flatParam
+bkg_p5_mu_2011_cat2  flatParam
+bkg_sigma_mu_2011_cat1  flatParam
+bkg_p5_mu_2011_cat4  flatParam
+bkg_el_2012_cat3_norm  flatParam
+bkg_sigma_mu_2011_cat3  flatParam
+bkg_sigma_mu_2011_cat2  flatParam
+bkg_el_2012_cat4_norm  flatParam
+bkg_mu_2012_cat2_norm  flatParam
+bkg_p4_el_2012_cat1  flatParam
+bkg_p4_el_2012_cat3  flatParam
+bkg_p4_el_2012_cat2  flatParam
+bkg_p4_el_2012_cat4  flatParam
+bkg_el_2012_cat5_norm  flatParam
+bkg_p1_mu_2011_cat4  flatParam
+bkg_p1_mu_2011_cat2  flatParam
+bkg_p1_mu_2011_cat3  flatParam
+bkg_p1_mu_2011_cat1  flatParam
+bkg_step_el_2011_cat1  flatParam
+bkg_step_el_2011_cat2  flatParam
+bkg_el_2012_cat2_norm  flatParam
+bkg_step_el_2011_cat4  flatParam
+bkg_mu_2011_cat4_norm  flatParam
+bkg_p3_mu_2012_cat1  flatParam
+bkg_p3_mu_2012_cat3  flatParam
+bkg_p3_mu_2012_cat2  flatParam
+bkg_p3_mu_2012_cat5  flatParam
+bkg_p3_mu_2012_cat4  flatParam
+bkg_step_el_2012_cat4  flatParam
+bkg_step_el_2012_cat1  flatParam
+bkg_step_el_2012_cat3  flatParam
+bkg_step_el_2012_cat2  flatParam
+bkg_p4_el_2011_cat1  flatParam
+bkg_p4_el_2011_cat2  flatParam
+bkg_p4_el_2011_cat3  flatParam
+bkg_p4_el_2011_cat4  flatParam
+bkg_p2_mu_2011_cat3  flatParam
+bkg_p2_mu_2011_cat2  flatParam
+bkg_p2_mu_2011_cat1  flatParam
+bkg_p2_mu_2011_cat4  flatParam
+bkg_p4_mu_2012_cat4  flatParam
+bkg_mu_2011_cat1_norm  flatParam
+bkg_p4_mu_2012_cat1  flatParam
+bkg_p4_mu_2012_cat2  flatParam
+bkg_p4_mu_2012_cat3  flatParam
+bkg_mu_2011_cat2_norm  flatParam
+bkg_sigma_mu_2012_cat4  flatParam
+bkg_sigma_mu_2012_cat1  flatParam
+bkg_sigma_mu_2012_cat2  flatParam
+bkg_sigma_mu_2012_cat3  flatParam
+bkg_step_el_2011_cat3  flatParam
+bkg_p1_all_2011_cat5  flatParam
+bkg_p1_el_2011_cat2  flatParam
+bkg_p3_all_2011_cat5  flatParam
+bkg_p1_el_2011_cat1  flatParam
+bkg_p3_el_2012_cat4  flatParam
+bkg_p3_el_2012_cat5  flatParam
+bkg_el_2011_cat4_norm  flatParam
+bkg_p3_el_2012_cat1  flatParam
+bkg_p3_el_2012_cat2  flatParam
+bkg_p3_el_2012_cat3  flatParam
+bkg_p4_mu_2011_cat4  flatParam
+bkg_p4_mu_2011_cat1  flatParam
+bkg_p4_mu_2011_cat3  flatParam
+bkg_p4_mu_2011_cat2  flatParam
+bkg_all_2011_cat5_norm  flatParam
+bkg_p5_el_2012_cat2  flatParam
+bkg_p5_el_2012_cat3  flatParam
+bkg_p5_el_2012_cat4  flatParam
+bkg_p5_mu_2011_cat3  flatParam
+bkg_p1_mu_2012_cat3  flatParam
+bkg_p1_mu_2012_cat2  flatParam
+bkg_p1_mu_2012_cat1  flatParam
+bkg_p5_el_2011_cat4  flatParam
+bkg_p5_el_2011_cat3  flatParam
+bkg_p5_el_2011_cat2  flatParam
+bkg_p1_mu_2012_cat5  flatParam
+bkg_p1_mu_2012_cat4  flatParam
+bkg_p2_all_2011_cat5  flatParam
+bkg_p3_el_2011_cat4  flatParam
+bkg_mu_2012_cat5_norm  flatParam
+bkg_p2_mu_2012_cat4  flatParam
+bkg_p2_mu_2012_cat5  flatParam
+bkg_p2_mu_2012_cat2  flatParam
+bkg_p2_mu_2012_cat3  flatParam
+bkg_p3_el_2011_cat3  flatParam
+bkg_p2_mu_2012_cat1  flatParam
+bkg_mu_2012_cat4_norm  flatParam
+bkg_p3_el_2011_cat1  flatParam
+bkg_sigma_el_2012_cat1  flatParam
+bkg_el_2011_cat2_norm  flatParam
+bkg_sigma_el_2012_cat3  flatParam
+bkg_sigma_el_2012_cat2  flatParam
+bkg_sigma_el_2012_cat4  flatParam
+bkg_mu_2012_cat3_norm  flatParam
+bkg_p3_el_2011_cat2  flatParam
+bkg_mu_2011_cat3_norm  flatParam
+bkg_step_mu_2012_cat1  flatParam
+bkg_step_mu_2012_cat2  flatParam
+bkg_step_mu_2012_cat3  flatParam
+bkg_step_mu_2012_cat4  flatParam
+bkg_mu_2012_cat1_norm  flatParam
+bkg_p2_el_2011_cat4  flatParam
+bkg_p2_el_2011_cat2  flatParam
+bkg_p2_el_2011_cat3  flatParam
+bkg_p2_el_2011_cat1  flatParam
+bkg_step_mu_2011_cat4  flatParam
+bkg_step_mu_2011_cat1  flatParam
+bkg_step_mu_2011_cat3  flatParam
+bkg_step_mu_2011_cat2  flatParam

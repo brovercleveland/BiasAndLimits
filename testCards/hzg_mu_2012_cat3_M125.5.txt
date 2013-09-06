@@ -1,0 +1,56 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * testCardBackground.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * testCardBackground.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_mu_2012_cat3_125.5.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_mu_2012_cat3_125.5.root ws_card:sig_vbf_$CHANNEL
+shapes sig_wh   * SignalOutput_mu_2012_cat3_125.5.root ws_card:sig_wh_$CHANNEL
+shapes sig_zh   * SignalOutput_mu_2012_cat3_125.5.root ws_card:sig_zh_$CHANNEL
+shapes sig_tth  * SignalOutput_mu_2012_cat3_125.5.root ws_card:sig_tth_$CHANNEL
+---------------
+bin          mu_2012_cat3
+observation  4076
+------------------------------
+bin                        mu_2012_cat3    mu_2012_cat3    mu_2012_cat3    mu_2012_cat3    mu_2012_cat3    mu_2012_cat3  
+process                       sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.0043105        0.04508        0.043654        0.074102         1.0946             1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       0.922/1.078          -               -               -          0.922/1.072          -       
+pdf_qqbar         lnN            -          0.965/1.035     0.965/1.035     0.972/1.026          -               -       
+QCDscale_ggH      lnN            -               -               -               -          0.931/1.075          -       
+QCDscale_qqH      lnN            -               -               -          0.998/1.002          -               -       
+QCDscale_VH       lnN            -          0.985/1.016     0.994/1.002          -               -               -       
+QCDscale_ttH      lnN       0.907/1.038          -               -               -               -               -       
+lumi_2012         lnN          1.044           1.044           1.044           1.044           1.044             -       
+eff_mu_2012       lnN          1.014           1.014           1.014           1.014           1.014             -       
+eff_trig_mu_2012  lnN          1.035           1.035           1.035           1.035           1.035             -       
+eff_PU_mu_2012    lnN          1.004           1.004           1.004           1.004           1.004             -       
+eff_g_EE_2012     lnN          1.010           1.010           1.010           1.010           1.010             -       
+JES               lnN            -               -               -             1.022           1.001             -       
+JER               lnN            -               -               -             1.014           1.001             -       
+UEPS              lnN            -               -               -             1.021           1.002             -       
+err_BR_2012       lnN       0.912/1.089     0.912/1.089     0.912/1.089     0.912/1.089     0.912/1.089          -       
+sig_gg_mShift_mu_2012_cat3               param          1         0.01   
+sig_gg_sigmaShift_mu_2012_cat3           param          1         0.05   
+sig_vbf_mShift_mu_2012_cat3              param          1         0.01   
+sig_vbf_sigmaShift_mu_2012_cat3          param          1         0.05   
+sig_wh_mShift_mu_2012_cat3               param          1         0.01   
+sig_wh_sigmaShift_mu_2012_cat3           param          1         0.05   
+sig_zh_mShift_mu_2012_cat3               param          1         0.01   
+sig_zh_sigmaShift_mu_2012_cat3           param          1         0.05   
+sig_tth_mShift_mu_2012_cat3              param          1         0.01   
+sig_tth_sigmaShift_mu_2012_cat3          param          1         0.05   
+bkg_p1_mu_2012_cat3                           flatParam      
+bkg_p2_mu_2012_cat3                           flatParam      
+bkg_p3_mu_2012_cat3                           flatParam      
+bkg_p4_mu_2012_cat3                           flatParam      
+bkg_p5_mu_2012_cat3                           flatParam      
+bkg_sigma_mu_2012_cat3                        flatParam      
+bkg_step_mu_2012_cat3                         flatParam      
+bkg_mu_2012_cat3_norm                         flatParam      

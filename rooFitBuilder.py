@@ -288,7 +288,7 @@ def BuildPow(year,lepton,cat,mzg,alpha = 115, alphaLow = 50, alphaHigh = 200, be
   suffix = '_'.join([year,lepton,'cat'+cat])
   alphaVar = RooRealVar('alphaPow_'+suffix,'alphaPow_'+suffix,alpha,alphaLow,alphaHigh)
   betaVar = RooRealVar('betaPow_'+suffix,'betaPow_'+suffix,beta,betaLow,betaHigh)
-  Pow = RooGenericPdf('Pow_'+suffix,'Pow_'+suffix,'1e-20 + (@1)*((@0)^(-@2)',RooArgList(mzg,alphaVar,betaVar))
+  Pow = RooGenericPdf('Pow_'+suffix,'Pow_'+suffix,'1e-20 + (@1)*((@0)^(-@2))',RooArgList(mzg,alphaVar,betaVar))
   SetOwnership(alphaVar,0)
   SetOwnership(betaVar,0)
   return Pow

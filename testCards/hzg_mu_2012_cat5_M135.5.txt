@@ -1,0 +1,43 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * testCardBackground.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * testCardBackground.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_mu_2012_cat5_135.5.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_mu_2012_cat5_135.5.root ws_card:sig_vbf_$CHANNEL
+---------------
+bin          mu_2012_cat5
+observation  21
+------------------------------
+bin                        mu_2012_cat5    mu_2012_cat5    mu_2012_cat5  
+process                       sig_vbf         sig_gg            bkg      
+process                         -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                          0.19235        0.049925            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN            -          0.924/1.07           -       
+pdf_qqbar         lnN       0.973/1.026          -               -       
+QCDscale_ggH      lnN            -          0.93/1.074           -       
+QCDscale_qqH      lnN       0.998/1.002          -               -       
+lumi_2012         lnN          1.044           1.044             -       
+eff_mu_2012       lnN          1.014           1.014             -       
+eff_trig_mu_2012  lnN          1.035           1.035             -       
+eff_PU_mu_2012    lnN          1.004           1.004             -       
+eff_g_EE_2012     lnN          1.010           1.010             -       
+JES               lnN          1.046           1.110             -       
+JER               lnN          1.019           1.060             -       
+UEPS              lnN          1.070           1.249             -       
+JetID             lnN          1.016           1.017             -       
+JetAcc            lnN          1.009           1.021             -       
+err_BR_2012       lnN       0.922/1.078     0.922/1.078          -       
+sig_gg_mShift_mu_2012_cat5               param          1         0.01   
+sig_gg_sigmaShift_mu_2012_cat5           param          1         0.05   
+sig_vbf_mShift_mu_2012_cat5              param          1         0.01   
+sig_vbf_sigmaShift_mu_2012_cat5          param          1         0.05   
+bkg_p1_mu_2012_cat5                           flatParam      
+bkg_p2_mu_2012_cat5                           flatParam      
+bkg_p3_mu_2012_cat5                           flatParam      
+bkg_mu_2012_cat5_norm                         flatParam      
