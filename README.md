@@ -28,7 +28,13 @@ Flow goes like this:
 
 Bias:
 -----
-Use `initialFitProducer.py` to generate all the initial inputs for bias study toy-making.  The `biasStudy_toyMaker.py` will then be used, usually in with a batch system, to generate a whole lotta fits.
+Use `initialFitProducer.py` to generate all the initial inputs for bias study toy-making.
+
+The `biasStudy_toyMaker.py` will then be used, usually in with a batch system, to generate a whole lotta fits.  Output is a simple TTree with branches corresponding to the generated toy data and the test functions.  A multitude of quality checks have been put in place to safegaurd against poor fits with non-physical results.
+
+`plotPulls.py` must be updated to sync with the new naming scheme for the toy files.
+
+`makeTables.py` generates LaTeX tables that highlight the best possible fitting function for a given channel.
 
 Limits:
 -------
