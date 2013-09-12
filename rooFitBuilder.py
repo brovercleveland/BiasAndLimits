@@ -110,6 +110,8 @@ def BuildGaussStepBern3(year,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.01
 
 def BuildGaussStepBern4(year,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
     p0 = 15, p1 = 0.4, p1Low = -1e-6, p1High = 900,p2 = 0.4, p2Low = -1e-6, p2High = 900,p3 = 0.4, p3Low = -1e-6, p3High = 900, p4 = 0.4, p4Low = -1e-6, p4High = 900):
+  #def BuildGaussStepBern4(year,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
+    #p0 = 15, p1 = 0.4, p1Low = -1e2, p1High = 900,p2 = 0.4, p2Low = -1e2, p2High = 900,p3 = 0.4, p3Low = -1e2, p3High = 900, p4 = 0.4, p4Low = -1e2, p4High = 900):
   suffix = '_'.join([year,lepton,'cat'+cat])
   meanVar = RooRealVar('meanGaussBern4_'+suffix,'meanGaussBern4_'+suffix, mean)
   sigmaVar = RooRealVar('sigmaGaussBern4_'+suffix,'sigmaGaussBern4_'+suffix,sigma,sigmaLow,sigmaHigh)
@@ -135,6 +137,8 @@ def BuildGaussStepBern4(year,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.00
 
 def BuildGaussStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
     p0 = 15, p1 = 0.5, p1Low = -1e-6, p1High = 900,p2 = 0.5, p2Low = -1e-6, p2High = 900,p3 = 0.5, p3Low = -1e-6, p3High = 900, p4 = 0.5, p4Low = -1e-6, p4High = 900, p5 = 0.5, p5Low = -1e-6, p5High = 900):
+  #def BuildGaussStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
+   # p0 = 15, p1 = 0.5, p1Low = -1e2, p1High = 900,p2 = 0.5, p2Low = -1e2, p2High = 900,p3 = 0.5, p3Low = -1e2, p3High = 900, p4 = 0.5, p4Low = -1e2, p4High = 900, p5 = 0.5, p5Low = -1e2, p5High = 900):
   suffix = '_'.join([year,lepton,'cat'+cat])
   meanVar = RooRealVar('meanGaussBern5_'+suffix,'meanGaussBern5_'+suffix, mean)
   sigmaVar = RooRealVar('sigmaGaussBern5_'+suffix,'sigmaGaussBern5_'+suffix,sigma,sigmaLow,sigmaHigh)
@@ -160,9 +164,12 @@ def BuildGaussStepBern5(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.00
   SetOwnership(p5Var,0)
   return GaussBern5
 
+#def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
+#    p0 = 15, p1 = 0.5, p1Low = -1e-6, p1High = 900,p2 = 0.5, p2Low = -1e-6, p2High = 900,p3 = 0.5, p3Low = -1e-6, p3High = 900,
+#    p4 = 0.5, p4Low = -1e-6, p4High = 900, p5 = 0.5, p5Low = -1e-6, p5High = 900, p6 = 0.5, p6Low = -1e-6, p6High = 900):
 def BuildGaussStepBern6(year,lepton,cat,mzg,mean = 0, sigma = 5, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
-    p0 = 15, p1 = 0.5, p1Low = -1e-6, p1High = 900,p2 = 0.5, p2Low = -1e-6, p2High = 900,p3 = 0.5, p3Low = -1e-6, p3High = 900,
-    p4 = 0.5, p4Low = -1e-6, p4High = 900, p5 = 0.5, p5Low = -1e-6, p5High = 900, p6 = 0.5, p6Low = -1e-6, p6High = 900):
+    p0 = 15, p1 = 0.5, p1Low = -1e2, p1High = 900,p2 = 0.5, p2Low = -1e2, p2High = 900,p3 = 0.5, p3Low = -1e2, p3High = 900,
+    p4 = 0.5, p4Low = -1e2, p4High = 900, p5 = 0.5, p5Low = -1e2, p5High = 900, p6 = 0.5, p6Low = -1e2, p6High = 900):
   suffix = '_'.join([year,lepton,'cat'+cat])
   meanVar = RooRealVar('meanGaussBern6_'+suffix,'meanGaussBern6_'+suffix, mean)
   sigmaVar = RooRealVar('sigmaGaussBern6_'+suffix,'sigmaGaussBern6_'+suffix,sigma,sigmaLow,sigmaHigh)
@@ -332,6 +339,14 @@ def BuildBern4(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p
   SetOwnership(p4Var,0)
   return Bern4
 
+def BuildRooGaussian(year,lepton,cat,mzg, mean = 125,meanLow = 100, meanHigh = 150, sigma = 1.5, sigmaLow = 0.3, sigmaHigh = 70):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  meanVar = RooRealVar('mean_'+suffix,'mean_'+suffix, mean, meanLow, meanHigh)
+  sigmaVar = RooRealVar('sigma_'+suffix,'sigma_'+suffix,sigma,sigmaLow,sigmaHigh)
+  gauss = RooGaussian('gauss_'+suffix,'gauss_'+suffix,mzg,meanVar,sigmaVar)
+  SetOwnership(meanVar,0)
+  SetOwnership(sigmaVar,0)
+  return gauss
 
 def BuildCrystalBallGauss(year,lepton,cat,sig,mass,piece,mzg, mean = 125,meanLow = -1, meanHigh = -1, sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 20, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
     n = 4, nLow = 0.5, nHigh = 50, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 20, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):

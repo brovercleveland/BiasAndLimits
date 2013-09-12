@@ -10,7 +10,7 @@ Flow goes like this:
     <th>Bias</th><th>Limits</th><th>Fit Plots</th>
   </tr>
   <tr>
-    <td>TBD</td><td>signalCBFits.py</td><td>TBD</td>
+    <td>biasStudy_toyMaker.py</td><td>signalCBFits.py</td><td>TBD</td>
   </tr>
   <tr>
     <td>plotPulls.py</td><td>bgCardPrep.py</td><td>TBD</td>
@@ -28,6 +28,8 @@ Flow goes like this:
 
 Bias:
 -----
+Use `initialFitProducer.py` to generate all the initial inputs for bias study toy-making.  The `biasStudy_toyMaker.py` will then be used, usually in with a batch system, to generate a whole lotta fits.
+
 Limits:
 -------
 The `initialFitProducer.py` creates all potential BG fit candidates, including the 'chosen' fits that are used in the analysis.  This macro also stores the unbinned signal distributions, weighted according to their associated scalefactors and scaled to the appropriate yield for their run year.  The outputs for this macro are then fed into the next steps.

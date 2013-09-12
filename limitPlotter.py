@@ -89,10 +89,10 @@ if fullCombo:
   expected.SetMarkerStyle(kFullCircle)
   expected.SetMarkerSize(1.5)
   expected.SetLineColor(kBlack)
-  expected.SetLineWidth(1)
+  expected.SetLineWidth(2)
   expected.SetLineStyle(2)
 
-  observed.SetLineWidth(1)
+  observed.SetLineWidth(2)
 
   mg.Add(twoSigma)
   mg.Add(oneSigma)
@@ -102,6 +102,7 @@ if fullCombo:
   mg.Draw('AL3')
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
   mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
+  mg.GetXaxis().SetLimits(massList[0],massList[-1]);
 
   c.Print('debugPlots/testLimits.pdf')
 
