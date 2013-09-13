@@ -33,19 +33,19 @@ def doInitialFits():
   #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_loose.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_loose.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
 #  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_diag.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_2Dv4.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_2Dv4.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
-  leptonList = ['mu']
+  leptonList = ['mu','el']
   yearList = ['2012']
   #yearList = ['2011','2012']
   #catList = ['0','1','2','3','4','5']
-  catList = ['0']
+  catList = ['0','1','2','3','4']
   #catList = ['5']
   #massList = ['120','125','130','135','140','145','150','155','160']
-  massList = []
+  massList = ['125']
   #sigNameList = ['gg','vbf','tth','wh','zh']
-  sigNameList = []
+  sigNameList = ['gg']
   '''
 
   leptonList = ['mu','el']
@@ -234,10 +234,10 @@ def doInitialFits():
           SechExp = BuildSechExp(year, lepton, cat, mzg)
           SechPow = BuildSechPow(year, lepton, cat, mzg)
           GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg)
-          #GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg)
-          #GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg)
-          GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg, step = 112, stepLow = 107, stepHigh = 150, sigma = 2.5)
-          GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg, step = 112, stepLow = 107, stepHigh = 150, sigma = 2.5)
+          GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg)
+          GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg)
+          #GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg, step = 112, stepLow = 107, stepHigh = 150, sigma = 2.5)
+          #GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg, step = 112, stepLow = 107, stepHigh = 150, sigma = 2.5)
           GaussBern6 = BuildGaussStepBern6(year, lepton, cat, mzg)
           SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg)
           if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(year, lepton, cat, mzg,sigma=2)
@@ -267,8 +267,8 @@ def doInitialFits():
           #GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
           #GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
           #gauss.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
-          GaussBern4.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
-          GaussBern5.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
+          GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
+          GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
           #GaussBern6.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
           #GaussBern6.fitTo(data_ds,RooFit.Range('fullRegion'))
           #SechBern3.fitTo(data_ds,RooFit.Range('fullRegion'))

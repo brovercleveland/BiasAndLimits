@@ -17,7 +17,8 @@ CMSStyle()
 # Run with: combine -M Asymptotic datacard.txt  #
 #################################################
 
-def makeCards():
+def makeCards(METest = True):
+  MESigScale = 0.887
   '''
   leptonList = ['mu','el']
   yearList = ['2012','2011']
@@ -29,20 +30,25 @@ def makeCards():
   yearList = ['2011','2012']
   catList = ['1','2','3','4','5']
   #catList = ['1']
-  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
-   '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
-   '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
-   '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
-   '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
-   '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
-
-  bgFile = TFile('testCards/testCardBackground.root')
-  bgWs = bgFile.Get('ws_card')
-  bgFileName = 'testCardBackground.root'
+  #massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
+  # '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
+  # '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
+  # '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
+  # '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
+  # '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
+  massList = ['125.0']
 
   for year in yearList:
     for lepton in leptonList:
       for cat in catList:
+        if METest and year is '2012' and cat is not '5':
+          bgFile = TFile('testCards/testCardBackground_ME.root')
+          bgWs = bgFile.Get('ws_card')
+          bgFileName = 'testCardBackground_ME.root'
+        else:
+          bgFile = TFile('testCards/testCardBackground.root')
+          bgWs = bgFile.Get('ws_card')
+          bgFileName = 'testCardBackground.root'
         sigNameList = ['gg','vbf','wh','zh','tth']
         if year is '2011' and cat is '5' and lepton is 'mu': continue
         elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
@@ -65,7 +71,10 @@ def makeCards():
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]
 
-          card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
+          if METest:
+            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'ME'])+'.txt','w')
+          else:
+            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
           card.write('#more comments\n')
           card.write('imax *\n')
@@ -92,7 +101,10 @@ def makeCards():
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
           sigYields = []
           for sig in prefixSigList[::-1]:
-            sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal())
+            if METest and year is '2012' and cat is not '5':
+              sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal()*MESigScale)
+            else:
+              sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal())
           if cat is not '5':
             card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
             card.write('-----------------------------------------------------------------------------------------------------------------------\n')

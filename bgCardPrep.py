@@ -12,10 +12,11 @@ CMSStyle()
 leptonList = ['mu','el']
 yearList = ['2012']
 #yearList = ['2012','2011']
-catList = ['0']
+#catList = ['0']
+catList = ['1','2','3','4']
 
-rooWsFile = TFile('testRooFitOut_Poter.root')
-#rooWsFile = TFile('testRooFitOut_ME.root')
+#rooWsFile = TFile('testRooFitOut_Poter.root')
+rooWsFile = TFile('testRooFitOut_ME.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -58,16 +59,17 @@ for year in yearList:
 
       ###### Extend the fit (give it a normalization parameter)
       print dataName
-      sumEntries = data.sumEntries('1','signal')
-      print sumEntries
-      raw_input()
+      sumEntries = data.sumEntries()
+      sumEntriesS = data.sumEntries('1','signal')
+      print sumEntries, sumEntriesS
+      #raw_input()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
       fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
       fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
 
-      #fit_ext.fitTo(data,RooFit.Range('fullRegion'))
+      fit_ext.fitTo(data,RooFit.Range('fullRegion'))
 
       testFrame = mzg.frame()
       data.plotOn(testFrame)
@@ -78,7 +80,6 @@ for year in yearList:
       ###### Import the fit and data, and rename them to the card convention
       dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+cat])
 
-      #getattr(card_ws,'import')(data,RooFit.RenameVariable(dataName,dataNameNew))
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
       getattr(card_ws,'import')(fit_ext)
       getattr(card_ws,'import')(dataYield)

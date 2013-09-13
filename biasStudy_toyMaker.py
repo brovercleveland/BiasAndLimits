@@ -53,16 +53,20 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
     print sigName
     sig.Print()
 
-  # get the test functions, turn them into extended pdfs with signal models.
+  # get the test functions, turn them into extended pdfs with signal models.  Also include the gen function for closure tests
   testPdfs = []
   testBkgNorms = []
   testPdfs_ext = []
   testSigNorms = []
   testSig_ext = []
   testModels = []
+  testFuncs = testFuncs + [genFunc]
   for func in testFuncs:
     fitName = '_'.join([func,year,lepton,'cat'+cat])
-    testPdfs.append(myWs.pdf(fitName))
+    if func is genFunc:
+      testPdfs.append(genFit)
+    else:
+      testPdfs.append(myWs.pdf(fitName))
     if verbose:
       print fitName
       testPdfs[-1].Print()
@@ -92,6 +96,9 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
   from ROOT import TOYDATA
   toyDataStruct = TOYDATA()
   tree.Branch('toyData', toyDataStruct, 'totalData/I:sigWindowData')
+  from ROOT import GEN
+  genStruct = GEN()
+  tree.Branch('gen',genStruct, 'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
   for func in testFuncs:
     if func is 'GaussBern3':
       from ROOT import GAUSSBERN3
@@ -162,16 +169,17 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
       structDict[func].yieldBkgErr = testBkgNormsDict[func].getError()
       structDict[func].yieldSig = testSigNormsDict[func].getVal()
       structDict[func].yieldSigErr = testSigNormsDict[func].getError()
-      structDict[func].paramSigma = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getVal()
-      structDict[func].paramSigmaErr = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getError()
-      structDict[func].paramStep = testModelsDict[func].getParameters(toyData)['step'+suffix].getVal()
-      structDict[func].paramStepErr = testModelsDict[func].getParameters(toyData)['step'+suffix].getError()
-      structDict[func].paramP1 = testModelsDict[func].getParameters(toyData)['p1'+suffix].getVal()
-      structDict[func].paramP1Err = testModelsDict[func].getParameters(toyData)['p1'+suffix].getError()
-      structDict[func].paramP2 = testModelsDict[func].getParameters(toyData)['p2'+suffix].getVal()
-      structDict[func].paramP2Err = testModelsDict[func].getParameters(toyData)['p2'+suffix].getError()
-      structDict[func].paramP3 = testModelsDict[func].getParameters(toyData)['p3'+suffix].getVal()
-      structDict[func].paramP3Err = testModelsDict[func].getParameters(toyData)['p3'+suffix].getError()
+      if func in ['GaussBern3','GaussBern4','GaussBern5']:
+        structDict[func].paramSigma = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getVal()
+        structDict[func].paramSigmaErr = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getError()
+        structDict[func].paramStep = testModelsDict[func].getParameters(toyData)['step'+suffix].getVal()
+        structDict[func].paramStepErr = testModelsDict[func].getParameters(toyData)['step'+suffix].getError()
+        structDict[func].paramP1 = testModelsDict[func].getParameters(toyData)['p1'+suffix].getVal()
+        structDict[func].paramP1Err = testModelsDict[func].getParameters(toyData)['p1'+suffix].getError()
+        structDict[func].paramP2 = testModelsDict[func].getParameters(toyData)['p2'+suffix].getVal()
+        structDict[func].paramP2Err = testModelsDict[func].getParameters(toyData)['p2'+suffix].getError()
+        structDict[func].paramP3 = testModelsDict[func].getParameters(toyData)['p3'+suffix].getVal()
+        structDict[func].paramP3Err = testModelsDict[func].getParameters(toyData)['p3'+suffix].getError()
       if func in ['GaussBern4','GaussBern5']:
         structDict[func].paramP4 = testModelsDict[func].getParameters(toyData)['p4'+suffix].getVal()
         structDict[func].paramP4Err = testModelsDict[func].getParameters(toyData)['p4'+suffix].getError()

@@ -94,3 +94,21 @@ def makeToyStucts():
     Int_t covQual;\
     Int_t numInvalidNLL;\
   };')
+
+
+  print 'making GEN...'
+  gROOT.ProcessLine(
+  'struct GEN{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
