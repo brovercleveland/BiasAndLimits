@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import sys
 sys.argv.append('-b')
+from ROOT import gSystem
+gSystem.Load("libRooFit")
 from ROOT import *
 import numpy as np
 
@@ -8,6 +10,19 @@ gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 #gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
+
+def BuildBetaFunc(year,lepton,cat,mzg,alpha = 5, alphaLow = 1, alphaHigh = 10, beta = 2, betaLow = 1, betaHigh = 10):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  alphaVar = RooRealVar('alphaBetaFunc_'+suffix,'alphaBetaFunc_'+suffix, alpha, alphaLow, alphaHigh)
+  betaVar = RooRealVar('betaBetaFunc_'+suffix,'betaBetaFunc_'+suffix, beta, betaLow, betaHigh)
+
+  BetaFunc = RooGenericPdf('BetaFunc_'+suffix, 'BetaFunc_'+suffix, '1e-20+ROOT::Math::lgamma(@1+@2)/(ROOT::Math::lgamma(@1)*ROOT::Math::lgamma(@2))*(@0**(@1-1))*((@0-1)**(@2-1))',RooArgList(mzg,alphaVar,betaVar))
+  #print ROOT.Math.beta_pdf
+  #BetaFunc = RooFit.bindPdf('BetaFunc_'+suffix,ROOT.Math.beta_pdf,mzg,alphaVar,betaVar)
+
+  SetOwnership(alphaVar,0)
+  SetOwnership(betaVar,0)
+  return BetaFunc
 
 def BuildGaussExp(year,lepton,cat,mzg,mean = 120, meanLow = 90, meanHigh = 150, sigma = 1, sigmaLow = 0.01, sigmaHigh = 10, tau = 5, tauLow = 0, tauHigh = 50):
   suffix = '_'.join([year,lepton,'cat'+cat])

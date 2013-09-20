@@ -13,10 +13,10 @@ leptonList = ['mu','el']
 yearList = ['2012']
 #yearList = ['2012','2011']
 #catList = ['0']
-catList = ['1','2','3','4']
+catList = ['0','1','2','3','4']
 
-#rooWsFile = TFile('testRooFitOut_Poter.root')
-rooWsFile = TFile('testRooFitOut_ME.root')
+rooWsFile = TFile('testRooFitOut_Poter.root')
+#rooWsFile = TFile('testRooFitOut_ME.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -62,7 +62,7 @@ for year in yearList:
       sumEntries = data.sumEntries()
       sumEntriesS = data.sumEntries('1','signal')
       print sumEntries, sumEntriesS
-      #raw_input()
+      raw_input()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)

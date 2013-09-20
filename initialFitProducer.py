@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import sys
 sys.argv.append('-b')
-from ROOT import *
 import numpy as np
 #import pdb
 from rooFitBuilder import *
 from xsWeighter import *
+from ROOT import *
 
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.L ./CMSStyle.C')
@@ -31,9 +31,9 @@ def doInitialFits():
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_loose.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_loose.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-#  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_2Dv4.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_2Dv4.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_loose.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_loose.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_2Dv4.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_2Dv4.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
   leptonList = ['mu','el']
@@ -41,6 +41,7 @@ def doInitialFits():
   #yearList = ['2011','2012']
   #catList = ['0','1','2','3','4','5']
   catList = ['0','1','2','3','4']
+  #catList = ['0']
   #catList = ['5']
   #massList = ['120','125','130','135','140','145','150','155','160']
   massList = ['125']
@@ -59,7 +60,7 @@ def doInitialFits():
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
   mzg.setRange('fullRegion',100,190)
   mzg.setRange('oldRegion',115,190)
-  mzg.setRange('MERegion',109,190)
+  mzg.setRange('MERegion',108,160)
   mzg.setBins(50000,'cache')
 
   c = TCanvas("c","c",0,0,500,400)
@@ -245,6 +246,7 @@ def doInitialFits():
           if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(year, lepton, cat, mzg,sigma=2)
           else: SechBern5 = BuildSechStepBern5(year, lepton, cat, mzg)
           gauss = BuildRooGaussian(year, lepton, cat, mzg)
+          BetaFunc = BuildBetaFunc(year, lepton, cat, mzg)
 
           if verbose:
             GaussExp.Print()
@@ -266,9 +268,10 @@ def doInitialFits():
           #GaussBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
           #GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
           #GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
-          #gauss.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
-          GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
-          GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
+          gauss.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
+          BetaFunc.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
+          #GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
+          #GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(1))
           #GaussBern6.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(2))
           #GaussBern6.fitTo(data_ds,RooFit.Range('fullRegion'))
           #SechBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
@@ -283,13 +286,14 @@ def doInitialFits():
             #SechExp.plotOn(testFrame,RooFit.LineColor(kRed))
             #SechPow.plotOn(testFrame,RooFit.LineColor(kYellow))
             #GaussBern3.plotOn(testFrame,RooFit.LineColor(kViolet))
-            GaussBern4.plotOn(testFrame,RooFit.LineColor(kPink))
-            GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray))
+            #GaussBern4.plotOn(testFrame,RooFit.LineColor(kPink))
+            #GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray))
             #GaussBern6.plotOn(testFrame,RooFit.LineColor(kGreen+2))
             #SechBern3.plotOn(testFrame,RooFit.LineColor(kMagenta))
             #SechBern4.plotOn(testFrame,RooFit.LineColor(kBlack))
             #SechBern5.plotOn(testFrame,RooFit.LineColor(kGreen))
-            #gauss.plotOn(testFrame,RooFit.LineColor(kBlue))
+            gauss.plotOn(testFrame,RooFit.LineColor(kBlue))
+            BetaFunc.plotOn(testFrame,RooFit.LineColor(kRed))
             testFrame.Draw()
             c.Print('debugPlots/'+'_'.join(['test','fits',year,lepton,'cat'+cat])+'.pdf')
 
