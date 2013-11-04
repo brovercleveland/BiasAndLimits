@@ -11,18 +11,64 @@ gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 #gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
 
-def BuildBetaFunc(year,lepton,cat,mzg,alpha = 5, alphaLow = 1, alphaHigh = 10, beta = 2, betaLow = 1, betaHigh = 10):
+def BuildBetaAndBern(year,lepton,cat,mzg,rangeName,frac = 0.1, fracLow = 0, fracHigh = 0.9):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  beta = BuildBetaFunc(year,lepton,cat+'BB',mzg,rangeName)
+  bern = BuildBern4(year,lepton,cat+'BB',mzg)
+  fracVar = RooRealVar('fracBB_'+suffix,'fracBB_'+suffix,frac,fracLow,fracHigh)
+  bbArgs = RooArgList(beta,bern)
+  fracArg = RooArgList(fracVar)
+
+  BB = RooAddPdf('BB_'+suffix,'BB_'+suffix,bbArgs,fracArg,True)
+  #BB = RooFFTConvPdf('BB_'+suffix,'BB_'+suffix,mzg,beta,bern)
+  SetOwnership(beta,0)
+  SetOwnership(bern,0)
+  SetOwnership(fracVar,0)
+  return BB
+
+def BuildGaussAndBern(year,lepton,cat,mzg,rangeName,frac = 0.1, fracLow = 0, fracHigh = 0.9):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  gauss = BuildRooGaussian(year,lepton,cat+'GB',mzg)
+  bern = BuildBern3(year,lepton,cat+'GB',mzg)
+  fracVar = RooRealVar('fracGB_'+suffix,'fracGB_'+suffix,frac,fracLow,fracHigh)
+  gbArgs = RooArgList(gauss,bern)
+  fracArg = RooArgList(fracVar)
+
+  GB = RooAddPdf('GB_'+suffix,'GB_'+suffix,gbArgs,fracArg,True)
+  #BB = RooFFTConvPdf('BB_'+suffix,'BB_'+suffix,mzg,beta,bern)
+  SetOwnership(gauss,0)
+  SetOwnership(bern,0)
+  SetOwnership(fracVar,0)
+  return GB
+
+
+def BuildBetaFunc(year,lepton,cat,mzg,rangeName,alpha = 2, alphaLow = 1, alphaHigh = 10, beta = 5, betaLow = 1, betaHigh = 10):
   suffix = '_'.join([year,lepton,'cat'+cat])
   alphaVar = RooRealVar('alphaBetaFunc_'+suffix,'alphaBetaFunc_'+suffix, alpha, alphaLow, alphaHigh)
   betaVar = RooRealVar('betaBetaFunc_'+suffix,'betaBetaFunc_'+suffix, beta, betaLow, betaHigh)
-
-  BetaFunc = RooGenericPdf('BetaFunc_'+suffix, 'BetaFunc_'+suffix, '1e-20+ROOT::Math::lgamma(@1+@2)/(ROOT::Math::lgamma(@1)*ROOT::Math::lgamma(@2))*(@0**(@1-1))*((@0-1)**(@2-1))',RooArgList(mzg,alphaVar,betaVar))
-  #print ROOT.Math.beta_pdf
-  #BetaFunc = RooFit.bindPdf('BetaFunc_'+suffix,ROOT.Math.beta_pdf,mzg,alphaVar,betaVar)
+  xLow = mzg.getMin(rangeName)
+  xRange = mzg.getMax(rangeName) - mzg.getMin(rangeName)
+  gROOT.ProcessLine('.L betaWrapper.cxx+')
+  from ROOT import makeBetaPdf
+  BetaFunc = makeBetaPdf('BetaFunc_'+suffix,mzg,alphaVar,betaVar)
 
   SetOwnership(alphaVar,0)
   SetOwnership(betaVar,0)
   return BetaFunc
+
+def BuildKumaraswamy(year,lepton,cat,mzg,rangeName,alpha = 2, alphaLow = 1, alphaHigh = 10, beta = 5, betaLow = 1, betaHigh = 10):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  alphaVar = RooRealVar('alphaKumaraswamy_'+suffix,'alphaKumaraswamy_'+suffix, alpha, alphaLow, alphaHigh)
+  betaVar = RooRealVar('betaKumaraswamy_'+suffix,'betaKumaraswamy_'+suffix, beta, betaLow, betaHigh)
+  xLow = RooRealVar('xLowKumaraswamy_'+suffix, 'xLowKumaraswamy_'+suffix, mzg.getMin(rangeName))
+  xRange = RooRealVar('xRangeKumaraswamy_'+suffix, 'xReangeKumaraswamy_'+suffix,mzg.getMax(rangeName) - mzg.getMin(rangeName))
+  Kumaraswamy = RooGenericPdf('Kumaraswamy_'+suffix, 'Kumaraswamy_'+suffix, '(@0>@3)*(@0<(@3+@4))*@1*@2*((@0-@3)/@4)**(@1-1)*(1-((@0-@3)/@4)**@1)**(@2)', RooArgList(mzg,alphaVar,betaVar,xLow,xRange))
+
+  SetOwnership(alphaVar,0)
+  SetOwnership(betaVar,0)
+  SetOwnership(xLow,0)
+  SetOwnership(xRange,0)
+  return Kumaraswamy
 
 def BuildGaussExp(year,lepton,cat,mzg,mean = 120, meanLow = 90, meanHigh = 150, sigma = 1, sigmaLow = 0.01, sigmaHigh = 10, tau = 5, tauLow = 0, tauHigh = 50):
   suffix = '_'.join([year,lepton,'cat'+cat])
@@ -353,6 +399,23 @@ def BuildBern4(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p
   SetOwnership(p3Var,0)
   SetOwnership(p4Var,0)
   return Bern4
+
+def BuildBern5(year,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30, p5 = 5, p5Low = -1e-6, p5High = 30):
+  suffix = '_'.join([year,lepton,'cat'+cat])
+  p0Var = RooRealVar('p0Bern5_'+suffix, 'p0Bern5_'+suffix,p0)
+  p1Var = RooRealVar('p1Bern5_'+suffix, 'p1Bern5_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2Bern5_'+suffix, 'p2Bern5_'+suffix,p2,p2Low,p2High)
+  p3Var = RooRealVar('p3Bern5_'+suffix, 'p3Bern5_'+suffix,p3,p3Low,p3High)
+  p4Var = RooRealVar('p4Bern5_'+suffix, 'p4Bern5_'+suffix,p4,p4Low,p4High)
+  p5Var = RooRealVar('p5Bern5_'+suffix, 'p5Bern5_'+suffix,p5,p5Low,p5High)
+  Bern5 = RooBernstein('Bern5_'+suffix,'Bern5_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var, p3Var, p4Var, p5Var))
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  SetOwnership(p4Var,0)
+  SetOwnership(p5Var,0)
+  return Bern5
 
 def BuildRooGaussian(year,lepton,cat,mzg, mean = 125,meanLow = 100, meanHigh = 150, sigma = 1.5, sigmaLow = 0.3, sigmaHigh = 70):
   suffix = '_'.join([year,lepton,'cat'+cat])
