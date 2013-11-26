@@ -15,8 +15,8 @@ yearList = ['2012']
 #catList = ['0']
 catList = ['0','1','2','3','4']
 
-rooWsFile = TFile('testRooFitOut_Poter.root')
-#rooWsFile = TFile('testRooFitOut_ME.root')
+#rooWsFile = TFile('testRooFitOut_Poter.root')
+rooWsFile = TFile('testRooFitOut_MVA.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -87,7 +87,7 @@ for year in yearList:
       fit_ext.Print()
       BackgroundNameFixer(year,lepton,cat,card_ws)
 
-card_ws.writeToFile('testCards/testCardBackground_ME.root')
+card_ws.writeToFile('testCards/testCardBackground_MVA.root')
 
 
 

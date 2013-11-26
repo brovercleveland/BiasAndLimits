@@ -38,20 +38,18 @@ def doInitialFits():
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
   signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
-  #leptonList = ['mu','el']
-  leptonList = ['mu']
+  leptonList = ['mu','el']
+  #leptonList = ['mu']
   yearList = ['2012']
   #yearList = ['2011','2012']
-  #catList = ['0','1','2','3','4','5']
-  #catList = ['0','1','2','3','4','5']
-  catList = ['0']
+  catList = ['0','1','2','3','4','5']
+  #catList = ['1']
   #catList = ['5']
   #massList = ['120','125','130','135','140','145','150','155','160']
   massList = ['125']
   #sigNameList = ['gg','vbf','tth','wh','zh']
   sigNameList = ['gg']
   '''
-
   leptonList = ['mu','el']
   yearList = ['2012']
   catList = ['0']
@@ -232,7 +230,8 @@ def doInitialFits():
         if cat is not '5':
           GaussExp = BuildGaussExp(year, lepton, cat, mzg)
           #if lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma = 5, beta = 5)
-          if lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg)
+          if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
+          elif lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg)
           elif lepton == 'el' and cat == '3' and year == '2011': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
           elif lepton == 'el' and cat == '0' and year == '2012': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma =5, beta = 5)
           else: GaussPow = BuildGaussPow(year, lepton, cat, mzg)

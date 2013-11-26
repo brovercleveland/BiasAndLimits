@@ -7,7 +7,7 @@ import numpy as np
 #import pdb
 from rooFitBuilder import *
 from collections import defaultdict
-from sigalCBFits import AutoVivification
+from signalCBFits import AutoVivification
 
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
@@ -18,17 +18,19 @@ CMSStyle()
 # Run with: combine -M Asymptotic datacard.txt  #
 #################################################
 
-def makeCards(METest = True):
+def makeCards(MVATest = True):
   MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.78
-  MVASigScale['mu']['2'] = 0.82
+  MVASigScale['mu']['1'] = 0.74
+  MVASigScale['mu']['2'] = 0.72
   MVASigScale['mu']['3'] = 0.87
-  MVASigScale['mu']['4'] = 0.94
+  MVASigScale['mu']['4'] = 0.88
+  MVASigScale['mu']['5'] = 1.0
 
   MVASigScale['el']['1'] = 0.78
   MVASigScale['el']['2'] = 0.82
   MVASigScale['el']['3'] = 0.87
   MVASigScale['el']['4'] = 0.94
+  MVASigScale['el']['5'] = 1.0
   '''
   leptonList = ['mu','el']
   yearList = ['2012','2011']
@@ -51,10 +53,10 @@ def makeCards(METest = True):
   for year in yearList:
     for lepton in leptonList:
       for cat in catList:
-        if METest and year is '2012' and cat is not '5':
-          bgFile = TFile('testCards/testCardBackground_ME.root')
+        if MVATest and year is '2012' and cat is not '5':
+          bgFile = TFile('testCards/testCardBackground_MVA.root')
           bgWs = bgFile.Get('ws_card')
-          bgFileName = 'testCardBackground_ME.root'
+          bgFileName = 'testCardBackground_MVA.root'
         else:
           bgFile = TFile('testCards/testCardBackground.root')
           bgWs = bgFile.Get('ws_card')
@@ -81,8 +83,8 @@ def makeCards(METest = True):
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]
 
-          if METest:
-            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'ME'])+'.txt','w')
+          if MVATest:
+            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA'])+'.txt','w')
           else:
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
@@ -111,8 +113,8 @@ def makeCards(METest = True):
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
           sigYields = []
           for sig in prefixSigList[::-1]:
-            if METest and year is '2012' and cat is not '5':
-              sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal()*MESigScale)
+            if MVATest and year is '2012' and cat is not '5':
+              sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal()*MVASigScale[lepton][cat])
             else:
               sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal())
           if cat is not '5':
