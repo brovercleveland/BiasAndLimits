@@ -7,6 +7,7 @@ import numpy as np
 #import pdb
 from rooFitBuilder import *
 from collections import defaultdict
+from sigalCBFits import AutoVivification
 
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
@@ -18,7 +19,16 @@ CMSStyle()
 #################################################
 
 def makeCards(METest = True):
-  MESigScale = 0.887
+  MVASigScale = AutoVivification()
+  MVASigScale['mu']['1'] = 0.78
+  MVASigScale['mu']['2'] = 0.82
+  MVASigScale['mu']['3'] = 0.87
+  MVASigScale['mu']['4'] = 0.94
+
+  MVASigScale['el']['1'] = 0.78
+  MVASigScale['el']['2'] = 0.82
+  MVASigScale['el']['3'] = 0.87
+  MVASigScale['el']['4'] = 0.94
   '''
   leptonList = ['mu','el']
   yearList = ['2012','2011']
