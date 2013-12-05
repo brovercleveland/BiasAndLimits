@@ -13,7 +13,7 @@ leptonList = ['mu','el']
 yearList = ['2012']
 #yearList = ['2012','2011']
 #catList = ['0']
-catList = ['0','1','2','3','4']
+catList = ['1','2','3','4']
 catFix = True
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
@@ -43,11 +43,11 @@ for year in yearList:
       if catFix:
         if year is '2012':
           if cat == '2':
-            cat = 3
+            cat = '3'
           elif cat == '3':
-            cat = 4
+            cat = '4'
           elif cat == '4':
-            cat = 2
+            cat = '2'
       dataName = '_'.join(['data',lepton,year,'cat'+cat])
       suffix = '_'.join([year,lepton,'cat'+cat])
       if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
@@ -71,7 +71,7 @@ for year in yearList:
       sumEntries = data.sumEntries()
       sumEntriesS = data.sumEntries('1','signal')
       print sumEntries, sumEntriesS
-      raw_input()
+      #raw_input()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)

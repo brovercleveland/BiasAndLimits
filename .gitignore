@@ -1,3 +1,7 @@
 roostats*
 *.root
 res
+*.pyc
+*.so
+*.d
+*.pdf
