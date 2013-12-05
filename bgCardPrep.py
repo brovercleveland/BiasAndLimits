@@ -14,6 +14,7 @@ yearList = ['2012']
 #yearList = ['2012','2011']
 #catList = ['0']
 catList = ['0','1','2','3','4']
+catFix = True
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('testRooFitOut_MVA.root')
@@ -39,6 +40,14 @@ for year in yearList:
     for cat in catList:
       if cat is '5' and year is '2011' and lepton is 'mu': continue
       elif cat is '5' and year is '2011' and lepton is 'el': lepton = 'all'
+      if catFix:
+        if year is '2012':
+          if cat == '2':
+            cat = 3
+          elif cat == '3':
+            cat = 4
+          elif cat == '4':
+            cat = 2
       dataName = '_'.join(['data',lepton,year,'cat'+cat])
       suffix = '_'.join([year,lepton,'cat'+cat])
       if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
