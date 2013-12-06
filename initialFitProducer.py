@@ -171,6 +171,7 @@ def doInitialFits():
               getattr(ws,'import')(signalListPDF[-1])
               if verbose: print 'finshed one mass', mass
 
+            '''
             if debugPlots and prod is 'gg':
               testFrame = mzg.frame()
               for i,signal in enumerate(signalListPDF):
@@ -184,6 +185,7 @@ def doInitialFits():
                 signal.plotOn(testFrame, RooFit.DrawOption('pl'))
               testFrame.Draw()
               c.Print('debugPlots/'+'_'.join(['test','ds','sig',prod,year,lepton,'cat'+cat])+'.pdf')
+            '''
             del signalTree
 
 
@@ -214,11 +216,13 @@ def doInitialFits():
           print dataName
           data_ds.Print()
           print
+        '''
         if debugPlots:
           testFrame = mzg.frame()
           data_ds.plotOn(testFrame,RooFit.Binning(45))
           testFrame.Draw()
           c.Print('debugPlots/'+'_'.join(['test','data',year,lepton,'cat'+cat])+'.pdf')
+        '''
         getattr(ws,'import')(data_ds)
 
 

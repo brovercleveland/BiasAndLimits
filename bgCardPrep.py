@@ -40,14 +40,6 @@ for year in yearList:
     for cat in catList:
       if cat is '5' and year is '2011' and lepton is 'mu': continue
       elif cat is '5' and year is '2011' and lepton is 'el': lepton = 'all'
-      if catFix:
-        if year is '2012':
-          if cat == '2':
-            cat = '3'
-          elif cat == '3':
-            cat = '4'
-          elif cat == '4':
-            cat = '2'
       dataName = '_'.join(['data',lepton,year,'cat'+cat])
       suffix = '_'.join([year,lepton,'cat'+cat])
       if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
@@ -87,14 +79,25 @@ for year in yearList:
       c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
 
       ###### Import the fit and data, and rename them to the card convention
-      dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+cat])
+      newCat = cat
+      if catFix:
+        if year is '2012':
+          if cat == '2':
+            newCat = '3'
+          elif cat == '3':
+            newCat = '4'
+          elif cat == '4':
+            newCat = '2'
+      dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+newCat])
+      dataYieldNameNew = '_'.join(['data','yield',lepton,year,'cat'+newCat])
+      dataYield.SetName(dataYieldNameNew)
 
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
       getattr(card_ws,'import')(fit_ext)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       fit_ext.Print()
-      BackgroundNameFixer(year,lepton,cat,card_ws)
+      BackgroundNameFixer(year,lepton,cat,card_ws,newCat)
 
 card_ws.writeToFile('testCards/testCardBackground_MVA.root')
 

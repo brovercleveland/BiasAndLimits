@@ -33,6 +33,7 @@ def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', ma
     os.system('combineCards.py '+cardNames+' > '+comboName)
     print 'running limit software, M:',mass
     os.system('combine -M Asymptotic '+comboName+' > '+outputName)
+    #os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
 
 if __name__ == "__main__":
   print sys.argv

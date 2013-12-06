@@ -475,11 +475,12 @@ def SignalNameParamFixer(year,lepton,cat,sig,mass,ws):
   ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
   ws.factory('EDIT::'+newFitName+'('+fitName+','+mean+'='+meanNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
 
-def BackgroundNameFixer(year,lepton,cat,ws):
+def BackgroundNameFixer(year,lepton,cat,ws,newCat = None):
+  if newCat == None: newCat = cat
   dataName = '_'.join(['data',lepton,year,'cat'+cat])
-  dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+cat])
+  dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+newCat])
   fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
-  fitExtNameNew = '_'.join(['bkg',lepton,year,'cat'+cat])
+  fitExtNameNew = '_'.join(['bkg',lepton,year,'cat'+newCat])
 
   if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
     suffix = '_'.join([year,lepton,'cat'+cat])
@@ -493,15 +494,15 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p3Name = 'p3GaussBern4_'+suffix
     p4Name = 'p4GaussBern4_'+suffix
 
-    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+cat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+cat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+cat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+cat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+cat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+cat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+cat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+newCat])
+    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+newCat])
+    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+newCat])
+    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+newCat])
+    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+newCat])
+    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+newCat])
+    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+newCat])
+    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+newCat])
 
     ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
     ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
@@ -529,17 +530,17 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p5Name = 'p5GaussBern6_'+suffix
     p6Name = 'p6GaussBern6_'+suffix
 
-    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+cat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+cat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+cat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+cat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+cat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+cat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+cat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+cat])
-    p5NameNew  = '_'.join(['bkg','p5',lepton,year,'cat'+cat])
-    p6NameNew  = '_'.join(['bkg','p6',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+newCat])
+    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+newCat])
+    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+newCat])
+    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+newCat])
+    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+newCat])
+    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+newCat])
+    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+newCat])
+    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+newCat])
+    p5NameNew  = '_'.join(['bkg','p5',lepton,year,'cat'+newCat])
+    p6NameNew  = '_'.join(['bkg','p6',lepton,year,'cat'+newCat])
 
     ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
     ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
@@ -563,11 +564,11 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p2Name = 'p2Bern3_'+suffix
     p3Name = 'p3Bern3_'+suffix
 
-    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+cat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+cat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+cat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+newCat])
+    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+newCat])
+    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+newCat])
+    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+newCat])
 
     ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
     ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
@@ -590,16 +591,16 @@ def BackgroundNameFixer(year,lepton,cat,ws):
     p4Name = 'p4GaussBern5_'+suffix
     p5Name = 'p5GaussBern5_'+suffix
 
-    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+cat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+cat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+cat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+cat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+cat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+cat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+cat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+cat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+cat])
-    p5NameNew  = '_'.join(['bkg','p5',lepton,year,'cat'+cat])
+    normNameNew  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+    meanNameNew  = '_'.join(['bkg','mean',lepton,year,'cat'+newCat])
+    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,year,'cat'+newCat])
+    stepNameNew  = '_'.join(['bkg','step',lepton,year,'cat'+newCat])
+    p0NameNew  = '_'.join(['bkg','p0',lepton,year,'cat'+newCat])
+    p1NameNew  = '_'.join(['bkg','p1',lepton,year,'cat'+newCat])
+    p2NameNew  = '_'.join(['bkg','p2',lepton,year,'cat'+newCat])
+    p3NameNew  = '_'.join(['bkg','p3',lepton,year,'cat'+newCat])
+    p4NameNew  = '_'.join(['bkg','p4',lepton,year,'cat'+newCat])
+    p5NameNew  = '_'.join(['bkg','p5',lepton,year,'cat'+newCat])
 
     ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
     ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))

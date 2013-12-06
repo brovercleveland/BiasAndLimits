@@ -13,7 +13,7 @@ shapes sig_zh   * SignalOutput_el_2012_cat2_125.0.root ws_card:sig_zh_$CHANNEL
 shapes sig_tth  * SignalOutput_el_2012_cat2_125.0.root ws_card:sig_tth_$CHANNEL
 ---------------
 bin          el_2012_cat2
-observation  2121
+observation  1629
 ------------------------------
 bin                        el_2012_cat2    el_2012_cat2    el_2012_cat2    el_2012_cat2    el_2012_cat2    el_2012_cat2  
 process                       sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
