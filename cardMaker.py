@@ -19,17 +19,18 @@ CMSStyle()
 #################################################
 
 def makeCards(MVATest = True):
+  #still uses old cat ordering
   MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.74
-  MVASigScale['mu']['2'] = 0.72
-  MVASigScale['mu']['3'] = 0.87
-  MVASigScale['mu']['4'] = 0.88
+  MVASigScale['mu']['1'] = 0.64
+  MVASigScale['mu']['2'] = 0.63
+  MVASigScale['mu']['3'] = 0.89
+  MVASigScale['mu']['4'] = 0.86
   MVASigScale['mu']['5'] = 1.0
 
-  MVASigScale['el']['1'] = 0.78
-  MVASigScale['el']['2'] = 0.82
-  MVASigScale['el']['3'] = 0.87
-  MVASigScale['el']['4'] = 0.94
+  MVASigScale['el']['1'] = 0.67
+  MVASigScale['el']['2'] = 0.62
+  MVASigScale['el']['3'] = 0.73
+  MVASigScale['el']['4'] = 0.85
   MVASigScale['el']['5'] = 1.0
   '''
   leptonList = ['mu','el']
