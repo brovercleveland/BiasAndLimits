@@ -34,17 +34,18 @@ def doInitialFits():
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_2Dv4.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_2Dv4.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_11-20-13_anglesOnly.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_11-20-13_anglesOnly.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_12-4-13_newAnglesR9Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_12-4-13_newAnglesR9Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_12-4-13_newAnglesR9Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_12-4-13_newAnglesR9Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_01-22-14_AndyWeightCut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_01-22-14_AndyWeightCut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
 
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
   signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
   leptonList = ['mu','el']
-  #leptonList = ['mu']
+  #leptonList = ['el']
   yearList = ['2012']
   #yearList = ['2011','2012']
   catList = ['0','1','2','3','4','5']
-  #catList = ['1']
+  #catList = ['4']
   #catList = ['5']
   #massList = ['120','125','130','135','140','145','150','155','160']
   massList = ['125']
@@ -238,18 +239,20 @@ def doInitialFits():
           if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
           elif lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg)
           elif lepton == 'el' and cat == '3' and year == '2011': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
-          elif lepton == 'el' and cat == '0' and year == '2012': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma =5, beta = 5)
+          elif lepton == 'el' and cat in ['0','4'] and year == '2012': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma =5, beta = 5)
           else: GaussPow = BuildGaussPow(year, lepton, cat, mzg)
           SechExp = BuildSechExp(year, lepton, cat, mzg)
           SechPow = BuildSechPow(year, lepton, cat, mzg)
-          GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg)
+          #GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg)
+          GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg, step = 117, sigma = 3)
           GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg)
           GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg)
           GaussBern6 = BuildGaussStepBern6(year, lepton, cat, mzg)
           #GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
           #GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
           #GaussBern6 = BuildGaussStepBern6(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg)
+          #SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg)
+          SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg, sigma = 10)
           if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(year, lepton, cat, mzg,sigma=2)
           else: SechBern4 = BuildSechStepBern4(year, lepton, cat, mzg)
           if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(year, lepton, cat, mzg,sigma=2)
@@ -391,7 +394,7 @@ def doInitialFits():
           getattr(ws,'import')(Bern3)
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
-  ws.writeToFile('testRooFitOut_MVA.root')
+  ws.writeToFile('testRooFitOut_MVA_Andy.root')
 
 
   print 'we did it!'
