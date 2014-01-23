@@ -14,8 +14,8 @@ def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', ma
   if fullCombo:
     cardNames = ''
     if MVATest:
-      comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass,'MVA'])+'.txt'
-      outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,'MVA'])+'.txt'
+      comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass,'MVA','Andy'])+'.txt'
+      outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,'MVA','Andy'])+'.txt'
     else:
       comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass])+'.txt'
       outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass])+'.txt'
@@ -25,7 +25,7 @@ def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', ma
           if year is '2011' and cat is '5' and lepton is 'mu': continue
           elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
           if MVATest:
-            cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA'])+'.txt'
+            cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA','Andy'])+'.txt'
           else:
             cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt'
     print 'making combined cards'

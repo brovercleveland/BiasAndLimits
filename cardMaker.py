@@ -20,6 +20,20 @@ CMSStyle()
 
 def makeCards(MVATest = True):
   #still uses old cat ordering
+  #andycuts
+  MVASigScale = AutoVivification()
+  MVASigScale['mu']['1'] = 0.67
+  MVASigScale['mu']['2'] = 0.64
+  MVASigScale['mu']['3'] = 0.75
+  MVASigScale['mu']['4'] = 0.89
+  MVASigScale['mu']['5'] = 1.0
+
+  MVASigScale['el']['1'] = 0.8
+  MVASigScale['el']['2'] = 0.68
+  MVASigScale['el']['3'] = 0.74
+  MVASigScale['el']['4'] = 0.81
+  MVASigScale['el']['5'] = 1.0
+  '''
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 0.64
   MVASigScale['mu']['2'] = 0.63
@@ -32,6 +46,7 @@ def makeCards(MVATest = True):
   MVASigScale['el']['3'] = 0.73
   MVASigScale['el']['4'] = 0.85
   MVASigScale['el']['5'] = 1.0
+  '''
   '''
   leptonList = ['mu','el']
   yearList = ['2012','2011']
@@ -55,9 +70,9 @@ def makeCards(MVATest = True):
     for lepton in leptonList:
       for cat in catList:
         if MVATest and year is '2012' and cat is not '5':
-          bgFile = TFile('testCards/testCardBackground_MVA.root')
+          bgFile = TFile('testCards/testCardBackground_MVA_Andy.root')
           bgWs = bgFile.Get('ws_card')
-          bgFileName = 'testCardBackground_MVA.root'
+          bgFileName = 'testCardBackground_MVA_Andy.root'
         else:
           bgFile = TFile('testCards/testCardBackground.root')
           bgWs = bgFile.Get('ws_card')
@@ -85,7 +100,7 @@ def makeCards(MVATest = True):
           prefixSigList = ['sig_'+sig for sig in sigNameList]
 
           if MVATest:
-            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA'])+'.txt','w')
+            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA','Andy'])+'.txt','w')
           else:
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
