@@ -49,4 +49,7 @@ necessary Higgs Combination syntax.  `bgCardPrep.py` takes the proper background
 
 `limitPlotter.py` parses the outputs from the 'combine' tool, and makes nice pretty plots.
 
+Fit Plots:
+----------
+The `initialFitProducer.py` is used like everything else on this page.  The fits are then fed into the prettyPlotter and something else happens.
 
