@@ -20,6 +20,41 @@ CMSStyle()
 
 def makeCards(MVATest = True):
   #still uses old cat ordering
+  suffix = 'MVA_02-03-14'
+  MVASigScale = AutoVivification()
+  MVASigScale['mu']['1'] = 0.73
+  MVASigScale['mu']['2'] = 0.64
+  MVASigScale['mu']['3'] = 0.77
+  MVASigScale['mu']['4'] = 0.74
+  MVASigScale['mu']['6'] = 1-0.73
+  MVASigScale['mu']['7'] = 1-0.64
+  MVASigScale['mu']['8'] = 1-0.77
+  MVASigScale['mu']['9'] = 1-0.74
+  MVASigScale['mu']['5'] = 1.0
+
+  MVASigScale['el']['1'] = 0.77
+  MVASigScale['el']['2'] = 0.66
+  MVASigScale['el']['3'] = 0.78
+  MVASigScale['el']['4'] = 0.75
+  MVASigScale['el']['6'] = 1-0.77
+  MVASigScale['el']['7'] = 1-0.66
+  MVASigScale['el']['8'] = 1-0.78
+  MVASigScale['el']['9'] = 1-0.75
+  MVASigScale['el']['5'] = 1.0
+  '''
+  MVASigScale = AutoVivification()
+  MVASigScale['mu']['1'] = 0.73
+  MVASigScale['mu']['2'] = 0.64
+  MVASigScale['mu']['3'] = 0.77
+  MVASigScale['mu']['4'] = 0.74
+  MVASigScale['mu']['5'] = 1.0
+
+  MVASigScale['el']['1'] = 0.77
+  MVASigScale['el']['2'] = 0.66
+  MVASigScale['el']['3'] = 0.78
+  MVASigScale['el']['4'] = 0.75
+  MVASigScale['el']['5'] = 1.0
+
   #andycuts
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 0.67
@@ -33,7 +68,7 @@ def makeCards(MVATest = True):
   MVASigScale['el']['3'] = 0.74
   MVASigScale['el']['4'] = 0.81
   MVASigScale['el']['5'] = 1.0
-  '''
+
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 0.64
   MVASigScale['mu']['2'] = 0.63
@@ -56,7 +91,8 @@ def makeCards(MVATest = True):
   '''
   leptonList = ['mu','el']
   yearList = ['2011','2012']
-  catList = ['1','2','3','4','5']
+  catListSmall = ['1','2','3','4','5']
+  catListBig = ['1','2','3','4','5','6','7','8','9']
   #catList = ['1']
   #massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
   # '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
@@ -67,12 +103,19 @@ def makeCards(MVATest = True):
   massList = ['125.0']
 
   for year in yearList:
+    if year == '2011': catList = catListSmall
+    else: catList = catListBig
     for lepton in leptonList:
       for cat in catList:
+        sigCorCat = cat
+        if cat == '6': sigCorCat = '1'
+        elif cat == '7': sigCorCat = '2'
+        elif cat == '8': sigCorCat = '3'
+        elif cat == '9': sigCorCat = '4'
         if MVATest and year is '2012' and cat is not '5':
-          bgFile = TFile('testCards/testCardBackground_MVA_Andy.root')
+          bgFile = TFile('testCards/testCardBackground_'+suffix+'.root')
           bgWs = bgFile.Get('ws_card')
-          bgFileName = 'testCardBackground_MVA_Andy.root'
+          bgFileName = 'testCardBackground_'+suffix+'.root'
         else:
           bgFile = TFile('testCards/testCardBackground.root')
           bgWs = bgFile.Get('ws_card')
@@ -82,9 +125,10 @@ def makeCards(MVATest = True):
         elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
 
 
-        if cat in ['1','4']: phoGeom = 'EB'
+        if cat in ['1','4','6','9']: phoGeom = 'EB'
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,year,'cat'+cat])
+        sigCorChannel = '_'.join([lepton,year,'cat'+sigCorCat])
         if cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = sigNameList[0:2]
@@ -94,13 +138,13 @@ def makeCards(MVATest = True):
           bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
 
         for mass in massList:
-          sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
+          sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+sigCorCat,mass])+'.root'
           sigFile = TFile('testCards/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]
 
           if MVATest:
-            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,'MVA','Andy'])+'.txt','w')
+            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt','w')
           else:
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
@@ -112,7 +156,10 @@ def makeCards(MVATest = True):
           card.write('shapes {0:<8} * {1:<20} ws_card:$PROCESS_$CHANNEL\n'.format('*',bgFileName))
           card.write('shapes {0:<8} * {1:<20} ws_card:bkg_$CHANNEL\n'.format('bkg',bgFileName))
           for sig in prefixSigList:
-            card.write('shapes {0:<8} * {1:<20} ws_card:{2}_$CHANNEL\n'.format(sig,sigFileName,sig))
+            if int(cat) < 6:
+              card.write('shapes {0:<8} * {1:<20} ws_card:{2}_$CHANNEL\n'.format(sig,sigFileName,sig))
+            else:
+              card.write('shapes {0:<8} * {1:<20} ws_card:{2}_{3}\n'.format(sig,sigFileName,sig,sigCorChannel))
           card.write('---------------\n')
           bgYield = bgWs.var('data_yield_'+channel).getVal()
           card.write('{0:<12} {1}\n'.format('bin',channel))
@@ -130,7 +177,7 @@ def makeCards(MVATest = True):
           sigYields = []
           for sig in prefixSigList[::-1]:
             if MVATest and year is '2012' and cat is not '5':
-              sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal()*MVASigScale[lepton][cat])
+              sigYields.append(sigWs.var(sig+'_yield_'+sigCorChannel).getVal()*MVASigScale[lepton][cat])
             else:
               sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal())
           if cat is not '5':
@@ -147,10 +194,10 @@ def makeCards(MVATest = True):
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['eff_trig_'+lepton+'_'+year,'lnN']+[eff_trig[year][lepton]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['eff_PU_'+lepton+'_'+year,'lnN']+[eff_PU[year][lepton]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['eff_g_'+phoGeom+'_'+year,'lnN']+[eff_g[year][phoGeom]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['JES','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['JER','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
-            if cat in['1','4']:
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['JES','lnN']+['-']*3+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['JER','lnN']+['-']*3+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['UEPS','lnN']+['-']*3+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
+            if cat in['1','4','6','9']:
               card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['eff_R9_'+year,'lnN']+[eff_R9[year]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['err_BR_'+year,'lnN']+[err_BR[mass]]*5+['-'])))
           else:
@@ -165,9 +212,9 @@ def makeCards(MVATest = True):
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['eff_trig_'+lepton+'_'+year,'lnN']+[eff_trig[year][lepton]]*2+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['eff_PU_'+lepton+'_'+year,'lnN']+[eff_PU[year][lepton]]*2+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['eff_g_'+phoGeom+'_'+year,'lnN']+[eff_g[year][phoGeom]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JES','lnN']+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JER','lnN']+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['UEPS','lnN']+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JES','lnN']+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JER','lnN']+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['UEPS','lnN']+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JetID','lnN']+jetId+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['JetAcc','lnN']+jetAcc+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['err_BR_'+year,'lnN']+[err_BR[mass]]*2+['-'])))

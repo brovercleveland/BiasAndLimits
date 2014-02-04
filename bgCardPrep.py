@@ -13,11 +13,12 @@ leptonList = ['mu','el']
 yearList = ['2012']
 #yearList = ['2012','2011']
 #catList = ['0']
-catList = ['1','2','3','4']
+catList = ['1','2','3','4','6','7','8','9']
 catFix = True
+suffixCard = 'MVA_02-03-14'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
-rooWsFile = TFile('testRooFitOut_MVA_Andy.root')
+rooWsFile = TFile('testRooFitOut_'+suffixCard+'.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -88,6 +89,12 @@ for year in yearList:
             newCat = '4'
           elif cat == '4':
             newCat = '2'
+          elif cat == '7':
+            newCat = '9'
+          elif cat == '8':
+            newCat = '7'
+          elif cat == '9':
+            newCat = '8'
       dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+newCat])
       dataYieldNameNew = '_'.join(['data','yield',lepton,year,'cat'+newCat])
       dataYield.SetName(dataYieldNameNew)
@@ -99,7 +106,7 @@ for year in yearList:
       fit_ext.Print()
       BackgroundNameFixer(year,lepton,cat,card_ws,newCat)
 
-card_ws.writeToFile('testCards/testCardBackground_MVA_Andy.root')
+card_ws.writeToFile('testCards/testCardBackground_'+suffixCard+'.root')
 
 
 
