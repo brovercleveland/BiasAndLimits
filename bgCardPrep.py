@@ -15,7 +15,7 @@ yearList = ['2012']
 #catList = ['0']
 catList = ['1','2','3','4','6','7','8','9']
 catFix = True
-suffixCard = 'MVA_02-03-14'
+suffixCard = 'MVA_02-04-14_Cats'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('testRooFitOut_'+suffixCard+'.root')

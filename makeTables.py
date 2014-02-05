@@ -10,8 +10,8 @@ def doTables():
   genList = ['GaussExp', 'GaussPow', 'SechExp', 'SechPow']
   genListAbbr = ['GE', 'GP', 'SE', 'SP']
   catList = ['0']
-  fitList = ['GaussBern3','GaussBern4','GaussBern5']
-  doLandscape = False
+  fitList = ['GaussBern3','GaussBern4','GaussBern5','GaussBern6']
+  doLandscape = True
 
 # get all the txt files from the pull plots, put them in a dictionary (they
 # are all uniquely named so you can just key on their names, makes callback
