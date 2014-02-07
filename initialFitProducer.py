@@ -16,7 +16,7 @@ verbose = False
 rootrace = False
 do4Cat = True
 doVBF = False
-suffix = '02-04-14_Cats'
+suffix = '02-06-14_Cats'
 
 # OK listen, we're gunna need to do some bullshit just to get a uniform RooRealVar name for our data objects.
 # Because I named branches different than the trees, there's a lot of tree loops here
