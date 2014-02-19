@@ -6,7 +6,7 @@ def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', ma
   fullCombo = True
   byParts = False
   MVATest = True
-  suffix = 'MVA_02-06-14_Cats'
+  suffix = 'MVA_02-18-14_Cats'
 
   leptonList = ['mu','el']
   yearList = ['2012','2011']

@@ -20,7 +20,30 @@ CMSStyle()
 
 def makeCards(MVATest = True):
   #still uses old cat ordering
-  suffix = 'MVA_02-06-14_Cats'
+  suffix = 'MVA_02-18-14_Cats'
+  MVASigScale = AutoVivification()
+  MVASigScale['mu']['1'] = 1.058*0.767
+  MVASigScale['mu']['2'] = 1.058*0.862
+  MVASigScale['mu']['3'] = 1.058*0.891
+  MVASigScale['mu']['4'] = 1.058*0.862
+  MVASigScale['mu']['6'] = 1.058*(1-0.767)
+  MVASigScale['mu']['7'] = 1.058*(1-0.862)
+  MVASigScale['mu']['8'] = 1.058*(1-0.891)
+  MVASigScale['mu']['9'] = 1.058*(1-0.862)
+  MVASigScale['mu']['5'] = 1.0
+
+  MVASigScale['el']['1'] = 1.04*0.674
+  MVASigScale['el']['2'] = 1.04*0.751
+  MVASigScale['el']['3'] = 1.04*0.771
+  MVASigScale['el']['4'] = 1.04*0.881
+  MVASigScale['el']['6'] = 1.04*(1-0.674)
+  MVASigScale['el']['7'] = 1.04*(1-0.751)
+  MVASigScale['el']['8'] = 1.04*(1-0.771)
+  MVASigScale['el']['9'] = 1.04*(1-0.881)
+  MVASigScale['el']['5'] = 1.0
+
+  '''
+# 9 cat, medium cut photon
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 0.777
   MVASigScale['mu']['2'] = 0.611
@@ -41,7 +64,7 @@ def makeCards(MVATest = True):
   MVASigScale['el']['8'] = 1-0.624
   MVASigScale['el']['9'] = 1-0.552
   MVASigScale['el']['5'] = 1.0
-  '''
+
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 0.73
   MVASigScale['mu']['2'] = 0.64
