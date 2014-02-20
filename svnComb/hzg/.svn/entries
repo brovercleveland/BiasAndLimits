@@ -1,0 +1,395 @@
+10
+
+dir
+5645
+svn+ssh://svn.cern.ch/reps/cmshcg/trunk/summer2013/couplings/hzg
+svn+ssh://svn.cern.ch/reps/cmshcg
+
+
+
+2013-09-03T08:25:47.893240Z
+5401
+poter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4525493e-7705-40b1-a816-d608a930855b
+
+RooGaussStepBernstein.h
+file
+
+
+
+
+2014-02-20T20:01:08.000000Z
+ebbfd7b665c90e5860b7c971cc1da196
+2013-02-27T11:14:31.147638Z
+4797
+poter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1664
+
+120
+dir
+
+121
+dir
+
+122
+dir
+
+123
+dir
+
+124
+dir
+
+160
+dir
+
+RooStepBernstein.cxx
+file
+
+
+
+
+2014-02-20T20:01:08.000000Z
+9b7fcae1adf6e1ba47f01fd4fab7e80a
+2013-02-16T08:53:35.890413Z
+4611
+poter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6258
+
+131.5
+dir
+
+125
+dir
+
+126
+dir
+
+133.5
+dir
+
+127
+dir
+
+128
+dir
+
+135.5
+dir
+
+129
+dir
+
+137.5
+dir
+
+139.5
+dir
+
+130
+dir
+
+131
+dir
+
+132
+dir
+
+133
+dir
+
+125.1
+dir
+
+121.5
+dir
+
+134
+dir
+
+125.2
+dir
+
+135
+dir
+
+123.5
+dir
+
+125.3
+dir
+
+136
+dir
+
+125.4
+dir
+
+125.5
+dir
+
+137
+dir
+
+138
+dir
+
+125.6
+dir
+
+139
+dir
+
+125.7
+dir
+
+127.5
+dir
+
+125.8
+dir
+
+129.5
+dir
+
+125.9
+dir
+
+140
+dir
+
+141
+dir
+
+142
+dir
+
+130.5
+dir
+
+143
+dir
+
+144
+dir
+
+132.5
+dir
+
+145
+dir
+
+146
+dir
+
+134.5
+dir
+
+147
+dir
+
+136.5
+dir
+
+148
+dir
+
+149
+dir
+
+138.5
+dir
+
+RooStepBernstein.h
+file
+
+
+
+
+2014-02-20T20:01:08.000000Z
+17c37a5de35a016c935cddbba6594223
+2013-02-16T08:53:35.890413Z
+4611
+poter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1897
+
+120.5
+dir
+
+150
+dir
+
+151
+dir
+
+122.5
+dir
+
+126.1
+dir
+
+152
+dir
+
+153
+dir
+
+126.2
+dir
+
+124.5
+dir
+
+126.3
+dir
+
+154
+dir
+
+RooGaussStepBernstein.cxx
+file
+
+
+
+
+2014-02-20T20:01:08.000000Z
+6b4dc1715299b25c8638d6400d2bac5f
+2013-02-27T19:14:41.767406Z
+4802
+poter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+23336
+
+124.6
+dir
+
+126.4
+dir
+
+155
+dir
+
+124.7
+dir
+
+126.5
+dir
+
+156
+dir
+
+124.8
+dir
+
+157
+dir
+
+128.5
+dir
+
+124.9
+dir
+
+158
+dir
+
+159
+dir
+
