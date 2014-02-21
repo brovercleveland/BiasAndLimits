@@ -13,9 +13,11 @@ leptonList = ['mu','el']
 yearList = ['2012']
 #yearList = ['2012','2011']
 #catList = ['0']
-catList = ['1','2','3','4','6','7','8','9']
+catList = ['1','2','3','4','5']
+#catList = ['1','2','3','4','6','7','8','9']
 catFix = True
-suffixCard = 'MVA_02-18-14_Cats'
+#suffixCard = 'MVA_02-18-14_Cats'
+suffixCard = 'Poter'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('testRooFitOut_'+suffixCard+'.root')
@@ -67,17 +69,17 @@ for year in yearList:
       #raw_input()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
-      norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
-      fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
-      fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
+      #norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+      #fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
+      #fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
 
-      fit_ext.fitTo(data,RooFit.Range('fullRegion'))
+      #fit_ext.fitTo(data,RooFit.Range('fullRegion'))
 
-      testFrame = mzg.frame()
-      data.plotOn(testFrame)
-      fit_ext.plotOn(testFrame)
-      testFrame.Draw()
-      c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
+      #testFrame = mzg.frame()
+      #data.plotOn(testFrame)
+      #fit_ext.plotOn(testFrame)
+      #testFrame.Draw()
+      #c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
 
       ###### Import the fit and data, and rename them to the card convention
       newCat = cat
@@ -100,13 +102,14 @@ for year in yearList:
       dataYield.SetName(dataYieldNameNew)
 
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
-      getattr(card_ws,'import')(fit_ext)
+      #getattr(card_ws,'import')(fit_ext)
+      getattr(card_ws,'import')(fit)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
-      fit_ext.Print()
-      BackgroundNameFixer(year,lepton,cat,card_ws,newCat)
+      #fit_ext.Print()
+      BackgroundNameFixer(year,lepton,cat,card_ws,newCat,Ext = False)
 
-card_ws.writeToFile('testCards/testCardBackground_'+suffixCard+'.root')
+card_ws.writeToFile('testCards/testCardBackground_NoExt_'+suffixCard+'.root')
 
 
 

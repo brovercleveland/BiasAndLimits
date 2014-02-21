@@ -18,7 +18,7 @@ CMSStyle()
 # Run with: combine -M Asymptotic datacard.txt  #
 #################################################
 
-def makeCards(MVATest = True):
+def makeCards(MVATest = False):
   #still uses old cat ordering
   suffix = 'MVA_02-18-14_Cats'
   MVASigScale = AutoVivification()
@@ -143,7 +143,7 @@ def makeCards(MVATest = True):
         elif cat == '7': sigCorCat = '2'
         elif cat == '8': sigCorCat = '3'
         elif cat == '9': sigCorCat = '4'
-        if MVATest and year is '2012' and cat is not '5':
+        if MVATest and (year is '2012' and cat is not '5'):
           bgFile = TFile('testCards/testCardBackground_'+suffix+'.root')
           bgWs = bgFile.Get('ws_card')
           bgFileName = 'testCardBackground_'+suffix+'.root'
@@ -177,7 +177,8 @@ def makeCards(MVATest = True):
           if MVATest:
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt','w')
           else:
-            card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
+            #card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
+            card = open('syncCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
           card.write('#more comments\n')
           card.write('imax *\n')

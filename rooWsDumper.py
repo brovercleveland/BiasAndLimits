@@ -11,18 +11,18 @@ yearList = ['2011','2012']
 catList = ['1','2','3','4']
 massList = ['120','125','130','135','140','145','150']
 
-#rooWsFile = TFile('testRooFitOut.root')
-rooWsFile_bkg = TFile('exampleCards/hzg.inputbkg_8TeV.root')
-rooWsFile_sig = TFile('exampleCards/hzg.mH120.0.inputsig_8TeV.root')
+#rooWsFile_bkg = TFile('testRooFitOut_Poter.root')
+#rooWsFile_bkg = TFile('exampleCards/hzg.inputbkg_8TeV.root')
+#rooWsFile_sig = TFile('exampleCards/hzg.mH120.0.inputsig_8TeV.root')
 #rooWsFile_sig = TFile('testCards/testCardSignal_125.0.root')
-#rooWsFile_bkg = TFile('testCards/testCardBackground.root')
+rooWsFile_bkg = TFile('testCards/testCardBackground_MVA.root')
 #myWs = rooWsFile.Get('ws')
-myWs_sig = rooWsFile_sig.Get('w_all')
-myWs_bkg = rooWsFile_bkg.Get('w_all')
+#myWs_sig = rooWsFile_sig.Get('w_all')
+#myWs_bkg = rooWsFile_bkg.Get('w_all')
 #myWs_sig = rooWsFile_sig.Get('ws_card')
-#myWs_bkg = rooWsFile_bkg.Get('ws_card')
+myWs_bkg = rooWsFile_bkg.Get('ws_card')
 print 'printing rooWsFile'
-myWs_sig.Print()
+#myWs_sig.Print()
 myWs_bkg.Print()
 
 testVar = myWs_bkg.var('mzg_bkg_norm_cat31')
