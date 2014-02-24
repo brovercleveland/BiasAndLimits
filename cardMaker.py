@@ -20,7 +20,7 @@ CMSStyle()
 
 def makeCards(MVATest = False):
   #still uses old cat ordering
-  suffix = 'Poter_NoExt'
+  suffix = 'Proper'
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 1.058*0.767
   MVASigScale['mu']['2'] = 1.058*0.862
@@ -148,9 +148,9 @@ def makeCards(MVATest = False):
           bgWs = bgFile.Get('ws_card')
           bgFileName = 'testCardBackground_'+suffix+'.root'
         else:
-          bgFile = TFile('testCards/testCardBackground.root')
+          bgFile = TFile('outputDir/'+suffix+'/CardBackground_'+suffix+'.root')
           bgWs = bgFile.Get('ws_card')
-          bgFileName = 'testCardBackground.root'
+          bgFileName = 'CardBackground_'+suffix+'.root'
         sigNameList = ['gg','vbf','wh','zh','tth']
         if year is '2011' and cat is '5' and lepton is 'mu': continue
         elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
@@ -170,7 +170,7 @@ def makeCards(MVATest = False):
 
         for mass in massList:
           sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+sigCorCat,mass])+'.root'
-          sigFile = TFile('testCards/'+sigFileName)
+          sigFile = TFile('outputDir/'+suffix+'/'+mass+'/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]
 
@@ -178,7 +178,7 @@ def makeCards(MVATest = False):
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt','w')
           else:
             #card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
-            card = open('syncCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
+            card = open('outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
           card.write('#some bullshit\n')
           card.write('#more comments\n')
           card.write('imax *\n')

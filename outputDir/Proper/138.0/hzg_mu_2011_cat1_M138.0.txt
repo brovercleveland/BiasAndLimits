@@ -1,0 +1,14 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackgroundProper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackgroundProper.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_mu_2011_cat1_138.0.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_mu_2011_cat1_138.0.root ws_card:sig_vbf_$CHANNEL
+shapes sig_wh   * SignalOutput_mu_2011_cat1_138.0.root ws_card:sig_wh_$CHANNEL
+shapes sig_zh   * SignalOutput_mu_2011_cat1_138.0.root ws_card:sig_zh_$CHANNEL
+shapes sig_tth  * SignalOutput_mu_2011_cat1_138.0.root ws_card:sig_tth_$CHANNEL
+---------------

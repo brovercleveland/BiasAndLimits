@@ -10,17 +10,17 @@ gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
 leptonList = ['mu','el']
-yearList = ['2012']
-#yearList = ['2012','2011']
+#yearList = ['2012']
+yearList = ['2012','2011']
 #catList = ['0']
 catList = ['1','2','3','4','5']
 #catList = ['1','2','3','4','6','7','8','9']
-catFix = True
+catFix = False
 #suffixCard = 'MVA_02-18-14_Cats'
-suffixCard = 'Poter'
+suffixCard = 'Proper'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
-rooWsFile = TFile('testRooFitOut_'+suffixCard+'.root')
+rooWsFile = TFile('outputDir/'+suffixCard+'/initRooFitOut_'+suffixCard+'.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 card_ws.autoImportClassCode(True)
@@ -109,7 +109,7 @@ for year in yearList:
       #fit_ext.Print()
       BackgroundNameFixer(year,lepton,cat,card_ws,newCat,Ext = False)
 
-card_ws.writeToFile('testCards/testCardBackground_NoExt_'+suffixCard+'.root')
+card_ws.writeToFile('outputDir/'+suffixCard+'/CardBackground_'+suffixCard+'.root')
 
 
 

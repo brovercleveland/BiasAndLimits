@@ -6,6 +6,7 @@ import numpy as np
 from rooFitBuilder import *
 from xsWeighter import *
 from ROOT import *
+import os
 
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" )
 gROOT.ProcessLine('.L ./CMSStyle.C')
@@ -17,7 +18,7 @@ rootrace = False
 do4Cat = True
 doMVA = False
 allBiasFits= False # Turn on extra fits used in bias studies
-suffix = 'Poter'
+suffix = 'Proper'
 MVAstring = ''
 if doMVA: MVAstring = 'MVA_'
 
@@ -51,18 +52,18 @@ def doInitialFits():
 
   leptonList = ['mu','el']
   #leptonList = ['el']
-  yearList = ['2012']
-  #yearList = ['2011','2012']
+  #yearList = ['2012']
+  yearList = ['2011','2012']
   if doMVA:
     catList = ['0','1','2','3','4','5','6','7','8','9']
   else:
     catList = ['0','1','2','3','4','5']
   #catList = ['9']
   #catList = ['5']
-  #massList = ['120','125','130','135','140','145','150','155','160']
-  massList = ['125']
-  #sigNameList = ['gg','vbf','tth','wh','zh']
-  sigNameList = []
+  massList = ['120','125','130','135','140','145','150','155','160']
+  #massList = ['125']
+  sigNameList = ['gg','vbf','tth','wh','zh']
+  #sigNameList = ['gg']
   '''
   leptonList = ['mu','el']
   yearList = ['2012']
@@ -434,7 +435,8 @@ def doInitialFits():
           getattr(ws,'import')(Bern3)
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
-  ws.writeToFile('syncCards/initRooFitOut_'+MVAstring+suffix.rstrip('_Cut')+'.root')
+  if not os.path.isdir('outputDir/'+suffix): os.mkdir('outputDir/'+suffix)
+  ws.writeToFile('outputDir/'+suffix+'/initRooFitOut_'+MVAstring+suffix.rstrip('_Cut')+'.root')
   #ws.writeToFile('testRooFitOut_MVA_02-01-14.root')
 
 

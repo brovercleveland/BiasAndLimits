@@ -2,11 +2,18 @@
 import os
 import sys
 
-def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', mass = '125.0'):
+def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
   byParts = False
-  MVATest = True
-  suffix = 'MVA_02-18-14_Cats'
+  MVATest = False
+  suffix = 'Proper'
+
+  if inputFolder == None:
+    inputFolder = 'outputDir/'+suffix+'/'+mass+'/'
+  if outPutFolder == None:
+    outPutFolder = 'outputDir/'+suffix+'/'+mass+'/limitOutput'
+  if not os.path.isdir(outPutFolder): os.mkdir(outPutFolder)
+
 
   leptonList = ['mu','el']
   yearList = ['2012','2011']
@@ -15,23 +22,16 @@ def produceLimits(inputFolder = 'testCards/', outPutFolder = 'limitOutputs/', ma
 
   if fullCombo:
     cardNames = ''
-    if MVATest:
-      comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
-      outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
-    else:
-      comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass])+'.txt'
-      outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass])+'.txt'
+    comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
+    outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     for year in yearList:
-      if year == '2011': catList = catListSmall
-      else: catList = catListBig
+      if MVATest and year == '2012': catList = catListBig
+      else: catList = catListSmall
       for lepton in leptonList:
         for cat in catList:
           if year is '2011' and cat is '5' and lepton is 'mu': continue
           elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
-          if MVATest:
-            cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
-          else:
-            cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt'
+          cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
