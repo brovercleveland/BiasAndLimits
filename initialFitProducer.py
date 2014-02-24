@@ -15,8 +15,13 @@ debugPlots = True
 verbose = False
 rootrace = False
 do4Cat = True
-doVBF = False
-suffix = '02-18-14_Cats'
+doMVA = False
+allBiasFits= False # Turn on extra fits used in bias studies
+suffix = 'Poter'
+MVAstring = ''
+if doMVA: MVAstring = 'MVA_'
+
+
 
 # OK listen, we're gunna need to do some bullshit just to get a uniform RooRealVar name for our data objects.
 # Because I named branches different than the trees, there's a lot of tree loops here
@@ -28,8 +33,7 @@ if rootrace: RooTrace.active(kTRUE)
 def doInitialFits():
   print 'loading up the files'
 
-  #dataDict = {'mu2012_4cat':TFile('inputFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/data_El2011.root','r')}
-  #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_loose.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_loose.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
@@ -40,7 +44,7 @@ def doInitialFits():
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_01-30-14_Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_01-30-14_Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_01-30-14_MoreShapeCut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_01-30-14_MoreShapeCut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_02-01-14_Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_02-01-14_Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
 
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
   signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
@@ -49,7 +53,10 @@ def doInitialFits():
   #leptonList = ['el']
   yearList = ['2012']
   #yearList = ['2011','2012']
-  catList = ['0','1','2','3','4','5','6','7','8','9']
+  if doMVA:
+    catList = ['0','1','2','3','4','5','6','7','8','9']
+  else:
+    catList = ['0','1','2','3','4','5']
   #catList = ['9']
   #catList = ['5']
   #massList = ['120','125','130','135','140','145','150','155','160']
@@ -400,7 +407,7 @@ def doInitialFits():
           getattr(ws,'import')(Bern3)
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
-  ws.writeToFile('testRooFitOut_MVA_'+suffix.rstrip('_Cut')+'.root')
+  ws.writeToFile('syncCards/initRooFitOut_'+MVAstring+suffix.rstrip('_Cut')+'.root')
   #ws.writeToFile('testRooFitOut_MVA_02-01-14.root')
 
 
