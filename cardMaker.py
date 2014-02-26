@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 sys.argv.append('-b')
 from ROOT import *
 from systematics import *
@@ -161,15 +162,21 @@ def makeCards(MVATest = False):
         channel = '_'.join([lepton,year,'cat'+cat])
         sigCorChannel = '_'.join([lepton,year,'cat'+sigCorCat])
         if cat is '5':
-          bkgParams = ['p1','p2','p3','norm']
+          #bkgParams = ['p1','p2','p3','norm']
+          bkgParams = ['p1','p2','p3']
           sigNameList = sigNameList[0:2]
         elif cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
-          bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
+          #bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
+          bkgParams = ['p1','p2','p3','p4','sigma','step']
         else:
-          bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
+          #bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
+          bkgParams = ['p1','p2','p3','p4','p5','sigma','step']
 
         for mass in massList:
+          #if not os.path.isfile('outputDir/'+suffix+'/'+mass+'/'+'SignalOutput_All_'+suffix+'_'+mass+'.root'):
+            #os.system('hadd -f outputDir/'+suffix+'/'+mass+'/'+'SignalOutput_All_'+suffix+'_'+mass+'.root outputDir/'+suffix+'/'+mass+'/'+'SignalOutput*.root')
           sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+sigCorCat,mass])+'.root'
+          #sigFileName = 'SignalOutput_All_'+suffix+'_'+mass+'.root'
           sigFile = TFile('outputDir/'+suffix+'/'+mass+'/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = ['sig_'+sig for sig in sigNameList]
@@ -178,7 +185,7 @@ def makeCards(MVATest = False):
             card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt','w')
           else:
             #card = open('testCards/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
-            card = open('outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass])+'.txt','w')
+            card = open('outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt','w')
           card.write('#some bullshit\n')
           card.write('#more comments\n')
           card.write('imax *\n')
@@ -255,9 +262,11 @@ def makeCards(MVATest = False):
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
 
-          for param in bkgParams[:-1]:
+          #for param in bkgParams[:-1]:
+            #card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))
+          #card.write('{0:<45} {1:<15}\n'.format('bkg_'+channel+'_'+bkgParams[-1],'flatParam'))
+          for param in bkgParams:
             card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))
-          card.write('{0:<45} {1:<15}\n'.format('bkg_'+channel+'_'+bkgParams[-1],'flatParam'))
 
 
           card.close()

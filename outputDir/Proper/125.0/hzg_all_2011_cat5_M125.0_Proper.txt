@@ -40,4 +40,3 @@ sig_vbf_sigmaShift_all_2011_cat5         param          1         0.05
 bkg_p1_all_2011_cat5                          flatParam      
 bkg_p2_all_2011_cat5                          flatParam      
 bkg_p3_all_2011_cat5                          flatParam      
-bkg_all_2011_cat5_norm                        flatParam      

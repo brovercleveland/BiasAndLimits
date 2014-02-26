@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import shutil
 
 def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
@@ -11,8 +12,12 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   if inputFolder == None:
     inputFolder = 'outputDir/'+suffix+'/'+mass+'/'
   if outPutFolder == None:
-    outPutFolder = 'outputDir/'+suffix+'/'+mass+'/limitOutput'
+    outPutFolder = 'outputDir/'+suffix+'/'+mass+'/limitOutput/'
   if not os.path.isdir(outPutFolder): os.mkdir(outPutFolder)
+
+  if not os.path.isfile(outPutFolder+'CardBackground_'+suffix+'.root'):
+    shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',outPutFolder+'CardBackground_'+suffix+'.root')
+
 
 
   leptonList = ['mu','el']
@@ -22,8 +27,10 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
 
   if fullCombo:
     cardNames = ''
-    comboName = inputFolder+'_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
-    outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
+    #comboName = outPutFolder+'_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
+    #outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
+    comboName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
+    outputName = '_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     for year in yearList:
       if MVATest and year == '2012': catList = catListBig
       else: catList = catListSmall
@@ -31,10 +38,16 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
         for cat in catList:
           if year is '2011' and cat is '5' and lepton is 'mu': continue
           elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
-          cardNames = cardNames+' '+inputFolder+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
+          cardNames = cardNames+' '+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
+          sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
+          if not os.path.isfile(outPutFolder+sigFileName):
+             shutil.copy(inputFolder+sigFileName,outPutFolder+sigFileName)
+    os.chdir(inputFolder)
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
+    shutil.move(comboName, 'limitOutput/'+comboName)
+    os.chdir('limitOutput')
     print 'running limit software, M:',mass
     os.system('combine -M Asymptotic '+comboName+' > '+outputName)
     #os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)

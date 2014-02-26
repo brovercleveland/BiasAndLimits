@@ -53,4 +53,3 @@ bkg_p4_mu_2011_cat3                           flatParam
 bkg_p5_mu_2011_cat3                           flatParam      
 bkg_sigma_mu_2011_cat3                        flatParam      
 bkg_step_mu_2011_cat3                         flatParam      
-bkg_mu_2011_cat3_norm                         flatParam      

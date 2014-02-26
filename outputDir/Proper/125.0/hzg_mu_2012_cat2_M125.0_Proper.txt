@@ -53,4 +53,3 @@ bkg_p4_mu_2012_cat2                           flatParam
 bkg_p5_mu_2012_cat2                           flatParam      
 bkg_sigma_mu_2012_cat2                        flatParam      
 bkg_step_mu_2012_cat2                         flatParam      
-bkg_mu_2012_cat2_norm                         flatParam      
