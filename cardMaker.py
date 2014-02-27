@@ -162,15 +162,12 @@ def makeCards(MVATest = False):
         channel = '_'.join([lepton,year,'cat'+cat])
         sigCorChannel = '_'.join([lepton,year,'cat'+sigCorCat])
         if cat is '5':
-          #bkgParams = ['p1','p2','p3','norm']
-          bkgParams = ['p1','p2','p3']
+          bkgParams = ['p1','p2','p3','norm']
           sigNameList = sigNameList[0:2]
         elif cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
-          #bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
-          bkgParams = ['p1','p2','p3','p4','sigma','step']
+          bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
         else:
-          #bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
-          bkgParams = ['p1','p2','p3','p4','p5','sigma','step']
+          bkgParams = ['p1','p2','p3','p4','p5','sigma','step','norm']
 
         for mass in massList:
           #if not os.path.isfile('outputDir/'+suffix+'/'+mass+'/'+'SignalOutput_All_'+suffix+'_'+mass+'.root'):
@@ -221,7 +218,7 @@ def makeCards(MVATest = False):
               sigYields.append(sigWs.var(sig+'_yield_'+channel).getVal())
           bgYield = bgWs.var('_'.join(['data','yield',lepton,year,'cat'+cat])).getVal()
           if cat is not '5':
-            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[bgYield])))
+            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
             card.write('-----------------------------------------------------------------------------------------------------------------------\n')
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[pdf_tth[year][mass]]+['-']*3+[pdf_gg[year][mass]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[year][mass]]+[pdf_wh[year][mass]]+[pdf_vbf[year][mass]]+['-']*2)))
@@ -241,7 +238,7 @@ def makeCards(MVATest = False):
               card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_eff_R9_'+TeV,'lnN']+[eff_R9[year]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR_'+year,'lnN']+[err_BR[mass]]*5+['-'])))
           else:
-            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15}\n'.format(*(['rate']+sigYields+[bgYield])))
+            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15}\n'.format(*(['rate']+sigYields+[1])))
             card.write('-----------------------------------------------------------------------------------------------------------------------\n')
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['pdf_gg','lnN']+['-']+[pdf_gg[year][mass]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['pdf_qqbar','lnN']+[pdf_vbf[year][mass]]+['-']*2)))
@@ -263,11 +260,9 @@ def makeCards(MVATest = False):
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
 
-          #for param in bkgParams[:-1]:
-            #card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))
-          #card.write('{0:<45} {1:<15}\n'.format('bkg_'+channel+'_'+bkgParams[-1],'flatParam'))
-          for param in bkgParams:
+          for param in bkgParams[:-1]:
             card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))
+          card.write('{0:<45} {1:<15}\n'.format('bkg_'+channel+'_'+bkgParams[-1],'flatParam'))
 
 
           card.close()

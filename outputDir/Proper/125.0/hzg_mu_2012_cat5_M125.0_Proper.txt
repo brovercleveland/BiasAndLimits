@@ -16,13 +16,13 @@ bin                        mu_2012_cat5    mu_2012_cat5    mu_2012_cat5
 process                       sig_vbf         sig_gg            bkg      
 process                         -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                          0.11801        0.033927          21.0      
+rate                          0.11801        0.033927            1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN            -          0.922/1.072          -       
 pdf_qqbar         lnN       0.972/1.026          -               -       
 QCDscale_ggH      lnN            -          0.931/1.075          -       
 QCDscale_qqH      lnN       0.998/1.002          -               -       
-lumi_8TeV         lnN          1.044           1.044             -       
+lumi_8TeV         lnN          1.026           1.026             -       
 CMS_eff_m_8TeV    lnN          1.014           1.014             -       
 CMS_eff_trig_m_8TeV lnN          1.035           1.035             -       
 CMS_eff_PU_m_8TeV lnN          1.004           1.004             -       
@@ -40,3 +40,4 @@ sig_vbf_sigmaShift_mu_2012_cat5          param          1         0.05
 bkg_p1_mu_2012_cat5                           flatParam      
 bkg_p2_mu_2012_cat5                           flatParam      
 bkg_p3_mu_2012_cat5                           flatParam      
+bkg_mu_2012_cat5_norm                         flatParam      

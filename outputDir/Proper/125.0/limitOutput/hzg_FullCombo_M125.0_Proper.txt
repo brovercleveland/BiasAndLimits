@@ -171,7 +171,7 @@ QCDscale_qqH            lnN            -            -            -            - 
 QCDscale_ttH            lnN            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            0.907/1.038  -            -            -            -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            0.907/1.033  -            -            -            -            -            -            -            -          
 UEPS                    lnN            -            -            -            1.002        1.026        -            -            -            -            1.002        1.018        -            -            -            -            1.002        1.021        -            -            -            -            1.002        1.035        -            1.249        1.07         -            -            -            -            1.002        1.026        -            -            -            -            1.002        1.018        -            -            -            -            1.002        1.021        -            -            -            -            1.002        1.035        -            1.249        1.07         -            -            -            -            1.002        1.026        -            -            -            -            1.002        1.018        -            -            -            -            1.002        1.021        -            -            -            -            1.002        1.035        -            -            -            -            1.002        1.026        -            -            -            -            1.002        1.018        -            -            -            -            1.002        1.021        -            -            -            -            1.002        1.035        -            1.249        1.07         -          
 lumi_7TeV               lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        -          
-lumi_8TeV               lnN            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        1.044        1.044        1.044        -            1.044        1.044        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+lumi_8TeV               lnN            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
 pdf_gg                  lnN            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.078  -            -            0.922/1.072  -            -            0.922/1.072  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.915/1.085  -            -            0.929/1.076  -            -            0.929/1.076  -            -          
 pdf_qqbar               lnN            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.972/1.026  -            -            0.972/1.026  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.965/1.035  0.965/1.035  -            0.979/1.025  -            -            0.979/1.025  -          
 sig_gg_mShift_el_2011_cat4  param  1 0.01
@@ -364,7 +364,10 @@ bkg_sigma_el_2011_cat1  flatParam
 bkg_sigma_el_2011_cat2  flatParam
 bkg_sigma_el_2011_cat3  flatParam
 bkg_sigma_el_2011_cat4  flatParam
+bkg_el_2011_cat1_norm  flatParam
+bkg_el_2012_cat1_norm  flatParam
 bkg_sigma_mu_2011_cat4  flatParam
+bkg_el_2011_cat3_norm  flatParam
 bkg_p1_el_2011_cat3  flatParam
 bkg_p3_mu_2011_cat1  flatParam
 bkg_p3_mu_2011_cat2  flatParam
@@ -374,21 +377,25 @@ bkg_p1_el_2011_cat4  flatParam
 bkg_p5_mu_2011_cat2  flatParam
 bkg_sigma_mu_2011_cat1  flatParam
 bkg_p5_mu_2011_cat4  flatParam
+bkg_el_2012_cat3_norm  flatParam
 bkg_sigma_mu_2011_cat3  flatParam
 bkg_sigma_mu_2011_cat2  flatParam
+bkg_el_2012_cat4_norm  flatParam
+bkg_mu_2012_cat2_norm  flatParam
 bkg_p4_el_2012_cat1  flatParam
 bkg_p4_el_2012_cat3  flatParam
 bkg_p4_el_2012_cat2  flatParam
 bkg_p4_el_2012_cat4  flatParam
+bkg_el_2012_cat5_norm  flatParam
 bkg_p1_mu_2011_cat4  flatParam
 bkg_p1_mu_2011_cat2  flatParam
 bkg_p1_mu_2011_cat3  flatParam
 bkg_p1_mu_2011_cat1  flatParam
 bkg_step_el_2011_cat1  flatParam
 bkg_step_el_2011_cat2  flatParam
-bkg_step_el_2011_cat3  flatParam
+bkg_el_2012_cat2_norm  flatParam
 bkg_step_el_2011_cat4  flatParam
-bkg_p3_all_2011_cat5  flatParam
+bkg_mu_2011_cat4_norm  flatParam
 bkg_p3_mu_2012_cat1  flatParam
 bkg_p3_mu_2012_cat3  flatParam
 bkg_p3_mu_2012_cat2  flatParam
@@ -407,18 +414,23 @@ bkg_p2_mu_2011_cat2  flatParam
 bkg_p2_mu_2011_cat1  flatParam
 bkg_p2_mu_2011_cat4  flatParam
 bkg_p4_mu_2012_cat4  flatParam
+bkg_mu_2011_cat1_norm  flatParam
 bkg_p4_mu_2012_cat1  flatParam
 bkg_p4_mu_2012_cat2  flatParam
 bkg_p4_mu_2012_cat3  flatParam
+bkg_mu_2011_cat2_norm  flatParam
 bkg_sigma_mu_2012_cat4  flatParam
 bkg_sigma_mu_2012_cat1  flatParam
 bkg_sigma_mu_2012_cat2  flatParam
 bkg_sigma_mu_2012_cat3  flatParam
+bkg_step_el_2011_cat3  flatParam
 bkg_p1_all_2011_cat5  flatParam
 bkg_p1_el_2011_cat2  flatParam
+bkg_p3_all_2011_cat5  flatParam
 bkg_p1_el_2011_cat1  flatParam
 bkg_p3_el_2012_cat4  flatParam
 bkg_p3_el_2012_cat5  flatParam
+bkg_el_2011_cat4_norm  flatParam
 bkg_p3_el_2012_cat1  flatParam
 bkg_p3_el_2012_cat2  flatParam
 bkg_p3_el_2012_cat3  flatParam
@@ -426,6 +438,7 @@ bkg_p4_mu_2011_cat4  flatParam
 bkg_p4_mu_2011_cat1  flatParam
 bkg_p4_mu_2011_cat3  flatParam
 bkg_p4_mu_2011_cat2  flatParam
+bkg_all_2011_cat5_norm  flatParam
 bkg_p5_el_2012_cat2  flatParam
 bkg_p5_el_2012_cat3  flatParam
 bkg_p5_el_2012_cat4  flatParam
@@ -440,22 +453,28 @@ bkg_p1_mu_2012_cat5  flatParam
 bkg_p1_mu_2012_cat4  flatParam
 bkg_p2_all_2011_cat5  flatParam
 bkg_p3_el_2011_cat4  flatParam
+bkg_mu_2012_cat5_norm  flatParam
 bkg_p2_mu_2012_cat4  flatParam
 bkg_p2_mu_2012_cat5  flatParam
 bkg_p2_mu_2012_cat2  flatParam
 bkg_p2_mu_2012_cat3  flatParam
 bkg_p3_el_2011_cat3  flatParam
 bkg_p2_mu_2012_cat1  flatParam
+bkg_mu_2012_cat4_norm  flatParam
 bkg_p3_el_2011_cat1  flatParam
 bkg_sigma_el_2012_cat1  flatParam
+bkg_el_2011_cat2_norm  flatParam
 bkg_sigma_el_2012_cat3  flatParam
 bkg_sigma_el_2012_cat2  flatParam
 bkg_sigma_el_2012_cat4  flatParam
+bkg_mu_2012_cat3_norm  flatParam
 bkg_p3_el_2011_cat2  flatParam
+bkg_mu_2011_cat3_norm  flatParam
 bkg_step_mu_2012_cat1  flatParam
 bkg_step_mu_2012_cat2  flatParam
 bkg_step_mu_2012_cat3  flatParam
 bkg_step_mu_2012_cat4  flatParam
+bkg_mu_2012_cat1_norm  flatParam
 bkg_p2_el_2011_cat4  flatParam
 bkg_p2_el_2011_cat2  flatParam
 bkg_p2_el_2011_cat3  flatParam

@@ -15,8 +15,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     outPutFolder = 'outputDir/'+suffix+'/'+mass+'/limitOutput/'
   if not os.path.isdir(outPutFolder): os.mkdir(outPutFolder)
 
-  if not os.path.isfile(outPutFolder+'CardBackground_'+suffix+'.root'):
-    shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',outPutFolder+'CardBackground_'+suffix+'.root')
+  shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',outPutFolder+'CardBackground_'+suffix+'.root')
 
 
 
@@ -42,6 +41,8 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
           sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
           if not os.path.isfile(outPutFolder+sigFileName):
              shutil.copy(inputFolder+sigFileName,outPutFolder+sigFileName)
+          else:
+            print 'using existing', sigFileName
     os.chdir(inputFolder)
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
@@ -50,7 +51,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     os.chdir('limitOutput')
     print 'running limit software, M:',mass
     os.system('combine -M Asymptotic '+comboName+' > '+outputName)
-    #os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
+    os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
 
 if __name__ == "__main__":
   print sys.argv

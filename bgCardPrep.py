@@ -9,6 +9,7 @@ from rooFitBuilder import *
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
+doExt = False
 leptonList = ['mu','el']
 #yearList = ['2012']
 yearList = ['2012','2011']
@@ -58,6 +59,7 @@ for year in yearList:
         fitName = '_'.join(['GaussBern5',year,lepton,'cat'+cat])
         normName = 'normGaussBern5_'+suffix
 
+
       data = myWs.data(dataName)
       fit = myWs.pdf(fitName)
 
@@ -69,17 +71,23 @@ for year in yearList:
       #raw_input()
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
-      #norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
-      #fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
-      #fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
+      if doExt:
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+        print 'start', norm.getVal()
+        fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
+        fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
 
-      #fit_ext.fitTo(data,RooFit.Range('fullRegion'))
+        fit_ext.fitTo(data,RooFit.Range('fullRegion'))
 
-      #testFrame = mzg.frame()
-      #data.plotOn(testFrame)
-      #fit_ext.plotOn(testFrame)
-      #testFrame.Draw()
-      #c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
+        testFrame = mzg.frame()
+        data.plotOn(testFrame)
+        fit_ext.plotOn(testFrame)
+        testFrame.Draw()
+        c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
+        print 'end', norm.getVal()
+      else:
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+
 
       ###### Import the fit and data, and rename them to the card convention
       newCat = cat
@@ -102,12 +110,17 @@ for year in yearList:
       dataYield.SetName(dataYieldNameNew)
 
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
-      #getattr(card_ws,'import')(fit_ext)
-      getattr(card_ws,'import')(fit)
+      if doExt:
+        getattr(card_ws,'import')(fit_ext)
+      else:
+        getattr(card_ws,'import')(fit)
+        normNameFixed  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+        norm.SetName(normNameFixed)
+        getattr(card_ws,'import')(norm)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       #fit_ext.Print()
-      BackgroundNameFixer(year,lepton,cat,card_ws,newCat,Ext = False)
+      BackgroundNameFixer(year,lepton,cat,card_ws,newCat,doExt)
 
 card_ws.writeToFile('outputDir/'+suffixCard+'/CardBackground_'+suffixCard+'.root')
 

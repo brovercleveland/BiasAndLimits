@@ -16,7 +16,7 @@ bin                        all_2011_cat5   all_2011_cat5   all_2011_cat5
 process                       sig_vbf         sig_gg            bkg      
 process                         -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.084431        0.029372           9.0      
+rate                         0.084431        0.029372            1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN            -          0.929/1.076          -       
 pdf_qqbar         lnN       0.979/1.025          -               -       
@@ -40,3 +40,4 @@ sig_vbf_sigmaShift_all_2011_cat5         param          1         0.05
 bkg_p1_all_2011_cat5                          flatParam      
 bkg_p2_all_2011_cat5                          flatParam      
 bkg_p3_all_2011_cat5                          flatParam      
+bkg_all_2011_cat5_norm                        flatParam      

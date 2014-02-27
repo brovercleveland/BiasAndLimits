@@ -19,7 +19,7 @@ bin                        mu_2012_cat1    mu_2012_cat1    mu_2012_cat1    mu_20
 process                       sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                          0.01399         0.0646         0.063911         0.14258          2.11           2725.0     
+rate                          0.01399         0.0646         0.063911         0.14258          2.11              1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       0.922/1.078          -               -               -          0.922/1.072          -       
 pdf_qqbar         lnN            -          0.965/1.035     0.965/1.035     0.972/1.026          -               -       
@@ -27,7 +27,7 @@ QCDscale_ggH      lnN            -               -               -              
 QCDscale_qqH      lnN            -               -               -          0.998/1.002          -               -       
 QCDscale_VH       lnN            -          0.985/1.016     0.994/1.002          -               -               -       
 QCDscale_ttH      lnN       0.907/1.038          -               -               -               -               -       
-lumi_8TeV         lnN          1.044           1.044           1.044           1.044           1.044             -       
+lumi_8TeV         lnN          1.026           1.026           1.026           1.026           1.026             -       
 CMS_eff_m_8TeV    lnN          1.014           1.014           1.014           1.014           1.014             -       
 CMS_eff_trig_m_8TeV lnN          1.035           1.035           1.035           1.035           1.035             -       
 CMS_eff_PU_m_8TeV lnN          1.004           1.004           1.004           1.004           1.004             -       
@@ -54,3 +54,4 @@ bkg_p4_mu_2012_cat1                           flatParam
 bkg_p5_mu_2012_cat1                           flatParam      
 bkg_sigma_mu_2012_cat1                        flatParam      
 bkg_step_mu_2012_cat1                         flatParam      
+bkg_mu_2012_cat1_norm                         flatParam      
