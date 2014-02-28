@@ -49,9 +49,9 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     os.system('combineCards.py '+cardNames+' > '+comboName)
     shutil.move(comboName, 'limitOutput/'+comboName)
     os.chdir('limitOutput')
-    print 'running limit software, M:',mass
-    os.system('combine -M Asymptotic '+comboName+' > '+outputName)
-    os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
+    #print 'running limit software, M:',mass
+    #os.system('combine -M Asymptotic '+comboName+' > '+outputName)
+    #os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
 
 if __name__ == "__main__":
   print sys.argv
