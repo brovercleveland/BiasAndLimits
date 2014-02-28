@@ -45,9 +45,9 @@ necessary Higgs Combination syntax.  `bgCardPrep.py` takes the proper background
 
 `cardMaker.py` takes the signal and bg output from the previous step and creates datacards for use with the higgs combination tool.
 
-`limitProducer.py` combines those datacards as specified by the user, and runs the 'combine' tool to produce asymptotic limits for all given mass points. *this code may be updated for batch useage in the future*
+`limitProducer.py` combines those datacards as specified by the user, and can run the 'combine' tool to produce asymptotic limits for all given mass points. It is recommended that you use `batchLimits.py` to run the calculation for each mass point.  In general, the cards take about 1-5 min to run if it is a single card, ~1 hour for the nominal (published) results, and 2-4 hours for the MVA categorization.
 
-`limitPlotter.py` parses the outputs from the 'combine' tool, and makes nice pretty plots.
+`limitPlotter.py` parses the outputs from the 'combine' tool, and makes nice pretty plots. *This code is not yet updated for new batchmode features, needs minor additions*
 
 Fit Plots:
 ----------
