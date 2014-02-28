@@ -57,9 +57,14 @@ if __name__ == "__main__":
   print sys.argv
   if len(sys.argv)<2:
     produceLimits()
-  elif len(sys.argv) is 2:
-    produceLimits('testCards/','',str(sys.argv[1]))
-  elif len(sys.argv) is 4:
-    produceLimits(str(sys.argv[1]),str(sys.argv[2]),str(sys.argv[3]))
+  elif len(sys.argv) is 2 and str(sys.argv[1]).lower() == 'all':
+    massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
+     '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
+     '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
+     '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
+     '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
+     '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
+    for mass in massList:
+      produceLimits(mass = mass)
   else:
-    'you did something wrong'
+    'you did something wrong, syntax has been changed'
