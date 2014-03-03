@@ -119,13 +119,13 @@ def makeCards(MVATest = False):
   catListSmall = ['1','2','3','4','5']
   catListBig = ['1','2','3','4','5','6','7','8','9']
   #catList = ['1']
-  #massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
-  # '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
-  # '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
-  # '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
-  # '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
-  # '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
-  massList = ['125.0']
+  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
+   '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
+   '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
+   '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
+   '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
+   '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
+  #massList = ['125.0']
 
   for year in yearList:
     if year == '2011':
@@ -228,13 +228,17 @@ def makeCards(MVATest = False):
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_VH','lnN']+['-']+[qcd_zh[year][mass]]+[qcd_wh[year][mass]]+['-']*3)))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ttH','lnN']+[qcd_tth[year][mass]]+['-']*5)))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[year]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[eff_l[year][lepton]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0]+'_'+TeV,'lnN']+[eff_trig[year][lepton]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0]+'_'+TeV,'lnN']+[eff_PU[year][lepton]]*5+['-'])))
+
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[eff_l[year][lepton]]*5+['-'])))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0]+'_'+TeV,'lnN']+[eff_trig[year][lepton]]*5+['-'])))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0]+'_'+TeV,'lnN']+[eff_PU[year][lepton]]*5+['-'])))
+            totalLeptonEffSys = AddInQuad([eff_l[year][lepton],eff_trig[year][lepton],eff_PU[year][lepton]])
+            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[totalLeptonEffSys]*5+['-'])))
+
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g_'+phoGeom+'_'+TeV,'lnN']+[eff_g[year][phoGeom]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['UEPS','lnN']+['-']*3+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+['-']*3+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
             if cat in['1','4','6','9']:
               card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_eff_R9_'+TeV,'lnN']+[eff_R9[year]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR_'+year,'lnN']+[err_BR[mass]]*5+['-'])))
@@ -246,13 +250,16 @@ def makeCards(MVATest = False):
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']+[qcd_gg[year][mass]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['QCDscale_qqH','lnN']+[qcd_vbf[year][mass]]+['-']*2)))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[year]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[eff_l[year][lepton]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0]+'_'+TeV,'lnN']+[eff_trig[year][lepton]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0]+'_'+TeV,'lnN']+[eff_PU[year][lepton]]*2+['-'])))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[eff_l[year][lepton]]*2+['-'])))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0]+'_'+TeV,'lnN']+[eff_trig[year][lepton]]*2+['-'])))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0]+'_'+TeV,'lnN']+[eff_PU[year][lepton]]*2+['-'])))
+            totalLeptonEffSys = AddInQuad([eff_l[year][lepton],eff_trig[year][lepton],eff_PU[year][lepton]])
+            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[totalLeptonEffSys]*5+['-'])))
+
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_g_'+phoGeom+'_'+TeV,'lnN']+[eff_g[year][phoGeom]]*2+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_scale_j','lnN']+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_res_j','lnN']+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['UEPS','lnN']+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_id_j','lnN']+jetId+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_acc_j','lnN']+jetAcc+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_hzg_err_BR_'+TeV,'lnN']+[err_BR[mass]]*2+['-'])))
@@ -280,7 +287,7 @@ def AddInQuad(inputList = ['1.1','1.2','1.3','1.4','1.5']):
 
 
 if __name__=="__main__":
-  #makeCards()
-  print AddInQuad()
+  makeCards()
+  #print AddInQuad()
 
 

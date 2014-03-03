@@ -2,6 +2,7 @@
 import os
 import sys
 import shutil
+import time
 
 def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
@@ -9,11 +10,13 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   MVATest = False
   suffix = 'Proper'
 
+  owd = os.getcwd()
   if inputFolder == None:
     inputFolder = 'outputDir/'+suffix+'/'+mass+'/'
   if outPutFolder == None:
     outPutFolder = 'outputDir/'+suffix+'/'+mass+'/limitOutput/'
-  if not os.path.isdir(outPutFolder): os.mkdir(outPutFolder)
+  if not os.path.exists(outPutFolder):
+    os.mkdir(outPutFolder)
 
   shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',outPutFolder+'CardBackground_'+suffix+'.root')
 
@@ -48,15 +51,18 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
     shutil.move(comboName, 'limitOutput/'+comboName)
-    os.chdir('limitOutput')
+    #os.chdir('limitOutput')
     #print 'running limit software, M:',mass
     #os.system('combine -M Asymptotic '+comboName+' > '+outputName)
     #os.system('combine -M ProfileLikelihood '+comboName+' > '+outputName)
+    os.chdir(owd)
 
 if __name__ == "__main__":
   print sys.argv
   if len(sys.argv)<2:
     produceLimits()
+  elif len(sys.argv) is 2 and str(sys.argv[1]).lower() != 'all':
+    produceLimits(mass = str(sys.argv[1]))
   elif len(sys.argv) is 2 and str(sys.argv[1]).lower() == 'all':
     massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
      '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',

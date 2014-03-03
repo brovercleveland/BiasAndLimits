@@ -1,0 +1,54 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
+shapes sig_gg   * SignalOutput_el_2011_cat3_153.0.root ws_card:sig_gg_$CHANNEL
+shapes sig_vbf  * SignalOutput_el_2011_cat3_153.0.root ws_card:sig_vbf_$CHANNEL
+shapes sig_wh   * SignalOutput_el_2011_cat3_153.0.root ws_card:sig_wh_$CHANNEL
+shapes sig_zh   * SignalOutput_el_2011_cat3_153.0.root ws_card:sig_zh_$CHANNEL
+shapes sig_tth  * SignalOutput_el_2011_cat3_153.0.root ws_card:sig_tth_$CHANNEL
+---------------
+bin          el_2011_cat3
+observation  576
+------------------------------
+bin                        el_2011_cat3    el_2011_cat3    el_2011_cat3    el_2011_cat3    el_2011_cat3    el_2011_cat3  
+process                       sig_tth         sig_zh          sig_wh          sig_vbf         sig_gg            bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                        0.00052749       0.0048294       0.0049654       0.015039         0.19471            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       1.085/0.915          -               -               -         0.9249/1.0755         -       
+pdf_qqbar         lnN            -          0.964/1.036     0.966/1.034     0.979/1.028          -               -       
+QCDscale_ggH      lnN            -               -               -               -         0.9266/1.0654         -       
+QCDscale_qqH      lnN            -               -               -          0.999/1.003          -               -       
+QCDscale_VH       lnN            -          0.984/1.02      0.992/1.005          -               -               -       
+QCDscale_ttH      lnN       0.909/1.028          -               -               -               -               -       
+lumi_7TeV         lnN          1.022           1.022           1.022           1.022           1.022             -       
+CMS_eff_e_7TeV    lnN          1.743           1.743           1.743           1.743           1.743             -       
+CMS_eff_g_EE_7TeV lnN          1.010           1.010           1.010           1.010           1.010             -       
+CMS_scale_j       lnN            -               -               -             1.022           1.001             -       
+CMS_res_j         lnN            -               -               -             1.014           1.001             -       
+CMS_UEPS_7TeV     lnN            -               -               -             1.021           1.002             -       
+CMS_hzg_err_BR_2011 lnN       0.940/1.060     0.940/1.060     0.940/1.060     0.940/1.060     0.940/1.060          -       
+sig_gg_mShift_el_2011_cat3               param          1         0.01   
+sig_gg_sigmaShift_el_2011_cat3           param          1         0.05   
+sig_vbf_mShift_el_2011_cat3              param          1         0.01   
+sig_vbf_sigmaShift_el_2011_cat3          param          1         0.05   
+sig_wh_mShift_el_2011_cat3               param          1         0.01   
+sig_wh_sigmaShift_el_2011_cat3           param          1         0.05   
+sig_zh_mShift_el_2011_cat3               param          1         0.01   
+sig_zh_sigmaShift_el_2011_cat3           param          1         0.05   
+sig_tth_mShift_el_2011_cat3              param          1         0.01   
+sig_tth_sigmaShift_el_2011_cat3          param          1         0.05   
+bkg_p1_el_2011_cat3                           flatParam      
+bkg_p2_el_2011_cat3                           flatParam      
+bkg_p3_el_2011_cat3                           flatParam      
+bkg_p4_el_2011_cat3                           flatParam      
+bkg_p5_el_2011_cat3                           flatParam      
+bkg_sigma_el_2011_cat3                        flatParam      
+bkg_step_el_2011_cat3                         flatParam      
+bkg_el_2011_cat3_norm                         flatParam      

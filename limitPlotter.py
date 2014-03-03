@@ -11,6 +11,7 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
+suffix = 'Proper'
 
 massList = [120.0,120.5,121.0,121.5,122.0,122.5,123.0,123.5,124.0,124.5,125.0,
  125.5,126.0,126.5,127.0,127.5,128.0,128.5,129.0,129.5,130.0,
@@ -30,11 +31,15 @@ if fullCombo:
   exp1SigLow = []
   exp2SigHi = []
   exp2SigLow = []
-  fileListTmp = os.listdir('limitOutputs')
-  fileList = filter(lambda fileName: 'FullCombo' in fileName,fileListTmp)
   for mass in massList:
-    thisFile = filter(lambda fileName: str(mass) in fileName,fileList)[0]
-    f = open('limitOutputs/'+thisFile)
+    currentDir = '/'.join(['outputDir',suffix,str(mass),'limitOutput'])
+    fileList = os.listdir(currentDir)
+    print fileList
+    raw_input()
+    thisFile = filter(lambda fileName: 'Output_FullCombo' in fileName,fileList)[0]
+    f = open('/'.join([currentDir,thisFile]))
+    print f
+    raw_input()
     xAxis.append(mass)
     for line in f:
       splitLine = line.split()
