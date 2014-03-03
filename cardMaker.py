@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
+import math
 sys.argv.append('-b')
 from ROOT import *
 from systematics import *
@@ -220,7 +221,7 @@ def makeCards(MVATest = False):
           if cat is not '5':
             card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
             card.write('-----------------------------------------------------------------------------------------------------------------------\n')
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[pdf_tth[year][mass]]+['-']*3+[pdf_gg[year][mass]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[year][mass])]+['-']*3+[pdf_gg[year][mass]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[year][mass]]+[pdf_wh[year][mass]]+[pdf_vbf[year][mass]]+['-']*2)))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']*4+[qcd_gg[year][mass]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_qqH','lnN']+['-']*3+[qcd_vbf[year][mass]]+['-']*2)))
@@ -269,8 +270,17 @@ def makeCards(MVATest = False):
 
 
 
+def KapSwap(inputSyst = '1.0/2.0'):
+  splitSyst = inputSyst.split('/')
+  outputSyst = splitSyst[-1] + '/' + splitSyst[0]
+  return outputSyst
+
+def AddInQuad(inputList = ['1.1','1.2','1.3','1.4','1.5']):
+  return str(math.sqrt(sum(float(i)**2 for i in inputList)))
+
 
 if __name__=="__main__":
-  makeCards()
+  #makeCards()
+  print AddInQuad()
 
 
