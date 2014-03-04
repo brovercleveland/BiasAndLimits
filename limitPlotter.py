@@ -35,11 +35,11 @@ if fullCombo:
     currentDir = '/'.join(['outputDir',suffix,str(mass),'limitOutput'])
     fileList = os.listdir(currentDir)
     print fileList
-    raw_input()
+    #raw_input()
     thisFile = filter(lambda fileName: 'Output_FullCombo' in fileName,fileList)[0]
     f = open('/'.join([currentDir,thisFile]))
     print f
-    raw_input()
+    #raw_input()
     xAxis.append(mass)
     for line in f:
       splitLine = line.split()

@@ -1,5 +1,4 @@
 roostats*
-*.root
 res
 *.pyc
 *.so
