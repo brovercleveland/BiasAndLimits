@@ -25,17 +25,52 @@ class AutoVivification(dict):
             value = self[item] = type(self)()
             return value
 
-suffix = 'Proper'
+def set_palette(name='palette', ncontours=999):
+  """Set a color palette from a given RGB list
+  stops, red, green and blue should all be lists of the same length
+  see set_decent_colors for an example"""
+
+  if name == "gray" or name == "grayscale":
+      stops = [0.00, 0.34, 0.61, 0.84, 1.00]
+      red   = [1.00, 0.84, 0.61, 0.34, 0.00]
+      green = [1.00, 0.84, 0.61, 0.34, 0.00]
+      blue  = [1.00, 0.84, 0.61, 0.34, 0.00]
+  # elif name == "whatever":
+      # (define more palettes)
+  else:
+      # default palette, looks cool
+      stops = [0.00, 0.34, 0.61, 0.84, 1.00]
+      red   = [0.00, 0.00, 0.87, 1.00, 0.51]
+      green = [0.00, 0.81, 1.00, 0.20, 0.00]
+      blue  = [0.51, 1.00, 0.12, 0.00, 0.00]
+
+  s = np.array(stops, 'd')
+  r = np.array(red, 'd')
+  g = np.array(green, 'd')
+  b = np.array(blue, 'd')
+
+  npoints = len(s)
+  TColor.CreateGradientColorTable(npoints, s, r, g, b, ncontours)
+  gStyle.SetNumberContours(ncontours)
+
+
 def SignalFitMaker(lep, year, cat):
-  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0',
-   '125.5','126.0','126.5','127.0','127.5','128.0','128.5','129.0','129.5','130.0',
+  set_palette()
+
+  suffix = 'Proper'
+  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
+   '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
+   '125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5',
+   '127.0','127.5','128.0','128.5','129.0','129.5','130.0',
    '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
    '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
    '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
    '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
   #massList = ['125.0']
-  sigNameList = ['gg','vbf','tth','wh','zh']
-#sigNameList = ['gg']
+  #massList = ['124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
+  #    '125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5']
+  #sigNameList = ['gg','vbf','tth','wh','zh']
+  sigNameList = ['gg']
 
   rooWsFile = TFile('outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
@@ -97,11 +132,14 @@ def SignalFitMaker(lep, year, cat):
           mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+10)
         sigNameLow = '_'.join(['ds','sig',prod,lep,year,'cat'+cat,'M'+str(massLow)])
         sig_ds_Low = myWs.data(sigNameLow)
-        if massLow == massHi: dsList.append(sig_ds_Low)
+        if massLow == massHi:
+          dsList.append(sig_ds_Low)
+          print sig_ds_Low.GetName()
+          #raw_input()
 
         CBG_Low = BuildCrystalBallGauss(year,lep,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
 
-        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
+        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
 
         ###### fit the hi mass point
         #if massHi<=125:
@@ -114,7 +152,7 @@ def SignalFitMaker(lep, year, cat):
 
         CBG_Hi = BuildCrystalBallGauss(year,lep,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
 
-        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
+        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -140,7 +178,7 @@ def SignalFitMaker(lep, year, cat):
 
       CBG_Interp,paramList = BuildCrystalBallGauss(year,lep,cat,prod,str(mass),'Interp',mzg,mean = mass)
 
-      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(4), RooFit.PrintLevel(-1))
+      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
       fitList.append(CBG_Interp)
@@ -153,10 +191,10 @@ def SignalFitMaker(lep, year, cat):
       regionName = fit.GetName().split('_')[-1]
       #fit.plotOn(testFrame)
       #fit.plotOn(testFrame, RooFit.NormRange('fitRegion_'+regionName))
-      fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent))
+      fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
       fit.paramOn(testFrame)
-    for signal in dsList:
-      signal.plotOn(testFrame)
+    for i,signal in enumerate(dsList):
+      signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1))
     testFrame.Draw()
     c.Print('debugPlots/'+'_'.join(['test','sig','fit',prod,lep,year,'cat'+cat])+'.pdf')
 

@@ -72,7 +72,7 @@ for year in yearList:
       dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       if doExt:
-        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.5,sumEntries*1.5)
         print 'start', norm.getVal()
         fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
         fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
@@ -86,7 +86,7 @@ for year in yearList:
         c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
-        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.25,sumEntries*1.75)
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.9,sumEntries*1.1)
 
 
       ###### Import the fit and data, and rename them to the card convention
