@@ -58,6 +58,7 @@ def SignalFitMaker(lep, year, cat):
   set_palette()
 
   suffix = 'Proper'
+
   massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
    '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
    '125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5',
@@ -69,8 +70,8 @@ def SignalFitMaker(lep, year, cat):
   #massList = ['125.0']
   #massList = ['124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
   #    '125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5']
-  #sigNameList = ['gg','vbf','tth','wh','zh']
-  sigNameList = ['gg']
+  sigNameList = ['gg','vbf','tth','wh','zh']
+  #sigNameList = ['gg']
 
   rooWsFile = TFile('outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')

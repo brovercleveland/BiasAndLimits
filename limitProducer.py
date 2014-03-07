@@ -18,7 +18,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   if not os.path.exists(outPutFolder):
     os.mkdir(outPutFolder)
 
-  shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',outPutFolder+'CardBackground_'+suffix+'.root')
+  shutil.copy('outputDir/'+suffix+'/'+'CardBackground_'+suffix+'.root',inputFolder+'CardBackground_'+suffix+'.root')
 
 
 
@@ -42,15 +42,10 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
           elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
           cardNames = cardNames+' '+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
           sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
-          if not os.path.isfile(outPutFolder+sigFileName):
-             shutil.copy(inputFolder+sigFileName,outPutFolder+sigFileName)
-          else:
-            print 'using existing', sigFileName
     os.chdir(inputFolder)
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
-    shutil.move(comboName, 'limitOutput/'+comboName)
     #os.chdir('limitOutput')
     #print 'running limit software, M:',mass
     #os.system('combine -M Asymptotic '+comboName+' > '+outputName)
