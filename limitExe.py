@@ -7,9 +7,10 @@ os.system('tar xvzf limitFiles.tgz')
 
 mass=sys.argv[1]
 suffix=sys.argv[2]
+outPutFolder = sys.argv[4]
 if sys.argv[3].lower() == 'combo':
   cardName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
-  outputName = 'limitOutput/'+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
+  outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
   print 'running limitProducer, FullCombo,  mass: {0}'.format(mass)
   os.system('combine -M Asymptotic '+cardName+' > '+outputName)
 else:
@@ -21,7 +22,7 @@ else:
     for year in yearList:
       for cat in catListSmall:
         cardName = '_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
-        outputName = 'limitOutput/'+'_'.join(['Output',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
+        outputName = '_'.join(['Output',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
         print 'running limitProducer, {1}, {2}, cat{3}, mass: {0}'.format(mass,lepton,year,cat)
         os.system('combine -M Asymptotic '+cardName+' > '+outputName)
 
