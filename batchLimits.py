@@ -2,8 +2,8 @@
 import os
 
 suffix = 'Proper'
-mode = 'noCombo'
-#mode = 'Combo'
+#mode = 'noCombo'
+mode = 'Combo'
 
 massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
  '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -22,7 +22,7 @@ for mass in massList:
     os.mkdir('limitOutput/res')
   os.system('rm limitOutput/res/*')
 
-  os.system('tar cvzf limitFiles.tgz Signal* Card* hzg*')
+  os.system('tar czf limitFiles.tgz Signal* Card* hzg*')
   if mode == 'Combo':
     cardName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
 
