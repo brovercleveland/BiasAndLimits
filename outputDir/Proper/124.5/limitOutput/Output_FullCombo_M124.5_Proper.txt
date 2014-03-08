@@ -1,0 +1,3 @@
+Restricting r to positive values.
+
+Make global fit of real data
