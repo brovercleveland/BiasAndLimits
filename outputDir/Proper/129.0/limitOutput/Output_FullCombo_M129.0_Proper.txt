@@ -1,8 +1,1 @@
->>> including systematics
->>> method used to compute upper limit is Asymptotic
->>> random number generator seed is 123456
-[?1034h
-
- --- now with extra fixes ... 
-
-
+NLL at global minimum of asimov: -82204.6 (r = 0.00850118)

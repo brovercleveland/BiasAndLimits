@@ -1,3 +1,11 @@
-Restricting r to positive values.
+At r = 9.806246:	q_mu = 3.72280	q_A  = 4.11911	CLsb = 0.02684	CLb  = 0.53987	CLs  = 0.04971
 
-Make global fit of real data
+ -- Asymptotic -- 
+Observed Limit: r < 9.8062
+Expected  2.5%: r < 4.9748
+Expected 16.0%: r < 6.6776
+Expected 50.0%: r < 9.4688
+Expected 84.0%: r < 13.5827
+Expected 97.5%: r < 18.8707
+
+Done in 34.30 min (cpu), 34.40 min (real)

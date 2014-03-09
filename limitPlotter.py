@@ -9,8 +9,8 @@ from collections import defaultdict
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-fullCombo = False
-byParts = True
+fullCombo = True
+byParts = False
 suffix = 'Proper'
 
 
@@ -18,8 +18,10 @@ suffix = 'Proper'
 
 
 def LimitPlot(CardOutput,AnalysisSuffix):
-  massList = [120.0,120.5,121.0,121.5,122.0,122.5,123.0,123.5,124.0,124.5,125.0,
-   125.5,126.0,126.5,127.0,127.5,128.0,128.5,129.0,129.5,130.0,
+  massList = [120.0,120.5,121.0,121.5,122.0,122.5,123.0,123.5,124.0,124.5,
+   124.6,124.7,124.8,124.9,125.0,125.1,125.2,125.3,125.4,125.5,
+   125.6,125.7,125.8,125.9,126.0,126.1,126.2,126.3,126.4,126.5,
+   127.0,127.5,128.0,128.5,129.0,129.5,130.0,
    130.5,131.0,131.5,132.0,132.5,133.0,133.5,134.0,134.5,135.0,
    135.5,136.0,136.5,137.0,137.5,138.0,138.5,139.0,139.5,140.0,
    141.0,142.0,143.0,144.0,145.0,146.0,147.0,148.0,149.0,150.0,
@@ -39,10 +41,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     fileList = os.listdir(currentDir)
     thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
-    print fileList
+    #print fileList
     #raw_input()
     f = open('/'.join([currentDir,thisFile]))
-    print f
+    #print f
     #raw_input()
     xAxis.append(mass)
     for line in f:
@@ -54,7 +56,25 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       elif '84.0%:' in splitLine: exp1SigHi.append(float(splitLine[-1]))
       elif '97.5%:' in splitLine: exp2SigHi.append(float(splitLine[-1]))
     f.close()
-  print 'masses:', xAxis
+    if len(obs) != len(xAxis):
+      print 'obs busted for',mass
+      raw_input()
+    if len(exp) != len(xAxis):
+      print 'exp busted for',mass
+      raw_input()
+    if len(exp1SigLow) != len(xAxis):
+      print 'exp1SigLow busted for',mass
+      raw_input()
+    if len(exp2SigLow) != len(xAxis):
+      print 'exp2SigLow busted for',mass
+      raw_input()
+    if len(exp1SigHi) != len(xAxis):
+      print 'exp1SigHi busted for',mass
+      raw_input()
+    if len(exp2SigHi) != len(xAxis):
+      print 'exp2SigHi busted for',mass
+      raw_input()
+  #print 'masses:', xAxis
   print 'obs:',obs
   print 'exp:',exp
   #print exp2SigLow
@@ -67,18 +87,18 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp2SigHiErr = [fabs(a-b) for a,b in zip(exp,exp2SigHi)]
   exp1SigHiErr = [fabs(a-b) for a,b in zip(exp,exp1SigHi)]
 
-  print '2 sig low:',exp2SigLowErr
+  #print '2 sig low:',exp2SigLowErr
   print '1 sig low:',exp1SigLowErr
   print '1 sig hi:',exp1SigHiErr
-  print '2 sig hi:',exp2SigHiErr
+  #print '2 sig hi:',exp2SigHiErr
 
-  xAxis_Array = np.array(xAxis)
-  obs_Array = np.array(obs)
-  exp_Array = np.array(exp)
-  exp2SigLowErr_Array = np.array(exp2SigLowErr)
-  exp1SigLowErr_Array = np.array(exp1SigLowErr)
-  exp1SigHiErr_Array = np.array(exp1SigHiErr)
-  exp2SigHiErr_Array = np.array(exp2SigHiErr)
+  xAxis_Array = np.array(xAxis,dtype=float)
+  obs_Array = np.array(obs,dtype=float)
+  exp_Array = np.array(exp,dtype='d')
+  exp2SigLowErr_Array = np.array(exp2SigLowErr,dtype=float)
+  exp1SigLowErr_Array = np.array(exp1SigLowErr,dtype=float)
+  exp1SigHiErr_Array = np.array(exp1SigHiErr,dtype=float)
+  exp2SigHiErr_Array = np.array(exp2SigHiErr,dtype=float)
   zeros_Array = np.zeros(len(xAxis),dtype = float)
 
   mg = TMultiGraph()
@@ -89,7 +109,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
-
+  expected.Print()
+  raw_input()
   oneSigma.SetFillColor(kGreen)
 
   twoSigma.SetFillColor(kYellow)
@@ -102,7 +123,6 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   expected.SetLineStyle(2)
 
   observed.SetLineWidth(2)
-
   mg.Add(twoSigma)
   mg.Add(oneSigma)
   mg.Add(expected)
@@ -112,7 +132,6 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
   mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
-
   c.Print('debugPlots/limitPlot_'+CardOutput+'.pdf')
 
 if __name__=='__main__':
