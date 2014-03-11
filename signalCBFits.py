@@ -54,23 +54,23 @@ def set_palette(name='palette', ncontours=999):
   gStyle.SetNumberContours(ncontours)
 
 
-def SignalFitMaker(lep, year, cat):
+def SignalFitMaker(lep, tev, cat):
   set_palette()
 
   suffix = 'Proper'
 
-  #massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
-   #'124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
-   #'125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5',
-   #'127.0','127.5','128.0','128.5','129.0','129.5','130.0',
-   #'130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
-   #'135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
-   #'141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
-   #'151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
+  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
+   '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
+   '125.6','125.7','125.8','125.9','126.0','126.1','126.2','126.3','126.4','126.5',
+   '127.0','127.5','128.0','128.5','129.0','129.5','130.0',
+   '130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
+   '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
+   '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
+   '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
   #massList = ['125.0']
-  massList = ['130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
-   '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0']
-  sigNameList = ['gg','vbf','tth','wh','zh']
+  #massList = ['130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
+  # '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0']
+  sigNameList = ['ggH','qqH','ttH','WH','ZH']
   #sigNameList = ['gg']
 
   rooWsFile = TFile('outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
@@ -84,7 +84,7 @@ def SignalFitMaker(lep, year, cat):
   mzg = myWs.var('CMS_hzg_mass')
   cardDict = AutoVivification()
   for mass in massList:
-    cardDict[lep][year][cat][mass] = RooWorkspace('ws_card')
+    cardDict[lep][tev][cat][mass] = RooWorkspace('ws_card')
 
 
 # we need crystal ball + gaussian fits for all mass points, and for all production methods.
@@ -131,16 +131,16 @@ def SignalFitMaker(lep, year, cat):
           mzg.setRange('fitRegion1',115,int(massLow)+10)
         else:
           mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+10)
-        sigNameLow = '_'.join(['ds','sig',prod,lep,year,'cat'+cat,'M'+str(massLow)])
+        sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
         sig_ds_Low = myWs.data(sigNameLow)
         if massLow == massHi:
           dsList.append(sig_ds_Low)
           print sig_ds_Low.GetName()
           #raw_input()
 
-        CBG_Low = BuildCrystalBallGauss(year,lep,cat,prod,str(massLow),'Low',mzg,mean = massLow)[0]
+        CBG_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
 
-        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
+        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
 
         ###### fit the hi mass point
         #if massHi<=125:
@@ -148,12 +148,12 @@ def SignalFitMaker(lep, year, cat):
           mzg.setRange('fitRegion2',115,int(massHi)+10)
         else:
           mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+10)
-        sigNameHi = '_'.join(['ds','sig',prod,lep,year,'cat'+cat,'M'+str(massHi)])
+        sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
         sig_ds_Hi = myWs.data(sigNameHi)
 
-        CBG_Hi = BuildCrystalBallGauss(year,lep,cat,prod,str(massHi),'Hi',mzg,mean = massHi)[0]
+        CBG_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
-        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
+        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -171,21 +171,21 @@ def SignalFitMaker(lep, year, cat):
       interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', CBG_Low, CBG_Hi, mzg, beta)
       interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
       normList.append(sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
-      yieldName = '_'.join(['sig',prod,'yield',lep,year,'cat'+cat])
+      yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
       yieldVar = RooRealVar(yieldName,yieldName,sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
 
 
-      sigNameInterp = '_'.join(['ds','sig',prod,lep,year,'cat'+cat,'M'+str(mass)])
+      sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
-      CBG_Interp,paramList = BuildCrystalBallGauss(year,lep,cat,prod,str(mass),'Interp',mzg,mean = mass)
+      CBG_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
-      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(8), RooFit.PrintLevel(-1))
+      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
       fitList.append(CBG_Interp)
-      getattr(cardDict[lep][year][cat][str(mass)],'import')(CBG_Interp)
-      getattr(cardDict[lep][year][cat][str(mass)],'import')(yieldVar)
-      cardDict[lep][year][cat][str(mass)].commitTransaction()
+      getattr(cardDict[lep][tev][cat][str(mass)],'import')(CBG_Interp)
+      getattr(cardDict[lep][tev][cat][str(mass)],'import')(yieldVar)
+      cardDict[lep][tev][cat][str(mass)].commitTransaction()
 
     testFrame = mzg.frame(float(massList[0])-10,float(massList[-1])+5)
     for i,fit in enumerate(fitList):
@@ -197,16 +197,16 @@ def SignalFitMaker(lep, year, cat):
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1))
     testFrame.Draw()
-    c.Print('debugPlots/'+'_'.join(['test','sig','fit',prod,lep,year,'cat'+cat])+'.pdf')
+    c.Print('debugPlots/'+'_'.join(['test','sig','fit',prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:
-      SignalNameParamFixer(year,lep,cat,prod,mass,cardDict[lep][year][cat][mass])
+      SignalNameParamFixer(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
 
   for mass in massList:
-    fileName = '_'.join(['SignalOutput',lep,year,'cat'+cat,mass])
+    fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])
     if not os.path.isdir('outputDir/'+suffix+'/'+mass): os.mkdir('outputDir/'+suffix+'/'+mass)
-    cardDict[lep][year][cat][mass].writeToFile('outputDir/'+suffix+'/'+mass+'/'+fileName+'.root')
+    cardDict[lep][tev][cat][mass].writeToFile('outputDir/'+suffix+'/'+mass+'/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')
@@ -218,7 +218,7 @@ if __name__=="__main__":
   print len(sys.argv)
   print sys.argv
   if len(sys.argv) != 6:
-    print 'usage: ./signalCBFits lepton year cat'
+    print 'usage: ./signalCBFits lepton tev cat'
   else:
     SignalFitMaker(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
 

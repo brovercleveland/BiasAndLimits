@@ -3,7 +3,7 @@
 def LumiXSWeighter(year, lepton, sig, mass, nEvt):
   LumiXSWeight = 0.0
   if(year is '2011'):
-    if(sig is 'gg'):
+    if(sig is 'ggH'):
       if(mass is '120'): LumiXSWeight = nEvt/(16.65*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(15.32*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(14.16*0.00195*0.10098*1000)
@@ -14,7 +14,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(9.886*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(9.202*0.00116*0.10098*1000)
 
-    elif(sig is 'vbf'):
+    elif(sig is 'qqH'):
       if(mass is '120'): LumiXSWeight = nEvt/(1.279*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(1.222*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(1.168*0.00195*0.10098*1000)
@@ -25,7 +25,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(0.9415*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(0.9043*0.00116*0.10098*1000)
 
-    elif(sig is 'tth'):
+    elif(sig is 'ttH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.0976*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(0.0863*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(0.0766*0.00195*0.10098*1000)
@@ -36,7 +36,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(0.0438*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(0.0394*0.00116*0.10098*1000)
 
-    elif(sig is 'wh'):
+    elif(sig is 'WH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.6561*0.00111*0.10098*1000*(1/0.100974))
       if(mass is '125'): LumiXSWeight = nEvt/(0.5729*0.00154*0.10098*1000*(1/0.100974))
       if(mass is '130'): LumiXSWeight = nEvt/(0.5008*0.00195*0.10098*1000*(1/0.100974))
@@ -47,7 +47,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(0.2646*0.00191*0.10098*1000*(1/0.100974))
       if(mass is '160'): LumiXSWeight = nEvt/(0.2291*0.00116*0.10098*1000*(1/0.100974))
 
-    elif(sig is 'zh'):
+    elif(sig is 'ZH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.3598*0.00111*0.10098*1000*(1/0.100974))
       if(mass is '125'): LumiXSWeight = nEvt/(0.3158*0.00154*0.10098*1000*(1/0.100974))
       if(mass is '130'): LumiXSWeight = nEvt/(0.2778*0.00195*0.10098*1000*(1/0.100974))
@@ -64,7 +64,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
 
   elif(year is '2012'):
 
-    if(sig is 'gg'):
+    if(sig is 'ggH'):
       if(mass is '120'): LumiXSWeight = nEvt/(21.13*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(19.52*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(18.07*0.00195*0.10098*1000)
@@ -75,7 +75,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(12.79*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(11.95*0.00116*0.10098*1000)
 
-    elif(sig is 'vbf'):
+    elif(sig is 'qqH'):
       if(mass is '120'): LumiXSWeight = nEvt/(1.649*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(1.578*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(1.511*0.00195*0.10098*1000)
@@ -86,7 +86,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(1.231*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(1.185*0.00116*0.10098*1000)
 
-    elif(sig is 'tth'):
+    elif(sig is 'ttH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.1470*0.00111*0.10098*1000)
       if(mass is '125'): LumiXSWeight = nEvt/(0.1302*0.00154*0.10098*1000)
       if(mass is '130'): LumiXSWeight = nEvt/(0.1157*0.00195*0.10098*1000)
@@ -97,7 +97,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(0.06664*0.00191*0.10098*1000)
       if(mass is '160'): LumiXSWeight = nEvt/(0.06013*0.00116*0.10098*1000)
 
-    elif(sig is 'wh'):
+    elif(sig is 'WH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.7966*0.00111*0.10098*1000*(1/0.100974))
       if(mass is '125'): LumiXSWeight = nEvt/(0.6966*0.00154*0.10098*1000*(1/0.100974))
       if(mass is '130'): LumiXSWeight = nEvt/(0.6095*0.00195*0.10098*1000*(1/0.100974))
@@ -108,7 +108,7 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '155'): LumiXSWeight = nEvt/(0.3252*0.00191*0.10098*1000*(1/0.100974))
       if(mass is '160'): LumiXSWeight = nEvt/(0.2817*0.00116*0.10098*1000*(1/0.100974))
 
-    elif(sig is 'zh'):
+    elif(sig is 'ZH'):
       if(mass is '120'): LumiXSWeight = nEvt/(0.4483*0.00111*0.10098*1000*(1/0.100974))
       if(mass is '125'): LumiXSWeight = nEvt/(0.3943*0.00154*0.10098*1000*(1/0.100974))
       if(mass is '130'): LumiXSWeight = nEvt/(0.3473*0.00195*0.10098*1000*(1/0.100974))

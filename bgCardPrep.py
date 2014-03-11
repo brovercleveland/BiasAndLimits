@@ -11,8 +11,7 @@ CMSStyle()
 
 doExt = False
 leptonList = ['mu','el']
-#yearList = ['2012']
-yearList = ['2012','2011']
+tevList = ['7TeV','8TeV']
 #catList = ['0']
 catList = ['1','2','3','4','5']
 #catList = ['1','2','3','4','6','7','8','9']
@@ -39,24 +38,24 @@ mzg.setRange('signal',120,130)
 ########################################
 
 
-for year in yearList:
+for tev in tevList:
   for lepton in leptonList:
     for cat in catList:
-      if cat is '5' and year is '2011' and lepton is 'mu': continue
-      elif cat is '5' and year is '2011' and lepton is 'el': lepton = 'all'
-      dataName = '_'.join(['data',lepton,year,'cat'+cat])
-      suffix = '_'.join([year,lepton,'cat'+cat])
-      if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
-        fitName = '_'.join(['GaussBern4',year,lepton,'cat'+cat])
+      if cat is '5' and tev is '7TeV' and lepton is 'mu': continue
+      elif cat is '5' and tev is '7TeV' and lepton is 'el': lepton = 'all'
+      dataName = '_'.join(['data',lepton,tev,'cat'+cat])
+      suffix = '_'.join([tev,lepton,'cat'+cat])
+      if cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
+        fitName = '_'.join(['GaussBern4',tev,lepton,'cat'+cat])
         normName = 'normGaussBern4_'+suffix
       elif cat is '5':
-        fitName = '_'.join(['Bern3',year,lepton,'cat'+cat])
+        fitName = '_'.join(['Bern3',tev,lepton,'cat'+cat])
         normName = 'normBern3_'+suffix
       elif cat is '0':
-        fitName = '_'.join(['GaussBern6',year,lepton,'cat'+cat])
+        fitName = '_'.join(['GaussBern6',tev,lepton,'cat'+cat])
         normName = 'normGaussBern6_'+suffix
       else:
-        fitName = '_'.join(['GaussBern5',year,lepton,'cat'+cat])
+        fitName = '_'.join(['GaussBern5',tev,lepton,'cat'+cat])
         normName = 'normGaussBern5_'+suffix
 
 
@@ -69,12 +68,12 @@ for year in yearList:
       sumEntriesS = data.sumEntries('1','signal')
       print sumEntries, sumEntriesS
       #raw_input()
-      dataYieldName = '_'.join(['data','yield',lepton,year,'cat'+cat])
+      dataYieldName = '_'.join(['data','yield',lepton,tev,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       if doExt:
         norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.5,sumEntries*1.5)
         print 'start', norm.getVal()
-        fitExtName = '_'.join(['bkgTmp',lepton,year,'cat'+cat])
+        fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
         fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
 
         fit_ext.fitTo(data,RooFit.Range('fullRegion'))
@@ -83,7 +82,7 @@ for year in yearList:
         data.plotOn(testFrame)
         fit_ext.plotOn(testFrame)
         testFrame.Draw()
-        c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,year,'cat'+cat])+'.pdf')
+        c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,tev,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
         norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.9,sumEntries*1.1)
@@ -92,7 +91,7 @@ for year in yearList:
       ###### Import the fit and data, and rename them to the card convention
       newCat = cat
       if catFix:
-        if year is '2012':
+        if tev is '8TeV':
           if cat == '2':
             newCat = '3'
           elif cat == '3':
@@ -105,8 +104,8 @@ for year in yearList:
             newCat = '7'
           elif cat == '9':
             newCat = '8'
-      dataNameNew = '_'.join(['data','obs',lepton,year,'cat'+newCat])
-      dataYieldNameNew = '_'.join(['data','yield',lepton,year,'cat'+newCat])
+      dataNameNew = '_'.join(['data','obs',lepton,tev,'cat'+newCat])
+      dataYieldNameNew = '_'.join(['data','yield',lepton,tev,'cat'+newCat])
       dataYield.SetName(dataYieldNameNew)
 
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
@@ -114,13 +113,13 @@ for year in yearList:
         getattr(card_ws,'import')(fit_ext)
       else:
         getattr(card_ws,'import')(fit)
-        normNameFixed  = '_'.join(['bkg',lepton,year,'cat'+newCat,'norm'])
+        normNameFixed  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
         norm.SetName(normNameFixed)
         getattr(card_ws,'import')(norm)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       #fit_ext.Print()
-      BackgroundNameFixer(year,lepton,cat,card_ws,newCat,doExt)
+      BackgroundNameFixer(tev,lepton,cat,card_ws,newCat,doExt)
 
 card_ws.writeToFile('outputDir/'+suffixCard+'/CardBackground_'+suffixCard+'.root')
 

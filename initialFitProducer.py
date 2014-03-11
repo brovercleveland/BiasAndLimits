@@ -54,6 +54,7 @@ def doInitialFits():
   #leptonList = ['el']
   #yearList = ['2012']
   yearList = ['2011','2012']
+  yearToTeV = {'2011':'7TeV','2012':'8TeV'}
   if doMVA:
     catList = ['0','1','2','3','4','5','6','7','8','9']
   else:
@@ -62,7 +63,8 @@ def doInitialFits():
   #catList = ['5']
   massList = ['120','125','130','135','140','145','150','155','160']
   #massList = ['125']
-  sigNameList = ['gg','vbf','tth','wh','zh']
+  sigNameListInput = ['gg','vbf','tth','wh','zh']
+  sigNameListOutput = ['ggH','qqH','ttH','WH','ZH']
   #sigNameList = ['gg']
   '''
   leptonList = ['mu','el']
@@ -105,33 +107,33 @@ def doInitialFits():
 # set up the signal histograms and the mzg ranges #
 ###################################################
 
-        for prod in sigNameList:
+        for j,prod in enumerate(sigNameListOutput):
           signalListDS = []
           for mass in massList:
           # store the unbinned signals for CB fitting
-            signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+prod+'M'+mass)
-            sigName = '_'.join(['ds_sig',prod,lepton,year,'cat'+cat,'M'+mass])
+            signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass)
+            sigName = '_'.join(['ds',prod,'hzg',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
             tmpSigMass= np.zeros(1,dtype = 'd')
             tmpSigWeight= np.zeros(1,dtype = 'd')
             tmpSigLumiXS= np.zeros(1,dtype = 'd')
             if cat is '0':
-              signalTree.SetBranchAddress('m_llg_Signal'+year+prod+'M'+mass,tmpSigMass)
+              signalTree.SetBranchAddress('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
             else:
-              signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+prod+'M'+mass,tmpSigMass)
-            signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+prod+'M'+mass,tmpSigWeight)
-            signalTree.SetBranchAddress('unBinnedLumiXS_Signal'+year+prod+'M'+mass,tmpSigLumiXS)
+              signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
+            signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigWeight)
+            signalTree.SetBranchAddress('unBinnedLumiXS_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigLumiXS)
             sig_argSW = RooArgSet(mzg,weight)
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
               if tmpSigMass[0]> 100 and tmpSigMass[0]<190:
-                if year is '2012' and mass is '160' and prod is 'gg':
+                if year is '2012' and mass is '160' and prod == 'ggH':
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
-                if prod is 'wh':
+                if prod == 'WH':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0]*0.655)
-                elif prod is 'zh':
+                elif prod == 'ZH':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0]*0.345)
                 else:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0])
@@ -146,7 +148,7 @@ def doInitialFits():
 # we don't need or use unbinned signal or complicated fits
 # but this is mostly for compatibility, we may change to unbinned
 # during a future iteration
-            if prod is 'gg':
+            if prod == 'ggH':
               if verbose: print 'signal mass loop', mass
               histName = '_'.join(['sig',lepton,year,'cat'+cat,'M'+mass])
               rangeName = '_'.join(['range',lepton,year,'cat'+cat,'M'+mass])
@@ -209,7 +211,7 @@ def doInitialFits():
         if verbose: print 'starting data section'
 
 
-        dataName = '_'.join(['data',lepton,year,'cat'+cat])
+        dataName = '_'.join(['data',lepton,yearToTeV[year],'cat'+cat])
         dataTree = dataDict[lepton+year+'_4cat'].Get('m_llg_DATA')
         #tmpMassEventOld = np.zeros(1,dtype = 'f')
         tmpMassEventOld = np.zeros(1,dtype = 'd')
@@ -247,37 +249,37 @@ def doInitialFits():
         if verbose: 'starting fits'
 
         if cat is not '5':
-          GaussExp = BuildGaussExp(year, lepton, cat, mzg)
-          #if lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma = 5, beta = 5)
-          #if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
-          #elif lepton == 'mu': GaussPow = BuildGaussPow(year, lepton, cat, mzg)
-          #elif lepton == 'el' and cat == '3' and year == '2011': GaussPow = BuildGaussPow(year, lepton, cat, mzg, alpha = 116)
-          #elif lepton == 'el' and cat in ['0','4'] and year == '2012': GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma =5, beta = 5)
-          #elif lepton == 'mu' and cat == '3' and year == '2012': GaussPow = BuildGaussPow(year, lepton, cat, mzg,sigma = 2, beta = 6,alpha = 105)
-          GaussPow = BuildGaussPow(year, lepton, cat, mzg, sigma = 2, beta = 6,alpha = 105)
-          SechExp = BuildSechExp(year, lepton, cat, mzg)
-          SechPow = BuildSechPow(year, lepton, cat, mzg)
-          #GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg)
-          GaussBern3 = BuildGaussStepBern3(year, lepton, cat, mzg, step = 117, sigma = 3)
-          GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg)
-          GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg)
-          GaussBern6 = BuildGaussStepBern6(year, lepton, cat, mzg)
-          #GaussBern4 = BuildGaussStepBern4(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #GaussBern5 = BuildGaussStepBern5(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #GaussBern6 = BuildGaussStepBern6(year, lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg)
-          SechBern3 = BuildSechStepBern3(year, lepton, cat, mzg, sigma = 10)
-          if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(year, lepton, cat, mzg,sigma=2)
-          else: SechBern4 = BuildSechStepBern4(year, lepton, cat, mzg)
-          if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(year, lepton, cat, mzg,sigma=2)
-          else: SechBern5 = BuildSechStepBern5(year, lepton, cat, mzg)
+          GaussExp = BuildGaussExp(yearToTeV[year], lepton, cat, mzg)
+          #if lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 5, beta = 5)
+          #if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+          #elif lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg)
+          #elif lepton == 'el' and cat == '3' and yearToTeV[year] == '2011': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+          #elif lepton == 'el' and cat in ['0','4'] and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma =5, beta = 5)
+          #elif lepton == 'mu' and cat == '3' and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg,sigma = 2, beta = 6,alpha = 105)
+          GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 2, beta = 6,alpha = 105)
+          SechExp = BuildSechExp(yearToTeV[year], lepton, cat, mzg)
+          SechPow = BuildSechPow(yearToTeV[year], lepton, cat, mzg)
+          #GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg)
+          GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg, step = 117, sigma = 3)
+          GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg)
+          GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg)
+          GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg)
+          #GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+          #GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+          #GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+          #SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg)
+          SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg, sigma = 10)
+          if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg,sigma=2)
+          else: SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg)
+          if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg,sigma=2)
+          else: SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg)
 
-          gauss = BuildRooGaussian(year, lepton, cat, mzg)
-          BetaFunc = BuildBetaFunc(year, lepton, cat, mzg, 'MERegion')
-          Kumaraswamy = BuildKumaraswamy(year, lepton, cat, mzg, 'MERegion')
-          Bern5 = BuildBern5(year, lepton, cat, mzg)
-          BB = BuildBetaAndBern(year, lepton, cat, mzg, 'MERegion')
-          GB = BuildGaussAndBern(year, lepton, cat, mzg, 'MERegion')
+          gauss = BuildRooGaussian(yearToTeV[year], lepton, cat, mzg)
+          BetaFunc = BuildBetaFunc(yearToTeV[year], lepton, cat, mzg, 'MERegion')
+          Kumaraswamy = BuildKumaraswamy(yearToTeV[year], lepton, cat, mzg, 'MERegion')
+          Bern5 = BuildBern5(yearToTeV[year], lepton, cat, mzg)
+          BB = BuildBetaAndBern(yearToTeV[year], lepton, cat, mzg, 'MERegion')
+          GB = BuildGaussAndBern(yearToTeV[year], lepton, cat, mzg, 'MERegion')
 
           if verbose:
             GaussExp.Print()
@@ -393,11 +395,11 @@ def doInitialFits():
           getattr(ws,'import')(SechBern5)
 
         else:
-          Exp = BuildExp(year, lepton, cat, mzg)
-          Pow = BuildPow(year, lepton, cat, mzg)
-          Bern2 = BuildBern2(year, lepton, cat, mzg)
-          Bern3 = BuildBern3(year, lepton, cat, mzg)
-          Bern4 = BuildBern4(year, lepton, cat, mzg)
+          Exp = BuildExp(yearToTeV[year], lepton, cat, mzg)
+          Pow = BuildPow(yearToTeV[year], lepton, cat, mzg)
+          Bern2 = BuildBern2(yearToTeV[year], lepton, cat, mzg)
+          Bern3 = BuildBern3(yearToTeV[year], lepton, cat, mzg)
+          Bern4 = BuildBern4(yearToTeV[year], lepton, cat, mzg)
 
           if verbose:
             Exp.Print()
