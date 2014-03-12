@@ -23,7 +23,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
 
 
   leptonList = ['mu','el']
-  yearList = ['2012','2011']
+  tevList = ['8TeV','7TeV']
   catListBig = ['1','2','3','4','5','6','7','8','9']
   catListSmall = ['1','2','3','4','5']
 
@@ -33,15 +33,15 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     #outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     comboName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
     outputName = '_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
-    for year in yearList:
-      if MVATest and year == '2012': catList = catListBig
+    for tev in tevList:
+      if MVATest and tev == '8TeV': catList = catListBig
       else: catList = catListSmall
       for lepton in leptonList:
         for cat in catList:
-          if year is '2011' and cat is '5' and lepton is 'mu': continue
-          elif year is '2011' and cat is '5' and lepton is 'el': lepton='all'
-          cardNames = cardNames+' '+'_'.join(['hzg',lepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
-          sigFileName = '_'.join(['SignalOutput',lepton,year,'cat'+cat,mass])+'.root'
+          if tev is '7TeV' and cat is '5' and lepton is 'mu': continue
+          elif tev is '7TeV' and cat is '5' and lepton is 'el': lepton='all'
+          cardNames = cardNames+' '+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
+          sigFileName = '_'.join(['SignalOutput',lepton,tev,'cat'+cat,mass])+'.root'
     os.chdir(inputFolder)
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
