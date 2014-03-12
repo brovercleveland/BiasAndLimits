@@ -54,10 +54,13 @@ def set_palette(name='palette', ncontours=999):
   gStyle.SetNumberContours(ncontours)
 
 
-def SignalFitMaker(lep, tev, cat):
-  set_palette()
+def SignalFitMaker(lep, tev, cat, suffix, batch = False):
+  if batch:
+    cpuNum = 1
+  else:
+    cpuNum = 12
 
-  suffix = 'Proper'
+  set_palette()
 
   massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
    '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -140,7 +143,7 @@ def SignalFitMaker(lep, tev, cat):
 
         CBG_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
 
-        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
+        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
         ###### fit the hi mass point
         #if massHi<=125:
@@ -153,7 +156,7 @@ def SignalFitMaker(lep, tev, cat):
 
         CBG_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
-        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
+        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -179,7 +182,7 @@ def SignalFitMaker(lep, tev, cat):
 
       CBG_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
-      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(12), RooFit.PrintLevel(-1))
+      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
       fitList.append(CBG_Interp)
@@ -220,5 +223,5 @@ if __name__=="__main__":
   if len(sys.argv) != 6:
     print 'usage: ./signalCBFits lepton tev cat'
   else:
-    SignalFitMaker(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]))
+    SignalFitMaker(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]), str(sys.argv[4]), str(sys.argv[5]))
 

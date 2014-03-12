@@ -1,2 +1,11 @@
-Median for expected limits: 9.03125
-Sigma  for expected limits: 4.60787
+At r = 9.120425:	q_mu = 3.81318	q_A  = 3.91711	CLsb = 0.02543	CLb  = 0.51054	CLs  = 0.04980
+
+ -- Asymptotic -- 
+Observed Limit: r < 9.1204
+Expected  2.5%: r < 4.7449
+Expected 16.0%: r < 6.3690
+Expected 50.0%: r < 9.0312
+Expected 84.0%: r < 13.0271
+Expected 97.5%: r < 18.1585
+
+Done in 40.42 min (cpu), 40.84 min (real)
