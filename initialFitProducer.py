@@ -16,11 +16,9 @@ debugPlots = True
 verbose = False
 rootrace = False
 do4Cat = True
-doMVA = False
+doMVA = True
 allBiasFits= False # Turn on extra fits used in bias studies
-suffix = 'Proper'
-MVAstring = ''
-if doMVA: MVAstring = 'MVA_'
+suffix = '03-11-14_Cats'
 
 
 
@@ -34,7 +32,7 @@ if rootrace: RooTrace.active(kTRUE)
 def doInitialFits():
   print 'loading up the files'
 
-  dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME_loose.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME_loose.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_ME.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_ME.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
@@ -45,20 +43,19 @@ def doInitialFits():
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_01-30-14_Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_01-30-14_Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_01-30-14_MoreShapeCut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_01-30-14_MoreShapeCut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
   #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_02-01-14_Cut.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_02-01-14_Cut.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  #dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
 
   #signalDict = {'mu2012_4cat':TFile('inputFiles/signal_Mu2012_hi.root','r'),'el2012_4cat':TFile('inputFiles/signal_El2012_hi.root','r'),'mu2011_4cat':TFile('inputFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/signal_El2011.root','r')}
-  signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
+  #signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
+  signalDict= {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
   leptonList = ['mu','el']
   #leptonList = ['el']
   #yearList = ['2012']
   yearList = ['2011','2012']
   yearToTeV = {'2011':'7TeV','2012':'8TeV'}
-  if doMVA:
-    catList = ['0','1','2','3','4','5','6','7','8','9']
-  else:
-    catList = ['0','1','2','3','4','5']
+  catListBig = ['0','1','2','3','4','5','6','7','8','9']
+  catListSmall = ['0','1','2','3','4','5']
   #catList = ['9']
   #catList = ['5']
   massList = ['120','125','130','135','140','145','150','155','160']
@@ -92,6 +89,8 @@ def doInitialFits():
 
   for year in yearList:
     for lepton in leptonList:
+      if doMVA and year == '2012': catList = catListBig
+      else: catList = catListSmall
       for cat in catList:
         if year is '2011' and cat is '5' and lepton is 'el': lepton = 'all'
         elif year is '2011' and cat is '5' and lepton is 'mu': continue
@@ -111,32 +110,39 @@ def doInitialFits():
           signalListDS = []
           for mass in massList:
           # store the unbinned signals for CB fitting
+            print 'm_llg_Signal'+year+sigNameListInput[j]+'M'+mass
             signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass)
             sigName = '_'.join(['ds',prod,'hzg',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
             tmpSigMass= np.zeros(1,dtype = 'd')
             tmpSigWeight= np.zeros(1,dtype = 'd')
-            tmpSigLumiXS= np.zeros(1,dtype = 'd')
+            if doMVA and year == '2012':
+              tmpSigNumEvents = np.zeros(1,dtype = int)
+            else:
+              tmpSigNumEvents = np.zeros(1,dtype = 'd')
             if cat is '0':
               signalTree.SetBranchAddress('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
             else:
               signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
             signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigWeight)
-            signalTree.SetBranchAddress('unBinnedLumiXS_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigLumiXS)
+            if doMVA and year == '2012':
+              signalTree.SetBranchAddress('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigNumEvents)
+            else:
+              signalTree.SetBranchAddress('unBinnedLumiXS_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigNumEvents)
             sig_argSW = RooArgSet(mzg,weight)
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
               if tmpSigMass[0]> 100 and tmpSigMass[0]<190:
-                if year is '2012' and mass is '160' and prod == 'ggH':
+                if year is '2012' and mass is '160' and prod == 'ggH' and not doMVA:
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
                 if prod == 'WH':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0]*0.655)
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.655)
                 elif prod == 'ZH':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0]*0.345)
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.345)
                 else:
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigLumiXS[0])
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0])
                 sigWeight = tmpSigWeight[0]*sigWeight
                 sig_ds.add(sig_argSW, sigWeight)
                 #sig_argSW.Print()
@@ -162,7 +168,7 @@ def doInitialFits():
                 signalTree.Print()
                 print
 
-              if year is '2012' and mass is '160':
+              if year is '2012' and mass is '160' and not doMVA:
                 if cat is '0':
                   signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'+5.0>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
                 else:
@@ -187,7 +193,6 @@ def doInitialFits():
               getattr(ws,'import')(signalListPDF[-1])
               if verbose: print 'finshed one mass', mass
 
-            '''
             if debugPlots and prod is 'gg':
               testFrame = mzg.frame()
               for i,signal in enumerate(signalListPDF):
@@ -201,7 +206,6 @@ def doInitialFits():
                 signal.plotOn(testFrame, RooFit.DrawOption('pl'))
               testFrame.Draw()
               c.Print('debugPlots/'+'_'.join(['test','ds','sig',prod,year,lepton,'cat'+cat])+'.pdf')
-            '''
             del signalTree
 
 
@@ -438,7 +442,7 @@ def doInitialFits():
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
   if not os.path.isdir('outputDir/'+suffix): os.mkdir('outputDir/'+suffix)
-  ws.writeToFile('outputDir/'+suffix+'/initRooFitOut_'+MVAstring+suffix.rstrip('_Cut')+'.root')
+  ws.writeToFile('outputDir/'+suffix+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
   #ws.writeToFile('testRooFitOut_MVA_02-01-14.root')
 
 

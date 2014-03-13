@@ -55,7 +55,7 @@ def set_palette(name='palette', ncontours=999):
 
 
 def SignalFitMaker(lep, tev, cat, suffix, batch = False):
-  if batch:
+  if batch == 'True':
     cpuNum = 1
   else:
     cpuNum = 12
@@ -220,8 +220,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 if __name__=="__main__":
   print len(sys.argv)
   print sys.argv
-  if len(sys.argv) != 6:
-    print 'usage: ./signalCBFits lepton tev cat'
+  if len(sys.argv) != 8:
+    print 'usage: ./signalCBFits lepton tev cat suffix batch'
   else:
     SignalFitMaker(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]), str(sys.argv[4]), str(sys.argv[5]))
 
