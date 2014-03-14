@@ -6,11 +6,11 @@ kmax *
 ---------------
 shapes *        * CardBackground_03-11-14_Cats.root ws_card:$PROCESS_$CHANNEL
 shapes bkg      * CardBackground_03-11-14_Cats.root ws_card:bkg_$CHANNEL
-shapes ggH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ggH_hzg_el_8TeV_cat9
-shapes qqH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:qqH_hzg_el_8TeV_cat9
-shapes WH_hzg   * SignalOutput_el_8TeV_cat9_137.0.root ws_card:WH_hzg_el_8TeV_cat9
-shapes ZH_hzg   * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ZH_hzg_el_8TeV_cat9
-shapes ttH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ttH_hzg_el_8TeV_cat9
+shapes ggH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ggH_hzg_el_cat9_8TeV
+shapes qqH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:qqH_hzg_el_cat9_8TeV
+shapes WH_hzg   * SignalOutput_el_8TeV_cat9_137.0.root ws_card:WH_hzg_el_cat9_8TeV
+shapes ZH_hzg   * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ZH_hzg_el_cat9_8TeV
+shapes ttH_hzg  * SignalOutput_el_8TeV_cat9_137.0.root ws_card:ttH_hzg_el_cat9_8TeV
 ---------------
 bin          el_8TeV_cat9
 observation  910

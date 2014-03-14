@@ -7,8 +7,8 @@ import time
 def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
   byParts = False
-  MVATest = False
-  suffix = 'Proper'
+  doMVA = True
+  suffix = '03-11-14_Cats'
 
   owd = os.getcwd()
   if inputFolder == None:
@@ -34,7 +34,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     comboName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
     outputName = '_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     for tev in tevList:
-      if MVATest and tev == '8TeV': catList = catListBig
+      if doMVA and tev == '8TeV': catList = catListBig
       else: catList = catListSmall
       for lepton in leptonList:
         for cat in catList:

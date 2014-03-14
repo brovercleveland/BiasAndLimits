@@ -92,7 +92,6 @@ def makeCards(MVATest = True):
         if cat in ['1','4','6','9']: phoGeom = 'EB'
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
-        sigCorChannel = '_'.join([lepton,tev,'cat'+cat])
         if cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = sigNameList[0:2]
@@ -122,10 +121,7 @@ def makeCards(MVATest = True):
           card.write('shapes {0:<8} * {1:<20} ws_card:$PROCESS_$CHANNEL\n'.format('*',bgFileName))
           card.write('shapes {0:<8} * {1:<20} ws_card:bkg_$CHANNEL\n'.format('bkg',bgFileName))
           for sig in prefixSigList:
-            if int(cat) < 6:
-              card.write('shapes {0:<8} * {1:<20} ws_card:{2}_{3}\n'.format(sig,sigFileName,sig,'_'.join([lepton,'cat'+cat,tev])))
-            else:
-              card.write('shapes {0:<8} * {1:<20} ws_card:{2}_{3}\n'.format(sig,sigFileName,sig,sigCorChannel))
+            card.write('shapes {0:<8} * {1:<20} ws_card:{2}_{3}\n'.format(sig,sigFileName,sig,'_'.join([lepton,'cat'+cat,tev])))
           card.write('---------------\n')
           card.write('{0:<12} {1}\n'.format('bin',channel))
           bgYield = bgWs.var('_'.join(['data','yield',lepton,tev,'cat'+cat])).getVal()

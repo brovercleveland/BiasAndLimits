@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 import os
 
-suffix = 'Proper'
+suffix = '03-11-14_Cats'
 #mode = 'noCombo'
 mode = 'Combo'
+doMVA = True
 
 massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
  '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -53,16 +54,18 @@ Queue
     os.system('rm submit.cmd')
   else:
     leptonList = ['mu','el']
-    yearList = ['2012','2011']
+    tevList = ['8TeV','7TeV']
     catListBig = ['1','2','3','4','5','6','7','8','9']
     catListSmall = ['1','2','3','4','5']
     for lepton in leptonList:
-      for year in yearList:
-        for cat in catListSmall:
-          if cat == '5' and year == '2011' and lepton == 'el': myLepton = 'all'
-          elif cat == '5' and year == '2011' and lepton == 'mu': continue
+      for tev in tevList:
+        if doMVA and tev == '8TeV': catList = catListBig
+        else: catList = catListSmall
+        for cat in catList:
+          if cat == '5' and tev == '7TeV' and lepton == 'el': myLepton = 'all'
+          elif cat == '5' and tev == '7TeV' and lepton == 'mu': continue
           else: myLepton = lepton
-          cardName = '_'.join(['hzg',myLepton,year,'cat'+cat,'M'+mass,suffix])+'.txt'
+          cardName = '_'.join(['hzg',myLepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
           consub = open('submit.cmd','w')
           consub.write('''
 Universe                = vanilla
