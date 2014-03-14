@@ -20,9 +20,10 @@ CMSStyle()
 # Run with: combine -M Asymptotic datacard.txt  #
 #################################################
 
-def makeCards(MVATest = False):
+def makeCards(MVATest = True):
   #still uses old cat ordering
-  suffix = 'Proper'
+  suffix = '03-11-14_Cats'
+
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 1.058*0.767
   MVASigScale['mu']['2'] = 1.058*0.862
@@ -44,76 +45,6 @@ def makeCards(MVATest = False):
   MVASigScale['el']['9'] = 1.04*(1-0.881)
   MVASigScale['el']['5'] = 1.0
 
-  '''
-# 9 cat, medium cut photon
-  MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.777
-  MVASigScale['mu']['2'] = 0.611
-  MVASigScale['mu']['3'] = 0.713
-  MVASigScale['mu']['4'] = 0.856
-  MVASigScale['mu']['6'] = 1-0.777
-  MVASigScale['mu']['7'] = 1-0.611
-  MVASigScale['mu']['8'] = 1-0.713
-  MVASigScale['mu']['9'] = 1-0.856
-  MVASigScale['mu']['5'] = 1.0
-
-  MVASigScale['el']['1'] = 0.715
-  MVASigScale['el']['2'] = 0.845
-  MVASigScale['el']['3'] = 0.624
-  MVASigScale['el']['4'] = 0.552
-  MVASigScale['el']['6'] = 1-0.715
-  MVASigScale['el']['7'] = 1-0.845
-  MVASigScale['el']['8'] = 1-0.624
-  MVASigScale['el']['9'] = 1-0.552
-  MVASigScale['el']['5'] = 1.0
-
-  MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.73
-  MVASigScale['mu']['2'] = 0.64
-  MVASigScale['mu']['3'] = 0.77
-  MVASigScale['mu']['4'] = 0.74
-  MVASigScale['mu']['5'] = 1.0
-
-  MVASigScale['el']['1'] = 0.77
-  MVASigScale['el']['2'] = 0.66
-  MVASigScale['el']['3'] = 0.78
-  MVASigScale['el']['4'] = 0.75
-  MVASigScale['el']['5'] = 1.0
-
-  #andycuts
-  MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.67
-  MVASigScale['mu']['2'] = 0.64
-  MVASigScale['mu']['3'] = 0.75
-  MVASigScale['mu']['4'] = 0.89
-  MVASigScale['mu']['5'] = 1.0
-
-  MVASigScale['el']['1'] = 0.8
-  MVASigScale['el']['2'] = 0.68
-  MVASigScale['el']['3'] = 0.74
-  MVASigScale['el']['4'] = 0.81
-  MVASigScale['el']['5'] = 1.0
-
-  MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 0.64
-  MVASigScale['mu']['2'] = 0.63
-  MVASigScale['mu']['3'] = 0.89
-  MVASigScale['mu']['4'] = 0.86
-  MVASigScale['mu']['5'] = 1.0
-
-  MVASigScale['el']['1'] = 0.67
-  MVASigScale['el']['2'] = 0.62
-  MVASigScale['el']['3'] = 0.73
-  MVASigScale['el']['4'] = 0.85
-  MVASigScale['el']['5'] = 1.0
-  '''
-  '''
-  leptonList = ['mu','el']
-  tevList = ['8TeV','7TeV']
-  catList = ['1','2','3','4']
-  massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5','125.0']
-  sigNameList = ['gg','vbf','tth','wh','zh']
-  '''
   leptonList = ['mu','el']
   #leptonList = ['mu']
   tevList = ['7TeV','8TeV']
@@ -130,6 +61,10 @@ def makeCards(MVATest = False):
    '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
    '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
   #massList = ['125.0']
+
+  bgFile = TFile('outputDir/'+suffix+'/CardBackground_'+suffix+'.root')
+  bgWs = bgFile.Get('ws_card')
+  bgFileName = 'CardBackground_'+suffix+'.root'
 
   for tev in tevList:
     if tev == '7TeV':
@@ -149,14 +84,6 @@ def makeCards(MVATest = False):
         elif cat == '7': sigCorCat = '2'
         elif cat == '8': sigCorCat = '3'
         elif cat == '9': sigCorCat = '4'
-        if MVATest and (tev is '8TeV' and cat is not '5'):
-          bgFile = TFile('testCards/testCardBackground_'+suffix+'.root')
-          bgWs = bgFile.Get('ws_card')
-          bgFileName = 'testCardBackground_'+suffix+'.root'
-        else:
-          bgFile = TFile('outputDir/'+suffix+'/CardBackground_'+suffix+'.root')
-          bgWs = bgFile.Get('ws_card')
-          bgFileName = 'CardBackground_'+suffix+'.root'
         sigNameList = ['ggH','qqH','WH','ZH','ttH']
         if tev is '7TeV' and cat is '5' and lepton is 'mu': continue
         elif tev is '7TeV' and cat is '5' and lepton is 'el': lepton='all'
@@ -165,7 +92,7 @@ def makeCards(MVATest = False):
         if cat in ['1','4','6','9']: phoGeom = 'EB'
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
-        sigCorChannel = '_'.join([lepton,tev,'cat'+sigCorCat])
+        sigCorChannel = '_'.join([lepton,tev,'cat'+cat])
         if cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = sigNameList[0:2]
@@ -177,17 +104,15 @@ def makeCards(MVATest = False):
         for mass in massList:
           #if not os.path.isfile('outputDir/'+suffix+'/'+mass+'/'+'SignalOutput_All_'+suffix+'_'+mass+'.root'):
             #os.system('hadd -f outputDir/'+suffix+'/'+mass+'/'+'SignalOutput_All_'+suffix+'_'+mass+'.root outputDir/'+suffix+'/'+mass+'/'+'SignalOutput*.root')
-          sigFileName = '_'.join(['SignalOutput',lepton,tev,'cat'+sigCorCat,mass])+'.root'
+          sigFileName = '_'.join(['SignalOutput',lepton,tev,'cat'+cat,mass])+'.root'
           #sigFileName = 'SignalOutput_All_'+suffix+'_'+mass+'.root'
           sigFile = TFile('outputDir/'+suffix+'/'+mass+'/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = [sig+'_hzg' for sig in sigNameList]
 
-          if MVATest:
-            card = open('testCards/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt','w')
-          else:
-            #card = open('testCards/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass])+'.txt','w')
-            card = open('outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt','w')
+          #card = open('testCards/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass])+'.txt','w')
+          cardName = 'outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
+          card = open(cardName, 'w')
           card.write('#some bullshit\n')
           card.write('#more comments\n')
           card.write('imax *\n')
@@ -202,8 +127,8 @@ def makeCards(MVATest = False):
             else:
               card.write('shapes {0:<8} * {1:<20} ws_card:{2}_{3}\n'.format(sig,sigFileName,sig,sigCorChannel))
           card.write('---------------\n')
-          bgYield = bgWs.var('data_yield_'+channel).getVal()
           card.write('{0:<12} {1}\n'.format('bin',channel))
+          bgYield = bgWs.var('_'.join(['data','yield',lepton,tev,'cat'+cat])).getVal()
           card.write('{0:<12} {1}\n'.format('observation',int(bgYield)))
           card.write('------------------------------\n')
           if cat is not '5':
@@ -217,11 +142,7 @@ def makeCards(MVATest = False):
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
           sigYields = []
           for sig in prefixSigList[::-1]:
-            if MVATest and tev is '8TeV' and cat is not '5':
-              sigYields.append(sigWs.var(sig+'_yield_'+sigCorChannel).getVal()*MVASigScale[lepton][cat])
-            else:
-              sigYields.append(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal())
-          bgYield = bgWs.var('_'.join(['data','yield',lepton,tev,'cat'+cat])).getVal()
+            sigYields.append(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal())
           if cat is not '5':
             card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
             card.write('-----------------------------------------------------------------------------------------------------------------------\n')
@@ -278,6 +199,7 @@ def makeCards(MVATest = False):
 
 
           card.close()
+          print cardName, 'created'
 
 
 

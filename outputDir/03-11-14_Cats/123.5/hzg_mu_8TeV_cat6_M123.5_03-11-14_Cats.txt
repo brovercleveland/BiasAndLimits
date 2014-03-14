@@ -1,0 +1,57 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_03-11-14_Cats.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_03-11-14_Cats.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_mu_8TeV_cat6_123.5.root ws_card:ggH_hzg_mu_8TeV_cat6
+shapes qqH_hzg  * SignalOutput_mu_8TeV_cat6_123.5.root ws_card:qqH_hzg_mu_8TeV_cat6
+shapes WH_hzg   * SignalOutput_mu_8TeV_cat6_123.5.root ws_card:WH_hzg_mu_8TeV_cat6
+shapes ZH_hzg   * SignalOutput_mu_8TeV_cat6_123.5.root ws_card:ZH_hzg_mu_8TeV_cat6
+shapes ttH_hzg  * SignalOutput_mu_8TeV_cat6_123.5.root ws_card:ttH_hzg_mu_8TeV_cat6
+---------------
+bin          mu_8TeV_cat6
+observation  1326
+------------------------------
+bin                        mu_8TeV_cat6    mu_8TeV_cat6    mu_8TeV_cat6    mu_8TeV_cat6    mu_8TeV_cat6    mu_8TeV_cat6  
+process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.0031659        0.31491         0.56553        0.083142         5.0622             1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       1.078/0.922          -               -               -          0.921/1.072          -       
+pdf_qqbar         lnN            -          0.965/1.035     0.965/1.035     0.972/1.026          -               -       
+QCDscale_ggH      lnN            -               -               -               -          0.931/1.075          -       
+QCDscale_qqH      lnN            -               -               -          0.998/1.002          -               -       
+QCDscale_VH       lnN            -          0.985/1.016     0.994/1.002          -               -               -       
+QCDscale_ttH      lnN       0.907/1.038          -               -               -               -               -       
+lumi_8TeV         lnN          1.026           1.026           1.026           1.026           1.026             -       
+CMS_eff_m_8TeV    lnN          1.014           1.014           1.014           1.014           1.014             -       
+CMS_eff_trig_m_8TeV lnN          1.035           1.035           1.035           1.035           1.035             -       
+CMS_eff_PU_m_8TeV lnN          1.004           1.004           1.004           1.004           1.004             -       
+CMS_eff_g_EB_8TeV lnN          1.006           1.006           1.006           1.006           1.006             -       
+CMS_scale_j       lnN            -               -               -             1.028           1.001             -       
+CMS_res_j         lnN            -               -               -             1.010           1.001             -       
+CMS_UEPS_8TeV     lnN            -               -               -             1.026           1.002             -       
+CMS_hzg_eff_R9_8TeV lnN          1.050           1.050           1.050           1.050           1.050             -       
+CMS_hzg_err_BR_8TeV lnN       0.910/1.091     0.910/1.091     0.910/1.091     0.910/1.091     0.910/1.091          -       
+ggH_hzg_mShift_mu_8TeV_cat6              param          1         0.01   
+ggH_hzg_sigmaShift_mu_8TeV_cat6          param          1         0.05   
+qqH_hzg_mShift_mu_8TeV_cat6              param          1         0.01   
+qqH_hzg_sigmaShift_mu_8TeV_cat6          param          1         0.05   
+WH_hzg_mShift_mu_8TeV_cat6               param          1         0.01   
+WH_hzg_sigmaShift_mu_8TeV_cat6           param          1         0.05   
+ZH_hzg_mShift_mu_8TeV_cat6               param          1         0.01   
+ZH_hzg_sigmaShift_mu_8TeV_cat6           param          1         0.05   
+ttH_hzg_mShift_mu_8TeV_cat6              param          1         0.01   
+ttH_hzg_sigmaShift_mu_8TeV_cat6          param          1         0.05   
+bkg_p1_mu_8TeV_cat6                           flatParam      
+bkg_p2_mu_8TeV_cat6                           flatParam      
+bkg_p3_mu_8TeV_cat6                           flatParam      
+bkg_p4_mu_8TeV_cat6                           flatParam      
+bkg_p5_mu_8TeV_cat6                           flatParam      
+bkg_sigma_mu_8TeV_cat6                        flatParam      
+bkg_step_mu_8TeV_cat6                         flatParam      
+bkg_mu_8TeV_cat6_norm                         flatParam      

@@ -76,7 +76,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
   sigNameList = ['ggH','qqH','ttH','WH','ZH']
   #sigNameList = ['gg']
 
-  rooWsFile = TFile('outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
+  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
 #myWs.Print()
 
@@ -200,7 +200,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1))
     testFrame.Draw()
-    c.Print('debugPlots/'+'_'.join(['test','sig','fit',prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:
@@ -208,8 +208,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
   for mass in massList:
     fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])
-    if not os.path.isdir('outputDir/'+suffix+'/'+mass): os.mkdir('outputDir/'+suffix+'/'+mass)
-    cardDict[lep][tev][cat][mass].writeToFile('outputDir/'+suffix+'/'+mass+'/'+fileName+'.root')
+    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass)
+    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass+'/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')

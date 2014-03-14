@@ -9,21 +9,22 @@ from rooFitBuilder import *
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
+doMVA = True
 doExt = False
 leptonList = ['mu','el']
 tevList = ['7TeV','8TeV']
 #catList = ['0']
-catList = ['1','2','3','4','5']
-#catList = ['1','2','3','4','6','7','8','9']
+catListSmall = ['1','2','3','4','5']
+catListBig = ['1','2','3','4','5','6','7','8','9']
 catFix = False
 #suffixCard = 'MVA_02-18-14_Cats'
-suffixCard = 'Proper'
+suffixCard = '03-11-14_Cats'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('outputDir/'+suffixCard+'/initRooFitOut_'+suffixCard+'.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
-card_ws.autoImportClassCode(True)
+#card_ws.autoImportClassCode(True)
 
 c = TCanvas("c","c",0,0,500,400)
 c.cd()
@@ -40,6 +41,8 @@ mzg.setRange('signal',120,130)
 
 for tev in tevList:
   for lepton in leptonList:
+    if tev == '8TeV' and doMVA: catList = catListBig
+    else: catList = catListSmall
     for cat in catList:
       if cat is '5' and tev is '7TeV' and lepton is 'mu': continue
       elif cat is '5' and tev is '7TeV' and lepton is 'el': lepton = 'all'
