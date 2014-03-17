@@ -1,31 +1,11 @@
->>> including systematics
->>> method used to compute upper limit is Asymptotic
->>> random number generator seed is 123456
-[?1034h
+At r = 0.389799:	q_mu = 4.28866	q_A  = 3.00568	CLsb = 0.01770	CLb  = 0.35569	CLs  = 0.04977
 
- --- now with extra fixes ... 
+ -- Asymptotic -- 
+Observed Limit: r < 0.3898
+Expected  2.5%: r < 0.2347
+Expected 16.0%: r < 0.3154
+Expected 50.0%: r < 0.4434
+Expected 84.0%: r < 0.6360
+Expected 97.5%: r < 0.8780
 
-
-Computing limit starting from observation
-Will compute both limit(s) using minimizer Minuit2 with strategy 0 and tolerance 0.01
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch1_nuis) WARNING: component PDF shapeBkg_bkg_ch1   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch2_nuis) WARNING: component PDF shapeBkg_bkg_ch2   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch3_nuis) WARNING: component PDF shapeBkg_bkg_ch3   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch4_nuis) WARNING: component PDF shapeBkg_bkg_ch4   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch6_nuis) WARNING: component PDF shapeBkg_bkg_ch6   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch7_nuis) WARNING: component PDF shapeBkg_bkg_ch7   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch8_nuis) WARNING: component PDF shapeBkg_bkg_ch8   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch9_nuis) WARNING: component PDF shapeBkg_bkg_ch9   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch11_nuis) WARNING: component PDF shapeBkg_bkg_ch11   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch12_nuis) WARNING: component PDF shapeBkg_bkg_ch12   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch13_nuis) WARNING: component PDF shapeBkg_bkg_ch13   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch15_nuis) WARNING: component PDF shapeBkg_bkg_ch15   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch16_nuis) WARNING: component PDF shapeBkg_bkg_ch16   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch17_nuis) WARNING: component PDF shapeBkg_bkg_ch17   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch18_nuis) WARNING: component PDF shapeBkg_bkg_ch18   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch20_nuis) WARNING: component PDF shapeBkg_bkg_ch20   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch21_nuis) WARNING: component PDF shapeBkg_bkg_ch21   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch22_nuis) WARNING: component PDF shapeBkg_bkg_ch22   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch24_nuis) WARNING: component PDF shapeBkg_bkg_ch24   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch25_nuis) WARNING: component PDF shapeBkg_bkg_ch25   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch26_nuis) WARNING: component PDF shapeBkg_bkg_ch26   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+Done in 89.49 min (cpu), 90.29 min (real)

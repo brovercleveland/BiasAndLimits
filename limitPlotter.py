@@ -9,9 +9,9 @@ from collections import defaultdict
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-fullCombo = True
-byParts = False
-suffix = 'Proper'
+fullCombo = False
+byParts = True
+suffix = '03-11-14_Cats'
 
 
 
@@ -39,6 +39,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp2SigLow = []
   for mass in massList:
     currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
+    print currentDir
     fileList = os.listdir(currentDir)
     thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
     #print fileList
@@ -109,8 +110,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
-  expected.Print()
-  raw_input()
+  #expected.Print()
+  #raw_input()
   oneSigma.SetFillColor(kGreen)
 
   twoSigma.SetFillColor(kYellow)
@@ -139,16 +140,16 @@ if __name__=='__main__':
     LimitPlot('FullCombo',suffix)
   if byParts:
     leptonList = ['mu','el']
-    yearList = ['2012','2011']
+    tevList = ['8TeV','7TeV']
     catListBig = ['1','2','3','4','5','6','7','8','9']
     catListSmall = ['1','2','3','4','5']
     for lepton in leptonList:
-      for year in yearList:
+      for tev in tevList:
         for cat in catListSmall:
-          if cat == '5' and year == '2011' and lepton == 'el': myLepton = 'all'
-          elif cat == '5' and year == '2011' and lepton == 'mu': continue
+          if cat == '5' and tev == '7TeV' and lepton == 'el': myLepton = 'all'
+          elif cat == '5' and tev == '7TeV' and lepton == 'mu': continue
           else: myLepton = lepton
-          outputName = '_'.join(['Output',myLepton,year,'cat'+cat])
+          outputName = '_'.join(['Output',myLepton,tev,'cat'+cat])
           LimitPlot(outputName,suffix)
 
 

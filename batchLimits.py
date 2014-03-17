@@ -2,8 +2,8 @@
 import os
 
 suffix = '03-11-14_Cats'
-#mode = 'noCombo'
-mode = 'Combo'
+mode = 'noCombo'
+#mode = 'Combo'
 doMVA = True
 
 massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
