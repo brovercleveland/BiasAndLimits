@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import os
 
-suffix = '03-11-14_Cats'
-doMVA = True
+#suffix = '03-11-14_Cats'
+suffix = '03-18-14'
+doMVA = False
 
 leptonList = ['mu','el']
 tevList = ['8TeV','7TeV']

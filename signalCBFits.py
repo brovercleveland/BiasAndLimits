@@ -138,8 +138,6 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         sig_ds_Low = myWs.data(sigNameLow)
         if massLow == massHi:
           dsList.append(sig_ds_Low)
-          print sig_ds_Low.GetName()
-          #raw_input()
 
         CBG_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
 
@@ -200,7 +198,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1))
     testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:

@@ -7,8 +7,8 @@ import time
 def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
   byParts = False
-  doMVA = True
-  suffix = '03-11-14_Cats'
+  doMVA = False
+  suffix = '03-18-14'
 
   owd = os.getcwd()
   if inputFolder == None:

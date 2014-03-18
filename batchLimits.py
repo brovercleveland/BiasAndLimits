@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import os
 
-suffix = '03-11-14_Cats'
-mode = 'noCombo'
-#mode = 'Combo'
-doMVA = True
+suffix = '03-18-14'
+#mode = 'noCombo'
+mode = 'Combo'
+doMVA = False
 
 massList = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
  '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',

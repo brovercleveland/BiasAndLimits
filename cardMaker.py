@@ -20,9 +20,9 @@ CMSStyle()
 # Run with: combine -M Asymptotic datacard.txt  #
 #################################################
 
-def makeCards(MVATest = True):
+def makeCards(MVATest = False):
   #still uses old cat ordering
-  suffix = '03-11-14_Cats'
+  suffix = '03-18-14'
 
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 1.058*0.767

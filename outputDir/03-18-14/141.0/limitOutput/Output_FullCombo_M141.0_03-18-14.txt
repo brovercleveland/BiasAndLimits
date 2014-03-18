@@ -1,0 +1,1 @@
+WARNING: Best fit of asimov dataset is at r = 0.022480 (0.001124 times rMax), while it should be at zero
