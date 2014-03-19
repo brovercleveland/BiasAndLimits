@@ -9,9 +9,9 @@ from collections import defaultdict
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-fullCombo = False
-byParts = True
-suffix = '03-11-14_Cats'
+fullCombo = True
+byParts = False
+suffix = '03-19-14_Proper'
 
 
 
@@ -133,7 +133,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
   mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
-  c.Print('debugPlots/limitPlot_'+CardOutput+'.pdf')
+  c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
 
 if __name__=='__main__':
   if fullCombo:

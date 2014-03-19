@@ -24,7 +24,7 @@ doOldStyle = False
 allBiasFits= False # Turn on extra fits used in bias studies
 
 #suffix = 'Proper'
-suffix = '03-18-14'
+suffix = '03-19-14_Proper'
 
 if suffix == 'Proper':
   doOldStyle = True

@@ -1,0 +1,43 @@
+#some bullshit
+#more comments
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_03-19-14_Proper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_03-19-14_Proper.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_mu_8TeV_cat5_129.5.root ws_card:ggH_hzg_mu_cat5_8TeV
+shapes qqH_hzg  * SignalOutput_mu_8TeV_cat5_129.5.root ws_card:qqH_hzg_mu_cat5_8TeV
+---------------
+bin          mu_8TeV_cat5
+observation  21
+------------------------------
+bin                        mu_8TeV_cat5    mu_8TeV_cat5    mu_8TeV_cat5  
+process                       qqH_hzg         ggH_hzg           bkg      
+process                         -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.087358        0.051351            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN            -          0.922/1.071          -       
+pdf_qqbar         lnN       0.973/1.026          -               -       
+QCDscale_ggH      lnN            -          0.931/1.075          -       
+QCDscale_qqH      lnN       0.998/1.002          -               -       
+lumi_8TeV         lnN          1.026           1.026             -       
+CMS_eff_m_8TeV    lnN          1.014           1.014             -       
+CMS_eff_trig_m_8TeV lnN          1.035           1.035             -       
+CMS_eff_PU_m_8TeV lnN          1.004           1.004             -       
+CMS_eff_g_EE_8TeV lnN          1.010           1.010             -       
+CMS_scale_j       lnN          1.046           1.110             -       
+CMS_res_j         lnN          1.019           1.060             -       
+CMS_UEPS_8TeV     lnN          1.070           1.249             -       
+CMS_eff_id_j      lnN          1.016           1.017             -       
+CMS_eff_acc_j     lnN          1.009           1.021             -       
+CMS_hzg_err_BR_8TeV lnN       0.915/1.085     0.915/1.085          -       
+ggH_hzg_mShift_mu_8TeV_cat5              param          1         0.01   
+ggH_hzg_sigmaShift_mu_8TeV_cat5          param          1         0.05   
+qqH_hzg_mShift_mu_8TeV_cat5              param          1         0.01   
+qqH_hzg_sigmaShift_mu_8TeV_cat5          param          1         0.05   
+bkg_p1_mu_8TeV_cat5                           flatParam      
+bkg_p2_mu_8TeV_cat5                           flatParam      
+bkg_p3_mu_8TeV_cat5                           flatParam      
+bkg_mu_8TeV_cat5_norm                         flatParam      

@@ -22,7 +22,7 @@ CMSStyle()
 
 def makeCards(MVATest = False):
   #still uses old cat ordering
-  suffix = '03-18-14'
+  suffix = '03-19-14_Proper'
 
   MVASigScale = AutoVivification()
   MVASigScale['mu']['1'] = 1.058*0.767

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 
-suffix = '03-18-14'
+suffix = '03-19-14_Proper'
 #mode = 'noCombo'
 mode = 'Combo'
 doMVA = False

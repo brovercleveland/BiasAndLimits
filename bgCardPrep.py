@@ -19,7 +19,7 @@ catListBig = ['1','2','3','4','5','6','7','8','9']
 catFix = False
 #suffixCard = 'MVA_02-18-14_Cats'
 #suffixCard = '03-11-14_Cats'
-suffixCard = '03-18-14'
+suffixCard = '03-19-14_Proper'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('outputDir/'+suffixCard+'/initRooFitOut_'+suffixCard+'.root')

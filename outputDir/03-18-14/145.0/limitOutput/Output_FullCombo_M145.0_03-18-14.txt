@@ -1,23 +1,11 @@
->>> including systematics
->>> method used to compute upper limit is Asymptotic
->>> random number generator seed is 123456
-[?1034h
+At r = 3.630236:	q_mu = 4.07775	q_A  = 3.40465	CLsb = 0.02130	CLb  = 0.42764	CLs  = 0.04981
 
- --- now with extra fixes ... 
+ -- Asymptotic -- 
+Observed Limit: r < 3.6302
+Expected  2.5%: r < 2.0428
+Expected 16.0%: r < 2.7453
+Expected 50.0%: r < 3.8594
+Expected 84.0%: r < 5.5054
+Expected 97.5%: r < 7.5741
 
-
-Computing limit starting from observation
-Will compute both limit(s) using minimizer Minuit2 with strategy 0 and tolerance 0.01
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch1_nuis) WARNING: component PDF shapeBkg_bkg_ch1   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch2_nuis) WARNING: component PDF shapeBkg_bkg_ch2   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch3_nuis) WARNING: component PDF shapeBkg_bkg_ch3   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch4_nuis) WARNING: component PDF shapeBkg_bkg_ch4   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch7_nuis) WARNING: component PDF shapeBkg_bkg_ch7   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch8_nuis) WARNING: component PDF shapeBkg_bkg_ch8   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch9_nuis) WARNING: component PDF shapeBkg_bkg_ch9   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch12_nuis) WARNING: component PDF shapeBkg_bkg_ch12   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch13_nuis) WARNING: component PDF shapeBkg_bkg_ch13   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch14_nuis) WARNING: component PDF shapeBkg_bkg_ch14   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch16_nuis) WARNING: component PDF shapeBkg_bkg_ch16   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch17_nuis) WARNING: component PDF shapeBkg_bkg_ch17   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
-[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch18_nuis) WARNING: component PDF shapeBkg_bkg_ch18   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+Done in 52.22 min (cpu), 52.23 min (real)

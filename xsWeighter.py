@@ -120,9 +120,11 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt):
       if(mass is '160'): LumiXSWeight = nEvt/(0.1687*0.00116*0.10098*1000*(1/0.100974))
 
     if (lepton=='mu'):
-      LumiXSWeight = 19.6175/(LumiXSWeight)
+      #LumiXSWeight = 19.6175/(LumiXSWeight)
+      LumiXSWeight = 19.7175/(LumiXSWeight)
     elif (lepton=='el'):
-      LumiXSWeight = 19.6195/(LumiXSWeight)
+      #LumiXSWeight = 19.6195/(LumiXSWeight)
+      LumiXSWeight = 19.7195/(LumiXSWeight)
 
   return LumiXSWeight
 

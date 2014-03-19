@@ -1,1 +1,11 @@
-WARNING: Best fit of asimov dataset is at r = 0.047080 (0.002354 times rMax), while it should be at zero
+At r = 7.665438:	q_mu = 3.41159	q_A  = 4.91524	CLsb = 0.03237	CLb  = 0.64430	CLs  = 0.05024
+
+ -- Asymptotic -- 
+Observed Limit: r < 7.6654
+Expected  2.5%: r < 3.5562
+Expected 16.0%: r < 4.7792
+Expected 50.0%: r < 6.7188
+Expected 84.0%: r < 9.5843
+Expected 97.5%: r < 13.2704
+
+Done in 25.23 min (cpu), 25.31 min (real)
