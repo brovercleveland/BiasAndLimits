@@ -52,7 +52,7 @@ def doInitialFits():
     signalDict= {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
 
   leptonList = ['mu','el']
-  #leptonList = ['el']
+  #leptonList = ['mu']
   #yearList = ['2012']
   yearList = ['2011','2012']
   yearToTeV = {'2011':'7TeV','2012':'8TeV'}
@@ -134,17 +134,23 @@ def doInitialFits():
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
-              if tmpSigMass[0]> 100 and tmpSigMass[0]<190:
+              if tmpSigMass[0]> int(mass)-10 and tmpSigMass[0]<int(mass)+10:
                 if year is '2012' and mass is '160' and prod == 'ggH' and doOldStyle:
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
-                if prod == 'WH':
+                if prod == 'WH' and doOldStyle:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.655)
-                elif prod == 'ZH':
+                elif prod == 'ZH' and doOldStyle:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.345)
                 else:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0])
+                #if i == 0:
+                #  print year,lepton,prod,mass
+                #  print sigWeight
+                #  print
+                #  raw_input()
+
                 sigWeight = tmpSigWeight[0]*sigWeight
                 sig_ds.add(sig_argSW, sigWeight)
                 #sig_argSW.Print()

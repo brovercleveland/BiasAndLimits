@@ -70,7 +70,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
    '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0',
    '141.0','142.0','143.0','144.0','145.0','146.0','147.0','148.0','149.0','150.0',
    '151.0','152.0','153.0','154.0','155.0','156.0','157.0','158.0','159.0','160.0']
-  #massList = ['125.0']
+ # massList = ['125.0']
   #massList = ['130.5','131.0','131.5','132.0','132.5','133.0','133.5','134.0','134.5','135.0',
   # '135.5','136.0','136.5','137.0','137.5','138.0','138.5','139.0','139.5','140.0']
   sigNameList = ['ggH','qqH','ttH','WH','ZH']
@@ -171,9 +171,15 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
       interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', CBG_Low, CBG_Hi, mzg, beta)
       interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
-      normList.append(sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+      yieldNum = (sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+      normList.append(yieldNum)
       yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
-      yieldVar = RooRealVar(yieldName,yieldName,sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+      yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
+
+      #print yieldName
+      #print yieldNum, sig_ds_Low.sumEntries()
+      #print
+      #raw_input()
 
 
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
