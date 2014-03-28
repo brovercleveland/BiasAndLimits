@@ -19,15 +19,11 @@ verbose = False
 rootrace = False
 
 doMVA = False
-doOldStyle = False
 
 allBiasFits= False # Turn on extra fits used in bias studies
 
-#suffix = 'Proper'
-suffix = '03-19-14_Proper'
-
-if suffix == 'Proper':
-  doOldStyle = True
+suffix = 'Proper'
+#suffix = '03-19-14_Proper'
 
 
 
@@ -41,15 +37,9 @@ if rootrace: RooTrace.active(kTRUE)
 def doInitialFits():
   print 'loading up the files'
 
-  if suffix == 'Proper':
-    dataDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/data_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/data_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
-  else:
-    dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/data_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/data_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/data_All2011.root','r')}
+  dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/m_llgFile_MuMu2011ABCD_Proper.root','r'),'el2011_4cat':TFile('inputFiles/m_llgFile_EE2011ABCD_Proper.root','r'),'all2011_4cat':TFile('inputFiles/m_llgFile_All2011ABCD_Proper.root','r')}
 
-  if suffix == 'Proper':
-    signalDict = {'mu2012_4cat':TFile('inputFiles/poterFiles/signal_Mu2012.root','r'),'el2012_4cat':TFile('inputFiles/poterFiles/signal_El2012.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'), 'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
-  else:
-    signalDict= {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/poterFiles/signal_Mu2011.root','r'),'el2011_4cat':TFile('inputFiles/poterFiles/signal_El2011.root','r'),'all2011_4cat':TFile('inputFiles/poterFiles/signal_All2011.root','r')}
+  signalDict = dataDict
 
   leptonList = ['mu','el']
   #leptonList = ['mu']
@@ -78,7 +68,7 @@ def doInitialFits():
   mzg.setRange('fullRegion',100,190)
   mzg.setRange('oldRegion',115,190)
   mzg.setRange('MERegion',108,160)
-  mzg.setBins(50000,'cache')
+  mzg.setBins(360,'cache')
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -117,34 +107,28 @@ def doInitialFits():
             sigName = '_'.join(['ds',prod,'hzg',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
             tmpSigMass= np.zeros(1,dtype = 'd')
             tmpSigWeight= np.zeros(1,dtype = 'd')
-            if not doOldStyle and year == '2012':
-              tmpSigNumEvents = []
-            else:
-              tmpSigNumEvents = np.zeros(1,dtype = 'd')
+            tmpSigNumEvents = 0
             if cat is '0':
               signalTree.SetBranchAddress('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
             else:
               signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
             signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigWeight)
-            if not doOldStyle and year == '2012':
-              tmpSigNumEvents.append(signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass).GetBinContent(1))
-            else:
-              signalTree.SetBranchAddress('unBinnedLumiXS_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigNumEvents)
+            tmpSigNumEvents = signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass).GetBinContent(1)
             sig_argSW = RooArgSet(mzg,weight)
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
               if tmpSigMass[0]> int(mass)-10 and tmpSigMass[0]<int(mass)+10:
-                if year is '2012' and mass is '160' and prod == 'ggH' and doOldStyle:
+                if year is '2012' and mass is '160' and prod == 'ggH' and suffix == 'Proper':
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
-                if prod == 'WH' and doOldStyle:
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.655)
-                elif prod == 'ZH' and doOldStyle:
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0]*0.345)
+                if prod == 'WH':
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)
+                elif prod == 'ZH':
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)
                 else:
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents[0])
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents)
                 #if i == 0:
                 #  print year,lepton,prod,mass
                 #  print sigWeight
@@ -176,7 +160,7 @@ def doInitialFits():
                 signalTree.Print()
                 print
 
-              if year is '2012' and mass is '160' and doOldStyle:
+              if year is '2012' and mass is '160' and suffix == 'Proper':
                 if cat is '0':
                   signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'+5.0>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
                 else:
@@ -232,7 +216,7 @@ def doInitialFits():
         else:
           dataTree.SetBranchAddress('m_llgCAT'+cat+'_DATA',tmpMassEventOld)
         data_argS = RooArgSet(mzg)
-        data_ds = RooDataSet(dataName,dataName,data_argS)
+        data_ds = RooDataHist(dataName,dataName,data_argS)
         for i in range(0,dataTree.GetEntries()):
           dataTree.GetEntry(i)
           if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<190:

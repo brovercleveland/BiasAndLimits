@@ -21,29 +21,7 @@ CMSStyle()
 #################################################
 
 def makeCards(MVATest = False):
-  #still uses old cat ordering
-  suffix = '03-19-14_Proper'
-
-  MVASigScale = AutoVivification()
-  MVASigScale['mu']['1'] = 1.058*0.767
-  MVASigScale['mu']['2'] = 1.058*0.862
-  MVASigScale['mu']['3'] = 1.058*0.891
-  MVASigScale['mu']['4'] = 1.058*0.862
-  MVASigScale['mu']['6'] = 1.058*(1-0.767)
-  MVASigScale['mu']['7'] = 1.058*(1-0.862)
-  MVASigScale['mu']['8'] = 1.058*(1-0.891)
-  MVASigScale['mu']['9'] = 1.058*(1-0.862)
-  MVASigScale['mu']['5'] = 1.0
-
-  MVASigScale['el']['1'] = 1.04*0.674
-  MVASigScale['el']['2'] = 1.04*0.751
-  MVASigScale['el']['3'] = 1.04*0.771
-  MVASigScale['el']['4'] = 1.04*0.881
-  MVASigScale['el']['6'] = 1.04*(1-0.674)
-  MVASigScale['el']['7'] = 1.04*(1-0.751)
-  MVASigScale['el']['8'] = 1.04*(1-0.771)
-  MVASigScale['el']['9'] = 1.04*(1-0.881)
-  MVASigScale['el']['5'] = 1.0
+  suffix = 'Proper'
 
   leptonList = ['mu','el']
   #leptonList = ['mu']
@@ -79,17 +57,12 @@ def makeCards(MVATest = False):
 
     for lepton in leptonList:
       for cat in catList:
-        sigCorCat = cat
-        if cat == '6': sigCorCat = '1'
-        elif cat == '7': sigCorCat = '2'
-        elif cat == '8': sigCorCat = '3'
-        elif cat == '9': sigCorCat = '4'
         sigNameList = ['ggH','qqH','WH','ZH','ttH']
         if tev is '7TeV' and cat is '5' and lepton is 'mu': continue
         elif tev is '7TeV' and cat is '5' and lepton is 'el': lepton='all'
 
 
-        if cat in ['1','4','6','9']: phoGeom = 'EB'
+        if cat in ['1','2','3','6','7','8']: phoGeom = 'EB'
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
         if cat is '5':
@@ -112,8 +85,8 @@ def makeCards(MVATest = False):
           #card = open('testCards/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass])+'.txt','w')
           cardName = 'outputDir/'+suffix+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
           card = open(cardName, 'w')
-          card.write('#some bullshit\n')
-          card.write('#more comments\n')
+          card.write('#removed vulgarity\n')
+          card.write('#cards produced by Brian Pollack\n')
           card.write('imax *\n')
           card.write('jmax *\n')
           card.write('kmax *\n')
@@ -157,10 +130,10 @@ def makeCards(MVATest = False):
             #card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[totalLeptonEffSys]*5+['-'])))
 
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g_'+phoGeom+'_'+TeV,'lnN']+[eff_g[tev][phoGeom]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+['-']*3+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
-            if cat in['1','4','6','9']:
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
+            if cat in['1','2','6','7']:
               card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_eff_R9_'+TeV,'lnN']+[eff_R9[tev]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR_'+tev,'lnN']+[err_BR[mass]]*5+['-'])))
           else:
@@ -178,9 +151,9 @@ def makeCards(MVATest = False):
             #card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[totalLeptonEffSys]*5+['-'])))
 
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_g_'+phoGeom+'_'+TeV,'lnN']+[eff_g[tev][phoGeom]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_scale_j','lnN']+[jes_vbf[sigCorCat]]+[jes_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_res_j','lnN']+[jer_vbf[sigCorCat]]+[jer_gg[sigCorCat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+[ueps_vbf[sigCorCat]]+[ueps_gg[sigCorCat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_scale_j','lnN']+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_res_j','lnN']+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_UEPS_'+TeV,'lnN']+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_id_j','lnN']+jetId+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_acc_j','lnN']+jetAcc+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_hzg_err_BR_'+TeV,'lnN']+[err_BR[mass]]*2+['-'])))

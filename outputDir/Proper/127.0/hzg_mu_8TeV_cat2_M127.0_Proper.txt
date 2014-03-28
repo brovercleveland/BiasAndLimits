@@ -1,5 +1,5 @@
-#some bullshit
-#more comments
+#removed vulgarity
+#cards produced by Brian Pollack
 imax *
 jmax *
 kmax *
@@ -13,13 +13,13 @@ shapes ZH_hzg   * SignalOutput_mu_8TeV_cat2_127.0.root ws_card:ZH_hzg_mu_cat2_8T
 shapes ttH_hzg  * SignalOutput_mu_8TeV_cat2_127.0.root ws_card:ttH_hzg_mu_cat2_8TeV
 ---------------
 bin          mu_8TeV_cat2
-observation  2747
+observation  4291
 ------------------------------
 bin                        mu_8TeV_cat2    mu_8TeV_cat2    mu_8TeV_cat2    mu_8TeV_cat2    mu_8TeV_cat2    mu_8TeV_cat2  
 process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.0049455       0.040867        0.041693        0.075509         1.2431             1       
+rate                         0.010777        0.037517        0.052522         0.12575         1.9158             1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       1.078/0.922          -               -               -          0.922/1.071          -       
 pdf_qqbar         lnN            -          0.964/1.036     0.965/1.035     0.973/1.026          -               -       
@@ -31,10 +31,11 @@ lumi_8TeV         lnN          1.026           1.026           1.026           1
 CMS_eff_m_8TeV    lnN          1.014           1.014           1.014           1.014           1.014             -       
 CMS_eff_trig_m_8TeV lnN          1.035           1.035           1.035           1.035           1.035             -       
 CMS_eff_PU_m_8TeV lnN          1.004           1.004           1.004           1.004           1.004             -       
-CMS_eff_g_EE_8TeV lnN          1.010           1.010           1.010           1.010           1.010             -       
-CMS_scale_j       lnN            -               -               -             1.022           1.001             -       
+CMS_eff_g_EB_8TeV lnN          1.006           1.006           1.006           1.006           1.006             -       
+CMS_scale_j       lnN            -               -               -             1.032           1.001             -       
 CMS_res_j         lnN            -               -               -             1.011           1.001             -       
-CMS_UEPS_8TeV     lnN            -               -               -             1.018           1.002             -       
+CMS_UEPS_8TeV     lnN            -               -               -             1.035           1.002             -       
+CMS_hzg_eff_R9_8TeV lnN          1.050           1.050           1.050           1.050           1.050             -       
 CMS_hzg_err_BR_8TeV lnN       0.913/1.088     0.913/1.088     0.913/1.088     0.913/1.088     0.913/1.088          -       
 ggH_hzg_mShift_mu_8TeV_cat2              param          1         0.01   
 ggH_hzg_sigmaShift_mu_8TeV_cat2          param          1         0.05   

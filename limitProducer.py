@@ -8,7 +8,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
   byParts = False
   doMVA = False
-  suffix = '03-19-14_Proper'
+  suffix = 'Proper'
 
   owd = os.getcwd()
   if inputFolder == None:

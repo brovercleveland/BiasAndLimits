@@ -11,7 +11,8 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
-suffix = '03-19-14_Proper'
+suffix = 'Proper'
+#suffix = '03-19-14_Proper'
 
 
 
@@ -39,7 +40,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp2SigLow = []
   for mass in massList:
     currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
-    print currentDir
+    #print currentDir
     fileList = os.listdir(currentDir)
     thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
     #print fileList
@@ -57,6 +58,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       elif '84.0%:' in splitLine: exp1SigHi.append(float(splitLine[-1]))
       elif '97.5%:' in splitLine: exp2SigHi.append(float(splitLine[-1]))
     f.close()
+    if mass == 125.0:
+      print mass
+      print 'obs:', obs[-1]
+      print 'exp:', exp[-1]
     if len(obs) != len(xAxis):
       print 'obs busted for',mass
       raw_input()
@@ -76,8 +81,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       print 'exp2SigHi busted for',mass
       raw_input()
   #print 'masses:', xAxis
-  print 'obs:',obs
-  print 'exp:',exp
+  #print 'obs:',obs
+  #print 'exp:',exp
   #print exp2SigLow
   #print exp1SigLow
   #print exp1SigHi
@@ -89,8 +94,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp1SigHiErr = [fabs(a-b) for a,b in zip(exp,exp1SigHi)]
 
   #print '2 sig low:',exp2SigLowErr
-  print '1 sig low:',exp1SigLowErr
-  print '1 sig hi:',exp1SigHiErr
+  #print '1 sig low:',exp1SigLowErr
+  #print '1 sig hi:',exp1SigHiErr
   #print '2 sig hi:',exp2SigHiErr
 
   xAxis_Array = np.array(xAxis,dtype=float)
@@ -130,9 +135,11 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.Add(observed)
 
   mg.Draw('AL3')
+  #mg.Draw('Asame')
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
   mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
+  c.RedrawAxis()
   c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
 
 if __name__=='__main__':

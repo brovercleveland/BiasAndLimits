@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 
-#suffix = '03-11-14_Cats'
-suffix = '03-19-14_Proper'
+suffix = 'Proper'
+#suffix = '03-19-14_Proper'
 doMVA = False
 
 leptonList = ['mu','el']

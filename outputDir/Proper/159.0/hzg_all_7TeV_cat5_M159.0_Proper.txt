@@ -1,5 +1,5 @@
-#some bullshit
-#more comments
+#removed vulgarity
+#cards produced by Brian Pollack
 imax *
 jmax *
 kmax *
@@ -16,7 +16,7 @@ bin                        all_7TeV_cat5   all_7TeV_cat5   all_7TeV_cat5
 process                       qqH_hzg         ggH_hzg           bkg      
 process                         -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.073543        0.020928            1       
+rate                         0.070366        0.019907            1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN            -         0.9243/1.0749         -       
 pdf_qqbar         lnN       0.979/1.028          -               -       

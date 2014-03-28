@@ -16,10 +16,9 @@ tevList = ['7TeV','8TeV']
 #catList = ['0']
 catListSmall = ['1','2','3','4','5']
 catListBig = ['1','2','3','4','5','6','7','8','9']
-catFix = False
-#suffixCard = 'MVA_02-18-14_Cats'
-#suffixCard = '03-11-14_Cats'
-suffixCard = '03-19-14_Proper'
+
+suffixCard = 'Proper'
+#suffixCard = '03-19-14_Proper'
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('outputDir/'+suffixCard+'/initRooFitOut_'+suffixCard+'.root')
@@ -93,23 +92,9 @@ for tev in tevList:
 
 
       ###### Import the fit and data, and rename them to the card convention
-      newCat = cat
-      if catFix:
-        if tev is '8TeV':
-          if cat == '2':
-            newCat = '3'
-          elif cat == '3':
-            newCat = '4'
-          elif cat == '4':
-            newCat = '2'
-          elif cat == '7':
-            newCat = '9'
-          elif cat == '8':
-            newCat = '7'
-          elif cat == '9':
-            newCat = '8'
-      dataNameNew = '_'.join(['data','obs',lepton,tev,'cat'+newCat])
-      dataYieldNameNew = '_'.join(['data','yield',lepton,tev,'cat'+newCat])
+
+      dataNameNew = '_'.join(['data','obs',lepton,tev,'cat'+cat])
+      dataYieldNameNew = '_'.join(['data','yield',lepton,tev,'cat'+cat])
       dataYield.SetName(dataYieldNameNew)
 
       getattr(card_ws,'import')(data,RooFit.Rename(dataNameNew))
@@ -117,13 +102,13 @@ for tev in tevList:
         getattr(card_ws,'import')(fit_ext)
       else:
         getattr(card_ws,'import')(fit)
-        normNameFixed  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
+        normNameFixed  = '_'.join(['bkg',lepton,tev,'cat'+cat,'norm'])
         norm.SetName(normNameFixed)
         getattr(card_ws,'import')(norm)
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       #fit_ext.Print()
-      BackgroundNameFixer(tev,lepton,cat,card_ws,newCat,doExt)
+      BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
 
 card_ws.writeToFile('outputDir/'+suffixCard+'/CardBackground_'+suffixCard+'.root')
 
