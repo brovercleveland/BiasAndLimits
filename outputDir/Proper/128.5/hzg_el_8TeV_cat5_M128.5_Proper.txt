@@ -23,16 +23,14 @@ pdf_qqbar         lnN       0.973/1.026          -               -
 QCDscale_ggH      lnN            -          0.931/1.075          -       
 QCDscale_qqH      lnN       0.998/1.002          -               -       
 lumi_8TeV         lnN          1.026           1.026             -       
-CMS_eff_e_8TeV    lnN          1.008           1.008             -       
-CMS_eff_trig_e_8TeV lnN          1.020           1.020             -       
-CMS_eff_PU_e_8TeV lnN          1.008           1.008             -       
-CMS_eff_g_EE_8TeV lnN          1.010           1.010             -       
+CMS_eff_e_8TeV    lnN          1.022           1.022           1.022           1.022           1.022             -       
+CMS_eff_g_EE      lnN          1.010           1.010             -       
 CMS_scale_j       lnN          1.046           1.110             -       
 CMS_res_j         lnN          1.019           1.060             -       
-CMS_UEPS_8TeV     lnN          1.070           1.249             -       
+CMS_UEPS          lnN          1.070           1.249             -       
 CMS_eff_id_j      lnN          1.016           1.017             -       
 CMS_eff_acc_j     lnN          1.009           1.021             -       
-CMS_hzg_err_BR_8TeV lnN       0.914/1.086     0.914/1.086          -       
+CMS_hzg_err_BR    lnN       0.914/1.086     0.914/1.086          -       
 ggH_hzg_mShift_el_8TeV_cat5              param          1         0.01   
 ggH_hzg_sigmaShift_el_8TeV_cat5          param          1         0.05   
 qqH_hzg_mShift_el_8TeV_cat5              param          1         0.01   
