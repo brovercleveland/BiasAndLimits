@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import sys
-sys.argv.append('-b')
 from ROOT import *
 import numpy as np
 #import pdb
 from rooFitBuilder import *
 import os
 
+gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
@@ -224,7 +224,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 if __name__=="__main__":
   print len(sys.argv)
   print sys.argv
-  if len(sys.argv) != 8:
+  if len(sys.argv) != 6:
     print 'usage: ./signalCBFits lepton tev cat suffix batch'
   else:
     SignalFitMaker(str(sys.argv[1]), str(sys.argv[2]), str(sys.argv[3]), str(sys.argv[4]), str(sys.argv[5]))

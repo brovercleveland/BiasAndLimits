@@ -11,8 +11,12 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
-suffix = 'Proper'
+#suffix = 'Proper'
 #suffix = '03-19-14_Proper'
+#suffix = '03-31-14_PhoMVA'
+suffix = '03-31-14_PhoKinMVA'
+#extras = ['03-31-14_PhoMVA','03-31-14_PhoKinMVA']
+extras = []
 
 
 
@@ -38,6 +42,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp1SigLow = []
   exp2SigHi = []
   exp2SigLow = []
+
+  expExtra = []
   for mass in massList:
     currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
@@ -80,6 +86,20 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     if len(exp2SigHi) != len(xAxis):
       print 'exp2SigHi busted for',mass
       raw_input()
+
+    if len(extras) != 0:
+      for extraSuffix in extras:
+        expExtra.append([])
+        currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
+        fileList = os.listdir(currentDir)
+        thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
+        f = open('/'.join([currentDir,thisFile]))
+        for line in f:
+          splitLine = line.split()
+          if '50.0%:' in splitLine: expExtra[-1].append(float(splitLine[-1]))
+        f.close()
+
+
   #print 'masses:', xAxis
   #print 'obs:',obs
   #print 'exp:',exp
@@ -115,6 +135,12 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
+  if len(extras) != 0:
+    extraExpected = []
+    for ar in expExtra:
+      extraExpected.append(TGraphAsymmErrors(nPoints,xAxis_Array,np.array(ar,dtype='d'),zeros_Array,zeros_Array,zeros_Array,zeros_Array))
+
+
   #expected.Print()
   #raw_input()
   oneSigma.SetFillColor(kGreen)
@@ -132,7 +158,17 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.Add(twoSigma)
   mg.Add(oneSigma)
   mg.Add(expected)
-  mg.Add(observed)
+  if len(extras) == 0:
+    print 'non obs'
+    #mg.Add(observed)
+  else:
+    for ar in extraExpected:
+      ar.SetMarkerColor(kBlack)
+      ar.SetMarkerStyle(kFullCircle)
+      ar.SetMarkerSize(1.5)
+      ar.SetLineColor(kBlack)
+      ar.SetLineWidth(2)
+      mg.Add(ar)
 
   mg.Draw('AL3')
   #mg.Draw('Asame')

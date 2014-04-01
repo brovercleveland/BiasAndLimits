@@ -1,5 +1,5 @@
-#some bullshit
-#more comments
+#removed vulgarity
+#cards produced by Brian Pollack
 imax *
 jmax *
 kmax *
@@ -19,7 +19,7 @@ bin                        el_7TeV_cat1    el_7TeV_cat1    el_7TeV_cat1    el_7T
 process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.0024341       0.0038731       0.0093315       0.038524         0.52595            1       
+rate                         0.0024341       0.0056132       0.0014247       0.038524         0.52595            1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       1.084/0.916          -               -               -         0.9269/1.076          -       
 pdf_qqbar         lnN            -          0.963/1.037     0.965/1.035     0.979/1.026          -               -       
@@ -28,15 +28,13 @@ QCDscale_qqH      lnN            -               -               -          0.99
 QCDscale_VH       lnN            -          0.985/1.016     0.995/1.006          -               -               -       
 QCDscale_ttH      lnN       0.908/1.03           -               -               -               -               -       
 lumi_7TeV         lnN          1.022           1.022           1.022           1.022           1.022             -       
-CMS_eff_e_7TeV    lnN          1.008           1.008           1.008           1.008           1.008             -       
-CMS_eff_trig_e_7TeV lnN          1.005           1.005           1.005           1.005           1.005             -       
-CMS_eff_PU_e_7TeV lnN          1.006           1.006           1.006           1.006           1.006             -       
-CMS_eff_g_EB_7TeV lnN          1.005           1.005           1.005           1.005           1.005             -       
+CMS_eff_e         lnN          1.011           1.011           1.011           1.011           1.011             -       
+CMS_eff_g_EB      lnN          1.005           1.005           1.005           1.005           1.005             -       
 CMS_scale_j       lnN            -               -               -             1.028           1.001             -       
 CMS_res_j         lnN            -               -               -             1.010           1.001             -       
-CMS_UEPS_7TeV     lnN            -               -               -             1.026           1.002             -       
+CMS_UEPS          lnN            -               -               -             1.026           1.002             -       
 CMS_hzg_eff_R9_7TeV lnN          1.050           1.050           1.050           1.050           1.050             -       
-CMS_hzg_err_BR_7TeV lnN       0.929/1.071     0.929/1.071     0.929/1.071     0.929/1.071     0.929/1.071          -       
+CMS_hzg_err_BR    lnN       0.929/1.071     0.929/1.071     0.929/1.071     0.929/1.071     0.929/1.071          -       
 ggH_hzg_mShift_el_7TeV_cat1              param          1         0.01   
 ggH_hzg_sigmaShift_el_7TeV_cat1          param          1         0.05   
 qqH_hzg_mShift_el_7TeV_cat1              param          1         0.01   

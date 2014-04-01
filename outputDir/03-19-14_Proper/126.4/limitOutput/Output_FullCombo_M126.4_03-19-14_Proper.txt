@@ -1,11 +1,23 @@
-At r = 10.144488:	q_mu = 3.21889	q_A  = 5.82448	CLsb = 0.03640	CLb  = 0.73213	CLs  = 0.04971
+>>> including systematics
+>>> method used to compute upper limit is Asymptotic
+>>> random number generator seed is 123456
+[?1034h
 
- -- Asymptotic -- 
-Observed Limit: r < 10.1445
-Expected  2.5%: r < 4.2840
-Expected 16.0%: r < 5.7573
-Expected 50.0%: r < 8.0938
-Expected 84.0%: r < 11.6103
-Expected 97.5%: r < 16.0288
+ --- now with extra fixes ... 
 
-Done in 37.90 min (cpu), 38.01 min (real)
+
+Computing limit starting from observation
+Will compute both limit(s) using minimizer Minuit2 with strategy 0 and tolerance 0.01
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch1_nuis) WARNING: component PDF shapeBkg_bkg_ch1   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch2_nuis) WARNING: component PDF shapeBkg_bkg_ch2   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch3_nuis) WARNING: component PDF shapeBkg_bkg_ch3   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch4_nuis) WARNING: component PDF shapeBkg_bkg_ch4   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch7_nuis) WARNING: component PDF shapeBkg_bkg_ch7   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch8_nuis) WARNING: component PDF shapeBkg_bkg_ch8   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch9_nuis) WARNING: component PDF shapeBkg_bkg_ch9   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch12_nuis) WARNING: component PDF shapeBkg_bkg_ch12   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch13_nuis) WARNING: component PDF shapeBkg_bkg_ch13   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch14_nuis) WARNING: component PDF shapeBkg_bkg_ch14   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch16_nuis) WARNING: component PDF shapeBkg_bkg_ch16   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch17_nuis) WARNING: component PDF shapeBkg_bkg_ch17   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF
+[#0] ERROR:InputArguments -- RooAddPdf::getAnalyticalIntegral(pdf_binch18_nuis) WARNING: component PDF shapeBkg_bkg_ch18   advertises inconsistent set of integrals (e.g. (X,Y) but not X or Y individually.   Distributed analytical integration disabled. Please fix PDF

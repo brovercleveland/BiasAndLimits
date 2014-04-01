@@ -1,0 +1,54 @@
+#removed vulgarity
+#cards produced by Brian Pollack
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_03-31-14_PhoKinMVA.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_03-31-14_PhoKinMVA.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_mu_7TeV_cat1_134.0.root ws_card:ggH_hzg_mu_cat1_7TeV
+shapes qqH_hzg  * SignalOutput_mu_7TeV_cat1_134.0.root ws_card:qqH_hzg_mu_cat1_7TeV
+shapes WH_hzg   * SignalOutput_mu_7TeV_cat1_134.0.root ws_card:WH_hzg_mu_cat1_7TeV
+shapes ZH_hzg   * SignalOutput_mu_7TeV_cat1_134.0.root ws_card:ZH_hzg_mu_cat1_7TeV
+shapes ttH_hzg  * SignalOutput_mu_7TeV_cat1_134.0.root ws_card:ttH_hzg_mu_cat1_7TeV
+---------------
+bin          mu_7TeV_cat1
+observation  688
+------------------------------
+bin                        mu_7TeV_cat1    mu_7TeV_cat1    mu_7TeV_cat1    mu_7TeV_cat1    mu_7TeV_cat1    mu_7TeV_cat1  
+process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.0025575       0.012482        0.017053        0.045913         0.62134            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       1.084/0.916          -               -               -         0.9272/1.076          -       
+pdf_qqbar         lnN            -          0.964/1.036     0.966/1.034     0.979/1.026          -               -       
+QCDscale_ggH      lnN            -               -               -               -         0.9238/1.0692         -       
+QCDscale_qqH      lnN            -               -               -          0.999/1.004          -               -       
+QCDscale_VH       lnN            -          0.986/1.017     0.995/1.006          -               -               -       
+QCDscale_ttH      lnN       0.908/1.031          -               -               -               -               -       
+lumi_7TeV         lnN          1.022           1.022           1.022           1.022           1.022             -       
+CMS_eff_m         lnN          1.009           1.009           1.009           1.009           1.009             -       
+CMS_eff_g_EB      lnN          1.005           1.005           1.005           1.005           1.005             -       
+CMS_scale_j       lnN            -               -               -             1.028           1.001             -       
+CMS_res_j         lnN            -               -               -             1.010           1.001             -       
+CMS_UEPS          lnN            -               -               -             1.026           1.002             -       
+CMS_hzg_eff_R9_7TeV lnN          1.050           1.050           1.050           1.050           1.050             -       
+CMS_hzg_err_BR    lnN       0.920/1.080     0.920/1.080     0.920/1.080     0.920/1.080     0.920/1.080          -       
+ggH_hzg_mShift_mu_7TeV_cat1              param          1         0.01   
+ggH_hzg_sigmaShift_mu_7TeV_cat1          param          1         0.05   
+qqH_hzg_mShift_mu_7TeV_cat1              param          1         0.01   
+qqH_hzg_sigmaShift_mu_7TeV_cat1          param          1         0.05   
+WH_hzg_mShift_mu_7TeV_cat1               param          1         0.01   
+WH_hzg_sigmaShift_mu_7TeV_cat1           param          1         0.05   
+ZH_hzg_mShift_mu_7TeV_cat1               param          1         0.01   
+ZH_hzg_sigmaShift_mu_7TeV_cat1           param          1         0.05   
+ttH_hzg_mShift_mu_7TeV_cat1              param          1         0.01   
+ttH_hzg_sigmaShift_mu_7TeV_cat1          param          1         0.05   
+bkg_p1_mu_7TeV_cat1                           flatParam      
+bkg_p2_mu_7TeV_cat1                           flatParam      
+bkg_p3_mu_7TeV_cat1                           flatParam      
+bkg_p4_mu_7TeV_cat1                           flatParam      
+bkg_sigma_mu_7TeV_cat1                        flatParam      
+bkg_step_mu_7TeV_cat1                         flatParam      
+bkg_mu_7TeV_cat1_norm                         flatParam      

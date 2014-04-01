@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 import sys
-sys.argv.append('-b')
 from ROOT import gSystem
 gSystem.Load("libRooFit")
 from ROOT import *
 import numpy as np
 
+gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')

@@ -1,5 +1,5 @@
-#some bullshit
-#more comments
+#removed vulgarity
+#cards produced by Brian Pollack
 imax *
 jmax *
 kmax *
@@ -13,13 +13,13 @@ shapes ZH_hzg   * SignalOutput_mu_7TeV_cat3_124.0.root ws_card:ZH_hzg_mu_cat3_7T
 shapes ttH_hzg  * SignalOutput_mu_7TeV_cat3_124.0.root ws_card:ttH_hzg_mu_cat3_7TeV
 ---------------
 bin          mu_7TeV_cat3
-observation  805
+observation  589
 ------------------------------
 bin                        mu_7TeV_cat3    mu_7TeV_cat3    mu_7TeV_cat3    mu_7TeV_cat3    mu_7TeV_cat3    mu_7TeV_cat3  
 process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                        0.00052237       0.0015182       0.0044595       0.012123         0.19019            1       
+rate                         0.0005454       0.0020237      0.00054841       0.011792         0.19093            1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       1.085/0.915          -               -               -         0.9293/1.0759         -       
 pdf_qqbar         lnN            -          0.965/1.035     0.965/1.035     0.979/1.025          -               -       
@@ -28,14 +28,12 @@ QCDscale_qqH      lnN            -               -               -          0.99
 QCDscale_VH       lnN            -          0.985/1.014     0.992/1.002          -               -               -       
 QCDscale_ttH      lnN       0.907/1.033          -               -               -               -               -       
 lumi_7TeV         lnN          1.022           1.022           1.022           1.022           1.022             -       
-CMS_eff_m_7TeV    lnN          1.007           1.007           1.007           1.007           1.007             -       
-CMS_eff_trig_m_7TeV lnN          1.005           1.005           1.005           1.005           1.005             -       
-CMS_eff_PU_m_7TeV lnN          1.004           1.004           1.004           1.004           1.004             -       
-CMS_eff_g_EE_7TeV lnN          1.010           1.010           1.010           1.010           1.010             -       
+CMS_eff_m         lnN          1.009           1.009           1.009           1.009           1.009             -       
+CMS_eff_g_EB      lnN          1.005           1.005           1.005           1.005           1.005             -       
 CMS_scale_j       lnN            -               -               -             1.022           1.001             -       
 CMS_res_j         lnN            -               -               -             1.011           1.001             -       
-CMS_UEPS_7TeV     lnN            -               -               -             1.018           1.002             -       
-CMS_hzg_err_BR_7TeV lnN       0.911/1.091     0.911/1.091     0.911/1.091     0.911/1.091     0.911/1.091          -       
+CMS_UEPS          lnN            -               -               -             1.018           1.002             -       
+CMS_hzg_err_BR    lnN       0.911/1.091     0.911/1.091     0.911/1.091     0.911/1.091     0.911/1.091          -       
 ggH_hzg_mShift_mu_7TeV_cat3              param          1         0.01   
 ggH_hzg_sigmaShift_mu_7TeV_cat3          param          1         0.05   
 qqH_hzg_mShift_mu_7TeV_cat3              param          1         0.01   

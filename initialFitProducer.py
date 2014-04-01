@@ -22,8 +22,10 @@ doMVA = False
 
 allBiasFits= False # Turn on extra fits used in bias studies
 
-suffix = 'Proper'
-#suffix = '03-19-14_Proper'
+#suffix = 'Proper'
+suffix = '03-19-14_Proper'
+#suffix = '03-31-14_PhoMVA'
+#suffix = '03-31-14_PhoKinMVA'
 
 
 
@@ -123,10 +125,14 @@ def doInitialFits():
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
-                if prod == 'WH':
+                if prod == 'WH' and suffix == 'Proper':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)
-                elif prod == 'ZH':
+                elif prod == 'WH' and suffix != 'Proper':
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)/10
+                elif prod == 'ZH' and suffix == 'Proper':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)
+                elif prod == 'ZH' and suffix != 'Proper':
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)/2
                 else:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents)
                 #if i == 0:
