@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 
-#suffix = 'Proper'
-suffix = '03-19-14_Proper'
+suffix = 'Proper'
+#suffix = '03-19-14_Proper'
 #suffix = '03-31-14_PhoMVA'
 #suffix = '03-31-14_PhoKinMVA'
 doMVA = False

@@ -1,8 +1,11 @@
->>> including systematics
->>> method used to compute upper limit is Asymptotic
->>> random number generator seed is 123456
-[?1034h
+At r = 11.436699:	q_mu = 3.06653	q_A  = 6.75655	CLsb = 0.03996	CLb  = 0.80183	CLs  = 0.04984
 
- --- now with extra fixes ... 
+ -- Asymptotic -- 
+Observed Limit: r < 11.4367
+Expected  2.5%: r < 4.3674
+Expected 16.0%: r < 5.8741
+Expected 50.0%: r < 8.3438
+Expected 84.0%: r < 12.0354
+Expected 97.5%: r < 16.8804
 
-
+Done in 18.50 min (cpu), 18.86 min (real)

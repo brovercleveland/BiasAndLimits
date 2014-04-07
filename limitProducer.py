@@ -8,8 +8,8 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   fullCombo = True
   byParts = False
   doMVA = False
-  #suffix = 'Proper'
-  suffix = '03-19-14_Proper'
+  suffix = 'Proper'
+  #suffix = '03-19-14_Proper'
   #suffix = '03-31-14_PhoMVA'
   #suffix = '03-31-14_PhoKinMVA'
 
@@ -32,9 +32,13 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
 
   if fullCombo:
     cardNames = ''
+    cardNames7TeV = ''
+    cardNames8TeV = ''
     #comboName = outPutFolder+'_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
     #outputName = outPutFolder+'_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     comboName = '_'.join(['hzg','FullCombo','M'+mass,suffix])+'.txt'
+    comboName7TeV = '_'.join(['hzg','7TeVCombo','M'+mass,suffix])+'.txt'
+    comboName8TeV = '_'.join(['hzg','8TeVCombo','M'+mass,suffix])+'.txt'
     outputName = '_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     for tev in tevList:
       if doMVA and tev == '8TeV': catList = catListBig
@@ -44,11 +48,16 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
           if tev is '7TeV' and cat is '5' and lepton is 'mu': continue
           elif tev is '7TeV' and cat is '5' and lepton is 'el': lepton='all'
           cardNames = cardNames+' '+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
-          sigFileName = '_'.join(['SignalOutput',lepton,tev,'cat'+cat,mass])+'.root'
+          if tev == '7TeV':
+            cardNames7TeV = cardNames7TeV+' '+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
+          elif tev == '8TeV':
+            cardNames8TeV = cardNames8TeV+' '+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
     os.chdir(inputFolder)
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
+    os.system('combineCards.py '+cardNames7TeV+' > '+comboName7TeV)
+    os.system('combineCards.py '+cardNames8TeV+' > '+comboName8TeV)
     #os.chdir('limitOutput')
     #print 'running limit software, M:',mass
     #os.system('combine -M Asymptotic '+comboName+' > '+outputName)

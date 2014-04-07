@@ -136,6 +136,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+10)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
         sig_ds_Low = myWs.data(sigNameLow)
+        #sig_ds_Low = RooDataHist('dh'+sigNameLow[2:],'dh'+sigNameLow[2:],RooArgSet(mzg),sig_ds_Low)
         if massLow == massHi:
           dsList.append(sig_ds_Low)
 
@@ -151,6 +152,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+10)
         sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
         sig_ds_Hi = myWs.data(sigNameHi)
+        #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
         CBG_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
@@ -202,7 +204,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
       fit.paramOn(testFrame)
     for i,signal in enumerate(dsList):
-      signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1))
+      signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
     testFrame.Draw()
     c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 

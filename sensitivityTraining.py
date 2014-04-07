@@ -39,7 +39,6 @@ def Sensitivity(suffix = 'Proper'):
       for cat in catList:
         print '  Cat'+cat
         dataName = '_'.join(['data',lepton,tev,'cat'+cat])
-        suffix = '_'.join([tev,lepton,'cat'+cat])
         data = myWs.data(dataName)
 
         sumEntries = data.sumEntries()
@@ -50,9 +49,9 @@ def Sensitivity(suffix = 'Proper'):
         for prod in sigNameList:
           sigName = '_'.join(['ds',prod,'hzg',lepton,tev,'cat'+cat,'M125'])
           sig_ds = myWs.data(sigName)
-          if prod == 'WH':
+          if (prod == 'WH' and suffix != 'Proper'):
             totalSig = totalSig + sig_ds.sumEntries('1','signal')/10
-          elif prod == 'ZH':
+          elif (prod == 'ZH' and suffix != 'Proper'):
             totalSig = totalSig + sig_ds.sumEntries('1','signal')/2
           else:
             totalSig = totalSig + sig_ds.sumEntries('1','signal')

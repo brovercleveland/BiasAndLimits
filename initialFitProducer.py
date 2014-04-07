@@ -22,8 +22,8 @@ doMVA = False
 
 allBiasFits= False # Turn on extra fits used in bias studies
 
-#suffix = 'Proper'
-suffix = '03-19-14_Proper'
+suffix = 'Proper'
+#suffix = '03-19-14_Proper'
 #suffix = '03-31-14_PhoMVA'
 #suffix = '03-31-14_PhoKinMVA'
 
@@ -44,12 +44,13 @@ def doInitialFits():
   signalDict = dataDict
 
   leptonList = ['mu','el']
-  #leptonList = ['mu']
+  #leptonList = ['el']
   #yearList = ['2012']
   yearList = ['2011','2012']
   yearToTeV = {'2011':'7TeV','2012':'8TeV'}
   catListBig = ['0','1','2','3','4','5','6','7','8','9']
   catListSmall = ['0','1','2','3','4','5']
+  #catListSmall = ['1']
   #catList = ['9']
   #catList = ['5']
   massList = ['120','125','130','135','140','145','150','155','160']
@@ -70,7 +71,8 @@ def doInitialFits():
   mzg.setRange('fullRegion',100,190)
   mzg.setRange('oldRegion',115,190)
   mzg.setRange('MERegion',108,160)
-  mzg.setBins(360,'cache')
+  #mzg.setBins(360,'cache')
+  mzg.setBins(360)
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -191,6 +193,7 @@ def doInitialFits():
               getattr(ws,'import')(signalListPDF[-1])
               if verbose: print 'finshed one mass', mass
 
+            '''
             if debugPlots and prod is 'gg':
               testFrame = mzg.frame()
               for i,signal in enumerate(signalListPDF):
@@ -204,6 +207,7 @@ def doInitialFits():
                 signal.plotOn(testFrame, RooFit.DrawOption('pl'))
               testFrame.Draw()
               c.Print('debugPlots/'+'_'.join(['test','ds','sig',suffix,prod,year,lepton,'cat'+cat])+'.pdf')
+            '''
             del signalTree
 
 
@@ -222,7 +226,10 @@ def doInitialFits():
         else:
           dataTree.SetBranchAddress('m_llgCAT'+cat+'_DATA',tmpMassEventOld)
         data_argS = RooArgSet(mzg)
-        data_ds = RooDataHist(dataName,dataName,data_argS)
+        if cat == '5':
+          data_ds = RooDataSet(dataName,dataName,data_argS)
+        else:
+          data_ds = RooDataHist(dataName,dataName,data_argS)
         for i in range(0,dataTree.GetEntries()):
           dataTree.GetEntry(i)
           if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<190:
@@ -332,6 +339,7 @@ def doInitialFits():
             leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
             testFrame = mzg.frame()
             data_ds.plotOn(testFrame,RooFit.Binning(45))
+            #data_ds.plotOn(testFrame)
             if allBiasFits:
               GaussExp.plotOn(testFrame,RooFit.Name('GaussExp'))
               GaussPow.plotOn(testFrame,RooFit.LineColor(kCyan),RooFit.Name('GaussPow'))
@@ -421,7 +429,7 @@ def doInitialFits():
 
           if debugPlots:
             testFrame = mzg.frame()
-            data_ds.plotOn(testFrame)
+            data_ds.plotOn(testFrame,RooFit.Binning(45))
             if allBiasFits:
               Exp.plotOn(testFrame)
               Pow.plotOn(testFrame,RooFit.LineColor(kCyan))
@@ -439,9 +447,11 @@ def doInitialFits():
           getattr(ws,'import')(Bern3)
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
+        print 'commited'
   if not os.path.isdir('outputDir/'+suffix): os.mkdir('outputDir/'+suffix)
+  print 'writing'
   ws.writeToFile('outputDir/'+suffix+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
-  #ws.writeToFile('testRooFitOut_MVA_02-01-14.root')
+  #ws.writeToFile('wtf.root')
 
 
   print 'we did it!'

@@ -17,8 +17,8 @@ tevList = ['7TeV','8TeV']
 catListSmall = ['1','2','3','4','5']
 catListBig = ['1','2','3','4','5','6','7','8','9']
 
-#suffixCard = 'Proper'
-suffixCard = '03-19-14_Proper'
+suffixCard = 'Proper'
+#suffixCard = '03-19-14_Proper'
 #suffixCard = '03-31-14_PhoMVA'
 #suffixCard = '03-31-14_PhoKinMVA'
 

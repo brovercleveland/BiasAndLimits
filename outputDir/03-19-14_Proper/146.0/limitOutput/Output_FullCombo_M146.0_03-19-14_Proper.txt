@@ -1,11 +1,11 @@
-At r = 5.340492:	q_mu = 3.29178	q_A  = 5.44480	CLsb = 0.03481	CLb  = 0.69815	CLs  = 0.04987
+At r = 6.353635:	q_mu = 3.32678	q_A  = 5.25453	CLsb = 0.03408	CLb  = 0.68023	CLs  = 0.05010
 
  -- Asymptotic -- 
-Observed Limit: r < 5.3405
-Expected  2.5%: r < 2.3405
-Expected 16.0%: r < 3.1454
-Expected 50.0%: r < 4.4219
-Expected 84.0%: r < 6.3255
-Expected 97.5%: r < 8.7454
+Observed Limit: r < 6.3536
+Expected  2.5%: r < 2.8158
+Expected 16.0%: r < 3.7796
+Expected 50.0%: r < 5.3594
+Expected 84.0%: r < 7.6879
+Expected 97.5%: r < 10.6809
 
-Done in 9.95 min (cpu), 9.98 min (real)
+Done in 13.06 min (cpu), 13.20 min (real)

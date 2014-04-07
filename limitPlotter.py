@@ -11,10 +11,10 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
-#suffix = 'Proper'
+suffix = 'Proper'
 #suffix = '03-19-14_Proper'
 #suffix = '03-31-14_PhoMVA'
-suffix = '03-31-14_PhoKinMVA'
+#suffix = '03-31-14_PhoKinMVA'
 #extras = ['03-31-14_PhoMVA','03-31-14_PhoKinMVA']
 extras = []
 
@@ -44,6 +44,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   exp2SigLow = []
 
   expExtra = []
+  for ex in extras:
+    expExtra.append([])
   for mass in massList:
     currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
@@ -88,15 +90,14 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       raw_input()
 
     if len(extras) != 0:
-      for extraSuffix in extras:
-        expExtra.append([])
+      for i,extraSuffix in enumerate(extras):
         currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
         thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
         f = open('/'.join([currentDir,thisFile]))
         for line in f:
           splitLine = line.split()
-          if '50.0%:' in splitLine: expExtra[-1].append(float(splitLine[-1]))
+          if '50.0%:' in splitLine: expExtra[i].append(float(splitLine[-1]))
         f.close()
 
 
@@ -160,14 +161,16 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.Add(expected)
   if len(extras) == 0:
     print 'non obs'
-    #mg.Add(observed)
+    mg.Add(observed)
   else:
-    for ar in extraExpected:
+    for i,ar in enumerate(extraExpected):
       ar.SetMarkerColor(kBlack)
       ar.SetMarkerStyle(kFullCircle)
       ar.SetMarkerSize(1.5)
-      ar.SetLineColor(kBlack)
+      ar.SetLineColor(kRed)
       ar.SetLineWidth(2)
+      if i == 0:
+        ar.SetLineStyle(2)
       mg.Add(ar)
 
   mg.Draw('AL3')
@@ -177,6 +180,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
   c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
+
 
 if __name__=='__main__':
   if fullCombo:
