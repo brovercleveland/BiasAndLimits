@@ -29,7 +29,7 @@ QCDscale_VH       lnN            -          0.984/1.018     0.993/1.001         
 QCDscale_ttH      lnN       0.908/1.037          -               -               -               -               -       
 lumi_8TeV         lnN          1.026           1.026           1.026           1.026           1.026             -       
 CMS_eff_m         lnN          1.037           1.037           1.037           1.037           1.037             -       
-CMS_eff_g_EB      lnN          1.006           1.006           1.006           1.006           1.006             -       
+CMS_eff_g         lnN          1.006           1.006           1.006           1.006           1.006             -       
 CMS_scale_j       lnN            -               -               -             1.032           1.001             -       
 CMS_res_j         lnN            -               -               -             1.011           1.001             -       
 CMS_UEPS          lnN            -               -               -             1.035           1.002             -       

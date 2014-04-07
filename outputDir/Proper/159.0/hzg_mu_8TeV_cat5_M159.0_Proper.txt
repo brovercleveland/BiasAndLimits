@@ -23,8 +23,8 @@ pdf_qqbar         lnN       0.974/1.025          -               -
 QCDscale_ggH      lnN            -          0.929/1.075          -       
 QCDscale_qqH      lnN       0.999/1.003          -               -       
 lumi_8TeV         lnN          1.026           1.026             -       
-CMS_eff_m_8TeV    lnN          1.037           1.037           1.037           1.037           1.037             -       
-CMS_eff_g_EE      lnN          1.010           1.010             -       
+CMS_eff_m         lnN          1.037           1.037           1.037           1.037           1.037             -       
+CMS_eff_g         lnN          1.010           1.010             -       
 CMS_scale_j       lnN          1.046           1.110             -       
 CMS_res_j         lnN          1.019           1.060             -       
 CMS_UEPS          lnN          1.070           1.249             -       

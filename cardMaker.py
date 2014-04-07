@@ -132,7 +132,7 @@ def makeCards(MVATest = False):
             totalLeptonEffSys = AddInQuad([eff_l[tev][lepton],eff_trig[tev][lepton],eff_PU[tev][lepton]])
             card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[totalLeptonEffSys]*5+['-'])))
 
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g_'+phoGeom,'lnN']+[eff_g[tev][phoGeom]]*5+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g','lnN']+[eff_g[tev][phoGeom]]*5+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
@@ -152,9 +152,9 @@ def makeCards(MVATest = False):
             #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0],'lnN']+[eff_trig[tev][lepton]]*2+['-'])))
             #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0],'lnN']+[eff_PU[tev][lepton]]*2+['-'])))
             totalLeptonEffSys = AddInQuad([eff_l[tev][lepton],eff_trig[tev][lepton],eff_PU[tev][lepton]])
-            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0]+'_'+TeV,'lnN']+[totalLeptonEffSys]*5+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[totalLeptonEffSys]*5+['-'])))
 
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_g_'+phoGeom,'lnN']+[eff_g[tev][phoGeom]]*2+['-'])))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_g','lnN']+[eff_g[tev][phoGeom]]*2+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_scale_j','lnN']+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_res_j','lnN']+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
             card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_UEPS','lnN']+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
