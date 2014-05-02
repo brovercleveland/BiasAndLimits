@@ -1,0 +1,467 @@
+Combination of hzg_mu_8TeV_cat1_M136.5_04-16-14.txt  hzg_mu_8TeV_cat2_M136.5_04-16-14.txt  hzg_mu_8TeV_cat3_M136.5_04-16-14.txt  hzg_mu_8TeV_cat4_M136.5_04-16-14.txt  hzg_mu_8TeV_cat5_M136.5_04-16-14.txt  hzg_el_8TeV_cat1_M136.5_04-16-14.txt  hzg_el_8TeV_cat2_M136.5_04-16-14.txt  hzg_el_8TeV_cat3_M136.5_04-16-14.txt  hzg_el_8TeV_cat4_M136.5_04-16-14.txt  hzg_el_8TeV_cat5_M136.5_04-16-14.txt  hzg_mu_7TeV_cat1_M136.5_04-16-14.txt  hzg_mu_7TeV_cat2_M136.5_04-16-14.txt  hzg_mu_7TeV_cat3_M136.5_04-16-14.txt  hzg_mu_7TeV_cat4_M136.5_04-16-14.txt  hzg_el_7TeV_cat1_M136.5_04-16-14.txt  hzg_el_7TeV_cat2_M136.5_04-16-14.txt  hzg_el_7TeV_cat3_M136.5_04-16-14.txt  hzg_el_7TeV_cat4_M136.5_04-16-14.txt  hzg_all_7TeV_cat5_M136.5_04-16-14.txt
+imax 19 number of bins
+jmax 5 number of processes minus 1
+kmax 192 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *        ch1      CardBackground_04-16-14.root ws_card:$PROCESS_mu_8TeV_cat1
+shapes WH_hzg   ch1      SignalOutput_mu_8TeV_cat1_136.5.root ws_card:WH_hzg_mu_cat1_8TeV
+shapes ZH_hzg   ch1      SignalOutput_mu_8TeV_cat1_136.5.root ws_card:ZH_hzg_mu_cat1_8TeV
+shapes bkg      ch1      CardBackground_04-16-14.root ws_card:bkg_mu_8TeV_cat1
+shapes ggH_hzg  ch1      SignalOutput_mu_8TeV_cat1_136.5.root ws_card:ggH_hzg_mu_cat1_8TeV
+shapes qqH_hzg  ch1      SignalOutput_mu_8TeV_cat1_136.5.root ws_card:qqH_hzg_mu_cat1_8TeV
+shapes ttH_hzg  ch1      SignalOutput_mu_8TeV_cat1_136.5.root ws_card:ttH_hzg_mu_cat1_8TeV
+shapes *        ch10     CardBackground_04-16-14.root ws_card:$PROCESS_el_8TeV_cat5
+shapes bkg      ch10     CardBackground_04-16-14.root ws_card:bkg_el_8TeV_cat5
+shapes ggH_hzg  ch10     SignalOutput_el_8TeV_cat5_136.5.root ws_card:ggH_hzg_el_cat5_8TeV
+shapes qqH_hzg  ch10     SignalOutput_el_8TeV_cat5_136.5.root ws_card:qqH_hzg_el_cat5_8TeV
+shapes *        ch11     CardBackground_04-16-14.root ws_card:$PROCESS_mu_7TeV_cat1
+shapes WH_hzg   ch11     SignalOutput_mu_7TeV_cat1_136.5.root ws_card:WH_hzg_mu_cat1_7TeV
+shapes ZH_hzg   ch11     SignalOutput_mu_7TeV_cat1_136.5.root ws_card:ZH_hzg_mu_cat1_7TeV
+shapes bkg      ch11     CardBackground_04-16-14.root ws_card:bkg_mu_7TeV_cat1
+shapes ggH_hzg  ch11     SignalOutput_mu_7TeV_cat1_136.5.root ws_card:ggH_hzg_mu_cat1_7TeV
+shapes qqH_hzg  ch11     SignalOutput_mu_7TeV_cat1_136.5.root ws_card:qqH_hzg_mu_cat1_7TeV
+shapes ttH_hzg  ch11     SignalOutput_mu_7TeV_cat1_136.5.root ws_card:ttH_hzg_mu_cat1_7TeV
+shapes *        ch12     CardBackground_04-16-14.root ws_card:$PROCESS_mu_7TeV_cat2
+shapes WH_hzg   ch12     SignalOutput_mu_7TeV_cat2_136.5.root ws_card:WH_hzg_mu_cat2_7TeV
+shapes ZH_hzg   ch12     SignalOutput_mu_7TeV_cat2_136.5.root ws_card:ZH_hzg_mu_cat2_7TeV
+shapes bkg      ch12     CardBackground_04-16-14.root ws_card:bkg_mu_7TeV_cat2
+shapes ggH_hzg  ch12     SignalOutput_mu_7TeV_cat2_136.5.root ws_card:ggH_hzg_mu_cat2_7TeV
+shapes qqH_hzg  ch12     SignalOutput_mu_7TeV_cat2_136.5.root ws_card:qqH_hzg_mu_cat2_7TeV
+shapes ttH_hzg  ch12     SignalOutput_mu_7TeV_cat2_136.5.root ws_card:ttH_hzg_mu_cat2_7TeV
+shapes *        ch13     CardBackground_04-16-14.root ws_card:$PROCESS_mu_7TeV_cat3
+shapes WH_hzg   ch13     SignalOutput_mu_7TeV_cat3_136.5.root ws_card:WH_hzg_mu_cat3_7TeV
+shapes ZH_hzg   ch13     SignalOutput_mu_7TeV_cat3_136.5.root ws_card:ZH_hzg_mu_cat3_7TeV
+shapes bkg      ch13     CardBackground_04-16-14.root ws_card:bkg_mu_7TeV_cat3
+shapes ggH_hzg  ch13     SignalOutput_mu_7TeV_cat3_136.5.root ws_card:ggH_hzg_mu_cat3_7TeV
+shapes qqH_hzg  ch13     SignalOutput_mu_7TeV_cat3_136.5.root ws_card:qqH_hzg_mu_cat3_7TeV
+shapes ttH_hzg  ch13     SignalOutput_mu_7TeV_cat3_136.5.root ws_card:ttH_hzg_mu_cat3_7TeV
+shapes *        ch14     CardBackground_04-16-14.root ws_card:$PROCESS_mu_7TeV_cat4
+shapes WH_hzg   ch14     SignalOutput_mu_7TeV_cat4_136.5.root ws_card:WH_hzg_mu_cat4_7TeV
+shapes ZH_hzg   ch14     SignalOutput_mu_7TeV_cat4_136.5.root ws_card:ZH_hzg_mu_cat4_7TeV
+shapes bkg      ch14     CardBackground_04-16-14.root ws_card:bkg_mu_7TeV_cat4
+shapes ggH_hzg  ch14     SignalOutput_mu_7TeV_cat4_136.5.root ws_card:ggH_hzg_mu_cat4_7TeV
+shapes qqH_hzg  ch14     SignalOutput_mu_7TeV_cat4_136.5.root ws_card:qqH_hzg_mu_cat4_7TeV
+shapes ttH_hzg  ch14     SignalOutput_mu_7TeV_cat4_136.5.root ws_card:ttH_hzg_mu_cat4_7TeV
+shapes *        ch15     CardBackground_04-16-14.root ws_card:$PROCESS_el_7TeV_cat1
+shapes WH_hzg   ch15     SignalOutput_el_7TeV_cat1_136.5.root ws_card:WH_hzg_el_cat1_7TeV
+shapes ZH_hzg   ch15     SignalOutput_el_7TeV_cat1_136.5.root ws_card:ZH_hzg_el_cat1_7TeV
+shapes bkg      ch15     CardBackground_04-16-14.root ws_card:bkg_el_7TeV_cat1
+shapes ggH_hzg  ch15     SignalOutput_el_7TeV_cat1_136.5.root ws_card:ggH_hzg_el_cat1_7TeV
+shapes qqH_hzg  ch15     SignalOutput_el_7TeV_cat1_136.5.root ws_card:qqH_hzg_el_cat1_7TeV
+shapes ttH_hzg  ch15     SignalOutput_el_7TeV_cat1_136.5.root ws_card:ttH_hzg_el_cat1_7TeV
+shapes *        ch16     CardBackground_04-16-14.root ws_card:$PROCESS_el_7TeV_cat2
+shapes WH_hzg   ch16     SignalOutput_el_7TeV_cat2_136.5.root ws_card:WH_hzg_el_cat2_7TeV
+shapes ZH_hzg   ch16     SignalOutput_el_7TeV_cat2_136.5.root ws_card:ZH_hzg_el_cat2_7TeV
+shapes bkg      ch16     CardBackground_04-16-14.root ws_card:bkg_el_7TeV_cat2
+shapes ggH_hzg  ch16     SignalOutput_el_7TeV_cat2_136.5.root ws_card:ggH_hzg_el_cat2_7TeV
+shapes qqH_hzg  ch16     SignalOutput_el_7TeV_cat2_136.5.root ws_card:qqH_hzg_el_cat2_7TeV
+shapes ttH_hzg  ch16     SignalOutput_el_7TeV_cat2_136.5.root ws_card:ttH_hzg_el_cat2_7TeV
+shapes *        ch17     CardBackground_04-16-14.root ws_card:$PROCESS_el_7TeV_cat3
+shapes WH_hzg   ch17     SignalOutput_el_7TeV_cat3_136.5.root ws_card:WH_hzg_el_cat3_7TeV
+shapes ZH_hzg   ch17     SignalOutput_el_7TeV_cat3_136.5.root ws_card:ZH_hzg_el_cat3_7TeV
+shapes bkg      ch17     CardBackground_04-16-14.root ws_card:bkg_el_7TeV_cat3
+shapes ggH_hzg  ch17     SignalOutput_el_7TeV_cat3_136.5.root ws_card:ggH_hzg_el_cat3_7TeV
+shapes qqH_hzg  ch17     SignalOutput_el_7TeV_cat3_136.5.root ws_card:qqH_hzg_el_cat3_7TeV
+shapes ttH_hzg  ch17     SignalOutput_el_7TeV_cat3_136.5.root ws_card:ttH_hzg_el_cat3_7TeV
+shapes *        ch18     CardBackground_04-16-14.root ws_card:$PROCESS_el_7TeV_cat4
+shapes WH_hzg   ch18     SignalOutput_el_7TeV_cat4_136.5.root ws_card:WH_hzg_el_cat4_7TeV
+shapes ZH_hzg   ch18     SignalOutput_el_7TeV_cat4_136.5.root ws_card:ZH_hzg_el_cat4_7TeV
+shapes bkg      ch18     CardBackground_04-16-14.root ws_card:bkg_el_7TeV_cat4
+shapes ggH_hzg  ch18     SignalOutput_el_7TeV_cat4_136.5.root ws_card:ggH_hzg_el_cat4_7TeV
+shapes qqH_hzg  ch18     SignalOutput_el_7TeV_cat4_136.5.root ws_card:qqH_hzg_el_cat4_7TeV
+shapes ttH_hzg  ch18     SignalOutput_el_7TeV_cat4_136.5.root ws_card:ttH_hzg_el_cat4_7TeV
+shapes *        ch19     CardBackground_04-16-14.root ws_card:$PROCESS_all_7TeV_cat5
+shapes bkg      ch19     CardBackground_04-16-14.root ws_card:bkg_all_7TeV_cat5
+shapes ggH_hzg  ch19     SignalOutput_all_7TeV_cat5_136.5.root ws_card:ggH_hzg_all_cat5_7TeV
+shapes qqH_hzg  ch19     SignalOutput_all_7TeV_cat5_136.5.root ws_card:qqH_hzg_all_cat5_7TeV
+shapes *        ch2      CardBackground_04-16-14.root ws_card:$PROCESS_mu_8TeV_cat2
+shapes WH_hzg   ch2      SignalOutput_mu_8TeV_cat2_136.5.root ws_card:WH_hzg_mu_cat2_8TeV
+shapes ZH_hzg   ch2      SignalOutput_mu_8TeV_cat2_136.5.root ws_card:ZH_hzg_mu_cat2_8TeV
+shapes bkg      ch2      CardBackground_04-16-14.root ws_card:bkg_mu_8TeV_cat2
+shapes ggH_hzg  ch2      SignalOutput_mu_8TeV_cat2_136.5.root ws_card:ggH_hzg_mu_cat2_8TeV
+shapes qqH_hzg  ch2      SignalOutput_mu_8TeV_cat2_136.5.root ws_card:qqH_hzg_mu_cat2_8TeV
+shapes ttH_hzg  ch2      SignalOutput_mu_8TeV_cat2_136.5.root ws_card:ttH_hzg_mu_cat2_8TeV
+shapes *        ch3      CardBackground_04-16-14.root ws_card:$PROCESS_mu_8TeV_cat3
+shapes WH_hzg   ch3      SignalOutput_mu_8TeV_cat3_136.5.root ws_card:WH_hzg_mu_cat3_8TeV
+shapes ZH_hzg   ch3      SignalOutput_mu_8TeV_cat3_136.5.root ws_card:ZH_hzg_mu_cat3_8TeV
+shapes bkg      ch3      CardBackground_04-16-14.root ws_card:bkg_mu_8TeV_cat3
+shapes ggH_hzg  ch3      SignalOutput_mu_8TeV_cat3_136.5.root ws_card:ggH_hzg_mu_cat3_8TeV
+shapes qqH_hzg  ch3      SignalOutput_mu_8TeV_cat3_136.5.root ws_card:qqH_hzg_mu_cat3_8TeV
+shapes ttH_hzg  ch3      SignalOutput_mu_8TeV_cat3_136.5.root ws_card:ttH_hzg_mu_cat3_8TeV
+shapes *        ch4      CardBackground_04-16-14.root ws_card:$PROCESS_mu_8TeV_cat4
+shapes WH_hzg   ch4      SignalOutput_mu_8TeV_cat4_136.5.root ws_card:WH_hzg_mu_cat4_8TeV
+shapes ZH_hzg   ch4      SignalOutput_mu_8TeV_cat4_136.5.root ws_card:ZH_hzg_mu_cat4_8TeV
+shapes bkg      ch4      CardBackground_04-16-14.root ws_card:bkg_mu_8TeV_cat4
+shapes ggH_hzg  ch4      SignalOutput_mu_8TeV_cat4_136.5.root ws_card:ggH_hzg_mu_cat4_8TeV
+shapes qqH_hzg  ch4      SignalOutput_mu_8TeV_cat4_136.5.root ws_card:qqH_hzg_mu_cat4_8TeV
+shapes ttH_hzg  ch4      SignalOutput_mu_8TeV_cat4_136.5.root ws_card:ttH_hzg_mu_cat4_8TeV
+shapes *        ch5      CardBackground_04-16-14.root ws_card:$PROCESS_mu_8TeV_cat5
+shapes bkg      ch5      CardBackground_04-16-14.root ws_card:bkg_mu_8TeV_cat5
+shapes ggH_hzg  ch5      SignalOutput_mu_8TeV_cat5_136.5.root ws_card:ggH_hzg_mu_cat5_8TeV
+shapes qqH_hzg  ch5      SignalOutput_mu_8TeV_cat5_136.5.root ws_card:qqH_hzg_mu_cat5_8TeV
+shapes *        ch6      CardBackground_04-16-14.root ws_card:$PROCESS_el_8TeV_cat1
+shapes WH_hzg   ch6      SignalOutput_el_8TeV_cat1_136.5.root ws_card:WH_hzg_el_cat1_8TeV
+shapes ZH_hzg   ch6      SignalOutput_el_8TeV_cat1_136.5.root ws_card:ZH_hzg_el_cat1_8TeV
+shapes bkg      ch6      CardBackground_04-16-14.root ws_card:bkg_el_8TeV_cat1
+shapes ggH_hzg  ch6      SignalOutput_el_8TeV_cat1_136.5.root ws_card:ggH_hzg_el_cat1_8TeV
+shapes qqH_hzg  ch6      SignalOutput_el_8TeV_cat1_136.5.root ws_card:qqH_hzg_el_cat1_8TeV
+shapes ttH_hzg  ch6      SignalOutput_el_8TeV_cat1_136.5.root ws_card:ttH_hzg_el_cat1_8TeV
+shapes *        ch7      CardBackground_04-16-14.root ws_card:$PROCESS_el_8TeV_cat2
+shapes WH_hzg   ch7      SignalOutput_el_8TeV_cat2_136.5.root ws_card:WH_hzg_el_cat2_8TeV
+shapes ZH_hzg   ch7      SignalOutput_el_8TeV_cat2_136.5.root ws_card:ZH_hzg_el_cat2_8TeV
+shapes bkg      ch7      CardBackground_04-16-14.root ws_card:bkg_el_8TeV_cat2
+shapes ggH_hzg  ch7      SignalOutput_el_8TeV_cat2_136.5.root ws_card:ggH_hzg_el_cat2_8TeV
+shapes qqH_hzg  ch7      SignalOutput_el_8TeV_cat2_136.5.root ws_card:qqH_hzg_el_cat2_8TeV
+shapes ttH_hzg  ch7      SignalOutput_el_8TeV_cat2_136.5.root ws_card:ttH_hzg_el_cat2_8TeV
+shapes *        ch8      CardBackground_04-16-14.root ws_card:$PROCESS_el_8TeV_cat3
+shapes WH_hzg   ch8      SignalOutput_el_8TeV_cat3_136.5.root ws_card:WH_hzg_el_cat3_8TeV
+shapes ZH_hzg   ch8      SignalOutput_el_8TeV_cat3_136.5.root ws_card:ZH_hzg_el_cat3_8TeV
+shapes bkg      ch8      CardBackground_04-16-14.root ws_card:bkg_el_8TeV_cat3
+shapes ggH_hzg  ch8      SignalOutput_el_8TeV_cat3_136.5.root ws_card:ggH_hzg_el_cat3_8TeV
+shapes qqH_hzg  ch8      SignalOutput_el_8TeV_cat3_136.5.root ws_card:qqH_hzg_el_cat3_8TeV
+shapes ttH_hzg  ch8      SignalOutput_el_8TeV_cat3_136.5.root ws_card:ttH_hzg_el_cat3_8TeV
+shapes *        ch9      CardBackground_04-16-14.root ws_card:$PROCESS_el_8TeV_cat4
+shapes WH_hzg   ch9      SignalOutput_el_8TeV_cat4_136.5.root ws_card:WH_hzg_el_cat4_8TeV
+shapes ZH_hzg   ch9      SignalOutput_el_8TeV_cat4_136.5.root ws_card:ZH_hzg_el_cat4_8TeV
+shapes bkg      ch9      CardBackground_04-16-14.root ws_card:bkg_el_8TeV_cat4
+shapes ggH_hzg  ch9      SignalOutput_el_8TeV_cat4_136.5.root ws_card:ggH_hzg_el_cat4_8TeV
+shapes qqH_hzg  ch9      SignalOutput_el_8TeV_cat4_136.5.root ws_card:qqH_hzg_el_cat4_8TeV
+shapes ttH_hzg  ch9      SignalOutput_el_8TeV_cat4_136.5.root ws_card:ttH_hzg_el_cat4_8TeV
+----------------------------------------------------------------------------------------------------------------------------------
+bin          ch1          ch2          ch3          ch4          ch5          ch6          ch7          ch8          ch9          ch10         ch11         ch12         ch13         ch14         ch15         ch16         ch17         ch18         ch19       
+observation  3058.0       3748.0       2474.0       2646.0       22.0         2376.0       2864.0       3176.0       2611.0       15.0         688.0        760.0        589.0        805.0        526.0        617.0        631.0        576.0        9.0        
+----------------------------------------------------------------------------------------------------------------------------------
+bin                                    ch1          ch1          ch1          ch1          ch1          ch1          ch2          ch2          ch2          ch2          ch2          ch2          ch3          ch3          ch3          ch3          ch3          ch3          ch4          ch4          ch4          ch4          ch4          ch4          ch5          ch5          ch5          ch6          ch6          ch6          ch6          ch6          ch6          ch7          ch7          ch7          ch7          ch7          ch7          ch8          ch8          ch8          ch8          ch8          ch8          ch9          ch9          ch9          ch9          ch9          ch9          ch10         ch10         ch10         ch11         ch11         ch11         ch11         ch11         ch11         ch12         ch12         ch12         ch12         ch12         ch12         ch13         ch13         ch13         ch13         ch13         ch13         ch14         ch14         ch14         ch14         ch14         ch14         ch15         ch15         ch15         ch15         ch15         ch15         ch16         ch16         ch16         ch16         ch16         ch16         ch17         ch17         ch17         ch17         ch17         ch17         ch18         ch18         ch18         ch18         ch18         ch18         ch19         ch19         ch19       
+process                                ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          qqH_hzg      ggH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          qqH_hzg      ggH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          ZH_hzg       ggH_hzg      WH_hzg       qqH_hzg      ttH_hzg      bkg          qqH_hzg      ggH_hzg      bkg        
+process                                -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -1           -3           1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -1           -3           1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -4           -3           -2           -1           0            1            -1           -3           1          
+rate                                   0.1168       3.2028       0.1132       0.2619       0.0030       1.0000       0.0824       2.3651       0.0809       0.1855       0.0020       1.0000       0.0600       1.4804       0.0579       0.1077       0.0008891    1.0000       0.0703       1.5481       0.0665       0.1128       0.000723     1.0000       0.1044       0.0489       1.0000       0.0858       2.5849       0.0893       0.2109       0.0023       1.0000       0.0647       1.9682       0.0611       0.1502       0.0016       1.0000       0.0699       1.8562       0.0709       0.1432       0.0011       1.0000       0.0618       1.4543       0.0655       0.1093       0.0006455    1.0000       0.0966       0.0454       1.0000       0.0124       0.6417       0.0177       0.0479       0.0026       1.0000       0.0066       0.4225       0.0105       0.0296       0.0015       1.0000       0.0055       0.2854       0.0085       0.0197       0.0007579    1.0000       0.0055       0.2912       0.0093       0.0206       0.0006959    1.0000       0.0104       0.5127       0.0148       0.0373       0.0024       1.0000       0.0056       0.3321       0.0102       0.0228       0.0014       1.0000       0.0059       0.3027       0.0080       0.0209       0.0009871    1.0000       0.0058       0.2408       0.0073       0.0162       0.0006308    1.0000       0.1317       0.0377       1.0000     
+----------------------------------------------------------------------------------------------------------------------------------
+CMS_UEPS                lnN            -            1.002        -            1.026        -            -            -            1.002        -            1.035        -            -            -            1.002        -            1.018        -            -            -            1.002        -            1.021        -            -            1.07         1.249        -            -            1.002        -            1.026        -            -            -            1.002        -            1.035        -            -            -            1.002        -            1.018        -            -            -            1.002        -            1.021        -            -            1.07         1.249        -            -            1.002        -            1.026        -            -            -            1.002        -            1.035        -            -            -            1.002        -            1.018        -            -            -            1.002        -            1.021        -            -            -            1.002        -            1.026        -            -            -            1.002        -            1.035        -            -            -            1.002        -            1.018        -            -            -            1.002        -            1.021        -            -            1.07         1.249        -          
+CMS_eff_a               lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.011        1.011        1.011      
+CMS_eff_acc_j           lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.009        1.021        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.009        1.021        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.009        1.021        -          
+CMS_eff_e               lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.011        1.011        1.011        1.011        1.011        -            1.011        1.011        1.011        1.011        1.011        -            1.011        1.011        1.011        1.011        1.011        -            1.011        1.011        1.011        1.011        1.011        -            -            -            -          
+CMS_eff_g               lnN            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.006        1.006        1.006        1.006        1.006        -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.01         1.01         1.01         1.01         1.01         -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.005        1.005        1.005        1.005        1.005        -            1.01         1.01         1.01         1.01         1.01         -            1.01         1.01         -          
+CMS_eff_id_j            lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.016        1.017        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.016        1.017        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.016        1.017        -          
+CMS_eff_m               lnN            1.037        1.037        1.037        1.037        1.037        -            1.037        1.037        1.037        1.037        1.037        -            1.037        1.037        1.037        1.037        1.037        -            1.037        1.037        1.037        1.037        1.037        -            1.037        1.037        1.037        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.009        1.009        1.009        1.009        1.009        -            1.009        1.009        1.009        1.009        1.009        -            1.009        1.009        1.009        1.009        1.009        -            1.009        1.009        1.009        1.009        1.009        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+CMS_hzg_eff_R9_7TeV     lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            -            -            -            -            -            -            -            -            -            -            -            -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+CMS_hzg_eff_R9_8TeV     lnN            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.05         1.05         1.05         1.05         1.05         -            1.05         1.05         1.05         1.05         1.05         -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+CMS_hzg_err_BR          lnN            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  0.925/1.075  -            0.925/1.075  0.925/1.075  -          
+CMS_res_j               lnN            -            1.001        -            1.01         -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.014        -            -            1.019        1.06         -            -            1.001        -            1.01         -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.014        -            -            1.019        1.06         -            -            1.001        -            1.01         -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.014        -            -            -            1.001        -            1.01         -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.011        -            -            -            1.001        -            1.014        -            -            1.019        1.06         -          
+CMS_scale_j             lnN            -            1.001        -            1.028        -            -            -            1.001        -            1.032        -            -            -            1.001        -            1.022        -            -            -            1.001        -            1.022        -            -            1.046        1.11         -            -            1.001        -            1.028        -            -            -            1.001        -            1.032        -            -            -            1.001        -            1.022        -            -            -            1.001        -            1.022        -            -            1.046        1.11         -            -            1.001        -            1.028        -            -            -            1.001        -            1.032        -            -            -            1.001        -            1.022        -            -            -            1.001        -            1.022        -            -            -            1.001        -            1.028        -            -            -            1.001        -            1.032        -            -            -            1.001        -            1.022        -            -            -            1.001        -            1.022        -            -            1.046        1.11         -          
+QCDscale_VH             lnN            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            0.983/1.018  -            0.993/1.001  -            -            -            -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            0.985/1.016  -            0.996/1.006  -            -            -            -            -            -          
+QCDscale_ggH            lnN            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            -            -            -            0.930/1.074  -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -            -            -            -            -            0.924/1.069  -          
+QCDscale_qqH            lnN            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            -            -            -            0.998/1.002  -            -            0.998/1.002  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            -            -            -            0.999/1.004  -            -            0.999/1.004  -            -          
+QCDscale_ttH            lnN            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            0.908/1.037  -            -            -            -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -            -            0.908/1.031  -            -            -            -          
+lumi_7TeV               lnN            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        1.022        1.022        1.022        -            1.022        1.022        -          
+lumi_8TeV               lnN            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        1.026        1.026        1.026        -            1.026        1.026        -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -            -          
+pdf_gg                  lnN            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            1.079/0.921  -            -            0.924/1.069  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -            -            1.084/0.916  -            -            0.927/1.076  -          
+pdf_qqbar               lnN            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.973/1.026  -            -            0.973/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.964/1.036  -            0.966/1.034  0.979/1.026  -            -            0.979/1.026  -            -          
+WH_hzg_sigmaShift_mu_8TeV_cat4  param  1 0.05
+WH_hzg_sigmaShift_mu_8TeV_cat3  param  1 0.05
+WH_hzg_sigmaShift_mu_8TeV_cat2  param  1 0.05
+WH_hzg_sigmaShift_mu_8TeV_cat1  param  1 0.05
+ggH_hzg_sigmaShift_mu_7TeV_cat4  param  1 0.05
+qqH_hzg_mShift_mu_8TeV_cat1  param  1 0.01
+ZH_hzg_mShift_el_7TeV_cat2  param  1 0.01
+qqH_hzg_mShift_mu_8TeV_cat3  param  1 0.01
+qqH_hzg_mShift_mu_8TeV_cat2  param  1 0.01
+qqH_hzg_mShift_mu_8TeV_cat5  param  1 0.01
+qqH_hzg_mShift_mu_8TeV_cat4  param  1 0.01
+ZH_hzg_mShift_el_7TeV_cat3  param  1 0.01
+ZH_hzg_mShift_el_8TeV_cat4  param  1 0.01
+ZH_hzg_mShift_el_8TeV_cat1  param  1 0.01
+ZH_hzg_mShift_el_8TeV_cat3  param  1 0.01
+ZH_hzg_mShift_el_8TeV_cat2  param  1 0.01
+WH_hzg_mShift_el_8TeV_cat2  param  1 0.01
+WH_hzg_mShift_el_8TeV_cat3  param  1 0.01
+WH_hzg_mShift_el_8TeV_cat1  param  1 0.01
+qqH_hzg_mShift_el_7TeV_cat3  param  1 0.01
+WH_hzg_mShift_el_8TeV_cat4  param  1 0.01
+ZH_hzg_sigmaShift_el_7TeV_cat2  param  1 0.05
+ZH_hzg_sigmaShift_el_7TeV_cat3  param  1 0.05
+ttH_hzg_mShift_el_8TeV_cat4  param  1 0.01
+ZH_hzg_sigmaShift_el_7TeV_cat1  param  1 0.05
+ttH_hzg_mShift_el_8TeV_cat2  param  1 0.01
+ttH_hzg_mShift_el_8TeV_cat3  param  1 0.01
+ZH_hzg_sigmaShift_el_7TeV_cat4  param  1 0.05
+ttH_hzg_mShift_el_8TeV_cat1  param  1 0.01
+WH_hzg_mShift_mu_7TeV_cat1  param  1 0.01
+WH_hzg_mShift_mu_7TeV_cat2  param  1 0.01
+WH_hzg_mShift_mu_7TeV_cat3  param  1 0.01
+WH_hzg_mShift_mu_7TeV_cat4  param  1 0.01
+ggH_hzg_sigmaShift_mu_7TeV_cat3  param  1 0.05
+ggH_hzg_sigmaShift_el_8TeV_cat4  param  1 0.05
+ttH_hzg_mShift_mu_8TeV_cat2  param  1 0.01
+WH_hzg_sigmaShift_mu_7TeV_cat1  param  1 0.05
+ZH_hzg_sigmaShift_mu_8TeV_cat1  param  1 0.05
+ZH_hzg_sigmaShift_mu_8TeV_cat2  param  1 0.05
+ZH_hzg_sigmaShift_mu_8TeV_cat3  param  1 0.05
+ZH_hzg_sigmaShift_mu_8TeV_cat4  param  1 0.05
+WH_hzg_sigmaShift_mu_7TeV_cat2  param  1 0.05
+WH_hzg_sigmaShift_mu_7TeV_cat3  param  1 0.05
+WH_hzg_sigmaShift_mu_7TeV_cat4  param  1 0.05
+ttH_hzg_mShift_mu_8TeV_cat4  param  1 0.01
+qqH_hzg_mShift_el_8TeV_cat5  param  1 0.01
+ttH_hzg_sigmaShift_el_7TeV_cat3  param  1 0.05
+WH_hzg_mShift_el_7TeV_cat4  param  1 0.01
+ggH_hzg_sigmaShift_mu_8TeV_cat1  param  1 0.05
+ttH_hzg_mShift_mu_7TeV_cat4  param  1 0.01
+ggH_hzg_sigmaShift_mu_8TeV_cat3  param  1 0.05
+ggH_hzg_sigmaShift_mu_8TeV_cat2  param  1 0.05
+ggH_hzg_sigmaShift_mu_8TeV_cat5  param  1 0.05
+ggH_hzg_sigmaShift_mu_8TeV_cat4  param  1 0.05
+qqH_hzg_mShift_el_7TeV_cat4  param  1 0.01
+ggH_hzg_mShift_el_8TeV_cat4  param  1 0.01
+ggH_hzg_mShift_el_8TeV_cat5  param  1 0.01
+qqH_hzg_mShift_el_8TeV_cat3  param  1 0.01
+ggH_hzg_mShift_el_8TeV_cat1  param  1 0.01
+ggH_hzg_mShift_el_8TeV_cat2  param  1 0.01
+ggH_hzg_mShift_el_8TeV_cat3  param  1 0.01
+ggH_hzg_mShift_mu_8TeV_cat1  param  1 0.01
+ttH_hzg_sigmaShift_el_7TeV_cat1  param  1 0.05
+ggH_hzg_mShift_mu_8TeV_cat3  param  1 0.01
+ggH_hzg_mShift_mu_8TeV_cat2  param  1 0.01
+ggH_hzg_mShift_mu_8TeV_cat5  param  1 0.01
+ggH_hzg_mShift_mu_8TeV_cat4  param  1 0.01
+qqH_hzg_mShift_el_7TeV_cat2  param  1 0.01
+ggH_hzg_mShift_el_7TeV_cat4  param  1 0.01
+qqH_hzg_mShift_el_7TeV_cat1  param  1 0.01
+ttH_hzg_sigmaShift_el_7TeV_cat2  param  1 0.05
+qqH_hzg_mShift_all_7TeV_cat5  param  1 0.01
+qqH_hzg_sigmaShift_el_7TeV_cat4  param  1 0.05
+ttH_hzg_sigmaShift_el_7TeV_cat4  param  1 0.05
+qqH_hzg_mShift_mu_7TeV_cat4  param  1 0.01
+qqH_hzg_mShift_mu_7TeV_cat2  param  1 0.01
+qqH_hzg_mShift_mu_7TeV_cat3  param  1 0.01
+qqH_hzg_mShift_mu_7TeV_cat1  param  1 0.01
+ttH_hzg_sigmaShift_mu_8TeV_cat3  param  1 0.05
+ttH_hzg_sigmaShift_mu_8TeV_cat2  param  1 0.05
+ttH_hzg_sigmaShift_mu_8TeV_cat1  param  1 0.05
+ZH_hzg_mShift_el_7TeV_cat1  param  1 0.01
+ZH_hzg_mShift_el_7TeV_cat4  param  1 0.01
+ttH_hzg_sigmaShift_mu_8TeV_cat4  param  1 0.05
+ttH_hzg_mShift_el_7TeV_cat1  param  1 0.01
+ttH_hzg_mShift_el_7TeV_cat3  param  1 0.01
+ttH_hzg_mShift_el_7TeV_cat2  param  1 0.01
+ttH_hzg_mShift_el_7TeV_cat4  param  1 0.01
+ZH_hzg_mShift_mu_8TeV_cat1  param  1 0.01
+ZH_hzg_mShift_mu_8TeV_cat2  param  1 0.01
+ZH_hzg_mShift_mu_8TeV_cat3  param  1 0.01
+ZH_hzg_mShift_mu_8TeV_cat4  param  1 0.01
+ggH_hzg_mShift_el_7TeV_cat3  param  1 0.01
+ggH_hzg_mShift_el_7TeV_cat2  param  1 0.01
+ggH_hzg_mShift_el_7TeV_cat1  param  1 0.01
+WH_hzg_mShift_el_7TeV_cat1  param  1 0.01
+ggH_hzg_mShift_all_7TeV_cat5  param  1 0.01
+WH_hzg_mShift_el_7TeV_cat3  param  1 0.01
+WH_hzg_mShift_el_7TeV_cat2  param  1 0.01
+ZH_hzg_mShift_mu_7TeV_cat4  param  1 0.01
+ZH_hzg_mShift_mu_7TeV_cat3  param  1 0.01
+ZH_hzg_mShift_mu_7TeV_cat2  param  1 0.01
+ZH_hzg_mShift_mu_7TeV_cat1  param  1 0.01
+qqH_hzg_sigmaShift_mu_8TeV_cat1  param  1 0.05
+qqH_hzg_sigmaShift_mu_8TeV_cat3  param  1 0.05
+qqH_hzg_sigmaShift_mu_8TeV_cat2  param  1 0.05
+qqH_hzg_sigmaShift_mu_8TeV_cat5  param  1 0.05
+qqH_hzg_sigmaShift_mu_8TeV_cat4  param  1 0.05
+WH_hzg_mShift_mu_8TeV_cat4  param  1 0.01
+WH_hzg_mShift_mu_8TeV_cat3  param  1 0.01
+WH_hzg_mShift_mu_8TeV_cat2  param  1 0.01
+WH_hzg_mShift_mu_8TeV_cat1  param  1 0.01
+WH_hzg_sigmaShift_el_8TeV_cat2  param  1 0.05
+WH_hzg_sigmaShift_el_8TeV_cat3  param  1 0.05
+WH_hzg_sigmaShift_el_8TeV_cat1  param  1 0.05
+WH_hzg_sigmaShift_el_8TeV_cat4  param  1 0.05
+ggH_hzg_sigmaShift_mu_7TeV_cat2  param  1 0.05
+ttH_hzg_sigmaShift_mu_7TeV_cat1  param  1 0.05
+ggH_hzg_sigmaShift_all_7TeV_cat5  param  1 0.05
+ggH_hzg_sigmaShift_mu_7TeV_cat1  param  1 0.05
+qqH_hzg_mShift_el_8TeV_cat2  param  1 0.01
+qqH_hzg_sigmaShift_el_7TeV_cat2  param  1 0.05
+qqH_hzg_sigmaShift_el_7TeV_cat1  param  1 0.05
+ttH_hzg_mShift_mu_7TeV_cat1  param  1 0.01
+ttH_hzg_mShift_mu_7TeV_cat2  param  1 0.01
+ttH_hzg_mShift_mu_7TeV_cat3  param  1 0.01
+qqH_hzg_sigmaShift_el_8TeV_cat4  param  1 0.05
+qqH_hzg_sigmaShift_el_8TeV_cat5  param  1 0.05
+qqH_hzg_sigmaShift_el_8TeV_cat1  param  1 0.05
+qqH_hzg_sigmaShift_el_8TeV_cat2  param  1 0.05
+qqH_hzg_sigmaShift_el_8TeV_cat3  param  1 0.05
+ZH_hzg_sigmaShift_mu_7TeV_cat4  param  1 0.05
+ZH_hzg_sigmaShift_mu_7TeV_cat3  param  1 0.05
+ZH_hzg_sigmaShift_mu_7TeV_cat2  param  1 0.05
+ZH_hzg_sigmaShift_mu_7TeV_cat1  param  1 0.05
+qqH_hzg_sigmaShift_el_7TeV_cat3  param  1 0.05
+ggH_hzg_mShift_mu_7TeV_cat4  param  1 0.01
+ggH_hzg_mShift_mu_7TeV_cat2  param  1 0.01
+ggH_hzg_mShift_mu_7TeV_cat3  param  1 0.01
+ggH_hzg_mShift_mu_7TeV_cat1  param  1 0.01
+ttH_hzg_mShift_mu_8TeV_cat3  param  1 0.01
+ggH_hzg_sigmaShift_el_8TeV_cat5  param  1 0.05
+ttH_hzg_mShift_mu_8TeV_cat1  param  1 0.01
+ggH_hzg_sigmaShift_el_8TeV_cat1  param  1 0.05
+ggH_hzg_sigmaShift_el_8TeV_cat2  param  1 0.05
+ggH_hzg_sigmaShift_el_8TeV_cat3  param  1 0.05
+qqH_hzg_mShift_el_8TeV_cat4  param  1 0.01
+ZH_hzg_sigmaShift_el_8TeV_cat4  param  1 0.05
+ZH_hzg_sigmaShift_el_8TeV_cat1  param  1 0.05
+qqH_hzg_mShift_el_8TeV_cat1  param  1 0.01
+ZH_hzg_sigmaShift_el_8TeV_cat3  param  1 0.05
+ZH_hzg_sigmaShift_el_8TeV_cat2  param  1 0.05
+qqH_hzg_sigmaShift_mu_7TeV_cat4  param  1 0.05
+qqH_hzg_sigmaShift_mu_7TeV_cat2  param  1 0.05
+qqH_hzg_sigmaShift_mu_7TeV_cat3  param  1 0.05
+qqH_hzg_sigmaShift_mu_7TeV_cat1  param  1 0.05
+ttH_hzg_sigmaShift_mu_7TeV_cat3  param  1 0.05
+ttH_hzg_sigmaShift_mu_7TeV_cat4  param  1 0.05
+ttH_hzg_sigmaShift_el_8TeV_cat4  param  1 0.05
+ttH_hzg_sigmaShift_el_8TeV_cat2  param  1 0.05
+ttH_hzg_sigmaShift_el_8TeV_cat3  param  1 0.05
+ttH_hzg_sigmaShift_mu_7TeV_cat2  param  1 0.05
+ttH_hzg_sigmaShift_el_8TeV_cat1  param  1 0.05
+ggH_hzg_sigmaShift_el_7TeV_cat3  param  1 0.05
+ggH_hzg_sigmaShift_el_7TeV_cat2  param  1 0.05
+ggH_hzg_sigmaShift_el_7TeV_cat1  param  1 0.05
+ggH_hzg_sigmaShift_el_7TeV_cat4  param  1 0.05
+qqH_hzg_sigmaShift_all_7TeV_cat5  param  1 0.05
+WH_hzg_sigmaShift_el_7TeV_cat4  param  1 0.05
+WH_hzg_sigmaShift_el_7TeV_cat1  param  1 0.05
+WH_hzg_sigmaShift_el_7TeV_cat3  param  1 0.05
+WH_hzg_sigmaShift_el_7TeV_cat2  param  1 0.05
+bkg_p2_mu_7TeV_cat4  flatParam
+bkg_mu_7TeV_cat2_norm  flatParam
+bkg_sigma_mu_7TeV_cat1  flatParam
+bkg_sigma_mu_7TeV_cat3  flatParam
+bkg_sigma_mu_7TeV_cat2  flatParam
+bkg_sigma_mu_7TeV_cat4  flatParam
+bkg_p1_mu_7TeV_cat4  flatParam
+bkg_p1_mu_7TeV_cat2  flatParam
+bkg_p1_mu_7TeV_cat3  flatParam
+bkg_p1_mu_7TeV_cat1  flatParam
+bkg_sigma_mu_8TeV_cat4  flatParam
+bkg_sigma_mu_8TeV_cat2  flatParam
+bkg_sigma_mu_8TeV_cat3  flatParam
+bkg_sigma_mu_8TeV_cat1  flatParam
+bkg_p2_mu_7TeV_cat3  flatParam
+bkg_p2_mu_7TeV_cat2  flatParam
+bkg_p2_mu_7TeV_cat1  flatParam
+bkg_mu_8TeV_cat4_norm  flatParam
+bkg_sigma_el_8TeV_cat2  flatParam
+bkg_p3_mu_8TeV_cat1  flatParam
+bkg_p1_el_8TeV_cat4  flatParam
+bkg_p1_el_8TeV_cat5  flatParam
+bkg_p1_el_8TeV_cat1  flatParam
+bkg_p1_el_8TeV_cat2  flatParam
+bkg_p1_el_8TeV_cat3  flatParam
+bkg_p4_el_8TeV_cat3  flatParam
+bkg_p4_el_8TeV_cat2  flatParam
+bkg_p4_el_8TeV_cat1  flatParam
+bkg_p3_el_7TeV_cat2  flatParam
+bkg_el_7TeV_cat1_norm  flatParam
+bkg_p4_el_8TeV_cat4  flatParam
+bkg_p3_el_7TeV_cat1  flatParam
+bkg_step_mu_7TeV_cat3  flatParam
+bkg_p1_el_7TeV_cat3  flatParam
+bkg_p1_el_7TeV_cat2  flatParam
+bkg_p1_el_7TeV_cat1  flatParam
+bkg_sigma_el_8TeV_cat4  flatParam
+bkg_p3_el_7TeV_cat3  flatParam
+bkg_p1_el_7TeV_cat4  flatParam
+bkg_step_el_8TeV_cat4  flatParam
+bkg_step_el_8TeV_cat3  flatParam
+bkg_step_el_8TeV_cat2  flatParam
+bkg_step_el_8TeV_cat1  flatParam
+bkg_p3_el_7TeV_cat4  flatParam
+bkg_p2_el_8TeV_cat1  flatParam
+bkg_p2_el_8TeV_cat3  flatParam
+bkg_p2_el_8TeV_cat2  flatParam
+bkg_p2_el_8TeV_cat5  flatParam
+bkg_p2_el_8TeV_cat4  flatParam
+bkg_p1_all_7TeV_cat5  flatParam
+bkg_mu_8TeV_cat1_norm  flatParam
+bkg_p2_el_7TeV_cat4  flatParam
+bkg_p2_el_7TeV_cat2  flatParam
+bkg_p2_el_7TeV_cat3  flatParam
+bkg_mu_7TeV_cat1_norm  flatParam
+bkg_p2_el_7TeV_cat1  flatParam
+bkg_el_7TeV_cat4_norm  flatParam
+bkg_el_8TeV_cat4_norm  flatParam
+bkg_p1_mu_8TeV_cat1  flatParam
+bkg_p1_mu_8TeV_cat3  flatParam
+bkg_mu_8TeV_cat5_norm  flatParam
+bkg_p1_mu_8TeV_cat5  flatParam
+bkg_p1_mu_8TeV_cat4  flatParam
+bkg_step_mu_7TeV_cat4  flatParam
+bkg_sigma_el_7TeV_cat4  flatParam
+bkg_sigma_el_7TeV_cat1  flatParam
+bkg_sigma_el_7TeV_cat2  flatParam
+bkg_sigma_el_7TeV_cat3  flatParam
+bkg_p3_mu_8TeV_cat3  flatParam
+bkg_p4_mu_7TeV_cat1  flatParam
+bkg_p4_mu_7TeV_cat3  flatParam
+bkg_p4_mu_7TeV_cat2  flatParam
+bkg_p4_mu_7TeV_cat4  flatParam
+bkg_p4_el_7TeV_cat4  flatParam
+bkg_p4_el_7TeV_cat1  flatParam
+bkg_p4_el_7TeV_cat2  flatParam
+bkg_p4_el_7TeV_cat3  flatParam
+bkg_all_7TeV_cat5_norm  flatParam
+bkg_mu_8TeV_cat2_norm  flatParam
+bkg_p1_mu_8TeV_cat2  flatParam
+bkg_el_8TeV_cat5_norm  flatParam
+bkg_p5_mu_7TeV_cat3  flatParam
+bkg_p2_mu_8TeV_cat4  flatParam
+bkg_p2_mu_8TeV_cat5  flatParam
+bkg_p2_mu_8TeV_cat1  flatParam
+bkg_p2_mu_8TeV_cat2  flatParam
+bkg_p2_mu_8TeV_cat3  flatParam
+bkg_p5_mu_7TeV_cat2  flatParam
+bkg_p5_mu_8TeV_cat4  flatParam
+bkg_p5_mu_8TeV_cat1  flatParam
+bkg_p5_mu_8TeV_cat3  flatParam
+bkg_p5_mu_8TeV_cat2  flatParam
+bkg_p3_el_8TeV_cat4  flatParam
+bkg_p3_el_8TeV_cat5  flatParam
+bkg_p3_el_8TeV_cat2  flatParam
+bkg_p3_el_8TeV_cat3  flatParam
+bkg_p3_el_8TeV_cat1  flatParam
+bkg_el_8TeV_cat3_norm  flatParam
+bkg_mu_7TeV_cat3_norm  flatParam
+bkg_el_7TeV_cat3_norm  flatParam
+bkg_step_el_7TeV_cat1  flatParam
+bkg_step_el_7TeV_cat2  flatParam
+bkg_step_el_7TeV_cat3  flatParam
+bkg_step_el_7TeV_cat4  flatParam
+bkg_mu_7TeV_cat4_norm  flatParam
+bkg_el_8TeV_cat2_norm  flatParam
+bkg_mu_8TeV_cat3_norm  flatParam
+bkg_p5_el_7TeV_cat4  flatParam
+bkg_p5_el_7TeV_cat3  flatParam
+bkg_p5_el_7TeV_cat2  flatParam
+bkg_p5_mu_7TeV_cat4  flatParam
+bkg_step_mu_8TeV_cat2  flatParam
+bkg_step_mu_8TeV_cat3  flatParam
+bkg_step_mu_8TeV_cat1  flatParam
+bkg_p3_mu_7TeV_cat1  flatParam
+bkg_p3_mu_7TeV_cat2  flatParam
+bkg_p3_mu_7TeV_cat3  flatParam
+bkg_p2_all_7TeV_cat5  flatParam
+bkg_sigma_el_8TeV_cat3  flatParam
+bkg_p3_mu_8TeV_cat2  flatParam
+bkg_sigma_el_8TeV_cat1  flatParam
+bkg_step_mu_7TeV_cat1  flatParam
+bkg_p3_mu_8TeV_cat5  flatParam
+bkg_step_mu_7TeV_cat2  flatParam
+bkg_p3_mu_7TeV_cat4  flatParam
+bkg_el_8TeV_cat1_norm  flatParam
+bkg_p3_all_7TeV_cat5  flatParam
+bkg_p3_mu_8TeV_cat4  flatParam
+bkg_p4_mu_8TeV_cat4  flatParam
+bkg_p4_mu_8TeV_cat2  flatParam
+bkg_p4_mu_8TeV_cat3  flatParam
+bkg_p4_mu_8TeV_cat1  flatParam
+bkg_p5_el_8TeV_cat2  flatParam
+bkg_p5_el_8TeV_cat3  flatParam
+bkg_p5_el_8TeV_cat4  flatParam
+bkg_step_mu_8TeV_cat4  flatParam
+bkg_el_7TeV_cat2_norm  flatParam

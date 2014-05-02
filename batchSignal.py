@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 import os
+import configLimits as cfl
 
-suffix = 'Proper'
-#suffix = '03-19-14_Proper'
-#suffix = '03-31-14_PhoMVA'
-#suffix = '03-31-14_PhoKinMVA'
-doMVA = False
+suffix = cfl.suffix
+doMVA = cfl.doMVA
 
-leptonList = ['mu','el']
-tevList = ['8TeV','7TeV']
-catListBig = ['1','2','3','4','5','6','7','8','9']
-catListSmall = ['1','2','3','4','5']
+leptonList = cfl.leptonList
+tevList = cfl.tevList
+catListBig = cfl.catListBig
+catListSmall = cfl.catListSmall
+
 for lepton in leptonList:
   for tev in tevList:
     if doMVA and tev == '8TeV': catList = catListBig

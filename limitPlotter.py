@@ -5,18 +5,17 @@ import os
 from ROOT import *
 import numpy as np
 from collections import defaultdict
+import configLimits as cfl
 
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
 fullCombo = True
 byParts = False
+#suffix = cfl.suffix
 suffix = 'Proper'
-#suffix = '03-19-14_Proper'
-#suffix = '03-31-14_PhoMVA'
-#suffix = '03-31-14_PhoKinMVA'
-#extras = ['03-31-14_PhoMVA','03-31-14_PhoKinMVA']
-extras = []
+extras = ['04-16-14_Proper','04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
+#extras = []
 
 
 

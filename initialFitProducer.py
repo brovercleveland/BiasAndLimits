@@ -7,25 +7,23 @@ from rooFitBuilder import *
 from xsWeighter import *
 from ROOT import *
 import os
+import configLimits as cfl
 
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" )
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-debugPlots = True
+debugPlots = cfl.debugPlots
 
-verbose = False
+verbose = cfl.verbose
 
-rootrace = False
+rootrace = cfl.rootrace
 
-doMVA = False
+doMVA = cfl.doMVA
 
-allBiasFits= False # Turn on extra fits used in bias studies
+allBiasFits= cfl.allBiasFits# Turn on extra fits used in bias studies
 
-suffix = 'Proper'
-#suffix = '03-19-14_Proper'
-#suffix = '03-31-14_PhoMVA'
-#suffix = '03-31-14_PhoKinMVA'
+suffix = cfl.suffix
 
 
 
@@ -43,28 +41,15 @@ def doInitialFits():
 
   signalDict = dataDict
 
-  leptonList = ['mu','el']
-  #leptonList = ['el']
-  #yearList = ['2012']
-  yearList = ['2011','2012']
+  leptonList = cfl.leptonList
+  yearList = cfl.yearList
+  catListBig = cfl.catListBig
+  catListSmall = cfl.catListSmall
+  massList = cfl.massList
+  sigNameListInput = cfl.sigNameListInput
+  sigNameListOutput = cfl.sigNameList
+
   yearToTeV = {'2011':'7TeV','2012':'8TeV'}
-  catListBig = ['0','1','2','3','4','5','6','7','8','9']
-  catListSmall = ['0','1','2','3','4','5']
-  #catListSmall = ['1']
-  #catList = ['9']
-  #catList = ['5']
-  massList = ['120','125','130','135','140','145','150','155','160']
-  #massList = ['125']
-  sigNameListInput = ['gg','vbf','tth','wh','zh']
-  sigNameListOutput = ['ggH','qqH','ttH','WH','ZH']
-  #sigNameList = ['gg']
-  '''
-  leptonList = ['mu','el']
-  yearList = ['2012']
-  catList = ['0']
-  massList = ['120','125','130','135','140','145','150','155','160']
-  sigNameList = ['gg']
-  '''
 
   weight  = RooRealVar('Weight','Weight',0,100)
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
@@ -127,13 +112,13 @@ def doInitialFits():
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
-                if prod == 'WH' and suffix == 'Proper':
+                if prod == 'WH' and (suffix == 'Proper' or year == '2011'):
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)
-                elif prod == 'WH' and suffix != 'Proper':
+                elif prod == 'WH' and suffix != 'Proper' and year == '2012':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)/10
-                elif prod == 'ZH' and suffix == 'Proper':
+                elif prod == 'ZH' and (suffix == 'Proper' or year == '2011'):
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)
-                elif prod == 'ZH' and suffix != 'Proper':
+                elif prod == 'ZH' and suffix != 'Proper' and year == '2012':
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)/2
                 else:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents)

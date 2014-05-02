@@ -5,22 +5,20 @@ from ROOT import *
 import numpy as np
 #import pdb
 from rooFitBuilder import *
+import configLimits as cfl
 
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-doMVA = False
-doExt = False
-leptonList = ['mu','el']
-tevList = ['7TeV','8TeV']
-#catList = ['0']
-catListSmall = ['1','2','3','4','5']
-catListBig = ['1','2','3','4','5','6','7','8','9']
+doMVA = cfl.doMVA
+doExt = cfl.doExt
+suffixCard = cfl.suffix
 
-suffixCard = 'Proper'
-#suffixCard = '03-19-14_Proper'
-#suffixCard = '03-31-14_PhoMVA'
-#suffixCard = '03-31-14_PhoKinMVA'
+leptonList = cfl.leptonList
+tevList = cfl.tevList
+catListSmall = cfl.catListSmall
+catListBig = cfl.catListBig
+
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
 rooWsFile = TFile('outputDir/'+suffixCard+'/initRooFitOut_'+suffixCard+'.root')
