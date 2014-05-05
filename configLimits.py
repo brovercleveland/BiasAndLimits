@@ -7,9 +7,9 @@
 
 doMVA = False
 #suffix = 'Proper'
-#suffix = '04-16-14_Proper'
+suffix = '04-28-14_Proper'
 #suffix = '04-28-14_PhoMVA'
-suffix = '04-28-14_PhoMVAKinMVA'
+#suffix = '04-28-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
 yearList = ['2011','2012']

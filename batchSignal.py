@@ -34,7 +34,7 @@ Output                  = signalRes/job_{0}_{1}_{2}_{3}.out
 Error                   = signalRes/job_{0}_{1}_{2}_{3}.err
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
-transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h
+transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
 Queue
       '''.format(myLepton,tev,cat,suffix,'True'))
       consub.close()
