@@ -14,8 +14,8 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList
-  catListBig = cfl.catListBig
-  catListSmall = cfl.catListSmall
+  catListBig = cfl.catListBig[1:]
+  catListSmall = cfl.catListSmall[1:]
 
   owd = os.getcwd()
   if inputFolder == None:

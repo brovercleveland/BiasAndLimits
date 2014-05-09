@@ -26,8 +26,8 @@ def makeCards(MVATest = cfl.doMVA):
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList
-  catListSmall = cfl.catListSmall
-  catListBig = cfl.catListBig
+  catListSmall = cfl.catListSmall[1:]
+  catListBig = cfl.catListBig[1:]
   massList = cfl.massListBig
 
   bgFile = TFile('outputDir/'+suffix+'/CardBackground_'+suffix+'.root')

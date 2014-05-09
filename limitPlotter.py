@@ -12,10 +12,10 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
-#suffix = cfl.suffix
-suffix = 'Proper'
-extras = ['04-16-14_Proper','04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
-#extras = []
+suffix = cfl.suffix
+#suffix = 'Proper'
+#extras = ['04-28-14_Proper','04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
+extras = []
 
 
 

@@ -44,22 +44,27 @@ def Sensitivity(suffix = 'Proper'):
         sumEntries = data.sumEntries()
         sumEntriesS = data.sumEntries('1','signal')
         #print sumEntries
+        totalSigS = 0
         totalSig = 0
         totalSigRaw = 0
         for prod in sigNameList:
           sigName = '_'.join(['ds',prod,'hzg',lepton,tev,'cat'+cat,'M125'])
           sig_ds = myWs.data(sigName)
           if (prod == 'WH' and suffix != 'Proper'):
-            totalSig = totalSig + sig_ds.sumEntries('1','signal')/10
+            totalSigS = totalSigS + sig_ds.sumEntries('1','signal')/10
+            totalSig = totalSig + sig_ds.sumEntries()/10
           elif (prod == 'ZH' and suffix != 'Proper'):
-            totalSig = totalSig + sig_ds.sumEntries('1','signal')/2
+            totalSigS = totalSigS + sig_ds.sumEntries('1','signal')/2
+            totalSig = totalSig + sig_ds.sumEntries()/2
           else:
-            totalSig = totalSig + sig_ds.sumEntries('1','signal')
+            totalSigS = totalSigS + sig_ds.sumEntries('1','signal')
+            totalSig = totalSig + sig_ds.sumEntries()
           if prod == 'ggH':
             totalSigRaw = totalSigRaw + sig_ds.numEntries()
 
-        signif = totalSig/sqrt(totalSig+sumEntriesS)
-        print '    total bg: {0:}, total sig: {1:.2}, signif: {2:.3}, acc: {3:.3}%'.format(sumEntriesS,totalSig, signif, totalSigRaw*100./(100000/3))
+        signif = totalSigS/sqrt(totalSigS+sumEntriesS)
+        print '    100-190: total bg: {0:}, total sig: {1:.3}'.format(sumEntries,totalSig)
+        print '    120-130: total bg: {0:}, total sig: {1:.3}, signif: {2:.3}, acc: {3:.3}%'.format(sumEntriesS,totalSigS, signif, totalSigRaw*100./(100000/3))
 
 
 if __name__ == "__main__":

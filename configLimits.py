@@ -7,15 +7,15 @@
 
 doMVA = False
 #suffix = 'Proper'
-suffix = '04-28-14_Proper'
-#suffix = '04-28-14_PhoMVA'
-#suffix = '04-28-14_PhoMVAKinMVA'
+#suffix = '05-07-14_Proper'
+suffix = '05-07-14_PhoMVA'
+#suffix = '05-07-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
 yearList = ['2011','2012']
 tevList = ['7TeV','8TeV']
-catListBig = ['1','2','3','4','5','6','7','8','9']
-catListSmall = ['1','2','3','4','5']
+catListBig = ['0','1','2','3','4','5','6','7','8','9']
+catListSmall = ['0','1','2','3','4','5']
 massList = ['120','125','130','135','140','145','150','155','160']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 
