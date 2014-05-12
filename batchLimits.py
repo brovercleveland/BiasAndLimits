@@ -8,8 +8,10 @@ doMVA = cfl.doMVA
 
 massList = cfl.massListBig
 
+YR = cfl.YR
+
 for mass in massList:
-  outPutFolder = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass
+  outPutFolder = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass
   os.chdir(outPutFolder)
   if not os.path.isdir('limitOutput/res'):
     os.mkdir('limitOutput/res')

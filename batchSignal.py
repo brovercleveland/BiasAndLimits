@@ -10,6 +10,8 @@ tevList = cfl.tevList
 catListBig = cfl.catListBig
 catListSmall = cfl.catListSmall
 
+YR = cfl.YR
+
 for lepton in leptonList:
   for tev in tevList:
     if doMVA and tev == '8TeV': catList = catListBig
@@ -24,19 +26,19 @@ Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
 Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/signalCBFits.py
-Arguments               = {0} {1} {2} {3} {4}
+Arguments               = {0} {1} {2} {3} {5}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
 +LENGTH                 = "LONG"
 GetEnv                  = True
 Input                   = /dev/null
-Output                  = signalRes/job_{0}_{1}_{2}_{3}.out
-Error                   = signalRes/job_{0}_{1}_{2}_{3}.err
+Output                  = signalRes/job_{0}_{1}_{2}_{3}_{4}.out
+Error                   = signalRes/job_{0}_{1}_{2}_{3}_{4}.err
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
 Queue
-      '''.format(myLepton,tev,cat,suffix,'True'))
+      '''.format(myLepton,tev,cat,suffix,YR,'True'))
       consub.close()
 
       os.system('condor_submit submit.cmd')

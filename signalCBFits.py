@@ -12,6 +12,8 @@ gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
+YR = cfl.YR
+
 # rounding function for interpolation
 def roundTo5(x, base=5):
   return int(base * round(float(x)/base))
@@ -66,7 +68,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
   massList = cfl.massListBig
   sigNameList = cfl.sigNameList
 
-  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/initRooFitOut_'+suffix+'.root')
+  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
 #myWs.Print()
 
@@ -204,8 +206,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
   for mass in massList:
     fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])
-    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass)
-    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'/'+mass+'/'+fileName+'.root')
+    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass)
+    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass+'/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')

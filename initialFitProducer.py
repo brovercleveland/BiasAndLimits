@@ -4,7 +4,7 @@ sys.argv.append('-b')
 import numpy as np
 #import pdb
 from rooFitBuilder import *
-from xsWeighter import *
+from xsWeighterNew import *
 from ROOT import *
 import os
 import configLimits as cfl
@@ -24,6 +24,8 @@ doMVA = cfl.doMVA
 allBiasFits= cfl.allBiasFits# Turn on extra fits used in bias studies
 
 suffix = cfl.suffix
+
+YR = cfl.YR
 
 
 
@@ -433,9 +435,9 @@ def doInitialFits():
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
         print 'commited'
-  if not os.path.isdir('outputDir/'+suffix): os.mkdir('outputDir/'+suffix)
+  if not os.path.isdir('outputDir/'+suffix+'_'+YR): os.mkdir('outputDir/'+suffix+'_'+YR)
   print 'writing'
-  ws.writeToFile('outputDir/'+suffix+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
+  ws.writeToFile('outputDir/'+suffix+'_'+YR+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
   #ws.writeToFile('wtf.root')
 
 

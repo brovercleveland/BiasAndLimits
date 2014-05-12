@@ -6,9 +6,9 @@
 ##########
 
 doMVA = False
-#suffix = 'Proper'
+suffix = 'Proper'
 #suffix = '05-07-14_Proper'
-suffix = '05-07-14_PhoMVA'
+#suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
@@ -28,6 +28,7 @@ verbose = False
 rootrace = False
 allBiasFits= False # Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
+YR = 'YR2012ICHEP'
 
 ##############
 # bgCardPrep #

@@ -12,6 +12,7 @@ CMSStyle()
 
 fullCombo = True
 byParts = False
+YR = cfl.YR
 suffix = cfl.suffix
 #suffix = 'Proper'
 #extras = ['04-28-14_Proper','04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
@@ -46,7 +47,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   for ex in extras:
     expExtra.append([])
   for mass in massList:
-    currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
+    currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR,str(mass),'limitOutput'])
     #print currentDir
     fileList = os.listdir(currentDir)
     thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
@@ -90,7 +91,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
 
     if len(extras) != 0:
       for i,extraSuffix in enumerate(extras):
-        currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
+        currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
         thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
         f = open('/'.join([currentDir,thisFile]))
