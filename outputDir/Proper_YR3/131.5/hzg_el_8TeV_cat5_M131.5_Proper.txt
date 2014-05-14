@@ -1,0 +1,41 @@
+#removed vulgarity
+#cards produced by Brian Pollack
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_el_8TeV_cat5_131.5.root ws_card:ggH_hzg_el_cat5_8TeV
+shapes qqH_hzg  * SignalOutput_el_8TeV_cat5_131.5.root ws_card:qqH_hzg_el_cat5_8TeV
+---------------
+bin          el_8TeV_cat5
+observation  19
+------------------------------
+bin                        el_8TeV_cat5    el_8TeV_cat5    el_8TeV_cat5  
+process                       qqH_hzg         ggH_hzg           bkg      
+process                         -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                          0.14032        0.036862            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg8TeV        lnN            -          0.923/1.07           -       
+pdf_qqbar8TeV     lnN       0.973/1.026          -               -       
+QCDscale_ggH8TeV  lnN            -          0.93/1.075           -       
+QCDscale_qqH8TeV  lnN       0.998/1.002          -               -       
+lumi_8TeV8TeV     lnN          1.026           1.026             -       
+CMS_eff_e8TeV     lnN          1.022           1.022           1.022           1.022           1.022             -       
+CMS_eff_g8TeV     lnN          1.010           1.010             -       
+CMS_scale_j8TeV   lnN          1.046           1.110             -       
+CMS_res_j8TeV     lnN          1.019           1.060             -       
+CMS_UEPS8TeV      lnN          1.070           1.249             -       
+CMS_eff_id_j8TeV  lnN          1.016           1.017             -       
+CMS_eff_acc_j8TeV lnN          1.009           1.021             -       
+CMS_hzg_err_BR8TeV lnN       0.917/1.083     0.917/1.083          -       
+ggH_hzg_mShift_el_8TeV_cat5              param          1         0.01   
+ggH_hzg_sigmaShift_el_8TeV_cat5          param          1         0.05   
+qqH_hzg_mShift_el_8TeV_cat5              param          1         0.01   
+qqH_hzg_sigmaShift_el_8TeV_cat5          param          1         0.05   
+bkg_p1_el_8TeV_cat5                           flatParam      
+bkg_p2_el_8TeV_cat5                           flatParam      
+bkg_p3_el_8TeV_cat5                           flatParam      
+bkg_el_8TeV_cat5_norm                         flatParam      

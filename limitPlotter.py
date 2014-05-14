@@ -13,9 +13,10 @@ CMSStyle()
 fullCombo = True
 byParts = False
 YR = cfl.YR
+#YR = 'YR2012ICHEP'
 suffix = cfl.suffix
-#suffix = 'Proper'
-#extras = ['04-28-14_Proper','04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
+#suffix = '04-28-14_Proper'
+#extras = ['04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
 extras = []
 
 
@@ -35,6 +36,8 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
 
+  colorList = [kRed,kBlue,kGreen+1]
+
   xAxis = []
   obs = []
   exp = []
@@ -47,7 +50,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   for ex in extras:
     expExtra.append([])
   for mass in massList:
-    currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR,str(mass),'limitOutput'])
+    if YR:
+      currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR,str(mass),'limitOutput'])
+    else:
+      currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
     fileList = os.listdir(currentDir)
     thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
@@ -91,7 +97,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
 
     if len(extras) != 0:
       for i,extraSuffix in enumerate(extras):
-        currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR,str(mass),'limitOutput'])
+        if YR:
+          currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR,str(mass),'limitOutput'])
+        else:
+          currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
         thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
         f = open('/'.join([currentDir,thisFile]))
@@ -167,10 +176,9 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       ar.SetMarkerColor(kBlack)
       ar.SetMarkerStyle(kFullCircle)
       ar.SetMarkerSize(1.5)
-      ar.SetLineColor(kRed)
+      ar.SetLineColor(colorList[i])
       ar.SetLineWidth(2)
-      if i == 0:
-        ar.SetLineStyle(2)
+      ar.SetLineStyle(2)
       mg.Add(ar)
 
   mg.Draw('AL3')
@@ -179,7 +187,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
-  c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
+  if YR:
+    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'.pdf')
+  else:
+    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
 
 
 if __name__=='__main__':

@@ -1,0 +1,41 @@
+#removed vulgarity
+#cards produced by Brian Pollack
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_all_7TeV_cat5_157.0.root ws_card:ggH_hzg_all_cat5_7TeV
+shapes qqH_hzg  * SignalOutput_all_7TeV_cat5_157.0.root ws_card:qqH_hzg_all_cat5_7TeV
+---------------
+bin          all_7TeV_cat5
+observation  9
+------------------------------
+bin                        all_7TeV_cat5   all_7TeV_cat5   all_7TeV_cat5 
+process                       qqH_hzg         ggH_hzg           bkg      
+process                         -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.086808        0.025458            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg7TeV        lnN            -         0.9247/1.0749         -       
+pdf_qqbar7TeV     lnN       0.979/1.028          -               -       
+QCDscale_ggH7TeV  lnN            -         0.9274/1.0646         -       
+QCDscale_qqH7TeV  lnN       0.999/1.002          -               -       
+lumi_7TeV7TeV     lnN          1.022           1.022             -       
+CMS_eff_a7TeV     lnN          1.011           1.011           1.011           1.011           1.011             -       
+CMS_eff_g7TeV     lnN          1.010           1.010             -       
+CMS_scale_j7TeV   lnN          1.046           1.110             -       
+CMS_res_j7TeV     lnN          1.019           1.060             -       
+CMS_UEPS7TeV      lnN          1.070           1.249             -       
+CMS_eff_id_j7TeV  lnN          1.016           1.017             -       
+CMS_eff_acc_j7TeV lnN          1.009           1.021             -       
+CMS_hzg_err_BR7TeV lnN       0.942/1.058     0.942/1.058          -       
+ggH_hzg_mShift_all_7TeV_cat5             param          1         0.01   
+ggH_hzg_sigmaShift_all_7TeV_cat5         param          1         0.05   
+qqH_hzg_mShift_all_7TeV_cat5             param          1         0.01   
+qqH_hzg_sigmaShift_all_7TeV_cat5         param          1         0.05   
+bkg_p1_all_7TeV_cat5                          flatParam      
+bkg_p2_all_7TeV_cat5                          flatParam      
+bkg_p3_all_7TeV_cat5                          flatParam      
+bkg_all_7TeV_cat5_norm                        flatParam      

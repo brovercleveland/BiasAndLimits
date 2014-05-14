@@ -3,6 +3,7 @@ import sys
 sys.argv.append('-b')
 import numpy as np
 #import pdb
+from signalCBFits import AutoVivification
 from rooFitBuilder import *
 from xsWeighterNew import *
 from ROOT import *
@@ -115,15 +116,15 @@ def doInitialFits():
                 else:
                   mzg.setVal(tmpSigMass[0])
                 if prod == 'WH' and (suffix == 'Proper' or year == '2011'):
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655,YR)
                 elif prod == 'WH' and suffix != 'Proper' and year == '2012':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655)/10
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655,YR)/10
                 elif prod == 'ZH' and (suffix == 'Proper' or year == '2011'):
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345,YR)
                 elif prod == 'ZH' and suffix != 'Proper' and year == '2012':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345)/2
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345,YR)/2
                 else:
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents)
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents,YR)
                 #if i == 0:
                 #  print year,lepton,prod,mass
                 #  print sigWeight

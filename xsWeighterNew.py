@@ -9,7 +9,7 @@ brDict = pickle.load(f)
 f.close()
 
 def LumiXSWeighter(year, lepton, sig, mass, nEvt, YR):
-  LumiXSWeighter = 0.0
+  LumiXSWeight = 0.0
   if sig == 'ggH': sig = 'ggF'
   if sig == 'qqH': sig = 'VBF'
   if year == '2012': year = '8TeV'
@@ -17,12 +17,22 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt, YR):
 
   mass = mass+'.0'
 
-  if sig in ['WH','ZH']:
-    LumiXSWeighter = nEvt/(xsDict[YR][year][sig][mass]*brDict[YR][year]['ZGamma'][mass]*1000)
-  else:
-    LumiXSWeighter = nEvt/(xsDict[YR][year][sig][mass]*brDict[YR][year]['ZGamma'][mass]*0.10098*1000)
+  xs = xsDict[YR][year][sig][mass]
+  br = brDict[YR]['Zgamma'][mass]
 
-  if year == '8TeV':
+  if type(xs) != float:
+    print 'using YR2 xs for ',year,sig,mass
+    xs = xsDict['YR2'][year][sig][mass]
+  if type(br) != float:
+    print 'using YR2 br for ',year,sig,mass
+    br = brDict['YR2']['Zgamma'][mass]
+
+  if sig in ['WH','ZH']:
+    LumiXSWeight = nEvt/(xs*br*1000)
+  else:
+    LumiXSWeight = nEvt/(xs*br*0.10098*1000)
+
+  if year == '7TeV':
     if (lepton=='mu'): LumiXSWeight = 5.05/(LumiXSWeight)
     if (lepton=='el'): LumiXSWeight = 4.98/(LumiXSWeight)
     if (lepton=='all'): LumiXSWeight = 10.03/(LumiXSWeight)

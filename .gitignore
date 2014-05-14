@@ -4,3 +4,5 @@ res
 *.so
 *.d
 *.pdf
+*.out
+*.err

@@ -18,6 +18,7 @@ catListBig = ['0','1','2','3','4','5','6','7','8','9']
 catListSmall = ['0','1','2','3','4','5']
 massList = ['120','125','130','135','140','145','150','155','160']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
+YR = 'YR3'
 
 ######################
 # initialFitProducer #
@@ -28,7 +29,6 @@ verbose = False
 rootrace = False
 allBiasFits= False # Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
-YR = 'YR2012ICHEP'
 
 ##############
 # bgCardPrep #
