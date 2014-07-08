@@ -31,8 +31,9 @@ def makeCards(MVATest = cfl.doMVA):
   massList = cfl.massListBig
 
   YR = cfl.YR
+  sigFit = cfl.sigFit
 
-  bgFile = TFile('outputDir/'+suffix+'_'+YR+'/CardBackground_'+suffix+'.root')
+  bgFile = TFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/CardBackground_'+suffix+'.root')
   bgWs = bgFile.Get('ws_card')
   bgFileName = 'CardBackground_'+suffix+'.root'
 
@@ -68,12 +69,12 @@ def makeCards(MVATest = cfl.doMVA):
         for mass in massList:
           sigFileName = '_'.join(['SignalOutput',lepton,tev,'cat'+cat,mass])+'.root'
           #sigFileName = 'SignalOutput_All_'+suffix+'_'+mass+'.root'
-          sigFile = TFile('outputDir/'+suffix+'_'+YR+'/'+mass+'/'+sigFileName)
+          sigFile = TFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+sigFileName)
           sigWs = sigFile.Get('ws_card')
           prefixSigList = [sig+'_hzg' for sig in sigNameList]
 
           #card = open('testCards/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass])+'.txt','w')
-          cardName = 'outputDir/'+suffix+'_'+YR+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
+          cardName = 'outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
           card = open(cardName, 'w')
           card.write('#removed vulgarity\n')
           card.write('#cards produced by Brian Pollack\n')

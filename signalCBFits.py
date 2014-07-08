@@ -13,6 +13,7 @@ gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
 YR = cfl.YR
+sigFit = cfl.sigFit
 
 # rounding function for interpolation
 def roundTo5(x, base=5):
@@ -68,7 +69,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
   massList = cfl.massListBig
   sigNameList = cfl.sigNameList
 
-  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/initRooFitOut_'+suffix+'.root')
+  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
 #myWs.Print()
 
@@ -132,9 +133,12 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massLow == massHi:
           dsList.append(sig_ds_Low)
 
-        CBG_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
+        if sigFit == 'TripG':
+          SigFit_Low = BuildTripleGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG1 = massLow, meanG2 = massLow, meanG3 = massLow)[0]
+        else:
+          SigFit_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
 
-        CBG_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
         ###### fit the hi mass point
         #if massHi<=125:
@@ -146,9 +150,12 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         sig_ds_Hi = myWs.data(sigNameHi)
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
-        CBG_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
+        if sigFit == 'TripG':
+          SigFit_Hi = BuildTripleGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG1 = massHi, meanG2 = massHi, meanG3 = massHi)[0]
+        else:
+          SigFit_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
-        CBG_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -163,7 +170,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       else:
         beta.setVal(massDiff)
 
-      interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', CBG_Low, CBG_Hi, mzg, beta)
+      interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', SigFit_Low, SigFit_Hi, mzg, beta)
       interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
       yieldNum = (sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
       normList.append(yieldNum)
@@ -178,13 +185,16 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
-      CBG_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
+      if sigFit == 'TripG':
+        SigFit_Interp,paramList = BuildTripleGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG1 = mass, meanG2 = mass, meanG3 = mass)
+      else:
+        SigFit_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
-      CBG_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
-      fitList.append(CBG_Interp)
-      getattr(cardDict[lep][tev][cat][str(mass)],'import')(CBG_Interp)
+      fitList.append(SigFit_Interp)
+      getattr(cardDict[lep][tev][cat][str(mass)],'import')(SigFit_Interp)
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(yieldVar)
       cardDict[lep][tev][cat][str(mass)].commitTransaction()
 
@@ -202,18 +212,21 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
   for prod in sigNameList:
     for mass in massList:
-      SignalNameParamFixer(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
+      if sigFit == 'TripG':
+        SignalNameParamFixerTripG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
+      else:
+        SignalNameParamFixerCBG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
 
   for mass in massList:
     fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])
-    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass)
-    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass+'/'+fileName+'.root')
+    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass)
+    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+fileName+'.root')
 
 
 #signal = myWs.data('ds_sig_gg_el_2012_cat4_M125')
-#CBG = BuildCrystalBallGauss('2012','el','4','gg','125',mzg)
-#CBG.fitTo(signal, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.PrintLevel(-1))
-#CBG.fitTo(signal, RooFit.SumW2Error(kTRUE), RooFit.PrintLevel(-1))
+#SigFit = BuildCrystalBallGauss('2012','el','4','gg','125',mzg)
+#SigFit.fitTo(signal, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.PrintLevel(-1))
+#SigFit.fitTo(signal, RooFit.SumW2Error(kTRUE), RooFit.PrintLevel(-1))
 
 if __name__=="__main__":
   print len(sys.argv)

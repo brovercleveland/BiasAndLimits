@@ -18,16 +18,17 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   catListSmall = cfl.catListSmall[1:]
 
   YR = cfl.YR
+  sigFit = cfl.sigFit
 
   owd = os.getcwd()
   if inputFolder == None:
-    inputFolder = 'outputDir/'+suffix+'_'+YR+'/'+mass+'/'
+    inputFolder = 'outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'
   if outPutFolder == None:
-    outPutFolder = 'outputDir/'+suffix+'_'+YR+'/'+mass+'/limitOutput/'
+    outPutFolder = 'outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/limitOutput/'
   if not os.path.exists(outPutFolder):
     os.mkdir(outPutFolder)
 
-  shutil.copy('outputDir/'+suffix+'_'+YR+'/'+'CardBackground_'+suffix+'.root',inputFolder+'CardBackground_'+suffix+'.root')
+  shutil.copy('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+'CardBackground_'+suffix+'.root',inputFolder+'CardBackground_'+suffix+'.root')
 
 
 

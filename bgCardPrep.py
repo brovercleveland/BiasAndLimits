@@ -20,10 +20,11 @@ catListSmall = cfl.catListSmall
 catListBig = cfl.catListBig
 
 YR = cfl.YR
+sigFit = cfl.sigFit
 
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
-rooWsFile = TFile('outputDir/'+suffixCard+'_'+YR+'/initRooFitOut_'+suffixCard+'.root')
+rooWsFile = TFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffixCard+'.root')
 myWs = rooWsFile.Get('ws')
 card_ws = RooWorkspace('ws_card')
 #card_ws.autoImportClassCode(True)
@@ -112,7 +113,7 @@ for tev in tevList:
       #fit_ext.Print()
       BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
 
-card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'/CardBackground_'+suffixCard+'.root')
+card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/CardBackground_'+suffixCard+'.root')
 
 
 

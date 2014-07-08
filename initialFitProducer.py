@@ -28,6 +28,8 @@ suffix = cfl.suffix
 
 YR = cfl.YR
 
+sigFit = cfl.sigFit
+
 
 
 # OK listen, we're gunna need to do some bullshit just to get a uniform RooRealVar name for our data objects.
@@ -115,20 +117,23 @@ def doInitialFits():
                   mzg.setVal(tmpSigMass[0]+5)
                 else:
                   mzg.setVal(tmpSigMass[0])
+
                 if prod == 'WH' and (suffix == 'Proper' or year == '2011'):
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655,YR)
-                elif prod == 'WH' and suffix != 'Proper' and year == '2012':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.655,YR)/10
                 elif prod == 'ZH' and (suffix == 'Proper' or year == '2011'):
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345,YR)
-                elif prod == 'ZH' and suffix != 'Proper' and year == '2012':
-                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents*0.345,YR)/2
+                elif prod in ['WH','ZH','ttH'] and suffix != 'Proper' and year == '2012':
+                  sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents,YR,alt=True)
                 else:
                   sigWeight = LumiXSWeighter(year,lepton,prod,mass,tmpSigNumEvents,YR)
+
                 #if i == 0:
                 #  print year,lepton,prod,mass
                 #  print sigWeight
                 #  print
+                #  raw_input()
+                #if prod == 'ggH' and year == '2012' and mass == '125' and lepton == 'mu':
+                #  print sigWeight
                 #  raw_input()
 
                 sigWeight = tmpSigWeight[0]*sigWeight
@@ -436,9 +441,9 @@ def doInitialFits():
           getattr(ws,'import')(Bern4)
         ws.commitTransaction()
         print 'commited'
-  if not os.path.isdir('outputDir/'+suffix+'_'+YR): os.mkdir('outputDir/'+suffix+'_'+YR)
+  if not os.path.isdir('outputDir/'+suffix+'_'+YR+'_'+sigFit): os.mkdir('outputDir/'+suffix+'_'+YR+'_'+sigFit)
   print 'writing'
-  ws.writeToFile('outputDir/'+suffix+'_'+YR+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
+  ws.writeToFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root')
   #ws.writeToFile('wtf.root')
 
 

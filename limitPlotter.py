@@ -13,6 +13,7 @@ CMSStyle()
 fullCombo = True
 byParts = False
 YR = cfl.YR
+sigFit = cfl.sigFit
 #YR = 'YR2012ICHEP'
 suffix = cfl.suffix
 #suffix = '04-28-14_Proper'
@@ -51,7 +52,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     expExtra.append([])
   for mass in massList:
     if YR:
-      currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR,str(mass),'limitOutput'])
+      currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
     else:
       currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
@@ -98,7 +99,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     if len(extras) != 0:
       for i,extraSuffix in enumerate(extras):
         if YR:
-          currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR,str(mass),'limitOutput'])
+          currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
         else:
           currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
@@ -188,7 +189,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
   if YR:
-    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'.pdf')
+    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
   else:
     c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
 
