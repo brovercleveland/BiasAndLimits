@@ -30,6 +30,8 @@ YR = cfl.YR
 
 sigFit = cfl.sigFit
 
+highMass = cfl.highMass
+
 
 
 # OK listen, we're gunna need to do some bullshit just to get a uniform RooRealVar name for our data objects.
@@ -57,12 +59,19 @@ def doInitialFits():
   yearToTeV = {'2011':'7TeV','2012':'8TeV'}
 
   weight  = RooRealVar('Weight','Weight',0,100)
-  mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
-  mzg.setRange('fullRegion',100,190)
-  mzg.setRange('oldRegion',115,190)
-  mzg.setRange('MERegion',108,160)
+  if highMass:
+    print 'high!!!!!!!!!!!!!!!!!!'
+    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,500)
+    mzg.setRange('fullRegion',100,500)
+    mzg.setBins(1600)
+  else:
+    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
+    mzg.setRange('fullRegion',100,190)
+    mzg.setBins(360)
+
+  #mzg.setRange('oldRegion',115,190)
+  #mzg.setRange('MERegion',108,160)
   #mzg.setBins(360,'cache')
-  mzg.setBins(360)
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -152,7 +161,11 @@ def doInitialFits():
               histName = '_'.join(['sig',lepton,year,'cat'+cat,'M'+mass])
               rangeName = '_'.join(['range',lepton,year,'cat'+cat,'M'+mass])
 
-              signalList.append(TH1F(histName, histName, 90, 100, 190))
+              if highMass:
+                signalList.append(TH1F(histName, histName, 90, 100, 500))
+              else:
+                signalList.append(TH1F(histName, histName, 90, 100, 190))
+
               signalList[-1].SetLineColor(kRed)
               signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+'ggM'+mass)
 
@@ -186,21 +199,19 @@ def doInitialFits():
               getattr(ws,'import')(signalListPDF[-1])
               if verbose: print 'finshed one mass', mass
 
-            '''
-            if debugPlots and prod is 'gg':
-              testFrame = mzg.frame()
-              for i,signal in enumerate(signalListPDF):
-                signalListDH[i].plotOn(testFrame)
-                signal.plotOn(testFrame)
-              testFrame.Draw()
-              c.Print('debugPlots/'+'_'.join(['test','signals',suffix,year,lepton,'cat'+cat])+'.pdf')
-            if debugPlots:
-              testFrame = mzg.frame()
-              for signal in signalListDS:
-                signal.plotOn(testFrame, RooFit.DrawOption('pl'))
-              testFrame.Draw()
-              c.Print('debugPlots/'+'_'.join(['test','ds','sig',suffix,prod,year,lepton,'cat'+cat])+'.pdf')
-            '''
+            #if debugPlots and prod is 'gg':
+            #  testFrame = mzg.frame()
+            #  for i,signal in enumerate(signalListPDF):
+            #    signalListDH[i].plotOn(testFrame)
+            #    signal.plotOn(testFrame)
+            #  testFrame.Draw()
+            #  c.Print('debugPlots/'+'_'.join(['test','signals',suffix,year,lepton,'cat'+cat])+'.pdf')
+            #if debugPlots:
+            #  testFrame = mzg.frame()
+            #  for signal in signalListDS:
+            #    signal.plotOn(testFrame, RooFit.DrawOption('pl'))
+            #  testFrame.Draw()
+            #  c.Print('debugPlots/'+'_'.join(['test','ds','sig',suffix,prod,year,lepton,'cat'+cat])+'.pdf')
             del signalTree
 
 
@@ -225,22 +236,29 @@ def doInitialFits():
           data_ds = RooDataHist(dataName,dataName,data_argS)
         for i in range(0,dataTree.GetEntries()):
           dataTree.GetEntry(i)
-          if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<190:
-            mzg.setVal(tmpMassEventOld[0])
-            data_ds.add(data_argS)
+          if highMass:
+            print 'HIGH!!!!!!!!!!!!!'
+            if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<500:
+              mzg.setVal(tmpMassEventOld[0])
+              data_ds.add(data_argS)
+          else:
+            if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<190:
+              mzg.setVal(tmpMassEventOld[0])
+              data_ds.add(data_argS)
         dataTree.ResetBranchAddresses()
 
         if verbose:
           print dataName
           data_ds.Print()
           print
-        '''
         if debugPlots:
           testFrame = mzg.frame()
-          data_ds.plotOn(testFrame,RooFit.Binning(45))
+          if highMass:
+            data_ds.plotOn(testFrame,RooFit.Binning(200))
+          else:
+            data_ds.plotOn(testFrame,RooFit.Binning(45))
           testFrame.Draw()
           c.Print('debugPlots/'+'_'.join(['test','data',year,lepton,'cat'+cat])+'.pdf')
-        '''
         getattr(ws,'import')(data_ds)
 
 
@@ -322,7 +340,8 @@ def doInitialFits():
             if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
               GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
             else:
-              GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
+              #GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
+              GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'))
 
           if debugPlots:
             leg  = TLegend(0.7,0.7,1.0,1.0)
@@ -331,7 +350,10 @@ def doInitialFits():
             leg.SetBorderSize(1)
             leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
             testFrame = mzg.frame()
-            data_ds.plotOn(testFrame,RooFit.Binning(45))
+            if highMass:
+              data_ds.plotOn(testFrame,RooFit.Binning(200))
+            else:
+              data_ds.plotOn(testFrame,RooFit.Binning(45))
             #data_ds.plotOn(testFrame)
             if allBiasFits:
               GaussExp.plotOn(testFrame,RooFit.Name('GaussExp'))
@@ -356,7 +378,8 @@ def doInitialFits():
               if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
                 GaussBern4.plotOn(testFrame,RooFit.LineColor(kPink),RooFit.Name('GaussBern4'))
               else:
-                GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
+                #GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
+                GaussPow.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
             testFrame.Draw()
             if allBiasFits:
               #leg.AddEntry(testFrame.findObject('Beta'),'Beta','l')
@@ -380,7 +403,8 @@ def doInitialFits():
               if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
                 leg.AddEntry(testFrame.findObject('GaussBern4'),'GaussBern4','l')
               else:
-                leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
+                #leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
+                leg.AddEntry(testFrame.findObject('GaussPow'),'GaussPow','l')
             leg.Draw()
             c.Print('debugPlots/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
 
@@ -422,7 +446,10 @@ def doInitialFits():
 
           if debugPlots:
             testFrame = mzg.frame()
-            data_ds.plotOn(testFrame,RooFit.Binning(45))
+            if highMass:
+              data_ds.plotOn(testFrame,RooFit.Binning(200))
+            else:
+              data_ds.plotOn(testFrame,RooFit.Binning(45))
             if allBiasFits:
               Exp.plotOn(testFrame)
               Pow.plotOn(testFrame,RooFit.LineColor(kCyan))

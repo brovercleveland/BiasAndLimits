@@ -134,7 +134,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           dsList.append(sig_ds_Low)
 
         if sigFit == 'TripG':
-          SigFit_Low = BuildTripleGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG1 = massLow, meanG2 = massLow, meanG3 = massLow)[0]
+          SigFit_Low = BuildTripleGaussV2(tev,lep,cat,prod,str(massLow),'Low',mzg,mean1 = massLow)[0]
         else:
           SigFit_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
 
@@ -151,7 +151,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
         if sigFit == 'TripG':
-          SigFit_Hi = BuildTripleGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG1 = massHi, meanG2 = massHi, meanG3 = massHi)[0]
+          SigFit_Hi = BuildTripleGaussV2(tev,lep,cat,prod,str(massHi),'Hi',mzg,mean1 = massHi)[0]
         else:
           SigFit_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
@@ -186,7 +186,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
       if sigFit == 'TripG':
-        SigFit_Interp,paramList = BuildTripleGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG1 = mass, meanG2 = mass, meanG3 = mass)
+        SigFit_Interp,paramList = BuildTripleGaussV2(tev,lep,cat,prod,str(mass),'Interp',mzg,mean1 = mass)
       else:
         SigFit_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
@@ -208,12 +208,35 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
     testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+
+    testFrame = mzg.frame(115, 135)
+    for i,fit in enumerate(fitList):
+      regionName = fit.GetName().split('_')[-2]
+      #fit.plotOn(testFrame)
+      #fit.plotOn(testFrame, RooFit.NormRange('fitRegion_'+regionName))
+      if regionName == '125.0':
+        fit.plotOn(testFrame, RooFit.Name('model'),RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
+        fit.paramOn(testFrame)
+    for i,signal in enumerate(dsList):
+      regionName = signal.GetName().split('_')[-1]
+      if regionName == 'M125':
+        signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
+    testFrame.Draw()
+    ndof = 0
+    if sigFit == 'TripG': ndof = 8
+    else: ndof = 7
+    chi2 = testFrame.chiSquare('model','data',ndof)
+    txt = TText(128,0.025,'chi2/ndof: '+'{0:.3f}'.format(chi2))
+    txt.SetTextSize(0.04)
+    testFrame.addObject(txt)
+    testFrame.Draw()
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,'M125',suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:
       if sigFit == 'TripG':
-        SignalNameParamFixerTripG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
+        SignalNameParamFixerTripGV2(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
       else:
         SignalNameParamFixerCBG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
 
