@@ -78,21 +78,27 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       print 'obs:', obs[-1]
       print 'exp:', exp[-1]
     if len(obs) != len(xAxis):
+      obs.append(0.0)
       print 'obs busted for',mass
       raw_input()
     if len(exp) != len(xAxis):
+      exp.append(0.0)
       print 'exp busted for',mass
       raw_input()
     if len(exp1SigLow) != len(xAxis):
+      exp1SigLow.append(0.0)
       print 'exp1SigLow busted for',mass
       raw_input()
     if len(exp2SigLow) != len(xAxis):
+      exp2SigLow.append(0.0)
       print 'exp2SigLow busted for',mass
       raw_input()
     if len(exp1SigHi) != len(xAxis):
+      exp1SigHi.append(0.0)
       print 'exp1SigHi busted for',mass
       raw_input()
     if len(exp2SigHi) != len(xAxis):
+      exp2SigHi.append(0.0)
       print 'exp2SigHi busted for',mass
       raw_input()
 

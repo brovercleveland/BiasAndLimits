@@ -4,5 +4,7 @@ res
 *.so
 *.d
 *.pdf
+*.png
 *.out
 *.err
+*.root

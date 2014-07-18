@@ -611,8 +611,12 @@ def SignalNameParamFixerTripGV2(tev,lepton,cat,sig,mass,ws):
   newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
 
   mean1 = '_'.join(['mean1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+  mean2 = '_'.join(['mean2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+  mean3 = '_'.join(['mean3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
   sigma1 = '_'.join(['sigma1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
   mean1New = '_'.join(['sig',sig,'mean1',lepton,tev,'cat'+cat])
+  mean2New = '_'.join(['sig',sig,'mean2',lepton,tev,'cat'+cat])
+  mean3New = '_'.join(['sig',sig,'mean3',lepton,tev,'cat'+cat])
   sigma1New = '_'.join(['sig',sig,'sigma1',lepton,tev,'cat'+cat])
 
   mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
@@ -621,8 +625,10 @@ def SignalNameParamFixerTripGV2(tev,lepton,cat,sig,mass,ws):
   ws.factory(mShift+'[1]')
   ws.factory(sigmaShift+'[1]')
   ws.factory('prod::'+mean1New+'('+mean1+','+mShift+')')
+  ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
+  ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
   ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
-  ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+sigma1+'='+sigma1New+')')
+  ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','+sigma1+'='+sigma1New+')')
 
 def BackgroundNameFixer(tev,lepton,cat,ws,newCat = None,Ext = True):
   if newCat == None: newCat = cat

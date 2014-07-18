@@ -340,8 +340,8 @@ def doInitialFits():
             if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
               GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
             else:
-              #GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
-              GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'))
+              GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
+              #GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'))
 
           if debugPlots:
             leg  = TLegend(0.7,0.7,1.0,1.0)
@@ -378,8 +378,8 @@ def doInitialFits():
               if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
                 GaussBern4.plotOn(testFrame,RooFit.LineColor(kPink),RooFit.Name('GaussBern4'))
               else:
-                #GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
-                GaussPow.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
+                GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
+                #GaussPow.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
             testFrame.Draw()
             if allBiasFits:
               #leg.AddEntry(testFrame.findObject('Beta'),'Beta','l')
@@ -403,8 +403,8 @@ def doInitialFits():
               if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
                 leg.AddEntry(testFrame.findObject('GaussBern4'),'GaussBern4','l')
               else:
-                #leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
-                leg.AddEntry(testFrame.findObject('GaussPow'),'GaussPow','l')
+                leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
+                #leg.AddEntry(testFrame.findObject('GaussPow'),'GaussPow','l')
             leg.Draw()
             c.Print('debugPlots/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
 

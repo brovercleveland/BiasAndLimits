@@ -6,26 +6,26 @@
 ##########
 
 doMVA = False
-#suffix = 'Proper'
+suffix = 'Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
-suffix = '07-10-14_ProperHighMass'
+#suffix = '07-10-14_ProperHighMass'
 
-#leptonList = ['mu','el']
-leptonList = ['mu']
-#yearList = ['2011','2012']
-yearList = ['2012']
+leptonList = ['mu','el']
+#leptonList = ['mu']
+yearList = ['2011','2012']
+#yearList = ['2012']
 tevList = ['7TeV','8TeV']
 catListBig = ['0','1','2','3','4','5','6','7','8','9']
-#catListSmall = ['0','1','2','3','4','5']
-catListSmall = ['0']
+catListSmall = ['0','1','2','3','4','5']
+#catListSmall = ['0']
 massList = ['120','125','130','135','140','145','150','155','160']
 #massList = ['125']
-#sigNameList = ['ggH','qqH','ttH','WH','ZH']
-sigNameList = ['ggH']
+sigNameList = ['ggH','qqH','ttH','WH','ZH']
+#sigNameList = ['ggH']
 YR = 'YR3'
-highMass = True
+highMass = False
 
 ######################
 # initialFitProducer #
@@ -47,8 +47,8 @@ doExt = False
 # signalCBFits #
 ################
 
-sigFit = 'TripG'
-#sigFit = 'CBG'
+#sigFit = 'TripG'
+sigFit = 'CBG'
 
 massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
 '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -86,3 +86,10 @@ byParts = False
 
 mode = 'Combo'
 #mode = 'noCombo'
+
+if __name__=='configLimits':
+  for name in dir():
+      myvalue = eval(name)
+      if '__' not in name:
+        print name, "=", myvalue
+

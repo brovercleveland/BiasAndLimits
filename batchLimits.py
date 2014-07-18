@@ -10,8 +10,10 @@ massList = cfl.massListBig
 
 YR = cfl.YR
 
+sigFit = cfl.sigFit
+
 for mass in massList:
-  outPutFolder = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'/'+mass
+  outPutFolder = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass
   os.chdir(outPutFolder)
   if not os.path.isdir('limitOutput/res'):
     os.mkdir('limitOutput/res')

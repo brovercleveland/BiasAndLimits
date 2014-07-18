@@ -11,6 +11,7 @@ catListBig = cfl.catListBig
 catListSmall = cfl.catListSmall
 
 YR = cfl.YR
+sigFit = cfl.sigFit
 
 for lepton in leptonList:
   for tev in tevList:
@@ -32,13 +33,13 @@ Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory 
 +LENGTH                 = "LONG"
 GetEnv                  = True
 Input                   = /dev/null
-Output                  = signalRes/job_{0}_{1}_{2}_{3}_{4}.out
-Error                   = signalRes/job_{0}_{1}_{2}_{3}_{4}.err
+Output                  = signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.out
+Error                   = signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.err
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
 Queue
-      '''.format(myLepton,tev,cat,suffix,YR,'True'))
+      '''.format(myLepton,tev,cat,suffix,YR,'True',sigFit))
       consub.close()
 
       os.system('condor_submit submit.cmd')
