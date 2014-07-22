@@ -14,6 +14,7 @@ CMSStyle()
 
 YR = cfl.YR
 sigFit = cfl.sigFit
+testPoint = cfl.testPoint
 
 # rounding function for interpolation
 def roundTo5(x, base=5):
@@ -126,7 +127,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massLow<=100:
           mzg.setRange('fitRegion1',115,int(massLow)+10)
         else:
-          mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+10)
+          mzg.setRange('fitRegion1',int(massLow)-10,int(massLow)+10)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
         sig_ds_Low = myWs.data(sigNameLow)
         #sig_ds_Low = RooDataHist('dh'+sigNameLow[2:],'dh'+sigNameLow[2:],RooArgSet(mzg),sig_ds_Low)
@@ -145,7 +146,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massHi<=100:
           mzg.setRange('fitRegion2',115,int(massHi)+10)
         else:
-          mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+10)
+          mzg.setRange('fitRegion2',int(massHi)-10,int(massHi)+10)
         sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
         sig_ds_Hi = myWs.data(sigNameHi)
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
@@ -155,7 +156,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         else:
           SigFit_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
-        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -163,7 +164,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       if mass<=100:
         mzg.setRange('fitRegion_'+massString,115,mass+10)
       else:
-        mzg.setRange('fitRegion_'+massString,mass-15,mass+10)
+        mzg.setRange('fitRegion_'+massString,mass-10,mass+10)
       beta = RooRealVar('beta','beta', 0.5, 0., 1.)
       if massHi == massLow:
         beta.setVal(1);
@@ -190,7 +191,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       else:
         SigFit_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
-      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
       fitList.append(SigFit_Interp)
@@ -210,28 +211,35 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     testFrame.Draw()
     c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
-    testFrame = mzg.frame(115, 135)
+
+    testFrame = mzg.frame(float(testPoint)-10, float(testPoint)+10)
     for i,fit in enumerate(fitList):
       regionName = fit.GetName().split('_')[-2]
       #fit.plotOn(testFrame)
       #fit.plotOn(testFrame, RooFit.NormRange('fitRegion_'+regionName))
-      if regionName == '125.0':
+      if regionName == testPoint:
         fit.plotOn(testFrame, RooFit.Name('model'),RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
         fit.paramOn(testFrame)
-    for i,signal in enumerate(dsList):
-      regionName = signal.GetName().split('_')[-1]
-      if regionName == 'M125':
-        signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
+
+    if float(testPoint)%5==0:
+      for i,signal in enumerate(dsList):
+        regionName = signal.GetName().split('_')[-1]
+        if regionName == 'M'+testPoint[0:3]:
+          signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
+      testFrame.Draw()
+
+      ndof = 0
+      if sigFit == 'TripG': ndof = 8
+      else: ndof = 7
+      chi2 = testFrame.chiSquare('model','data',ndof)
+      txt = TText(0,0,'chi2/ndof: '+'{0:.3f}'.format(chi2))
+      txt.SetNDC()
+      txt.SetX(0.7)
+      txt.SetY(0.7)
+      txt.SetTextSize(0.04)
+      testFrame.addObject(txt)
     testFrame.Draw()
-    ndof = 0
-    if sigFit == 'TripG': ndof = 8
-    else: ndof = 7
-    chi2 = testFrame.chiSquare('model','data',ndof)
-    txt = TText(128,0.025,'chi2/ndof: '+'{0:.3f}'.format(chi2))
-    txt.SetTextSize(0.04)
-    testFrame.addObject(txt)
-    testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,'M125',suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,'M'+testPoint,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:

@@ -31,10 +31,6 @@ CMS_UEPS          lnN          1.070           1.249             -
 CMS_eff_id_j      lnN          1.016           1.017             -       
 CMS_eff_acc_j     lnN          1.009           1.021             -       
 CMS_hzg_err_BR    lnN       0.927/1.073     0.927/1.073          -       
-ggH_hzg_mShift_mu_8TeV_cat5              param          1         0.01   
-ggH_hzg_sigmaShift_mu_8TeV_cat5          param          1         0.05   
-qqH_hzg_mShift_mu_8TeV_cat5              param          1         0.01   
-qqH_hzg_sigmaShift_mu_8TeV_cat5          param          1         0.05   
 bkg_p1_mu_8TeV_cat5                           flatParam      
 bkg_p2_mu_8TeV_cat5                           flatParam      
 bkg_p3_mu_8TeV_cat5                           flatParam      

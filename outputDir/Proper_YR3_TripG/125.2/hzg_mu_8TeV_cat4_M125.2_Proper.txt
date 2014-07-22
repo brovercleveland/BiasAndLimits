@@ -8,18 +8,18 @@ shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
 shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
 shapes ggH_hzg  * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:ggH_hzg_mu_cat4_8TeV
 shapes qqH_hzg  * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:qqH_hzg_mu_cat4_8TeV
+shapes ttH_hzg  * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:ttH_hzg_mu_cat4_8TeV
 shapes WH_hzg   * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:WH_hzg_mu_cat4_8TeV
 shapes ZH_hzg   * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:ZH_hzg_mu_cat4_8TeV
-shapes ttH_hzg  * SignalOutput_mu_8TeV_cat4_125.2.root ws_card:ttH_hzg_mu_cat4_8TeV
 ---------------
 bin          mu_8TeV_cat4
 observation  4076
 ------------------------------
 bin                        mu_8TeV_cat4    mu_8TeV_cat4    mu_8TeV_cat4    mu_8TeV_cat4    mu_8TeV_cat4    mu_8TeV_cat4  
-process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
+process                       ZH_hzg          WH_hzg          ttH_hzg         qqH_hzg         ggH_hzg           bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.0037807       0.031321        0.040487        0.070149         1.0181             1       
+rate                         0.031321        0.040487        0.0037807       0.070149         1.0181             1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       1.078/0.922          -               -               -          0.922/1.072          -       
 pdf_qqbar         lnN            -          0.965/1.035     0.965/1.035     0.972/1.026          -               -       
@@ -34,16 +34,6 @@ CMS_scale_j       lnN            -               -               -             1
 CMS_res_j         lnN            -               -               -             1.014           1.001             -       
 CMS_UEPS          lnN            -               -               -             1.021           1.002             -       
 CMS_hzg_err_BR    lnN       0.912/1.090     0.912/1.090     0.912/1.090     0.912/1.090     0.912/1.090          -       
-ggH_hzg_mShift_mu_8TeV_cat4              param          1         0.01   
-ggH_hzg_sigmaShift_mu_8TeV_cat4          param          1         0.05   
-qqH_hzg_mShift_mu_8TeV_cat4              param          1         0.01   
-qqH_hzg_sigmaShift_mu_8TeV_cat4          param          1         0.05   
-WH_hzg_mShift_mu_8TeV_cat4               param          1         0.01   
-WH_hzg_sigmaShift_mu_8TeV_cat4           param          1         0.05   
-ZH_hzg_mShift_mu_8TeV_cat4               param          1         0.01   
-ZH_hzg_sigmaShift_mu_8TeV_cat4           param          1         0.05   
-ttH_hzg_mShift_mu_8TeV_cat4              param          1         0.01   
-ttH_hzg_sigmaShift_mu_8TeV_cat4          param          1         0.05   
 bkg_p1_mu_8TeV_cat4                           flatParam      
 bkg_p2_mu_8TeV_cat4                           flatParam      
 bkg_p3_mu_8TeV_cat4                           flatParam      

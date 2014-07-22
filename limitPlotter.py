@@ -10,8 +10,8 @@ import configLimits as cfl
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-fullCombo = True
-byParts = False
+fullCombo =cfl.fullCombo
+byParts = cfl.byParts
 YR = cfl.YR
 sigFit = cfl.sigFit
 #YR = 'YR2012ICHEP'
@@ -57,7 +57,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
       currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
     fileList = os.listdir(currentDir)
-    thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
+    if cfl.syst:
+      thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
+    else:
+      thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
     #print fileList
     #raw_input()
     f = open('/'.join([currentDir,thisFile]))
@@ -109,7 +112,10 @@ def LimitPlot(CardOutput,AnalysisSuffix):
         else:
           currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
-        thisFile = filter(lambda fileName: CardOutput in fileName,fileList)[0]
+        if cfl.syst:
+          thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
+        else:
+          thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
         f = open('/'.join([currentDir,thisFile]))
         for line in f:
           splitLine = line.split()
@@ -195,26 +201,36 @@ def LimitPlot(CardOutput,AnalysisSuffix):
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
   if YR:
-    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
+    if cfl.syst:
+      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
+    else:
+      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'_nosyst.pdf')
   else:
-    c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
+    if cfl.syst:
+      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
+    else:
+      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_nosyst.pdf')
 
 
 if __name__=='__main__':
   if fullCombo:
+    print 'FULL COMBO PLOT'
     LimitPlot('FullCombo',suffix)
   if byParts:
+    print 'BY PARTS PLOTS'
     leptonList = ['mu','el']
     tevList = ['8TeV','7TeV']
-    catListBig = ['1','2','3','4','5','6','7','8','9']
-    catListSmall = ['1','2','3','4','5']
+    catListBig = cfl.catListBig
+    catListSmall = cfl.catListSmall
     for lepton in leptonList:
       for tev in tevList:
         for cat in catListSmall:
+          if cat == '0': continue
           if cat == '5' and tev == '7TeV' and lepton == 'el': myLepton = 'all'
           elif cat == '5' and tev == '7TeV' and lepton == 'mu': continue
           else: myLepton = lepton
           outputName = '_'.join(['Output',myLepton,tev,'cat'+cat])
+          print outputName
           LimitPlot(outputName,suffix)
 
 

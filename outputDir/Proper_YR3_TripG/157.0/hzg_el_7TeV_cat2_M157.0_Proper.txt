@@ -8,18 +8,18 @@ shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
 shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
 shapes ggH_hzg  * SignalOutput_el_7TeV_cat2_157.0.root ws_card:ggH_hzg_el_cat2_7TeV
 shapes qqH_hzg  * SignalOutput_el_7TeV_cat2_157.0.root ws_card:qqH_hzg_el_cat2_7TeV
+shapes ttH_hzg  * SignalOutput_el_7TeV_cat2_157.0.root ws_card:ttH_hzg_el_cat2_7TeV
 shapes WH_hzg   * SignalOutput_el_7TeV_cat2_157.0.root ws_card:WH_hzg_el_cat2_7TeV
 shapes ZH_hzg   * SignalOutput_el_7TeV_cat2_157.0.root ws_card:ZH_hzg_el_cat2_7TeV
-shapes ttH_hzg  * SignalOutput_el_7TeV_cat2_157.0.root ws_card:ttH_hzg_el_cat2_7TeV
 ---------------
 bin          el_7TeV_cat2
 observation  617
 ------------------------------
 bin                        el_7TeV_cat2    el_7TeV_cat2    el_7TeV_cat2    el_7TeV_cat2    el_7TeV_cat2    el_7TeV_cat2  
-process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
+process                       ZH_hzg          WH_hzg          ttH_hzg         qqH_hzg         ggH_hzg           bkg      
 process                         -4              -3              -2              -1               0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                        0.00062546       0.0027252       0.003879        0.012948          0.174             1       
+rate                         0.0027252       0.003879       0.00062546       0.012948          0.174             1       
 -----------------------------------------------------------------------------------------------------------------------
 pdf_gg            lnN       1.086/0.914          -               -               -         0.9247/1.0749         -       
 pdf_qqbar         lnN            -          0.962/1.038     0.964/1.036     0.979/1.028          -               -       
@@ -35,16 +35,6 @@ CMS_res_j         lnN            -               -               -             1
 CMS_UEPS          lnN            -               -               -             1.035           1.002             -       
 CMS_hzg_eff_R9_7TeV lnN          1.050           1.050           1.050           1.050           1.050             -       
 CMS_hzg_err_BR    lnN       0.942/1.058     0.942/1.058     0.942/1.058     0.942/1.058     0.942/1.058          -       
-ggH_hzg_mShift_el_7TeV_cat2              param          1         0.01   
-ggH_hzg_sigmaShift_el_7TeV_cat2          param          1         0.05   
-qqH_hzg_mShift_el_7TeV_cat2              param          1         0.01   
-qqH_hzg_sigmaShift_el_7TeV_cat2          param          1         0.05   
-WH_hzg_mShift_el_7TeV_cat2               param          1         0.01   
-WH_hzg_sigmaShift_el_7TeV_cat2           param          1         0.05   
-ZH_hzg_mShift_el_7TeV_cat2               param          1         0.01   
-ZH_hzg_sigmaShift_el_7TeV_cat2           param          1         0.05   
-ttH_hzg_mShift_el_7TeV_cat2              param          1         0.01   
-ttH_hzg_sigmaShift_el_7TeV_cat2          param          1         0.05   
 bkg_p1_el_7TeV_cat2                           flatParam      
 bkg_p2_el_7TeV_cat2                           flatParam      
 bkg_p3_el_7TeV_cat2                           flatParam      

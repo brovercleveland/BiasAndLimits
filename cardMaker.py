@@ -26,8 +26,8 @@ def makeCards(MVATest = cfl.doMVA):
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList
-  catListSmall = cfl.catListSmall[1:]
-  catListBig = cfl.catListBig[1:]
+  catListSmall = cfl.catListSmall
+  catListBig = cfl.catListBig
   massList = cfl.massListBig
 
   YR = cfl.YR
@@ -50,7 +50,10 @@ def makeCards(MVATest = cfl.doMVA):
 
     for lepton in leptonList:
       for cat in catList:
-        sigNameList = ['ggH','qqH','WH','ZH','ttH']
+        if cat == '0': continue
+        sigNameList = cfl.sigNameList
+        if len(sigNameList)==5:
+          sigNameList = ['ggH','qqH','WH','ZH','ttH']
         if tev is '7TeV' and cat is '5' and lepton is 'mu': continue
         elif tev is '7TeV' and cat is '5' and lepton is 'el': lepton='all'
 
@@ -60,7 +63,7 @@ def makeCards(MVATest = cfl.doMVA):
         channel = '_'.join([lepton,tev,'cat'+cat])
         if cat is '5':
           bkgParams = ['p1','p2','p3','norm']
-          sigNameList = sigNameList[0:2]
+          sigNameList = filter(lambda i: i in ['ggH', 'qqH'],sigNameList)
         elif cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
           bkgParams = ['p1','p2','p3','p4','sigma','step','norm']
         else:
@@ -91,64 +94,157 @@ def makeCards(MVATest = cfl.doMVA):
           bgYield = bgWs.var('_'.join(['data','yield',lepton,tev,'cat'+cat])).getVal()
           card.write('{0:<12} {1}\n'.format('observation',int(bgYield)))
           card.write('------------------------------\n')
-          if cat is not '5':
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['bin']+[channel]*6)))
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['process']+prefixSigList[::-1]+['bkg'])))
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['process',-4,-3,-2,-1,0,1])))
-          else:
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15}\n'.format(*(['bin']+[channel]*3)))
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15}\n'.format(*(['process']+prefixSigList[::-1]+['bkg'])))
-            card.write('{0:<25} {1:^15} {2:^15} {3:^15}\n'.format(*(['process',-1,0,1])))
+
+          #card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['bin']+[channel]*6)))
+          card.write('{0:<25} '.format('bin'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15} '.format(channel))
+          card.write('{0:^15}\n'.format(channel))
+
+          #card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['process']+prefixSigList[::-1]+['bkg'])))
+          card.write('{0:<25} '.format('process'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15} '.format(sig))
+          card.write('{0:^15}\n'.format('bkg'))
+
+          #card.write('{0:<25} {1:^15} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15}\n'.format(*(['process',-4,-3,-2,-1,0,1])))
+          card.write('{0:<25} '.format('process'))
+          for i,sig in enumerate(prefixSigList[::-1]):
+            card.write('{0:^15} '.format(i+1-len(prefixSigList)))
+          card.write('{0:^15}\n'.format('1'))
+
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
           sigYields = []
           for sig in prefixSigList[::-1]:
             sigYields.append(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal())
-          if cat is not '5':
-            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
-            card.write('-----------------------------------------------------------------------------------------------------------------------\n')
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[tev][mass])]+['-']*3+[pdf_gg[tev][mass]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[tev][mass]]+[pdf_wh[tev][mass]]+[pdf_vbf[tev][mass]]+['-']*2)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']*4+[qcd_gg[tev][mass]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_qqH','lnN']+['-']*3+[qcd_vbf[tev][mass]]+['-']*2)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_VH','lnN']+['-']+[qcd_zh[tev][mass]]+[qcd_wh[tev][mass]]+['-']*3)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ttH','lnN']+[qcd_tth[tev][mass]]+['-']*5)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[tev]]*5+['-'])))
+          #if cat is not '5':
+          #card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
+          card.write('{0:<25} '.format('rate'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()))
+          card.write('{0:^15}\n'.format(1))
 
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[eff_l[tev][lepton]]*5+['-'])))
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0],'lnN']+[eff_trig[tev][lepton]]*5+['-'])))
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0],'lnN']+[eff_PU[tev][lepton]]*5+['-'])))
-            totalLeptonEffSys = AddInQuad([eff_l[tev][lepton],eff_trig[tev][lepton],eff_PU[tev][lepton]])
-            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[totalLeptonEffSys]*5+['-'])))
+          card.write('-----------------------------------------------------------------------------------------------------------------------\n')
 
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g','lnN']+[eff_g[tev][phoGeom]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
-            if cat in['1','2','6','7']:
-              card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_eff_R9_'+TeV,'lnN']+[eff_R9[tev]]*5+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*5+['-'])))
-          else:
-            card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15}\n'.format(*(['rate']+sigYields+[1])))
-            card.write('-----------------------------------------------------------------------------------------------------------------------\n')
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['pdf_gg','lnN']+['-']+[pdf_gg[tev][mass]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['pdf_qqbar','lnN']+[pdf_vbf[tev][mass]]+['-']*2)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']+[qcd_gg[tev][mass]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['QCDscale_qqH','lnN']+[qcd_vbf[tev][mass]]+['-']*2)))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[tev]]*2+['-'])))
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[tev][mass])]+['-']*3+[pdf_gg[tev][mass]]+['-'])))
+          card.write('{0:<17} {1:<7} '.format('pdf_gg','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ggH' in sig: card.write('{0:^15} '.format(pdf_gg[tev][mass]))
+            elif 'ttH' in sig: card.write('{0:^15} '.format(KapSwap(pdf_tth[tev][mass])))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
 
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[eff_l[tev][lepton]]*2+['-'])))
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_trig_'+lepton[0],'lnN']+[eff_trig[tev][lepton]]*2+['-'])))
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_PU_'+lepton[0],'lnN']+[eff_PU[tev][lepton]]*2+['-'])))
-            totalLeptonEffSys = AddInQuad([eff_l[tev][lepton],eff_trig[tev][lepton],eff_PU[tev][lepton]])
-            card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[totalLeptonEffSys]*5+['-'])))
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[tev][mass]]+[pdf_wh[tev][mass]]+[pdf_vbf[tev][mass]]+['-']*2)))
+          card.write('{0:<17} {1:<7} '.format('pdf_qqbar','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ZH' in sig: card.write('{0:^15} '.format(pdf_zh[tev][mass]))
+            elif 'WH' in sig: card.write('{0:^15} '.format(pdf_wh[tev][mass]))
+            elif 'qqH' in sig: card.write('{0:^15} '.format(pdf_vbf[tev][mass]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
 
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_g','lnN']+[eff_g[tev][phoGeom]]*2+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_scale_j','lnN']+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_res_j','lnN']+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_UEPS','lnN']+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_id_j','lnN']+jetId+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_acc_j','lnN']+jetAcc+['-'])))
-            card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*2+['-'])))
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']*4+[qcd_gg[tev][mass]]+['-'])))
+          card.write('{0:<17} {1:<7} '.format('QCDscale_ggH','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ggH' in sig: card.write('{0:^15} '.format(qcd_gg[tev][mass]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_qqH','lnN']+['-']*3+[qcd_vbf[tev][mass]]+['-']*2)))
+          card.write('{0:<17} {1:<7} '.format('QCDscale_qqH','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'qqH' in sig: card.write('{0:^15} '.format(qcd_vbf[tev][mass]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
+
+          if cat != '5':
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_VH','lnN']+['-']+[qcd_zh[tev][mass]]+[qcd_wh[tev][mass]]+['-']*3)))
+            card.write('{0:<17} {1:<7} '.format('QCDscale_VH','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'ZH' in sig: card.write('{0:^15} '.format(qcd_zh[tev][mass]))
+              elif 'WH' in sig: card.write('{0:^15} '.format(qcd_wh[tev][mass]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ttH','lnN']+[qcd_tth[tev][mass]]+['-']*5)))
+            card.write('{0:<17} {1:<7} '.format('QCDscale_ttH','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'ttH' in sig: card.write('{0:^15} '.format(qcd_tth[tev][mass]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[tev]]*5+['-'])))
+          card.write('{0:<17} {1:<7} '.format('lumi_'+TeV,'lnN'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15} '.format(lumi[tev]))
+          card.write('{0:^15}\n'.format('-'))
+
+          totalLeptonEffSys = AddInQuad([eff_l[tev][lepton],eff_trig[tev][lepton],eff_PU[tev][lepton]])
+          #card.write('{0:<17} {1:<7} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15.5} {7:^15.5}\n'.format(*(['CMS_eff_'+lepton[0],'lnN']+[totalLeptonEffSys]*5+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_eff_'+lepton[0],'lnN'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15.5} '.format(totalLeptonEffSys))
+          card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_eff_g','lnN']+[eff_g[tev][phoGeom]]*5+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_eff_g','lnN'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15} '.format(eff_g[tev][phoGeom]))
+          card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_scale_j','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ggH' in sig: card.write('{0:^15} '.format(jes_gg[cat]))
+            elif 'qqH' in sig: card.write('{0:^15} '.format(jes_vbf[cat]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_res_j','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ggH' in sig: card.write('{0:^15} '.format(jer_gg[cat]))
+            elif 'qqH' in sig: card.write('{0:^15} '.format(jer_vbf[cat]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_UEPS','lnN'))
+          for sig in prefixSigList[::-1]:
+            if 'ggH' in sig: card.write('{0:^15} '.format(ueps_gg[cat]))
+            elif 'qqH' in sig: card.write('{0:^15} '.format(ueps_vbf[cat]))
+            else: card.write('{0:^15} '.format('-'))
+          card.write('{0:^15}\n'.format('-'))
+
+          if cat == '5':
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_id_j','lnN']+jetId+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_eff_id_j','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'qqH' in sig: card.write('{0:^15} '.format(jetId[0]))
+              elif 'ggH' in sig: card.write('{0:^15} '.format(jetId[1]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_acc_j','lnN']+jetAcc+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_eff_acc_j','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'qqH' in sig: card.write('{0:^15} '.format(jetAcc[0]))
+              elif 'ggH' in sig: card.write('{0:^15} '.format(jetAcc[1]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+          if cat in['1','2','6','7']:
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_eff_R9_'+TeV,'lnN']+[eff_R9[tev]]*5+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_hzg_eff_R9_'+TeV,'lnN'))
+            for sig in prefixSigList[::-1]:
+              card.write('{0:^15} '.format(eff_R9[tev]))
+            card.write('{0:^15}\n'.format('-'))
+
+          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*5+['-'])))
+          card.write('{0:<17} {1:<7} '.format('CMS_hzg_err_BR','lnN'))
+          for sig in prefixSigList[::-1]:
+            card.write('{0:^15} '.format(err_BR[mass]))
+          card.write('{0:^15}\n'.format('-'))
 
           for sig in prefixSigList:
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))

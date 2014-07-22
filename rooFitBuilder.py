@@ -502,13 +502,13 @@ def BuildTripleGauss(tev,lepton,cat,sig,mass,piece,mzg, meanG1 = 125, meanG1Low 
   return TripG, paramList
   return TripG
 
-def BuildTripleGaussV2(tev,lepton,cat,sig,mass,piece,mzg, mean1 = 125, mean1Low = -1, mean1High = -1, sigma1 = 2, sigma1Low = 0.1, sigma1High = 8,
-    delta21 = 0, delta21Low = -10, delta21High = 10, s21 = 3, s21Low = 1, s21High = 30, delta31 = 0, delta31Low = -10, delta31High = 10,
+def BuildTripleGaussV2(tev,lepton,cat,sig,mass,piece,mzg, mean1 = 125, mean1Low = -1, mean1High = -1, sigma1 = 2, sigma1Low = 1, sigma1High = 8,
+    delta21 = 0, delta21Low = -2, delta21High = 2, s21 = 3, s21Low = 1, s21High = 30, delta31 = 0, delta31Low = -2, delta31High = 2,
     s32 = 3, s32Low = 1, s32High = 30, frac23 = 0.9, frac23Low = 0, frac23High = 1, frac123 = 0.9, frac123Low = 0, frac123High = 1):
 
   suffix = '_'.join([tev,lepton,'cat'+cat,sig,mass,piece])
-  if mean1Low is -1: mean1Low = mean1-5
-  if mean1High is -1: mean1High = mean1+5
+  if mean1Low is -1: mean1Low = mean1-1
+  if mean1High is -1: mean1High = mean1+1
 
   mean1Var = RooRealVar('mean1TripG_'+suffix,'mean1TripG_'+suffix, mean1, mean1Low, mean1High)
   sigma1Var = RooRealVar('sigma1TripG_'+suffix,'sigma1TripG_'+suffix, sigma1, sigma1Low, sigma1High)
@@ -614,10 +614,14 @@ def SignalNameParamFixerTripGV2(tev,lepton,cat,sig,mass,ws):
   mean2 = '_'.join(['mean2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
   mean3 = '_'.join(['mean3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
   sigma1 = '_'.join(['sigma1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+  sigma2 = '_'.join(['sigma2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+  sigma3 = '_'.join(['sigma3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
   mean1New = '_'.join(['sig',sig,'mean1',lepton,tev,'cat'+cat])
   mean2New = '_'.join(['sig',sig,'mean2',lepton,tev,'cat'+cat])
   mean3New = '_'.join(['sig',sig,'mean3',lepton,tev,'cat'+cat])
   sigma1New = '_'.join(['sig',sig,'sigma1',lepton,tev,'cat'+cat])
+  sigma2New = '_'.join(['sig',sig,'sigma2',lepton,tev,'cat'+cat])
+  sigma3New = '_'.join(['sig',sig,'sigma3',lepton,tev,'cat'+cat])
 
   mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
   sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
@@ -628,7 +632,10 @@ def SignalNameParamFixerTripGV2(tev,lepton,cat,sig,mass,ws):
   ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
   ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
   ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
-  ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','+sigma1+'='+sigma1New+')')
+  ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
+  ws.factory('prod::'+sigma3New+'('+sigma3+','+sigmaShift+')')
+  ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','
+      +sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+','+sigma3+'='+sigma3New+')')
 
 def BackgroundNameFixer(tev,lepton,cat,ws,newCat = None,Ext = True):
   if newCat == None: newCat = cat

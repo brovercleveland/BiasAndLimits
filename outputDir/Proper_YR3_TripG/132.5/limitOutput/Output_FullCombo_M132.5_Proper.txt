@@ -1,11 +1,1 @@
-At r = 5.572383:	q_mu = 4.17239	q_A  = 3.22414	CLsb = 0.01972	CLb  = 0.39587	CLs  = 0.04981
-
- -- Asymptotic -- 
-Observed Limit: r < 5.5724
-Expected  2.5%: r < 4.0252
-Expected 16.0%: r < 5.4247
-Expected 50.0%: r < 7.7188
-Expected 84.0%: r < 11.1339
-Expected 97.5%: r < 15.6160
-
-Done in 25.95 min (cpu), 26.19 min (real)
+NLL at global minimum of asimov: -82205.5 (r = 5.76626e-05)
