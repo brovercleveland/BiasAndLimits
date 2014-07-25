@@ -361,7 +361,8 @@ def BuildPow(tev,lepton,cat,mzg,alpha = 115, alphaLow = 50, alphaHigh = 200, bet
   SetOwnership(betaVar,0)
   return Pow
 
-def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30):
+#def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 3000, p2 = 5, p2Low = -1e-6, p2High = 3000):
+def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 3000, p2 = 5, p2Low =1e-3, p2High = 3000):
   suffix = '_'.join([tev,lepton,'cat'+cat])
   p0Var = RooRealVar('p0Bern2_'+suffix, 'p0Bern2_'+suffix,p0)
   p1Var = RooRealVar('p1Bern2_'+suffix, 'p1Bern2_'+suffix,p1,p1Low,p1High)
@@ -372,7 +373,8 @@ def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2
   SetOwnership(p2Var,0)
   return Bern2
 
-def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30):
+#def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 3000, p2 = 5, p2Low = -1e-6, p2High = 3000, p3 = 5, p3Low = -1e-6, p3High = 3000):
+def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 3000, p2 = 5, p2Low =1e-3, p2High = 3000, p3 = 5, p3Low =1e-3, p3High = 3000):
   suffix = '_'.join([tev,lepton,'cat'+cat])
   p0Var = RooRealVar('p0Bern3_'+suffix, 'p0Bern3_'+suffix,p0)
   p1Var = RooRealVar('p1Bern3_'+suffix, 'p1Bern3_'+suffix,p1,p1Low,p1High)
@@ -385,7 +387,8 @@ def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2
   SetOwnership(p3Var,0)
   return Bern3
 
-def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30):
+#def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 3000, p2 = 5, p2Low = -1e-6, p2High = 3000, p3 = 5, p3Low = -1e-6, p3High = 3000, p4 = 5, p4Low = -1e-6, p4High = 3000):
+def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 3000, p2 = 5, p2Low =1e-3, p2High = 3000, p3 = 5, p3Low =1e-3, p3High = 3000, p4 = 5, p4Low =1e-3, p4High = 3000):
   suffix = '_'.join([tev,lepton,'cat'+cat])
   p0Var = RooRealVar('p0Bern4_'+suffix, 'p0Bern4_'+suffix,p0)
   p1Var = RooRealVar('p1Bern4_'+suffix, 'p1Bern4_'+suffix,p1,p1Low,p1High)
@@ -400,7 +403,8 @@ def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2
   SetOwnership(p4Var,0)
   return Bern4
 
-def BuildBern5(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30, p5 = 5, p5Low = -1e-6, p5High = 30):
+#def BuildBern5(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 3000, p2 = 5, p2Low = -1e-6, p2High = 3000, p3 = 5, p3Low = -1e-6, p3High = 3000, p4 = 5, p4Low = -1e-6, p4High = 3000, p5 = 5, p5Low = -1e-6, p5High = 3000):
+def BuildBern5(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 3000, p2 = 5, p2Low =1e-3, p2High = 3000, p3 = 5, p3Low =1e-3, p3High = 3000, p4 = 5, p4Low =1e-3, p4High = 3000, p5 = 5, p5Low =1e-3, p5High = 3000):
   suffix = '_'.join([tev,lepton,'cat'+cat])
   p0Var = RooRealVar('p0Bern5_'+suffix, 'p0Bern5_'+suffix,p0)
   p1Var = RooRealVar('p1Bern5_'+suffix, 'p1Bern5_'+suffix,p1,p1Low,p1High)

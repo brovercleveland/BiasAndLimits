@@ -1,11 +1,4 @@
-At r = 45.358083:	q_mu = 3.56195	q_A  = 4.51627	CLsb = 0.02956	CLb  = 0.59400	CLs  = 0.04976
-
- -- Asymptotic -- 
-Observed Limit: r < 45.3581
-Expected  2.5%: r < 17.5852
-Expected 16.0%: r < 25.5082
-Expected 50.0%: r < 40.3750
-Expected 84.0%: r < 66.4467
-Expected 97.5%: r < 106.4922
-
-Done in 0.01 min (cpu), 0.01 min (real)
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_8TeV_cat5) evaluation error, 
+ origin       : RooAbsReal::mu_8TeV_cat5[ params=(CMS_UEPS,CMS_eff_acc_j,CMS_eff_g,CMS_eff_id_j,CMS_eff_m,CMS_hzg_err_BR,CMS_res_j,CMS_scale_j,QCDscale_ggH,QCDscale_qqH,bkg_p0_mu_8TeV_cat5,bkg_p1_mu_8TeV_cat5,bkg_p2_mu_8TeV_cat5,bkg_p3_mu_8TeV_cat5,delta21TripG_8TeV_mu_cat5_ggH_159.0_Interp,delta21TripG_8TeV_mu_cat5_qqH_159.0_Interp,delta31TripG_8TeV_mu_cat5_ggH_159.0_Interp,delta31TripG_8TeV_mu_cat5_qqH_159.0_Interp,frac123TripG_8TeV_mu_cat5_ggH_159.0_Interp,frac123TripG_8TeV_mu_cat5_qqH_159.0_Interp,frac23TripG_8TeV_mu_cat5_ggH_159.0_Interp,frac23TripG_8TeV_mu_cat5_qqH_159.0_Interp,lumi_8TeV,mean1TripG_8TeV_mu_cat5_ggH_159.0_Interp,mean1TripG_8TeV_mu_cat5_qqH_159.0_Interp,n_exp_binmu_8TeV_cat5_proc_bkg,pdf_gg,pdf_qqbar,r,s21TripG_8TeV_mu_cat5_ggH_159.0_Interp,s21TripG_8TeV_mu_cat5_qqH_159.0_Interp,s32TripG_8TeV_mu_cat5_ggH_159.0_Interp,s32TripG_8TeV_mu_cat5_qqH_159.0_Interp,shapeBkg_bkg_mu_8TeV_cat5__norm,sig_ggH_mShift_mu_8TeV_cat5,sig_ggH_sigmaShift_mu_8TeV_cat5,sig_qqH_mShift_mu_8TeV_cat5,sig_qqH_sigmaShift_mu_8TeV_cat5,sigma1TripG_8TeV_mu_cat5_ggH_159.0_Interp,sigma1TripG_8TeV_mu_cat5_qqH_159.0_Interp) ]
+ message      : Number of events is negative or error
+ server values: params=(CMS_UEPS = 0 +/- 5.8903,CMS_eff_acc_j = 0 +/- 5.8903,CMS_eff_g = 0 +/- 5.8903,CMS_eff_id_j = 0 +/- 5.8903,CMS_eff_m = 0 +/- 5.8903,CMS_hzg_err_BR = 0 +/- 5.8903,CMS_res_j = 0 +/- 5.8903,CMS_scale_j = 0 +/- 5.8903,QCDscale_ggH = 0 +/- 5.8903,QCDscale_qqH = 0 +/- 5.8903,bkg_p0_mu_8TeV_cat5 = 1,bkg_p1_mu_8TeV_cat5 = 1.66483 +/- 6.13015,bkg_p2_mu_8TeV_cat5 = 15 +/- 12.6221,bkg_p3_mu_8TeV_cat5 = 0.537388 +/- 6.64843,delta21TripG_8TeV_mu_cat5_ggH_159.0_Interp = -0.593122 +/- 0.644147,delta21TripG_8TeV_mu_cat5_qqH_159.0_Interp = -1.99966 +/- 13.4718,delta31TripG_8TeV_mu_cat5_ggH_159.0_Interp = 1.86976 +/- 4.50603,delta31TripG_8TeV_mu_cat5_qqH_159.0_Interp = 0.330967 +/- 11.2894,frac123TripG_8TeV_mu_cat5_ggH_159.0_Interp = 0.922965 +/- 0.419602,frac123TripG_8TeV_mu_cat5_qqH_159.0_Interp = 0.780297 +/- 0.418846,frac23TripG_8TeV_mu_cat5_ggH_159.0_Interp = 0.871465 +/- 2.75578,frac23TripG_8TeV_mu_cat5_qqH_159.0_Interp = 0.410277 +/- 0.545377,lumi_8TeV = 0 +/- 0,mean1TripG_8TeV_mu_cat5_ggH_159.0_Interp = 158....

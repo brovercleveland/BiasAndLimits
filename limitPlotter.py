@@ -218,8 +218,8 @@ if __name__=='__main__':
     LimitPlot('FullCombo',suffix)
   if byParts:
     print 'BY PARTS PLOTS'
-    leptonList = ['mu','el']
-    tevList = ['8TeV','7TeV']
+    leptonList = cfl.leptonList
+    tevList = cfl.tevList
     catListBig = cfl.catListBig
     catListSmall = cfl.catListSmall
     for lepton in leptonList:

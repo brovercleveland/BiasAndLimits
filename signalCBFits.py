@@ -156,7 +156,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         else:
           SigFit_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
 
-        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -191,11 +191,16 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       else:
         SigFit_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
 
-      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
       for param in paramList:
         param.setConstant(True)
       fitList.append(SigFit_Interp)
+
+      #newFitName = '_'.join([prod,'hzg',lep,'cat'+cat,tev])
+      #SigFit_Interp.SetName(newFitName)
+
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(SigFit_Interp)
+
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(yieldVar)
       cardDict[lep][tev][cat][str(mass)].commitTransaction()
 
@@ -244,6 +249,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
   for prod in sigNameList:
     for mass in massList:
       if sigFit == 'TripG':
+        #print 'nofix'
         SignalNameParamFixerTripGV2(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
       else:
         SignalNameParamFixerCBG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
