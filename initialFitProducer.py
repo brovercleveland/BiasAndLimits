@@ -61,21 +61,22 @@ def doInitialFits():
   weight  = RooRealVar('Weight','Weight',0,100)
   if highMass:
     print 'high!!!!!!!!!!!!!!!!!!'
-    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',140,400)
-    mzg.setRange('fullRegion',140,400)
-    mzg.setRange('plotRegion',150,400)
+    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',140,500)
+    mzg.setRange('fullRegion',140,500)
+    mzg.setRange('plotRegion',150,500)
     #mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',150,500)
     #mzg.setRange('fullRegion',150,500)
     #mzg.setBins(1600)
-    mzg.setBins(500)
+    mzg.setBins(50000,'cache')
+    mzg.setBins(700)
   else:
     mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
     mzg.setRange('fullRegion',100,190)
+    mzg.setBins(50000,'cache')
     mzg.setBins(360)
 
   #mzg.setRange('oldRegion',115,190)
   #mzg.setRange('MERegion',108,160)
-  #mzg.setBins(360,'cache')
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -167,7 +168,7 @@ def doInitialFits():
 
               if highMass:
                 #signalList.append(TH1F(histName, histName, 90, 150, 500))
-                signalList.append(TH1F(histName, histName, 90, 140, 400))
+                signalList.append(TH1F(histName, histName, 90, 140, 500))
               else:
                 signalList.append(TH1F(histName, histName, 90, 100, 190))
 
@@ -242,9 +243,9 @@ def doInitialFits():
         for i in range(0,dataTree.GetEntries()):
           dataTree.GetEntry(i)
           if highMass:
-            print 'HIGH!!!!!!!!!!!!!'
+            #print 'HIGH!!!!!!!!!!!!!'
             #if tmpMassEventOld[0]> 150 and tmpMassEventOld[0]<500:
-            if tmpMassEventOld[0]>= 140 and tmpMassEventOld[0]<400:
+            if tmpMassEventOld[0]>= 140 and tmpMassEventOld[0]<500:
               mzg.setVal(tmpMassEventOld[0])
               data_ds.add(data_argS)
           else:
@@ -358,7 +359,7 @@ def doInitialFits():
             leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
             testFrame = mzg.frame()
             if highMass:
-              data_ds.plotOn(testFrame,RooFit.Binning(130))
+              data_ds.plotOn(testFrame,RooFit.Binning(175))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             #data_ds.plotOn(testFrame)
@@ -429,20 +430,12 @@ def doInitialFits():
           getattr(ws,'import')(SechBern5)
 
         else:
-          if highMass:
-            Exp = BuildExp(yearToTeV[year], lepton, cat, mzg)
-            Pow = BuildPow(yearToTeV[year], lepton, cat, mzg)
-            Bern2 = BuildBern2(yearToTeV[year], lepton, cat, mzg)
-            Bern3 = BuildBern3(yearToTeV[year], lepton, cat, mzg)
-            Bern4 = BuildBern4(yearToTeV[year], lepton, cat, mzg)
-            Bern5 = BuildBern5(yearToTeV[year], lepton, cat, mzg)
-          else:
-            Exp = BuildExp(yearToTeV[year], lepton, cat, mzg)
-            Pow = BuildPow(yearToTeV[year], lepton, cat, mzg)
-            Bern2 = BuildBern2(yearToTeV[year], lepton, cat, mzg, p1 = 100, p2 =100)
-            Bern3 = BuildBern3(yearToTeV[year], lepton, cat, mzg, p1 = 100, p2 =100, p3 =100)
-            Bern4 = BuildBern4(yearToTeV[year], lepton, cat, mzg, p1 = 100, p2 =100, p3 =100, p4=100)
-            Bern5 = BuildBern5(yearToTeV[year], lepton, cat, mzg, p1 = 100, p2 =100, p3 =100, p4=100, p5=100)
+          Exp = BuildExp(yearToTeV[year], lepton, cat, mzg)
+          Pow = BuildPow(yearToTeV[year], lepton, cat, mzg)
+          Bern2 = BuildBern2(yearToTeV[year], lepton, cat, mzg)
+          Bern3 = BuildBern3(yearToTeV[year], lepton, cat, mzg)
+          Bern4 = BuildBern4(yearToTeV[year], lepton, cat, mzg)
+          Bern5 = BuildBern5(yearToTeV[year], lepton, cat, mzg)
 
           if verbose:
             Exp.Print()
@@ -453,22 +446,23 @@ def doInitialFits():
             Bern5.Print()
 
           if allBiasFits:
-            Exp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
-            Pow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
-            Bern2.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
-            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
-            Bern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
-            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
+            Exp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Pow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern2.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
           elif cat == '5':
-            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
+            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
           else:
-            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2), RooFit.SumW2Error(kTRUE))
+            print'fuck up start'
+            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            print'fuck up end'
 
           if debugPlots:
             testFrame = mzg.frame()
             if highMass:
-              #data_ds.plotOn(testFrame,RooFit.Binning(175))
-              data_ds.plotOn(testFrame,RooFit.Binning(65))
+              data_ds.plotOn(testFrame,RooFit.Binning(175))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             if allBiasFits:
@@ -481,16 +475,19 @@ def doInitialFits():
             elif cat == '5':
               Bern3.plotOn(testFrame,RooFit.LineColor(kPink))
             else:
+              print 'plot Bern5'
               Bern5.plotOn(testFrame,RooFit.LineColor(kGreen))
             testFrame.Draw()
             c.Print('debugPlots/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
 
+          print 'start import'
           getattr(ws,'import')(Exp)
           getattr(ws,'import')(Pow)
           getattr(ws,'import')(Bern2)
           getattr(ws,'import')(Bern3)
           getattr(ws,'import')(Bern4)
           getattr(ws,'import')(Bern5)
+          print 'end import'
         ws.commitTransaction()
         print 'commited'
   if not os.path.isdir('outputDir/'+suffix+'_'+YR+'_'+sigFit): os.mkdir('outputDir/'+suffix+'_'+YR+'_'+sigFit)

@@ -15,6 +15,7 @@ CMSStyle()
 YR = cfl.YR
 sigFit = cfl.sigFit
 testPoint = cfl.testPoint
+highMass = cfl.highMass
 
 # rounding function for interpolation
 def roundTo5(x, base=5):
@@ -125,9 +126,11 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         ###### fit the low mass point
         #if massLow<=125:
         if massLow<=100:
-          mzg.setRange('fitRegion1',115,int(massLow)+10)
+          mzg.setRange('fitRegion1',115,int(massLow)+15)
+        elif massLow > 160:
+          mzg.setRange('fitRegion1',int(massLow)-50,int(massLow)+50)
         else:
-          mzg.setRange('fitRegion1',int(massLow)-10,int(massLow)+10)
+          mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+15)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
         sig_ds_Low = myWs.data(sigNameLow)
         #sig_ds_Low = RooDataHist('dh'+sigNameLow[2:],'dh'+sigNameLow[2:],RooArgSet(mzg),sig_ds_Low)
@@ -144,9 +147,11 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         ###### fit the hi mass point
         #if massHi<=125:
         if massHi<=100:
-          mzg.setRange('fitRegion2',115,int(massHi)+10)
+          mzg.setRange('fitRegion2',115,int(massHi)+15)
+        elif massHi > 160:
+          mzg.setRange('fitRegion2',int(massHi)-50,int(massHi)+50)
         else:
-          mzg.setRange('fitRegion2',int(massHi)-10,int(massHi)+10)
+          mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+15)
         sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
         sig_ds_Hi = myWs.data(sigNameHi)
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
@@ -162,9 +167,11 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       massDiff = (massHi - mass)/5.
       #if mass<=125:
       if mass<=100:
-        mzg.setRange('fitRegion_'+massString,115,mass+10)
+        mzg.setRange('fitRegion_'+massString,115,mass+15)
+      elif mass > 160:
+        mzg.setRange('fitRegion_'+massString,mass-50,mass+50)
       else:
-        mzg.setRange('fitRegion_'+massString,mass-10,mass+10)
+        mzg.setRange('fitRegion_'+massString,mass-15,mass+15)
       beta = RooRealVar('beta','beta', 0.5, 0., 1.)
       if massHi == massLow:
         beta.setVal(1);
@@ -204,7 +211,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(yieldVar)
       cardDict[lep][tev][cat][str(mass)].commitTransaction()
 
-    testFrame = mzg.frame(float(massList[0])-10,float(massList[-1])+5)
+    testFrame = mzg.frame(float(massList[0])-15,float(massList[-1])+5)
     for i,fit in enumerate(fitList):
       regionName = fit.GetName().split('_')[-1]
       #fit.plotOn(testFrame)
@@ -217,7 +224,10 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
-    testFrame = mzg.frame(float(testPoint)-10, float(testPoint)+10)
+    if highMass:
+      testFrame = mzg.frame(float(testPoint)-50, float(testPoint)+50)
+    else:
+      testFrame = mzg.frame(float(testPoint)-15, float(testPoint)+15)
     for i,fit in enumerate(fitList):
       regionName = fit.GetName().split('_')[-2]
       #fit.plotOn(testFrame)

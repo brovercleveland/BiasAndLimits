@@ -10,16 +10,17 @@ doMVA = False
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
-#suffix = '07-23-14_PhoMVAHighMass'
+#suffix = '07-25-14_PhoMVAHighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
-suffix = '07-25-14_PhoMVA'
+#suffix = '07-25-14_PhoMVA'
+suffix = '07-29-14_Proper'
 
 leptonList = ['mu','el']
 #leptonList = ['mu']
 yearList = ['2011','2012']
-#yearList = ['2012']
+#yearList = ['2011']
 tevList = ['7TeV','8TeV']
-#tevList = ['8TeV']
+#tevList = ['7TeV']
 catListBig = ['0','1','2','3','4','5','6','7','8','9']
 catListSmall = ['0','1','2','3','4','5']
 #catListSmall = ['1']
@@ -30,7 +31,7 @@ sigNameList = ['ggH','qqH','ttH','WH','ZH']
 YR = 'YR3'
 highMass = False
 if highMass:
-  massList = ['200','300']
+  massList = ['200','300','400']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -40,7 +41,7 @@ if highMass:
 ######################
 
 debugPlots = True
-verbose = False
+verbose = True
 rootrace = False
 allBiasFits= False# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
@@ -74,8 +75,8 @@ massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','
 
 #massListBig = ['125.0']
 if highMass:
-  massListBig = ['200.0','300.0']
-  testPoint = '300.0'
+  massListBig = ['200.0','300.0','400.0']
+  testPoint = '200.0'
 
 ###############
 # batchSignal #
@@ -93,15 +94,15 @@ if highMass:
 # limitProducer #
 #################
 
-fullCombo = True
-byParts = False
+fullCombo = False
+byParts = True
 
 ###############
 # batchLimits #
 ###############
 
-mode = 'Combo'
-#mode = 'noCombo'
+#mode = 'Combo'
+mode = 'noCombo'
 
 syst = True
 
