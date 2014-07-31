@@ -61,14 +61,14 @@ def doInitialFits():
   weight  = RooRealVar('Weight','Weight',0,100)
   if highMass:
     print 'high!!!!!!!!!!!!!!!!!!'
-    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',140,500)
-    mzg.setRange('fullRegion',140,500)
+    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,300)
+    mzg.setRange('fullRegion',100,300)
     mzg.setRange('plotRegion',150,500)
     #mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',150,500)
     #mzg.setRange('fullRegion',150,500)
-    #mzg.setBins(1600)
-    mzg.setBins(50000,'cache')
-    mzg.setBins(700)
+    mzg.setBins(1600)
+    #mzg.setBins(50000,'cache')
+    #mzg.setBins(500)
   else:
     mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
     mzg.setRange('fullRegion',100,190)
@@ -168,7 +168,7 @@ def doInitialFits():
 
               if highMass:
                 #signalList.append(TH1F(histName, histName, 90, 150, 500))
-                signalList.append(TH1F(histName, histName, 90, 140, 500))
+                signalList.append(TH1F(histName, histName, 90, 100, 300))
               else:
                 signalList.append(TH1F(histName, histName, 90, 100, 190))
 
@@ -245,7 +245,7 @@ def doInitialFits():
           if highMass:
             #print 'HIGH!!!!!!!!!!!!!'
             #if tmpMassEventOld[0]> 150 and tmpMassEventOld[0]<500:
-            if tmpMassEventOld[0]>= 140 and tmpMassEventOld[0]<500:
+            if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<300:
               mzg.setVal(tmpMassEventOld[0])
               data_ds.add(data_argS)
           else:
@@ -276,31 +276,57 @@ def doInitialFits():
 #############
         if verbose: 'starting fits'
 
-        if cat is not '5' and not highMass:
-          GaussExp = BuildGaussExp(yearToTeV[year], lepton, cat, mzg)
-          #if lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 5, beta = 5)
-          #if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
-          #elif lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg)
-          #elif lepton == 'el' and cat == '3' and yearToTeV[year] == '2011': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
-          #elif lepton == 'el' and cat in ['0','4'] and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma =5, beta = 5)
-          #elif lepton == 'mu' and cat == '3' and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg,sigma = 2, beta = 6,alpha = 105)
-          GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 2, beta = 6,alpha = 105)
-          SechExp = BuildSechExp(yearToTeV[year], lepton, cat, mzg)
-          SechPow = BuildSechPow(yearToTeV[year], lepton, cat, mzg)
-          #GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg)
-          GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg, step = 117, sigma = 3)
-          GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg)
-          GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg)
-          GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg)
-          #GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
-          #SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg)
-          SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg, sigma = 10)
-          if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg,sigma=2)
-          else: SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg)
-          if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg,sigma=2)
-          else: SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg)
+        if cat is not '5':
+          if highMass:
+            GaussExp = BuildGaussExp(yearToTeV[year], lepton, cat, mzg)
+            #if lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 5, beta = 5)
+            #if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+            #elif lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg)
+            #elif lepton == 'el' and cat == '3' and yearToTeV[year] == '2011': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+            #elif lepton == 'el' and cat in ['0','4'] and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma =5, beta = 5)
+            #elif lepton == 'mu' and cat == '3' and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg,sigma = 2, beta = 6,alpha = 105)
+            GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 2, beta = 6,alpha = 105)
+            SechExp = BuildSechExp(yearToTeV[year], lepton, cat, mzg)
+            SechPow = BuildSechPow(yearToTeV[year], lepton, cat, mzg)
+            #GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg)
+            GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg, step = 110, sigma = 3)
+            GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg)
+            GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg)
+            GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg)
+            #GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg)
+            SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg, sigma = 10)
+            if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg,sigma=2)
+            else: SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg)
+            if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg,sigma=2)
+            else: SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg)
+          else:
+            GaussExp = BuildGaussExp(yearToTeV[year], lepton, cat, mzg)
+            #if lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 5, beta = 5)
+            #if lepton == 'mu' and cat == '1': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+            #elif lepton == 'mu': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg)
+            #elif lepton == 'el' and cat == '3' and yearToTeV[year] == '2011': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, alpha = 116)
+            #elif lepton == 'el' and cat in ['0','4'] and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma =5, beta = 5)
+            #elif lepton == 'mu' and cat == '3' and yearToTeV[year] == '2012': GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg,sigma = 2, beta = 6,alpha = 105)
+            GaussPow = BuildGaussPow(yearToTeV[year], lepton, cat, mzg, sigma = 2, beta = 6,alpha = 105)
+            SechExp = BuildSechExp(yearToTeV[year], lepton, cat, mzg)
+            SechPow = BuildSechPow(yearToTeV[year], lepton, cat, mzg)
+            #GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg)
+            GaussBern3 = BuildGaussStepBern3(yearToTeV[year], lepton, cat, mzg, step = 110, sigma = 3)
+            GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg)
+            GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg)
+            GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg)
+            #GaussBern4 = BuildGaussStepBern4(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #GaussBern5 = BuildGaussStepBern5(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #GaussBern6 = BuildGaussStepBern6(yearToTeV[year], lepton, cat, mzg, step = 105, stepLow = 100, stepHigh = 150, sigma = 2.5)
+            #SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg)
+            SechBern3 = BuildSechStepBern3(yearToTeV[year], lepton, cat, mzg, sigma = 10)
+            if lepton == 'mu' and cat == '3': SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg,sigma=2)
+            else: SechBern4 = BuildSechStepBern4(yearToTeV[year], lepton, cat, mzg)
+            if lepton == 'mu' and cat == '3': SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg,sigma=2)
+            else: SechBern5 = BuildSechStepBern5(yearToTeV[year], lepton, cat, mzg)
 
           gauss = BuildRooGaussian(yearToTeV[year], lepton, cat, mzg)
           BetaFunc = BuildBetaFunc(yearToTeV[year], lepton, cat, mzg, 'MERegion')
@@ -323,20 +349,22 @@ def doInitialFits():
             SechBern5.Print()
 
           if allBiasFits:
-            GaussExp.fitTo(data_ds,RooFit.Range('fullRegion'))
-            GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'))
-            SechExp.fitTo(data_ds,RooFit.Range('fullRegion'))
-            SechPow.fitTo(data_ds,RooFit.Range('fullRegion'))
-            GaussBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
-            GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
-            GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
+            if not highMass:
+              GaussBern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+              SechBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
+            GaussExp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            SechExp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            SechPow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            SechBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            SechBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+
             #GaussBern4.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
             #GaussBern5.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
             #GaussBern6.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
             #GaussBern6.fitTo(data_ds,RooFit.Range('fullRegion'))
-            SechBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
-            SechBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
-            SechBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
             #gauss.fitTo(data_ds,RooFit.Range('MERegion'))
             #BetaFunc.fitTo(data_ds,RooFit.Range('MERegion'))
             #Kumaraswamy.fitTo(data_ds,RooFit.Range('MERegion'))
@@ -359,28 +387,30 @@ def doInitialFits():
             leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
             testFrame = mzg.frame()
             if highMass:
-              data_ds.plotOn(testFrame,RooFit.Binning(175))
+              data_ds.plotOn(testFrame,RooFit.Binning(100))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             #data_ds.plotOn(testFrame)
             if allBiasFits:
+              if not highMass:
+                GaussBern3.plotOn(testFrame,RooFit.LineColor(kViolet),RooFit.Name('GaussBern3'))
+                SechBern3.plotOn(testFrame,RooFit.LineColor(kMagenta),RooFit.Name('SechBern3'))
               GaussExp.plotOn(testFrame,RooFit.Name('GaussExp'))
               GaussPow.plotOn(testFrame,RooFit.LineColor(kCyan),RooFit.Name('GaussPow'))
               SechExp.plotOn(testFrame,RooFit.LineColor(kRed),RooFit.Name('SechExp'))
               SechPow.plotOn(testFrame,RooFit.LineColor(kYellow),RooFit.Name('SechPow'))
-              GaussBern3.plotOn(testFrame,RooFit.LineColor(kViolet),RooFit.Name('GaussBern3'))
               GaussBern4.plotOn(testFrame,RooFit.LineColor(kPink),RooFit.Name('GaussBern4'))
               GaussBern5.plotOn(testFrame,RooFit.LineColor(kGray),RooFit.Name('GaussBern5'))
-              #GaussBern6.plotOn(testFrame,RooFit.LineColor(kGreen+2))
-              SechBern3.plotOn(testFrame,RooFit.LineColor(kMagenta),RooFit.Name('SechBern3'))
               SechBern4.plotOn(testFrame,RooFit.LineColor(kBlack),RooFit.Name('SechBern4'))
               SechBern5.plotOn(testFrame,RooFit.LineColor(kGreen),RooFit.Name('SechBern5'))
+
               #gauss.plotOn(testFrame,RooFit.LineColor(kBlue), RooFit.Name('Gauss'))
               #BetaFunc.plotOn(testFrame,RooFit.LineColor(kBlack), RooFit.Name('Beta'))
               #Kumaraswamy.plotOn(testFrame,RooFit.LineColor(kCyan), RooFit.Name('Kumaraswamy'))
               #Bern5.plotOn(testFrame,RooFit.LineColor(kRed), RooFit.Name('Bern5'))
               #BB.plotOn(testFrame,RooFit.LineColor(kViolet), RooFit.Name('Beta+Bern4'))
               #GB.plotOn(testFrame,RooFit.LineColor(kGreen), RooFit.Name('Gauss+Bern3'))
+              #GaussBern6.plotOn(testFrame,RooFit.LineColor(kGreen+2))
             else:
               # only do the limit fits
               if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
@@ -396,14 +426,17 @@ def doInitialFits():
               #leg.AddEntry(testFrame.findObject('Beta+Bern4'),'Beta+Bern4','l')
               #leg.AddEntry(testFrame.findObject('Gauss'),'Gauss','l')
               #leg.AddEntry(testFrame.findObject('Gauss+Bern3'),'Gauss+Bern3','l')
+
               leg.AddEntry(testFrame.findObject('GaussExp'),'GaussExp','l')
               leg.AddEntry(testFrame.findObject('GaussPow'),'GaussPow','l')
               leg.AddEntry(testFrame.findObject('SechExp'),'SechExp','l')
               leg.AddEntry(testFrame.findObject('SechPow'),'SechPow','l')
-              leg.AddEntry(testFrame.findObject('GaussBern3'),'GaussBern3','l')
+
+              if not highMass:
+                leg.AddEntry(testFrame.findObject('GaussBern3'),'GaussBern3','l')
+                leg.AddEntry(testFrame.findObject('SechBern3'),'SechBern3','l')
               leg.AddEntry(testFrame.findObject('GaussBern4'),'GaussBern4','l')
               leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
-              leg.AddEntry(testFrame.findObject('SechBern3'),'SechBern3','l')
               leg.AddEntry(testFrame.findObject('SechBern4'),'SechBern4','l')
               leg.AddEntry(testFrame.findObject('SechBern5'),'SechBern5','l')
             else:
@@ -462,7 +495,7 @@ def doInitialFits():
           if debugPlots:
             testFrame = mzg.frame()
             if highMass:
-              data_ds.plotOn(testFrame,RooFit.Binning(175))
+              data_ds.plotOn(testFrame,RooFit.Binning(100))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             if allBiasFits:

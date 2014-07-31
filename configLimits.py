@@ -10,26 +10,26 @@ doMVA = False
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
-#suffix = '07-25-14_PhoMVAHighMass'
+suffix = '07-25-14_PhoMVAHighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVA'
-suffix = '07-29-14_Proper'
+#suffix = '07-29-14_Proper'
 
-leptonList = ['mu','el']
-#leptonList = ['mu']
-yearList = ['2011','2012']
-#yearList = ['2011']
-tevList = ['7TeV','8TeV']
-#tevList = ['7TeV']
+#leptonList = ['mu','el']
+leptonList = ['mu']
+#yearList = ['2011','2012']
+yearList = ['2012']
+#tevList = ['7TeV','8TeV']
+tevList = ['8TeV']
 catListBig = ['0','1','2','3','4','5','6','7','8','9']
-catListSmall = ['0','1','2','3','4','5']
-#catListSmall = ['1']
+#catListSmall = ['0','1','2','3','4','5']
+catListSmall = ['0']
 massList = ['120','125','130','135','140','145','150','155','160']
 #massList = ['125']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 #sigNameList = ['ggH']
 YR = 'YR3'
-highMass = False
+highMass = True
 if highMass:
   massList = ['200','300','400']
   sigNameList = ['ggH']
@@ -43,10 +43,11 @@ if highMass:
 debugPlots = True
 verbose = True
 rootrace = False
-allBiasFits= False# Turn on extra fits used in bias studies
+allBiasFits= True# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 if highMass:
   sigNameListInput = ['gg']
+  catListSmall = ['0']
 
 
 ##############

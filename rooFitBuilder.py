@@ -377,15 +377,32 @@ def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2
 #def BuildBern3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30, p3 = 5, p3Low =1e-3, p3High = 30):
   suffix = '_'.join([tev,lepton,'cat'+cat])
   p0Var = RooRealVar('p0Bern3_'+suffix, 'p0Bern3_'+suffix,p0)
-  p1Var = RooRealVar('p1Bern3_'+suffix, 'p1Bern3_'+suffix,p1,p1Low,p1High)
-  p2Var = RooRealVar('p2Bern3_'+suffix, 'p2Bern3_'+suffix,p2,p2Low,p2High)
-  p3Var = RooRealVar('p3Bern3_'+suffix, 'p3Bern3_'+suffix,p3,p3Low,p3High)
+  #p1Var = RooRealVar('p1Bern3_'+suffix, 'p1Bern3_'+suffix,p1,p1Low,p1High)
+  #p2Var = RooRealVar('p2Bern3_'+suffix, 'p2Bern3_'+suffix,p2,p2Low,p2High)
+  #p3Var = RooRealVar('p3Bern3_'+suffix, 'p3Bern3_'+suffix,p3,p3Low,p3High)
+  p1Var = RooRealVar('p1Bern3_'+suffix, 'p1Bern3_'+suffix,p1)
+  p2Var = RooRealVar('p2Bern3_'+suffix, 'p2Bern3_'+suffix,p2)
+  p3Var = RooRealVar('p3Bern3_'+suffix, 'p3Bern3_'+suffix,p3)
   Bern3 = RooBernstein('Bern3_'+suffix,'Bern3_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
   SetOwnership(p0Var,0)
   SetOwnership(p1Var,0)
   SetOwnership(p2Var,0)
   SetOwnership(p3Var,0)
   return Bern3
+
+def BuildPoly3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -3000, p1High = 3000, p2 = 5, p2Low = -3000, p2High = 3000, p3 = 5, p3Low = -3000, p3High = 3000):
+#def BuildPoly3(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30, p3 = 5, p3Low =1e-3, p3High = 30):
+  suffix = '_'.join([tev,lepton,'cat'+cat])
+  p0Var = RooRealVar('p0Poly3_'+suffix, 'p0Poly3_'+suffix,p0)
+  p1Var = RooRealVar('p1Poly3_'+suffix, 'p1Poly3_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2Poly3_'+suffix, 'p2Poly3_'+suffix,p2,p2Low,p2High)
+  p3Var = RooRealVar('p3Poly3_'+suffix, 'p3Poly3_'+suffix,p3,p3Low,p3High)
+  Poly3 = RooPolynomial('Poly3_'+suffix,'Poly3_'+suffix,mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  return Poly3
 
 def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30):
 #def BuildBern4(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30, p3 = 5, p3Low =1e-3, p3High = 30, p4 = 5, p4Low =1e-3, p4High = 30):
