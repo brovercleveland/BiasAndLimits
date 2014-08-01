@@ -61,17 +61,17 @@ def doInitialFits():
   weight  = RooRealVar('Weight','Weight',0,100)
   if highMass:
     print 'high!!!!!!!!!!!!!!!!!!'
-    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,300)
-    mzg.setRange('fullRegion',100,300)
-    mzg.setRange('plotRegion',150,500)
+    mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,500)
+    mzg.setRange('full',100,190)
+    mzg.setRange('plotRegion',100,500)
     #mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',150,500)
-    #mzg.setRange('fullRegion',150,500)
+    #mzg.setRange('full',150,500)
     mzg.setBins(1600)
     #mzg.setBins(50000,'cache')
     #mzg.setBins(500)
   else:
     mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',100,190)
-    mzg.setRange('fullRegion',100,190)
+    mzg.setRange('full',100,190)
     mzg.setBins(50000,'cache')
     mzg.setBins(360)
 
@@ -168,7 +168,7 @@ def doInitialFits():
 
               if highMass:
                 #signalList.append(TH1F(histName, histName, 90, 150, 500))
-                signalList.append(TH1F(histName, histName, 90, 100, 300))
+                signalList.append(TH1F(histName, histName, 90, 100, 500))
               else:
                 signalList.append(TH1F(histName, histName, 90, 100, 190))
 
@@ -245,7 +245,7 @@ def doInitialFits():
           if highMass:
             #print 'HIGH!!!!!!!!!!!!!'
             #if tmpMassEventOld[0]> 150 and tmpMassEventOld[0]<500:
-            if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<300:
+            if tmpMassEventOld[0]> 100 and tmpMassEventOld[0]<500:
               mzg.setVal(tmpMassEventOld[0])
               data_ds.add(data_argS)
           else:
@@ -349,22 +349,22 @@ def doInitialFits():
             SechBern5.Print()
 
           if allBiasFits:
-            if not highMass:
-              GaussBern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-              SechBern3.fitTo(data_ds,RooFit.Range('fullRegion'))
-            GaussExp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            SechExp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            SechPow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            SechBern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            SechBern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            #if not highMass:
+            GaussBern3.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            SechBern3.fitTo(data_ds,RooFit.Range('full'))
+            GaussExp.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            GaussPow.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            SechExp.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            SechPow.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            GaussBern4.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            GaussBern5.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            SechBern4.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            SechBern5.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
 
             #GaussBern4.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
             #GaussBern5.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
             #GaussBern6.fitTo(data_ds,RooFit.Range('MERegion'), RooFit.Strategy(1))
-            #GaussBern6.fitTo(data_ds,RooFit.Range('fullRegion'))
+            #GaussBern6.fitTo(data_ds,RooFit.Range('full'))
             #gauss.fitTo(data_ds,RooFit.Range('MERegion'))
             #BetaFunc.fitTo(data_ds,RooFit.Range('MERegion'))
             #Kumaraswamy.fitTo(data_ds,RooFit.Range('MERegion'))
@@ -374,10 +374,10 @@ def doInitialFits():
           else:
             # only do the limit fits
             if cat is '1' and (lepton is 'el' or (lepton is 'mu' and year is '2011')):
-              GaussBern4.fitTo(data_ds,RooFit.Range('fullRegion'))
+              GaussBern4.fitTo(data_ds,RooFit.Range('full'))
             else:
-              GaussBern5.fitTo(data_ds,RooFit.Range('fullRegion'))
-              #GaussPow.fitTo(data_ds,RooFit.Range('fullRegion'))
+              GaussBern5.fitTo(data_ds,RooFit.Range('full'))
+              #GaussPow.fitTo(data_ds,RooFit.Range('full'))
 
           if debugPlots:
             leg  = TLegend(0.7,0.7,1.0,1.0)
@@ -387,14 +387,14 @@ def doInitialFits():
             leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
             testFrame = mzg.frame()
             if highMass:
-              data_ds.plotOn(testFrame,RooFit.Binning(100))
+              data_ds.plotOn(testFrame,RooFit.Binning(200))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             #data_ds.plotOn(testFrame)
             if allBiasFits:
-              if not highMass:
-                GaussBern3.plotOn(testFrame,RooFit.LineColor(kViolet),RooFit.Name('GaussBern3'))
-                SechBern3.plotOn(testFrame,RooFit.LineColor(kMagenta),RooFit.Name('SechBern3'))
+              #if not highMass:
+              GaussBern3.plotOn(testFrame,RooFit.LineColor(kViolet),RooFit.Name('GaussBern3'))
+              SechBern3.plotOn(testFrame,RooFit.LineColor(kMagenta),RooFit.Name('SechBern3'))
               GaussExp.plotOn(testFrame,RooFit.Name('GaussExp'))
               GaussPow.plotOn(testFrame,RooFit.LineColor(kCyan),RooFit.Name('GaussPow'))
               SechExp.plotOn(testFrame,RooFit.LineColor(kRed),RooFit.Name('SechExp'))
@@ -432,9 +432,9 @@ def doInitialFits():
               leg.AddEntry(testFrame.findObject('SechExp'),'SechExp','l')
               leg.AddEntry(testFrame.findObject('SechPow'),'SechPow','l')
 
-              if not highMass:
-                leg.AddEntry(testFrame.findObject('GaussBern3'),'GaussBern3','l')
-                leg.AddEntry(testFrame.findObject('SechBern3'),'SechBern3','l')
+              #if not highMass:
+              leg.AddEntry(testFrame.findObject('GaussBern3'),'GaussBern3','l')
+              leg.AddEntry(testFrame.findObject('SechBern3'),'SechBern3','l')
               leg.AddEntry(testFrame.findObject('GaussBern4'),'GaussBern4','l')
               leg.AddEntry(testFrame.findObject('GaussBern5'),'GaussBern5','l')
               leg.AddEntry(testFrame.findObject('SechBern4'),'SechBern4','l')
@@ -479,23 +479,23 @@ def doInitialFits():
             Bern5.Print()
 
           if allBiasFits:
-            Exp.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            Pow.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            Bern2.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            Bern4.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
-            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Exp.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            Pow.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            Bern2.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            Bern3.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            Bern4.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
+            Bern5.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
           elif cat == '5':
-            Bern3.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern3.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
           else:
             print'fuck up start'
-            Bern5.fitTo(data_ds,RooFit.Range('fullRegion'), RooFit.Strategy(2))
+            Bern5.fitTo(data_ds,RooFit.Range('full'), RooFit.Strategy(2))
             print'fuck up end'
 
           if debugPlots:
             testFrame = mzg.frame()
             if highMass:
-              data_ds.plotOn(testFrame,RooFit.Binning(100))
+              data_ds.plotOn(testFrame,RooFit.Binning(200))
             else:
               data_ds.plotOn(testFrame,RooFit.Binning(45))
             if allBiasFits:

@@ -24,12 +24,12 @@ tevList = ['8TeV']
 catListBig = ['0','1','2','3','4','5','6','7','8','9']
 #catListSmall = ['0','1','2','3','4','5']
 catListSmall = ['0']
-massList = ['120','125','130','135','140','145','150','155','160']
-#massList = ['125']
-sigNameList = ['ggH','qqH','ttH','WH','ZH']
-#sigNameList = ['ggH']
+#massList = ['120','125','130','135','140','145','150','155','160']
+massList = ['200']
+#sigNameList = ['ggH','qqH','ttH','WH','ZH']
+sigNameList = ['ggH']
 YR = 'YR3'
-highMass = True
+highMass = False
 if highMass:
   massList = ['200','300','400']
   sigNameList = ['ggH']

@@ -160,6 +160,7 @@ def BuildGaussStepBern3(tev,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.01,
   pArgs = RooArgList(p0Var,p1Var,p2Var,p3Var)
   GaussBern3 = RooGaussStepBernstein('GaussBern3_'+suffix,'GaussBern3_'+suffix,mzg,meanVar,sigmaVar,stepVar,pArgs)
 
+  returnArgs = [meanVar,sigmaVar,stepVar,p0Var,p1Var,p2Var,p3Var]
   SetOwnership(meanVar,0)
   SetOwnership(sigmaVar,0)
   SetOwnership(stepVar,0)
@@ -167,7 +168,31 @@ def BuildGaussStepBern3(tev,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.01,
   SetOwnership(p1Var,0)
   SetOwnership(p2Var,0)
   SetOwnership(p3Var,0)
-  return GaussBern3
+  return GaussBern3,returnArgs
+
+def BuildGaussStepBern3Const(tev,lepton,cat,mzg,mean = 0, sigma = 4, step = 115,
+    p0 = 15, p1 = 0.3, p2 = 0.3, p3 = 0.3):
+  suffix = '_'.join([tev,lepton,'cat'+cat])
+  meanVar = RooRealVar('meanGaussBern3_'+suffix,'meanGaussBern3_'+suffix, mean)
+  sigmaVar = RooRealVar('sigmaGaussBern3_'+suffix,'sigmaGaussBern3_'+suffix,sigma)
+  stepVar = RooRealVar('stepGaussBern3_'+suffix,'stepGaussBern3_'+suffix,step)
+  p0Var = RooRealVar('p0GaussBern3_'+suffix,'p0GaussBern3_'+suffix,p0)
+  p1Var = RooRealVar('p1GaussBern3_'+suffix,'p1GaussBern3_'+suffix,p1)
+  p2Var = RooRealVar('p2GaussBern3_'+suffix,'p2GaussBern3_'+suffix,p2)
+  p3Var = RooRealVar('p3GaussBern3_'+suffix,'p3GaussBern3_'+suffix,p3)
+
+  pArgs = RooArgList(p0Var,p1Var,p2Var,p3Var)
+  GaussBern3 = RooGaussStepBernstein('GaussBern3_'+suffix,'GaussBern3_'+suffix,mzg,meanVar,sigmaVar,stepVar,pArgs)
+
+  returnArgs = [meanVar,sigmaVar,stepVar,p0Var,p1Var,p2Var,p3Var]
+  SetOwnership(meanVar,0)
+  SetOwnership(sigmaVar,0)
+  SetOwnership(stepVar,0)
+  SetOwnership(p0Var,0)
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  SetOwnership(p3Var,0)
+  return GaussBern3,returnArgs
 
 def BuildGaussStepBern4(tev,lepton,cat,mzg,mean = 0, sigma = 4, sigmaLow = 0.001, sigmaHigh = 60, step = 115, stepLow = 100, stepHigh = 130,
     p0 = 15, p1 = 0.4, p1Low = -1e-6, p1High = 900,p2 = 0.4, p2Low = -1e-6, p2High = 900,p3 = 0.4, p3Low = -1e-6, p3High = 900, p4 = 0.4, p4Low = -1e-6, p4High = 900):
