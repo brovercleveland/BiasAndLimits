@@ -386,6 +386,15 @@ def BuildPow(tev,lepton,cat,mzg,alpha = 115, alphaLow = 50, alphaHigh = 200, bet
   SetOwnership(betaVar,0)
   return Pow
 
+def BuildPowDecay(tev,lepton,cat,mzg,p1 = 1, p1Low = -20, p1High = 20, p2 = 1, p2Low = -20, p2High = 20):
+  suffix = '_'.join([tev,lepton,'cat'+cat])
+  p1Var = RooRealVar('p1PowDecay_'+suffix,'p1PowDecay_'+suffix,p1,p1Low,p1High)
+  p2Var = RooRealVar('p2PowDecay_'+suffix,'p2PowDecay_'+suffix,p2,p2Low,p2High)
+  PowDecay = RooGenericPdf('PowDecay_'+suffix,'PowDecay_'+suffix,'exp(-@1)*((@0)^(-@2))',RooArgList(mzg,p1Var,p2Var))
+  SetOwnership(p1Var,0)
+  SetOwnership(p2Var,0)
+  return PowDecay
+
 def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30):
 #def BuildBern2(tev,lepton,cat,mzg,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30):
   suffix = '_'.join([tev,lepton,'cat'+cat])
