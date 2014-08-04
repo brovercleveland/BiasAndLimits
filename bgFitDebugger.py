@@ -29,7 +29,7 @@ year = cfl.yearList[0]
 cat= cfl.catListSmall[0]
 mass = cfl.massList[0]
 
-bgFitList = ['Pow','PowDecay']
+bgFitList = ['Pow','PowDecay','PowLog','Exp2','Laurent','ExpSum']
 
 yearToTeV = {'2011':'7TeV','2012':'8TeV'}
 
@@ -93,7 +93,7 @@ for fitName in bgFitList:
   ndof = fitBuilder.FitNdofDict[fitName]
   fit = fitBuilder.Build(fitName)
   fit.Print()
-  fit.fitTo(data_ds, RooFit.Strategy(2))
+  fit.fitTo(data_ds, RooFit.Strategy(1))
   fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
   testFrame.Draw()
   chi2 = testFrame.chiSquare(fitName,'data',ndof)
