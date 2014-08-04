@@ -29,6 +29,8 @@ year = cfl.yearList[0]
 cat= cfl.catListSmall[0]
 mass = cfl.massList[0]
 
+bgFitList = ['Pow','PowDecay']
+
 yearToTeV = {'2011':'7TeV','2012':'8TeV'}
 
 xmin = 150
@@ -73,36 +75,34 @@ dataTree.ResetBranchAddresses()
 #############
 # make fits #
 #############
-Pow = BuildPow(yearToTeV[year], lepton, cat, mzg)
-PowDecay= BuildPowDecay(yearToTeV[year], lepton, cat, mzg)
 
-Pow.Print()
-PowDecay.Print()
-
-Pow.fitTo(data_ds, RooFit.Strategy(2))
-PowDecay.fitTo(data_ds, RooFit.Strategy(2))
-#for arg in GB3Vars:
-#  print arg.GetName(), arg.getVal()
-#mzg.setRange(100,500)
+fitBuilder = FitBuilder(mzg, yearToTeV[year], lepton, cat)
 
 leg  = TLegend(0.7,0.7,1.0,1.0)
 leg.SetFillColor(0)
 leg.SetShadowColor(0)
 leg.SetBorderSize(1)
-leg.SetHeader('_'.join(['test','fits',year,lepton,'cat'+cat]))
+leg.SetHeader(', '.join([year,lepton,'cat'+cat]))
+
 testFrame = mzg.frame()
-print 'BINNNNNNNING', binning
 data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'))
-#data_ds.plotOn(testFrame)
 
-Pow.plotOn(testFrame,RooFit.Name('Pow'))
-PowDecay.plotOn(testFrame,RooFit.LineColor(kViolet),RooFit.Name('PowDecay'))
+for fitName in bgFitList:
 
-testFrame.Draw()
-chi2 = testFrame.chiSquare('model','data',ndof)
-txt = TText(0,0,'chi2/ndof: '+'{0:.3f}'.format(chi2))
-leg.AddEntry(testFrame.findObject('Pow'),'Pow','l')
-leg.AddEntry(testFrame.findObject('PowDecay'),'PowDecay','l')
+  color = fitBuilder.FitColorDict[fitName]
+  ndof = fitBuilder.FitNdofDict[fitName]
+  fit = fitBuilder.Build(fitName)
+  fit.Print()
+  fit.fitTo(data_ds, RooFit.Strategy(2))
+  fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
+  testFrame.Draw()
+  chi2 = testFrame.chiSquare(fitName,'data',ndof)
+  leg.AddEntry(testFrame.findObject(fitName),fitName+' #chi2 = {0:.3f}'.format(chi2),'l')
+  #leg.AddEntry(testFrame.findObject(fitName),fitName,'l')
+
+
+#txt = TText(0,0,'chi2/ndof: '+'{0:.3f}'.format(chi2))
+#leg.AddEntry(testFrame.findObject('PowDecay'),'PowDecay','l')
 leg.Draw()
 c.Print('debugPlots/'+'_'.join(['DEBUG','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
 

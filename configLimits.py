@@ -45,6 +45,8 @@ verbose = True
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
+
+
 if highMass:
   sigNameListInput = ['gg']
   catListSmall = ['0']
