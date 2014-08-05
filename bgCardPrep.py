@@ -54,8 +54,8 @@ for tev in tevList:
       dataName = '_'.join(['data',lepton,tev,'cat'+cat])
       suffix = '_'.join([tev,lepton,'cat'+cat])
 
-      fitName = cfl.bgLimitDict[highMass][tev][lepton][cat]
-      fitName = fitName+'_'+suffix
+      fitNameHeader = cfl.bgLimitDict[highMass][tev][lepton][cat]
+      fitName = fitNameHeader+'_'+suffix
       normName = 'norm'+fitName
 
       data = myWs.data(dataName)
@@ -105,8 +105,8 @@ for tev in tevList:
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       #fit_ext.Print()
-      fitBuilder = FitBuilder(tev,lepton,cat)
-      fitBuilder.BackgroundNameFixer(card_ws,doExt)
+      fitBuilder = FitBuilder(mzg,tev,lepton,cat)
+      fitBuilder.BackgroundNameFixer(card_ws,fitNameHeader,doExt)
       #BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
 
 card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/CardBackground_'+suffixCard+'.root')

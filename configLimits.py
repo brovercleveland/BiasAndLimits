@@ -15,11 +15,11 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
-suffix = 'Proper'
+#suffix = 'Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
-#suffix = '07-25-14_PhoMVAHighMass'
+suffix = '07-25-14_PhoMVAHighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVA'
 #suffix = '07-29-14_Proper'
@@ -38,7 +38,7 @@ massList = ['125']
 #sigNameList = ['ggH','qqH','ttH','WH','ZH']
 sigNameList = ['ggH']
 YR = 'YR3'
-highMass = False
+highMass = True
 
 
 if highMass:
