@@ -6,6 +6,7 @@ import numpy as np
 from rooFitBuilder import *
 import os
 import configLimits as cfl
+from configLimits import AutoVivification
 
 gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
@@ -20,16 +21,6 @@ highMass = cfl.highMass
 # rounding function for interpolation
 def roundTo5(x, base=5):
   return int(base * round(float(x)/base))
-
-# class for multi-layered nested dictionaries, pretty cool
-class AutoVivification(dict):
-    """Implementation of perl's autovivification feature."""
-    def __getitem__(self, item):
-        try:
-            return dict.__getitem__(self, item)
-        except KeyError:
-            value = self[item] = type(self)()
-            return value
 
 def set_palette(name='palette', ncontours=999):
   """Set a color palette from a given RGB list

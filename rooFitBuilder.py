@@ -18,8 +18,13 @@ class FitBuilder:
       self.suffix = '_'.join([tev,lepton,'cat'+cat])
     else:
       self.suffix = '_'.join([tev,lepton,'cat'+cat,sig,mass,piece])
+      self.sig = sig
+      self.mass = mass
 
     self.mzg = mzg
+    self.tev = tev
+    self.lepton = lepton
+    self.cat = cat
     self.BuildDict = {'BB':self.BuildBetaAndBern,
         'GB': self.BuildGaussAndBern,
         'BetaFunc': self.BuildBetaFunc,
@@ -733,256 +738,255 @@ class FitBuilder:
     return TripG, paramList
     return TripG
 
-def SignalNameParamFixerCBG(tev,lepton,cat,sig,mass,ws):
-  fitName = '_'.join(['CBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
-  meanG = '_'.join(['meanGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  meanCB = '_'.join(['meanCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigmaCB = '_'.join(['sigmaCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigmaG = '_'.join(['sigmaGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  meanGNew = '_'.join(['sig',sig,'meanG',lepton,tev,'cat'+cat])
-  meanCBNew = '_'.join(['sig',sig,'meanCB',lepton,tev,'cat'+cat])
-  sigmaCBNew = '_'.join(['sig',sig,'sigmaCB',lepton,tev,'cat'+cat])
-  sigmaGNew = '_'.join(['sig',sig,'sigmaG',lepton,tev,'cat'+cat])
-  mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-  sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
-  ws.factory(mShift+'[1]')
-  ws.factory(sigmaShift+'[1]')
-  ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
-  ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
-  ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
-  ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
-  ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+  def SignalNameParamFixerCBG(self, tev,lepton,cat,sig,mass,ws):
+    fitName = '_'.join(['CBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
+    meanG = '_'.join(['meanGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    meanCB = '_'.join(['meanCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigmaCB = '_'.join(['sigmaCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigmaG = '_'.join(['sigmaGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    meanGNew = '_'.join(['sig',sig,'meanG',lepton,tev,'cat'+cat])
+    meanCBNew = '_'.join(['sig',sig,'meanCB',lepton,tev,'cat'+cat])
+    sigmaCBNew = '_'.join(['sig',sig,'sigmaCB',lepton,tev,'cat'+cat])
+    sigmaGNew = '_'.join(['sig',sig,'sigmaG',lepton,tev,'cat'+cat])
+    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
+    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
+    ws.factory(mShift+'[1]')
+    ws.factory(sigmaShift+'[1]')
+    ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
+    ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
+    ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
+    ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
+    ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
 
-def SignalNameParamFixerTripG(tev,lepton,cat,sig,mass,ws):
-  fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
+  def SignalNameParamFixerTripG(self,tev,lepton,cat,sig,mass,ws):
+    fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
 
-  meanG1 = '_'.join(['meanG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigmaG1 = '_'.join(['sigmaG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  meanG1New = '_'.join(['sig',sig,'meanG1',lepton,tev,'cat'+cat])
-  sigmaG1New = '_'.join(['sig',sig,'sigmaG1',lepton,tev,'cat'+cat])
+    meanG1 = '_'.join(['meanG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigmaG1 = '_'.join(['sigmaG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    meanG1New = '_'.join(['sig',sig,'meanG1',lepton,tev,'cat'+cat])
+    sigmaG1New = '_'.join(['sig',sig,'sigmaG1',lepton,tev,'cat'+cat])
 
-  meanG2 = '_'.join(['meanG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigmaG2 = '_'.join(['sigmaG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  meanG2New = '_'.join(['sig',sig,'meanG2',lepton,tev,'cat'+cat])
-  sigmaG2New = '_'.join(['sig',sig,'sigmaG2',lepton,tev,'cat'+cat])
+    meanG2 = '_'.join(['meanG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigmaG2 = '_'.join(['sigmaG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    meanG2New = '_'.join(['sig',sig,'meanG2',lepton,tev,'cat'+cat])
+    sigmaG2New = '_'.join(['sig',sig,'sigmaG2',lepton,tev,'cat'+cat])
 
-  meanG3 = '_'.join(['meanG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigmaG3 = '_'.join(['sigmaG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  meanG3New = '_'.join(['sig',sig,'meanG3',lepton,tev,'cat'+cat])
-  sigmaG3New = '_'.join(['sig',sig,'sigmaG3',lepton,tev,'cat'+cat])
+    meanG3 = '_'.join(['meanG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigmaG3 = '_'.join(['sigmaG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    meanG3New = '_'.join(['sig',sig,'meanG3',lepton,tev,'cat'+cat])
+    sigmaG3New = '_'.join(['sig',sig,'sigmaG3',lepton,tev,'cat'+cat])
 
-  mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-  sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
+    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
+    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
 
-  ws.factory(mShift+'[1]')
-  ws.factory(sigmaShift+'[1]')
-  ws.factory('prod::'+meanG1New+'('+meanG1+','+mShift+')')
-  ws.factory('prod::'+sigmaG1New+'('+sigmaG1+','+sigmaShift+')')
-  ws.factory('prod::'+meanG2New+'('+meanG2+','+mShift+')')
-  ws.factory('prod::'+sigmaG2New+'('+sigmaG2+','+sigmaShift+')')
-  ws.factory('prod::'+meanG3New+'('+meanG3+','+mShift+')')
-  ws.factory('prod::'+sigmaG3New+'('+sigmaG3+','+sigmaShift+')')
-  ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG1+'='+meanG1New+','+meanG2+'='+meanG2New+','+meanG3+'='+meanG3New+','+
-      sigmaG1+'='+sigmaG1New+','+sigmaG2+'='+sigmaG2New+','+sigmaG3+'='+sigmaG3New+')')
+    ws.factory(mShift+'[1]')
+    ws.factory(sigmaShift+'[1]')
+    ws.factory('prod::'+meanG1New+'('+meanG1+','+mShift+')')
+    ws.factory('prod::'+sigmaG1New+'('+sigmaG1+','+sigmaShift+')')
+    ws.factory('prod::'+meanG2New+'('+meanG2+','+mShift+')')
+    ws.factory('prod::'+sigmaG2New+'('+sigmaG2+','+sigmaShift+')')
+    ws.factory('prod::'+meanG3New+'('+meanG3+','+mShift+')')
+    ws.factory('prod::'+sigmaG3New+'('+sigmaG3+','+sigmaShift+')')
+    ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG1+'='+meanG1New+','+meanG2+'='+meanG2New+','+meanG3+'='+meanG3New+','+
+        sigmaG1+'='+sigmaG1New+','+sigmaG2+'='+sigmaG2New+','+sigmaG3+'='+sigmaG3New+')')
 
-def SignalNameParamFixerTripGV2(tev,lepton,cat,sig,mass,ws):
-  fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
+  def SignalNameParamFixerTripGV2(self, tev,lepton,cat,sig,mass,ws):
+    fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
 
-  mean1 = '_'.join(['mean1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  mean2 = '_'.join(['mean2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  mean3 = '_'.join(['mean3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigma1 = '_'.join(['sigma1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigma2 = '_'.join(['sigma2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  sigma3 = '_'.join(['sigma3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-  mean1New = '_'.join(['sig',sig,'mean1',lepton,tev,'cat'+cat])
-  mean2New = '_'.join(['sig',sig,'mean2',lepton,tev,'cat'+cat])
-  mean3New = '_'.join(['sig',sig,'mean3',lepton,tev,'cat'+cat])
-  sigma1New = '_'.join(['sig',sig,'sigma1',lepton,tev,'cat'+cat])
-  sigma2New = '_'.join(['sig',sig,'sigma2',lepton,tev,'cat'+cat])
-  sigma3New = '_'.join(['sig',sig,'sigma3',lepton,tev,'cat'+cat])
+    mean1 = '_'.join(['mean1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    mean2 = '_'.join(['mean2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    mean3 = '_'.join(['mean3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigma1 = '_'.join(['sigma1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigma2 = '_'.join(['sigma2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    sigma3 = '_'.join(['sigma3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
+    mean1New = '_'.join(['sig',sig,'mean1',lepton,tev,'cat'+cat])
+    mean2New = '_'.join(['sig',sig,'mean2',lepton,tev,'cat'+cat])
+    mean3New = '_'.join(['sig',sig,'mean3',lepton,tev,'cat'+cat])
+    sigma1New = '_'.join(['sig',sig,'sigma1',lepton,tev,'cat'+cat])
+    sigma2New = '_'.join(['sig',sig,'sigma2',lepton,tev,'cat'+cat])
+    sigma3New = '_'.join(['sig',sig,'sigma3',lepton,tev,'cat'+cat])
 
-  mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-  sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
+    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
+    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
 
-  ws.factory(mShift+'[1]')
-  ws.factory(sigmaShift+'[1]')
-  ws.factory('prod::'+mean1New+'('+mean1+','+mShift+')')
-  ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
-  ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
-  ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
-  ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
-  ws.factory('prod::'+sigma3New+'('+sigma3+','+sigmaShift+')')
-  ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','
-      +sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+','+sigma3+'='+sigma3New+')')
+    ws.factory(mShift+'[1]')
+    ws.factory(sigmaShift+'[1]')
+    ws.factory('prod::'+mean1New+'('+mean1+','+mShift+')')
+    ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
+    ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
+    ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
+    ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
+    ws.factory('prod::'+sigma3New+'('+sigma3+','+sigmaShift+')')
+    ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','
+        +sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+','+sigma3+'='+sigma3New+')')
 
-def BackgroundNameFixer(tev,lepton,cat,ws,newCat = None,Ext = True):
-  if newCat == None: newCat = cat
-  dataName = '_'.join(['data',lepton,tev,'cat'+cat])
-  dataNameNew = '_'.join(['data','obs',lepton,tev,'cat'+newCat])
-  if Ext:
-    fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
-  else:
+  def BackgroundNameFixer(self,ws,Ext = True):
+    dataName = '_'.join(['data',lepton,tev,'cat'+cat])
+    dataNameNew = '_'.join(['data','obs',lepton,tev,'cat'+newCat])
+    if Ext:
+      fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
+    else:
+      if cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
+        fitExtName = '_'.join(['GaussBern4',tev,lepton,'cat'+cat])
+      elif cat is '0':
+        fitExtName = '_'.join(['GaussBern6',tev,lepton,'cat'+cat])
+      elif cat is '5':
+        fitExtName = '_'.join(['Bern3',tev,lepton,'cat'+cat])
+      else:
+        fitExtName = '_'.join(['GaussBern5',tev,lepton,'cat'+cat])
+    fitExtNameNew = '_'.join(['bkg',lepton,tev,'cat'+newCat])
+
     if cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
-      fitExtName = '_'.join(['GaussBern4',tev,lepton,'cat'+cat])
+      suffix = '_'.join([tev,lepton,'cat'+cat])
+      if Ext: normName = 'normGaussBern4_'+suffix
+      meanName = 'meanGaussBern4_'+suffix
+      sigmaName = 'sigmaGaussBern4_'+suffix
+      stepName = 'stepGaussBern4_'+suffix
+      p0Name = 'p0GaussBern4_'+suffix
+      p1Name = 'p1GaussBern4_'+suffix
+      p2Name = 'p2GaussBern4_'+suffix
+      p3Name = 'p3GaussBern4_'+suffix
+      p4Name = 'p4GaussBern4_'+suffix
+
+      if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
+      meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
+      sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
+      stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
+      p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
+      p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
+      p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
+      p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
+      p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
+      ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
+      ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
+      ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
+      if Ext:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+')')
+      else:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+')')
+
     elif cat is '0':
-      fitExtName = '_'.join(['GaussBern6',tev,lepton,'cat'+cat])
+      suffix = '_'.join([tev,lepton,'cat'+cat])
+      if Ext: normName = 'normGaussBern6_'+suffix
+      meanName = 'meanGaussBern6_'+suffix
+      sigmaName = 'sigmaGaussBern6_'+suffix
+      stepName = 'stepGaussBern6_'+suffix
+      p0Name = 'p0GaussBern6_'+suffix
+      p1Name = 'p1GaussBern6_'+suffix
+      p2Name = 'p2GaussBern6_'+suffix
+      p3Name = 'p3GaussBern6_'+suffix
+      p4Name = 'p4GaussBern6_'+suffix
+      p5Name = 'p5GaussBern6_'+suffix
+      p6Name = 'p6GaussBern6_'+suffix
+
+      if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
+      meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
+      sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
+      stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
+      p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
+      p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
+      p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
+      p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
+      p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
+      p5NameNew  = '_'.join(['bkg','p5',lepton,tev,'cat'+newCat])
+      p6NameNew  = '_'.join(['bkg','p6',lepton,tev,'cat'+newCat])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
+      ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
+      ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
+      ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
+      ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(),ws.function(p5Name).getMax()))
+      ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(),ws.function(p6Name).getMax()))
+      if Ext:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+','+p6Name+'='+p6NameNew+')')
+      else:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+','+p6Name+'='+p6NameNew+')')
+
     elif cat is '5':
-      fitExtName = '_'.join(['Bern3',tev,lepton,'cat'+cat])
+      suffix = '_'.join([tev,lepton,'cat'+cat])
+      if Ext: normName = 'normBern3_'+suffix
+      p0Name = 'p0Bern3_'+suffix
+      p1Name = 'p1Bern3_'+suffix
+      p2Name = 'p2Bern3_'+suffix
+      p3Name = 'p3Bern3_'+suffix
+
+      if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
+      p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
+      p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
+      p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
+      p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+      if Ext:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+normName+'='+normNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+')')
+      else:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+')')
+
     else:
-      fitExtName = '_'.join(['GaussBern5',tev,lepton,'cat'+cat])
-  fitExtNameNew = '_'.join(['bkg',lepton,tev,'cat'+newCat])
+      suffix = '_'.join([tev,lepton,'cat'+cat])
+      if Ext: normName = 'normGaussBern5_'+suffix
+      meanName = 'meanGaussBern5_'+suffix
+      sigmaName = 'sigmaGaussBern5_'+suffix
+      stepName = 'stepGaussBern5_'+suffix
+      p0Name = 'p0GaussBern5_'+suffix
+      p1Name = 'p1GaussBern5_'+suffix
+      p2Name = 'p2GaussBern5_'+suffix
+      p3Name = 'p3GaussBern5_'+suffix
+      p4Name = 'p4GaussBern5_'+suffix
+      p5Name = 'p5GaussBern5_'+suffix
 
-  if cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
-    suffix = '_'.join([tev,lepton,'cat'+cat])
-    if Ext: normName = 'normGaussBern4_'+suffix
-    meanName = 'meanGaussBern4_'+suffix
-    sigmaName = 'sigmaGaussBern4_'+suffix
-    stepName = 'stepGaussBern4_'+suffix
-    p0Name = 'p0GaussBern4_'+suffix
-    p1Name = 'p1GaussBern4_'+suffix
-    p2Name = 'p2GaussBern4_'+suffix
-    p3Name = 'p3GaussBern4_'+suffix
-    p4Name = 'p4GaussBern4_'+suffix
+      if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
+      meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
+      sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
+      stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
+      p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
+      p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
+      p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
+      p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
+      p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
+      p5NameNew  = '_'.join(['bkg','p5',lepton,tev,'cat'+newCat])
 
-    if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
-
-    if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
-    ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
-    ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
-    ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
-    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
-    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
-    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
-    ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
-    if Ext:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+')')
-    else:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+')')
-
-  elif cat is '0':
-    suffix = '_'.join([tev,lepton,'cat'+cat])
-    if Ext: normName = 'normGaussBern6_'+suffix
-    meanName = 'meanGaussBern6_'+suffix
-    sigmaName = 'sigmaGaussBern6_'+suffix
-    stepName = 'stepGaussBern6_'+suffix
-    p0Name = 'p0GaussBern6_'+suffix
-    p1Name = 'p1GaussBern6_'+suffix
-    p2Name = 'p2GaussBern6_'+suffix
-    p3Name = 'p3GaussBern6_'+suffix
-    p4Name = 'p4GaussBern6_'+suffix
-    p5Name = 'p5GaussBern6_'+suffix
-    p6Name = 'p6GaussBern6_'+suffix
-
-    if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
-    p5NameNew  = '_'.join(['bkg','p5',lepton,tev,'cat'+newCat])
-    p6NameNew  = '_'.join(['bkg','p6',lepton,tev,'cat'+newCat])
-
-    if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
-    ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
-    ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
-    ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
-    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
-    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
-    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
-    ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
-    ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(),ws.function(p5Name).getMax()))
-    ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(),ws.function(p6Name).getMax()))
-    if Ext:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+','+p6Name+'='+p6NameNew+')')
-    else:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+','+p6Name+'='+p6NameNew+')')
-
-  elif cat is '5':
-    suffix = '_'.join([tev,lepton,'cat'+cat])
-    if Ext: normName = 'normBern3_'+suffix
-    p0Name = 'p0Bern3_'+suffix
-    p1Name = 'p1Bern3_'+suffix
-    p2Name = 'p2Bern3_'+suffix
-    p3Name = 'p3Bern3_'+suffix
-
-    if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
-
-    if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
-    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
-    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
-    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
-    if Ext:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+normName+'='+normNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+')')
-    else:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+')')
-
-  else:
-    suffix = '_'.join([tev,lepton,'cat'+cat])
-    if Ext: normName = 'normGaussBern5_'+suffix
-    meanName = 'meanGaussBern5_'+suffix
-    sigmaName = 'sigmaGaussBern5_'+suffix
-    stepName = 'stepGaussBern5_'+suffix
-    p0Name = 'p0GaussBern5_'+suffix
-    p1Name = 'p1GaussBern5_'+suffix
-    p2Name = 'p2GaussBern5_'+suffix
-    p3Name = 'p3GaussBern5_'+suffix
-    p4Name = 'p4GaussBern5_'+suffix
-    p5Name = 'p5GaussBern5_'+suffix
-
-    if Ext: normNameNew  = '_'.join(['bkg',lepton,tev,'cat'+newCat,'norm'])
-    meanNameNew  = '_'.join(['bkg','mean',lepton,tev,'cat'+newCat])
-    sigmaNameNew  = '_'.join(['bkg','sigma',lepton,tev,'cat'+newCat])
-    stepNameNew  = '_'.join(['bkg','step',lepton,tev,'cat'+newCat])
-    p0NameNew  = '_'.join(['bkg','p0',lepton,tev,'cat'+newCat])
-    p1NameNew  = '_'.join(['bkg','p1',lepton,tev,'cat'+newCat])
-    p2NameNew  = '_'.join(['bkg','p2',lepton,tev,'cat'+newCat])
-    p3NameNew  = '_'.join(['bkg','p3',lepton,tev,'cat'+newCat])
-    p4NameNew  = '_'.join(['bkg','p4',lepton,tev,'cat'+newCat])
-    p5NameNew  = '_'.join(['bkg','p5',lepton,tev,'cat'+newCat])
-
-    if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
-    ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
-    ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
-    ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
-    ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
-    ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
-    ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
-    ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
-    ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
-    ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(),ws.function(p5Name).getMax()))
-    if Ext:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
-    else:
-      ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
-      +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(meanNameNew+'[{0}]'.format(ws.function(meanName).getVal()))
+      ws.factory(sigmaNameNew+'[{0},{1},{2}]'.format(ws.function(sigmaName).getVal(),ws.function(sigmaName).getMin(),ws.function(sigmaName).getMax()))
+      ws.factory(stepNameNew+'[{0},{1},{2}]'.format(ws.function(stepName).getVal(),ws.function(stepName).getMin(),ws.function(stepName).getMax()))
+      ws.factory(p0NameNew+'[{0}]'.format(ws.function(p0Name).getVal()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(),ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(),ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(),ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(),ws.function(p4Name).getMax()))
+      ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(),ws.function(p5Name).getMax()))
+      if Ext:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','+normName+'='+normNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
+      else:
+        ws.factory('EDIT::'+fitExtNameNew+'('+fitExtName+','+meanName+'='+meanNameNew+','+sigmaName+'='+sigmaNameNew+','+stepName+'='+stepNameNew+','
+        +p0Name+'='+p0NameNew+','+p1Name+'='+p1NameNew+','+p2Name+'='+p2NameNew+','+p3Name+'='+p3NameNew+','+p4Name+'='+p4NameNew+','+p5Name+'='+p5NameNew+')')
 
 
 

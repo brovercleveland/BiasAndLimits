@@ -268,13 +268,7 @@ def doInitialFits():
           elif highMass: bgFitList = cfl.bgFitListHighMass
           else: bgFitList = cfl.bgFitListTurnOn
         else:
-          if cat == '5': bgFitList = ['Bern3']
-          elif highMass: bgFitList = ['PowDecay']
-          else:
-            if cat == '1' and (lepton == 'el' or (lepton == 'mu' and year == '2011')):
-              bgFitList = ['GaussBern4']
-            else:
-              bgFitList = ['GaussBern5']
+          bgFitList = [cfl.bgLimitDict[highMass][yearToTeV[year]][lepton][cat]]
 
         leg  = TLegend(0.7,0.7,1.0,1.0)
         leg.SetFillColor(0)

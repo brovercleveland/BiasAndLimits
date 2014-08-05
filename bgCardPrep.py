@@ -21,6 +21,7 @@ catListBig = cfl.catListBig
 
 YR = cfl.YR
 sigFit = cfl.sigFit
+highMass = cfl.highMass
 
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
@@ -49,24 +50,17 @@ for tev in tevList:
     for cat in catList:
       if cat is '5' and tev is '7TeV' and lepton is 'mu': continue
       elif cat is '5' and tev is '7TeV' and lepton is 'el': lepton = 'all'
+
       dataName = '_'.join(['data',lepton,tev,'cat'+cat])
       suffix = '_'.join([tev,lepton,'cat'+cat])
-      if cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
-        fitName = '_'.join(['GaussBern4',tev,lepton,'cat'+cat])
-        normName = 'normGaussBern4_'+suffix
-      elif cat is '5':
-        fitName = '_'.join(['Bern3',tev,lepton,'cat'+cat])
-        normName = 'normBern3_'+suffix
-      elif cat is '0':
-        fitName = '_'.join(['GaussBern6',tev,lepton,'cat'+cat])
-        normName = 'normGaussBern6_'+suffix
-      else:
-        fitName = '_'.join(['GaussBern5',tev,lepton,'cat'+cat])
-        normName = 'normGaussBern5_'+suffix
 
+      fitName = cfl.bgLimitDict[highMass][tev][lepton][cat]
+      fitName = fitName+'_'+suffix
+      normName = 'norm'+fitName
 
       data = myWs.data(dataName)
       fit = myWs.pdf(fitName)
+      fit.Print()
 
       ###### Extend the fit (give it a normalization parameter)
       print dataName
@@ -111,7 +105,9 @@ for tev in tevList:
       getattr(card_ws,'import')(dataYield)
       card_ws.commitTransaction()
       #fit_ext.Print()
-      BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
+      fitBuilder = FitBuilder(tev,lepton,cat)
+      fitBuilder.BackgroundNameFixer(card_ws,doExt)
+      #BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
 
 card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/CardBackground_'+suffixCard+'.root')
 

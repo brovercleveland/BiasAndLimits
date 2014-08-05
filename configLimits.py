@@ -1,16 +1,25 @@
 #!/usr/bin/env python
 
+# class for multi-layered nested dictionaries, pretty cool
+class AutoVivification(dict):
+    """Implementation of perl's autovivification feature."""
+    def __getitem__(self, item):
+        try:
+            return dict.__getitem__(self, item)
+        except KeyError:
+            value = self[item] = type(self)()
+            return value
 
 ##########
 # common #
 ##########
 
 doMVA = False
-#suffix = 'Proper'
+suffix = 'Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
-suffix = '07-25-14_PhoMVAHighMass'
+#suffix = '07-25-14_PhoMVAHighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVA'
 #suffix = '07-29-14_Proper'
@@ -29,12 +38,17 @@ massList = ['125']
 #sigNameList = ['ggH','qqH','ttH','WH','ZH']
 sigNameList = ['ggH']
 YR = 'YR3'
-highMass = True
+highMass = False
+
+
 if highMass:
   massList = ['200','300','400']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
+
+
+
 
 ######################
 # initialFitProducer #
@@ -43,7 +57,7 @@ if highMass:
 debugPlots = True
 verbose = True
 rootrace = False
-allBiasFits= True# Turn on extra fits used in bias studies
+allBiasFits= False# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -112,6 +126,72 @@ byParts = True
 mode = 'noCombo'
 
 syst = True
+
+########################
+########################
+# Define limit bgFits: #
+########################
+########################
+
+bgLimitDict = AutoVivification()
+#bgLimitDict[highMass][tev][lepton][cat]
+bgLimitDict[True]['8TeV']['mu']['0'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['1'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['2'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['3'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['4'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['5'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['6'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['7'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['8'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['9'] = 'PowDecay'
+
+bgLimitDict[True]['8TeV']['el']['0'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['1'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['2'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['3'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['4'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['5'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['6'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['7'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['8'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['9'] = 'PowDecay'
+
+bgLimitDict[False]['8TeV']['mu']['0'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['1'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['2'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['3'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['4'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['5'] = 'Bern3'
+bgLimitDict[False]['8TeV']['mu']['6'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['7'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['8'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['mu']['9'] = 'GaussBern5'
+
+bgLimitDict[False]['8TeV']['el']['0'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['1'] = 'GaussBern4'
+bgLimitDict[False]['8TeV']['el']['2'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['3'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['4'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['5'] = 'Bern3'
+bgLimitDict[False]['8TeV']['el']['6'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['7'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['8'] = 'GaussBern5'
+bgLimitDict[False]['8TeV']['el']['9'] = 'GaussBern5'
+
+bgLimitDict[False]['7TeV']['mu']['0'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['mu']['1'] = 'GaussBern4'
+bgLimitDict[False]['7TeV']['mu']['2'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['mu']['3'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['mu']['4'] = 'GaussBern5'
+
+bgLimitDict[False]['7TeV']['el']['0'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['el']['1'] = 'GaussBern4'
+bgLimitDict[False]['7TeV']['el']['2'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['el']['3'] = 'GaussBern5'
+bgLimitDict[False]['7TeV']['el']['4'] = 'GaussBern5'
+
+bgLimitDict[False]['7TeV']['all']['5'] = 'Bern3'
 
 if __name__=='configLimits':
   for name in dir():
