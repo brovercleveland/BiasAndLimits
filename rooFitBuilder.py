@@ -62,7 +62,7 @@ class FitBuilder:
       'SechBern5':kGreen,
       'Exp':kBlue,
       'Exp2':kOrange,
-      'ExpSum':kBlack,
+      'ExpSum':kGreen+2,
       'Laurent':kMagenta,
       'Pow':kCyan,
       'Bern2':kViolet,
@@ -180,7 +180,7 @@ class FitBuilder:
     #nGaussExp[i] = new RooRealVar(sbuffer1,sbuffer1,ntcat[i]->GetEntries(),0,3*ntcat[i]->GetEntries());
 
 
-  def BuildGaussPow(self,mean = 0, sigma = 1, sigmaLow = 0.01, sigmaHigh = 10, alpha = 115, alphaLow = 50, alphaHigh = 200,beta = 2.7, betaLow = 0, betaHigh = 20):
+  def BuildGaussPow(self,mean = 0, sigma = 2, sigmaLow = 0.01, sigmaHigh = 10, alpha = 105 , alphaLow = 50, alphaHigh = 200,beta = 6, betaLow = 0, betaHigh = 20):
 
     meanVar = RooRealVar('meanGaussPow_'+self.suffix,'meanGaussPow_'+self.suffix, mean)
     sigmaVar = RooRealVar('sigmaGaussPow_'+self.suffix,'sigmaGaussPow_'+self.suffix,sigma,sigmaLow,sigmaHigh)
@@ -237,7 +237,7 @@ class FitBuilder:
     SetOwnership(tail,0)
     return SechPow
 
-  def BuildGaussStepBern3(self,mean = 0, sigma = 4, sigmaLow = 0.01, sigmaHigh = 20, step = 115, stepLow = 100, stepHigh = 130,
+  def BuildGaussStepBern3(self,mean = 0, sigma = 3, sigmaLow = 0.01, sigmaHigh = 20, step = 110, stepLow = 100, stepHigh = 130,
       p0 = 15, p1 = 0.3, p1Low = -1e-6, p1High = 900,p2 = 0.3, p2Low = -1e-6, p2High = 900,p3 = 0.3, p3Low = -1e-6, p3High = 900):
 
     meanVar = RooRealVar('meanGaussBern3_'+self.suffix,'meanGaussBern3_'+self.suffix, mean)
@@ -374,7 +374,7 @@ class FitBuilder:
     SetOwnership(p6Var,0)
     return GaussBern6
 
-  def BuildSechStepBern3(self,mean = 0, sigma = 3, sigmaLow = 0.01, sigmaHigh = 20, step = 0.1, stepLow = 0, stepHigh = 10,
+  def BuildSechStepBern3(self,mean = 0, sigma = 10, sigmaLow = 0.01, sigmaHigh = 20, step = 0.1, stepLow = 0, stepHigh = 10,
       p0 = 15, p1 = 0.3, p1Low = -1e-6, p1High = 900,p2 = 0.3, p2Low = -1e-6, p2High = 900,p3 = 0.3, p3Low = -1e-6, p3High = 900):
 
     meanVar = RooRealVar('meanSechBern3_'+self.suffix,'meanSechBern3_'+self.suffix, mean)
@@ -506,7 +506,7 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return Exp2
 
-  def BuildExpSum(self,p1 = -5, p1Low = -20, p1High = 20, p2 = 0.1, p2Low = -20, p2High = 20, p3 = 0.01, p3Low = -20, p3High = 20):
+  def BuildExpSum(self,p1 = 1.3, p1Low = -20, p1High = 20, p2 = 0.1, p2Low = -20, p2High = 20, p3 = 0.01, p3Low = -20, p3High = 20):
 
     p1Var = RooRealVar('p1ExpSum_'+self.suffix,'p1ExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2ExpSum_'+self.suffix,'p2ExpSum_'+self.suffix,p2,p2Low,p2High)

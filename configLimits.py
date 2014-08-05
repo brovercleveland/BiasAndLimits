@@ -25,11 +25,11 @@ catListBig = ['0','1','2','3','4','5','6','7','8','9']
 #catListSmall = ['0','1','2','3','4','5']
 catListSmall = ['0']
 #massList = ['120','125','130','135','140','145','150','155','160']
-massList = ['200']
+massList = ['125']
 #sigNameList = ['ggH','qqH','ttH','WH','ZH']
 sigNameList = ['ggH']
 YR = 'YR3'
-highMass = False
+highMass = True
 if highMass:
   massList = ['200','300','400']
   sigNameList = ['ggH']
@@ -45,6 +45,10 @@ verbose = True
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
+
+bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
+bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
+bgFitListHighMass = ['Pow','PowDecay','PowLog','Exp2','Laurent','ExpSum']
 
 
 if highMass:
