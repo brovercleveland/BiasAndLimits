@@ -26,7 +26,7 @@ for lepton in leptonList:
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
-Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/signalCBFits.py
+Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/signalFits.py
 Arguments               = {0} {1} {2} {3} {5}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)

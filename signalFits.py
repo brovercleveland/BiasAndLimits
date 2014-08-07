@@ -91,11 +91,13 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     oldMassHi = oldMassLow = 0
     for massString in massList:
 
-#############################################
-# Get the high and low mass references      #
-# If the point does not need interpolation, #
-# we just use it for high and low           #
-#############################################
+      #############################################
+      # Get the high and low mass references      #
+      # If the point does not need interpolation, #
+      # we just use it for high and low           #
+      #############################################
+
+      fitBuilder = FitBuilder(mzg,tev,lep,cat,sig=prod,mass=massString)
 
       mass = float(massString)
       if mass%5.0 == 0.0:
@@ -110,6 +112,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           massHi = massRound+5
           massLow = massRound
       ###### only calc the low and high points if they change
+
+
       if not(oldMassLow == massLow and oldMassHi == massHi):
         oldMassLow = massLow
         oldMassHi = massHi
@@ -128,10 +132,9 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massLow == massHi:
           dsList.append(sig_ds_Low)
 
-        if sigFit == 'TripG':
-          SigFit_Low = BuildTripleGaussV2(tev,lep,cat,prod,str(massLow),'Low',mzg,mean1 = massLow)[0]
-        else:
-          SigFit_Low = BuildCrystalBallGauss(tev,lep,cat,prod,str(massLow),'Low',mzg,meanG = massLow, meanCB = massLow)[0]
+
+        fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massLow))
+        SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)[0]
 
         SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
@@ -147,10 +150,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         sig_ds_Hi = myWs.data(sigNameHi)
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
-        if sigFit == 'TripG':
-          SigFit_Hi = BuildTripleGaussV2(tev,lep,cat,prod,str(massHi),'Hi',mzg,mean1 = massHi)[0]
-        else:
-          SigFit_Hi = BuildCrystalBallGauss(tev,lep,cat,prod,str(massHi),'Hi',mzg,meanG = massHi, meanCB = massHi)[0]
+        fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massHi))
+        SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
 
         SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
@@ -184,12 +185,11 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
-      if sigFit == 'TripG':
-        SigFit_Interp,paramList = BuildTripleGaussV2(tev,lep,cat,prod,str(mass),'Interp',mzg,mean1 = mass)
-      else:
-        SigFit_Interp,paramList = BuildCrystalBallGauss(tev,lep,cat,prod,str(mass),'Interp',mzg,meanG = mass, meanCB = mass)
+      fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(mass))
+      SigFit_Interp, paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
 
       SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+
       for param in paramList:
         param.setConstant(True)
       fitList.append(SigFit_Interp)
@@ -249,11 +249,15 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
   for prod in sigNameList:
     for mass in massList:
-      if sigFit == 'TripG':
-        #print 'nofix'
-        SignalNameParamFixerTripGV2(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
-      else:
-        SignalNameParamFixerCBG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
+      fitBuilder = FitBuilder(mzg,tev,lep,cat,sig=prod,mass=mass)
+
+      fitBuilder.SignalNameParamFixer(cardDict[lep][tev][cat][mass],sigFit)
+
+     # if sigFit == 'TripG':
+     #   #print 'nofix'
+     #   SignalNameParamFixerTripGV2(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
+     # else:
+     #   SignalNameParamFixerCBG(tev,lep,cat,prod,mass,cardDict[lep][tev][cat][mass])
 
   for mass in massList:
     fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])

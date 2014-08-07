@@ -3,7 +3,7 @@ import sys
 sys.argv.append('-b')
 import numpy as np
 #import pdb
-from signalCBFits import AutoVivification
+from configLimits import AutoVivification
 from rooFitBuilder import *
 from xsWeighterNew import *
 from ROOT import *

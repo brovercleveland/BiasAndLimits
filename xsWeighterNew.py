@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import pickle
-from signalCBFits import AutoVivification
+from configLimits import AutoVivification
 import configLimits as cfl
 
 f = open('XSBR.p')
 xsDict = pickle.load(f)
+xsScaleErrDict = pickle.load(f)
+xsPDFErrDict = pickle.load(f)
 brDict = pickle.load(f)
+brErrDict = pickle.load(f)
 f.close()
 
 def LumiXSWeighter(year, lepton, sig, mass, nEvt, YR,alt=False):

@@ -13,11 +13,11 @@ gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 
 class FitBuilder:
 
-  def __init__(self,mzg,tev,lepton,cat,sig=None,mass=None,peice=None):
+  def __init__(self,mzg,tev,lepton,cat,sig=None,mass=None):
     if sig == None:
       self.suffix = '_'.join([tev,lepton,'cat'+cat])
     else:
-      self.suffix = '_'.join([tev,lepton,'cat'+cat,sig,mass,piece])
+      self.suffix = '_'.join([tev,lepton,'cat'+cat,sig,mass])
       self.sig = sig
       self.mass = mass
 
@@ -52,7 +52,7 @@ class FitBuilder:
         'Bern4': self.BuildBern4,
         'Bern5': self.BuildBern5,
         'CBG': self.BuildCrystalBallGauss,
-        'TripG': self.BuildTripleGaussV2}
+        'TripG': self.BuildTripleGauss}
 
     self.FitColorDict = {
       'GaussBern3':kViolet,
@@ -615,25 +615,29 @@ class FitBuilder:
     SetOwnership(sigmaVar,0)
     return gauss
 
-  def BuildCrystalBallGauss(self, meanG = 125, meanGLow = -1, meanGHigh = -1, meanCB = 125, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 20, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
+  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 20, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
       n = 4, nLow = 0.5, nHigh = 50, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 20, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):
+
+    suffix = self.suffix+'_'+piece
+    meanG = meanCB = mean
+
     if meanGLow is -1: meanGLow = meanG-5
     if meanGHigh is -1: meanGHigh = meanG+5
     if meanCBLow is -1: meanCBLow = meanCB-5
     if meanCBHigh is -1: meanCBHigh = meanCB+5
-    meanGVar = RooRealVar('meanGCBG_'+self.suffix,'meanGCBG_'+self.suffix, meanG, meanGLow, meanGHigh)
-    meanCBVar = RooRealVar('meanCBCBG_'+self.suffix,'meanCBCBG_'+self.suffix, meanCB, meanCBLow, meanCBHigh)
-    sigmaCBVar = RooRealVar('sigmaCBCBG_'+self.suffix,'sigmaCBCBG_'+self.suffix,sigmaCB,sigmaCBLow,sigmaCBHigh)
-    alphaVar = RooRealVar('alphaCBG_'+self.suffix,'alphaCBG_'+self.suffix,alpha,alphaLow,alphaHigh)
-    nVar = RooRealVar('nCBG_'+self.suffix,'nCBG_'+self.suffix,n,nLow,nHigh)
-    sigmaGVar = RooRealVar('sigmaGCBG_'+self.suffix,'sigmaGCBG_'+self.suffix,sigmaG,sigmaGLow,sigmaGHigh)
-    fracVar = RooRealVar('fracCBG_'+self.suffix,'fracCBG_'+self.suffix,frac,fracLow,fracHigh)
+    meanGVar = RooRealVar('meanGCBG_'+suffix,'meanGCBG_'+suffix, meanG, meanGLow, meanGHigh)
+    meanCBVar = RooRealVar('meanCBCBG_'+suffix,'meanCBCBG_'+suffix, meanCB, meanCBLow, meanCBHigh)
+    sigmaCBVar = RooRealVar('sigmaCBCBG_'+suffix,'sigmaCBCBG_'+suffix,sigmaCB,sigmaCBLow,sigmaCBHigh)
+    alphaVar = RooRealVar('alphaCBG_'+suffix,'alphaCBG_'+suffix,alpha,alphaLow,alphaHigh)
+    nVar = RooRealVar('nCBG_'+suffix,'nCBG_'+suffix,n,nLow,nHigh)
+    sigmaGVar = RooRealVar('sigmaGCBG_'+suffix,'sigmaGCBG_'+suffix,sigmaG,sigmaGLow,sigmaGHigh)
+    fracVar = RooRealVar('fracCBG_'+suffix,'fracCBG_'+suffix,frac,fracLow,fracHigh)
 
-    crystal = RooCBShape('crystalCBG_'+self.suffix,'crystalCBG_'+self.suffix,self.mzg,meanCBVar,sigmaCBVar,alphaVar,nVar)
-    gauss = RooGaussian('gaussCBG_'+self.suffix,'gaussCBG_'+self.suffix,self.mzg,meanGVar,sigmaGVar)
+    crystal = RooCBShape('crystalCBG_'+suffix,'crystalCBG_'+suffix,self.mzg,meanCBVar,sigmaCBVar,alphaVar,nVar)
+    gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanGVar,sigmaGVar)
     cbArgs = RooArgList(gauss,crystal)
     fracArg = RooArgList(fracVar)
-    CBG = RooAddPdf('CBG_'+self.suffix,'CBG_'+self.suffix,cbArgs,fracArg,True)
+    CBG = RooAddPdf('CBG_'+suffix,'CBG_'+suffix,cbArgs,fracArg,True)
 
     SetOwnership(meanGVar,0)
     SetOwnership(meanCBVar,0)
@@ -646,77 +650,38 @@ class FitBuilder:
     SetOwnership(gauss,0)
     paramList = [meanGVar,meanCBVar,sigmaCBVar,alphaVar,nVar,sigmaGVar,fracVar]
     return CBG, paramList
-    return CBG
 
-  def BuildTripleGauss(self, meanG1 = 125, meanG1Low = -1, meanG1High = -1, meanG2 = 125, meanG2Low = -1, meanG2High = -1, meanG3 = 125, meanG3Low = -1, meanG3High = -1,
-      sigmaG1 = 1.5, sigmaG1Low = 0.3, sigmaG1High = 20, sigmaG2 = 1.5, sigmaG2Low = 0.3, sigmaG2High = 20, sigmaG3 = 1.5, sigmaG3Low = 0.3, sigmaG3High = 20,
-      frac1 = 0.1, frac1Low = 0.0, frac1High = 1.0, frac2 = 0.1, frac2Low = 0.0, frac2High = 1.0):
-    if meanG1Low is -1: meanG1Low = meanG1-5
-    if meanG1High is -1: meanG1High = meanG1+5
-    if meanG2Low is -1: meanG2Low = meanG2-5
-    if meanG2High is -1: meanG2High = meanG2+5
-    if meanG3Low is -1: meanG3Low = meanG3-5
-    if meanG3High is -1: meanG3High = meanG3+5
 
-    meanG1Var = RooRealVar('meanG1TripG_'+self.suffix,'meanG1TripG_'+self.suffix, meanG1, meanG1Low, meanG1High)
-    meanG2Var = RooRealVar('meanG2TripG_'+self.suffix,'meanG2TripG_'+self.suffix, meanG2, meanG2Low, meanG2High)
-    meanG3Var = RooRealVar('meanG3TripG_'+self.suffix,'meanG3TripG_'+self.suffix, meanG3, meanG3Low, meanG3High)
-    sigmaG1Var = RooRealVar('sigmaG1TripG_'+self.suffix,'sigmaG1TripG_'+self.suffix,sigmaG1,sigmaG1Low,sigmaG1High)
-    sigmaG2Var = RooRealVar('sigmaG2TripG_'+self.suffix,'sigmaG2TripG_'+self.suffix,sigmaG2,sigmaG2Low,sigmaG2High)
-    sigmaG3Var = RooRealVar('sigmaG3TripG_'+self.suffix,'sigmaG3TripG_'+self.suffix,sigmaG3,sigmaG3Low,sigmaG3High)
-    frac1Var = RooRealVar('frac1TripG_'+self.suffix,'frac1TripG_'+self.suffix,frac1,frac1Low,frac1High)
-    frac2Var = RooRealVar('frac2TripG_'+self.suffix,'frac2TripG_'+self.suffix,frac2,frac2Low,frac2High)
-
-    gauss1 = RooGaussian('gauss1TripG_'+self.suffix,'gauss1TripG_'+self.suffix,self.mzg,meanG1Var,sigmaG1Var)
-    gauss2 = RooGaussian('gauss2TripG_'+self.suffix,'gauss2TripG_'+self.suffix,self.mzg,meanG2Var,sigmaG2Var)
-    gauss3 = RooGaussian('gauss3TripG_'+self.suffix,'gauss3TripG_'+self.suffix,self.mzg,meanG3Var,sigmaG3Var)
-    gaussArgs = RooArgList(gauss1,gauss2,gauss3)
-    fracArgs = RooArgList(frac1Var, frac2Var)
-    TripG = RooAddPdf('TripG_'+self.suffix,'TripG_'+self.suffix,gaussArgs,fracArgs,True)
-
-    SetOwnership(meanG1Var,0)
-    SetOwnership(sigmaG1Var,0)
-    SetOwnership(meanG2Var,0)
-    SetOwnership(sigmaG2Var,0)
-    SetOwnership(meanG3Var,0)
-    SetOwnership(sigmaG3Var,0)
-    SetOwnership(frac1Var,0)
-    SetOwnership(frac2Var,0)
-    SetOwnership(gauss1,0)
-    SetOwnership(gauss2,0)
-    SetOwnership(gauss3,0)
-    paramList = [meanG1Var, meanG2Var, meanG3Var, sigmaG1Var, sigmaG2Var, sigmaG3Var, frac1Var, frac2Var]
-    return TripG, paramList
-    return TripG
-
-  def BuildTripleGaussV2(self, mean1 = 125, mean1Low = -1, mean1High = -1, sigma1 = 2, sigma1Low = 1, sigma1High = 8,
+  def BuildTripleGauss(self, piece, mean = 125, mean1 = -1, mean1Low = -1, mean1High = -1, sigma1 = 2, sigma1Low = 1, sigma1High = 8,
       delta21 = 0, delta21Low = -2, delta21High = 2, s21 = 3, s21Low = 1, s21High = 30, delta31 = 0, delta31Low = -2, delta31High = 2,
       s32 = 3, s32Low = 1, s32High = 30, frac23 = 0.9, frac23Low = 0, frac23High = 1, frac123 = 0.9, frac123Low = 0, frac123High = 1):
 
+    suffix = self.suffix+'_'+piece
+    mean1 = mean
     if mean1Low is -1: mean1Low = mean1-1
     if mean1High is -1: mean1High = mean1+1
 
-    mean1Var = RooRealVar('mean1TripG_'+self.suffix,'mean1TripG_'+self.suffix, mean1, mean1Low, mean1High)
-    sigma1Var = RooRealVar('sigma1TripG_'+self.suffix,'sigma1TripG_'+self.suffix, sigma1, sigma1Low, sigma1High)
-    delta21Var = RooRealVar('delta21TripG_'+self.suffix,'delta21TripG_'+self.suffix, delta21, delta21Low, delta21High)
-    s21Var = RooRealVar('s21TripG_'+self.suffix,'s21TripG_'+self.suffix,s21,s21Low,s21High)
-    delta31Var = RooRealVar('delta31TripG_'+self.suffix,'delta31TripG_'+self.suffix,delta31,delta31Low,delta31High)
-    s32Var = RooRealVar('s32TripG_'+self.suffix,'s32TripG_'+self.suffix,s32,s32Low,s32High)
-    frac23Var = RooRealVar('frac23TripG_'+self.suffix,'frac23TripG_'+self.suffix,frac23,frac23Low,frac23High)
-    frac123Var = RooRealVar('frac123TripG_'+self.suffix,'frac123TripG_'+self.suffix,frac123,frac123Low,frac123High)
+    mean1Var = RooRealVar('mean1TripG_'+suffix,'mean1TripG_'+suffix, mean1, mean1Low, mean1High)
+    sigma1Var = RooRealVar('sigma1TripG_'+suffix,'sigma1TripG_'+suffix, sigma1, sigma1Low, sigma1High)
+    delta21Var = RooRealVar('delta21TripG_'+suffix,'delta21TripG_'+suffix, delta21, delta21Low, delta21High)
+    s21Var = RooRealVar('s21TripG_'+suffix,'s21TripG_'+suffix,s21,s21Low,s21High)
+    delta31Var = RooRealVar('delta31TripG_'+suffix,'delta31TripG_'+suffix,delta31,delta31Low,delta31High)
+    s32Var = RooRealVar('s32TripG_'+suffix,'s32TripG_'+suffix,s32,s32Low,s32High)
+    frac23Var = RooRealVar('frac23TripG_'+suffix,'frac23TripG_'+suffix,frac23,frac23Low,frac23High)
+    frac123Var = RooRealVar('frac123TripG_'+suffix,'frac123TripG_'+suffix,frac123,frac123Low,frac123High)
 
-    mean2Var = RooFormulaVar('mean2TripG_'+self.suffix,'@0 + @1', RooArgList(mean1Var, delta21Var))
-    sigma2Var = RooFormulaVar('sigma2TripG_'+self.suffix,'@0 * @1', RooArgList(sigma1Var, s21Var))
-    mean3Var = RooFormulaVar('mean3TripG_'+self.suffix,'@0 + @1', RooArgList(mean1Var, delta31Var))
-    sigma3Var = RooFormulaVar('sigma3TripG_'+self.suffix,'@0 * @1', RooArgList(sigma2Var, s32Var))
+    mean2Var = RooFormulaVar('mean2TripG_'+suffix,'@0 + @1', RooArgList(mean1Var, delta21Var))
+    sigma2Var = RooFormulaVar('sigma2TripG_'+suffix,'@0 * @1', RooArgList(sigma1Var, s21Var))
+    mean3Var = RooFormulaVar('mean3TripG_'+suffix,'@0 + @1', RooArgList(mean1Var, delta31Var))
+    sigma3Var = RooFormulaVar('sigma3TripG_'+suffix,'@0 * @1', RooArgList(sigma2Var, s32Var))
 
-    gauss1 = RooGaussian('gauss1TripG_'+self.suffix,'gauss1TripG_'+self.suffix,self.mzg,mean1Var,sigma1Var)
-    gauss2 = RooGaussian('gauss2TripG_'+self.suffix,'gauss2TripG_'+self.suffix,self.mzg,mean2Var,sigma2Var)
-    gauss3 = RooGaussian('gauss3TripG_'+self.suffix,'gauss3TripG_'+self.suffix,self.mzg,mean3Var,sigma3Var)
+    gauss1 = RooGaussian('gauss1TripG_'+suffix,'gauss1TripG_'+suffix,self.mzg,mean1Var,sigma1Var)
+    gauss2 = RooGaussian('gauss2TripG_'+suffix,'gauss2TripG_'+suffix,self.mzg,mean2Var,sigma2Var)
+    gauss3 = RooGaussian('gauss3TripG_'+suffix,'gauss3TripG_'+suffix,self.mzg,mean3Var,sigma3Var)
     #gaussArgs = RooArgList(gauss1,gauss2,gauss3)
     #fracArgs = RooArgList(frac1Var, frac2Var)
-    pdf23 = RooAddPdf('pdf23TripG_'+self.suffix,'pdf12TripG_'+self.suffix, gauss2, gauss3, frac23Var)
-    TripG = RooAddPdf('TripG_'+self.suffix,'TripG_'+self.suffix, gauss1, pdf23, frac123Var)
+    pdf23 = RooAddPdf('pdf23TripG_'+suffix,'pdf12TripG_'+suffix, gauss2, gauss3, frac23Var)
+    TripG = RooAddPdf('TripG_'+suffix,'TripG_'+suffix, gauss1, pdf23, frac123Var)
 
     SetOwnership(mean1Var,0)
     SetOwnership(sigma1Var,0)
@@ -736,92 +701,64 @@ class FitBuilder:
     SetOwnership(s32Var,0)
     paramList = [mean1Var, sigma1Var, frac23Var, frac123Var, delta21Var, s21Var, s32Var, delta31Var]
     return TripG, paramList
-    return TripG
 
-  def SignalNameParamFixerCBG(self, tev,lepton,cat,sig,mass,ws):
-    fitName = '_'.join(['CBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
-    meanG = '_'.join(['meanGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    meanCB = '_'.join(['meanCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigmaCB = '_'.join(['sigmaCBCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigmaG = '_'.join(['sigmaGCBG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    meanGNew = '_'.join(['sig',sig,'meanG',lepton,tev,'cat'+cat])
-    meanCBNew = '_'.join(['sig',sig,'meanCB',lepton,tev,'cat'+cat])
-    sigmaCBNew = '_'.join(['sig',sig,'sigmaCB',lepton,tev,'cat'+cat])
-    sigmaGNew = '_'.join(['sig',sig,'sigmaG',lepton,tev,'cat'+cat])
-    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
-    ws.factory(mShift+'[1]')
-    ws.factory(sigmaShift+'[1]')
-    ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
-    ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
-    ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
-    ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
-    ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+  def SignalNameParamFixer(self, ws, fitName):
 
-  def SignalNameParamFixerTripG(self,tev,lepton,cat,sig,mass,ws):
-    fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
+    if fitName == 'CBG':
 
-    meanG1 = '_'.join(['meanG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigmaG1 = '_'.join(['sigmaG1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    meanG1New = '_'.join(['sig',sig,'meanG1',lepton,tev,'cat'+cat])
-    sigmaG1New = '_'.join(['sig',sig,'sigmaG1',lepton,tev,'cat'+cat])
+      fitName = '_'.join(['CBG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      newFitName = '_'.join([self.sig,'hzg',self.lepton,'cat'+self.cat,self.tev])
+      meanG = '_'.join(['meanGCBG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      meanCB = '_'.join(['meanCBCBG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigmaCB = '_'.join(['sigmaCBCBG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigmaG = '_'.join(['sigmaGCBG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      meanGNew = '_'.join(['sig',self.sig,'meanG',self.lepton,self.tev,'cat'+self.cat])
+      meanCBNew = '_'.join(['sig',self.sig,'meanCB',self.lepton,self.tev,'cat'+self.cat])
+      sigmaCBNew = '_'.join(['sig',self.sig,'sigmaCB',self.lepton,self.tev,'cat'+self.cat])
+      sigmaGNew = '_'.join(['sig',self.sig,'sigmaG',self.lepton,self.tev,'cat'+self.cat])
+      mShift = '_'.join(['sig',self.sig,'mShift',self.lepton,self.tev,'cat'+self.cat])
+      sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
+      ws.factory(mShift+'[1]')
+      ws.factory(sigmaShift+'[1]')
+      ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
+      ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
+      ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
+      ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
 
-    meanG2 = '_'.join(['meanG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigmaG2 = '_'.join(['sigmaG2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    meanG2New = '_'.join(['sig',sig,'meanG2',lepton,tev,'cat'+cat])
-    sigmaG2New = '_'.join(['sig',sig,'sigmaG2',lepton,tev,'cat'+cat])
+    elif fitName == 'TripG':
 
-    meanG3 = '_'.join(['meanG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigmaG3 = '_'.join(['sigmaG3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    meanG3New = '_'.join(['sig',sig,'meanG3',lepton,tev,'cat'+cat])
-    sigmaG3New = '_'.join(['sig',sig,'sigmaG3',lepton,tev,'cat'+cat])
+      fitName = '_'.join(['TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      newFitName = '_'.join([self.sig,'hzg',self.lepton,'cat'+self.cat,self.tev])
 
-    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
+      mean1 = '_'.join(['mean1TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      mean2 = '_'.join(['mean2TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      mean3 = '_'.join(['mean3TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma1 = '_'.join(['sigma1TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma2 = '_'.join(['sigma2TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma3 = '_'.join(['sigma3TripG',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      mean1New = '_'.join(['sig',self.sig,'mean1',self.lepton,self.tev,'cat'+self.cat])
+      mean2New = '_'.join(['sig',self.sig,'mean2',self.lepton,self.tev,'cat'+self.cat])
+      mean3New = '_'.join(['sig',self.sig,'mean3',self.lepton,self.tev,'cat'+self.cat])
+      sigma1New = '_'.join(['sig',self.sig,'sigma1',self.lepton,self.tev,'cat'+self.cat])
+      sigma2New = '_'.join(['sig',self.sig,'sigma2',self.lepton,self.tev,'cat'+self.cat])
+      sigma3New = '_'.join(['sig',self.sig,'sigma3',self.lepton,self.tev,'cat'+self.cat])
 
-    ws.factory(mShift+'[1]')
-    ws.factory(sigmaShift+'[1]')
-    ws.factory('prod::'+meanG1New+'('+meanG1+','+mShift+')')
-    ws.factory('prod::'+sigmaG1New+'('+sigmaG1+','+sigmaShift+')')
-    ws.factory('prod::'+meanG2New+'('+meanG2+','+mShift+')')
-    ws.factory('prod::'+sigmaG2New+'('+sigmaG2+','+sigmaShift+')')
-    ws.factory('prod::'+meanG3New+'('+meanG3+','+mShift+')')
-    ws.factory('prod::'+sigmaG3New+'('+sigmaG3+','+sigmaShift+')')
-    ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG1+'='+meanG1New+','+meanG2+'='+meanG2New+','+meanG3+'='+meanG3New+','+
-        sigmaG1+'='+sigmaG1New+','+sigmaG2+'='+sigmaG2New+','+sigmaG3+'='+sigmaG3New+')')
+      mShift = '_'.join(['sig',self.sig,'mShift',self.lepton,self.tev,'cat'+self.cat])
+      sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
 
-  def SignalNameParamFixerTripGV2(self, tev,lepton,cat,sig,mass,ws):
-    fitName = '_'.join(['TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    newFitName = '_'.join([sig,'hzg',lepton,'cat'+cat,tev])
-
-    mean1 = '_'.join(['mean1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    mean2 = '_'.join(['mean2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    mean3 = '_'.join(['mean3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigma1 = '_'.join(['sigma1TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigma2 = '_'.join(['sigma2TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    sigma3 = '_'.join(['sigma3TripG',tev,lepton,'cat'+cat,sig,mass,'Interp'])
-    mean1New = '_'.join(['sig',sig,'mean1',lepton,tev,'cat'+cat])
-    mean2New = '_'.join(['sig',sig,'mean2',lepton,tev,'cat'+cat])
-    mean3New = '_'.join(['sig',sig,'mean3',lepton,tev,'cat'+cat])
-    sigma1New = '_'.join(['sig',sig,'sigma1',lepton,tev,'cat'+cat])
-    sigma2New = '_'.join(['sig',sig,'sigma2',lepton,tev,'cat'+cat])
-    sigma3New = '_'.join(['sig',sig,'sigma3',lepton,tev,'cat'+cat])
-
-    mShift = '_'.join(['sig',sig,'mShift',lepton,tev,'cat'+cat])
-    sigmaShift = '_'.join(['sig',sig,'sigmaShift',lepton,tev,'cat'+cat])
-
-    ws.factory(mShift+'[1]')
-    ws.factory(sigmaShift+'[1]')
-    ws.factory('prod::'+mean1New+'('+mean1+','+mShift+')')
-    ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
-    ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
-    ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
-    ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
-    ws.factory('prod::'+sigma3New+'('+sigma3+','+sigmaShift+')')
-    ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','
-        +sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+','+sigma3+'='+sigma3New+')')
+      ws.factory(mShift+'[1]')
+      ws.factory(sigmaShift+'[1]')
+      ws.factory('prod::'+mean1New+'('+mean1+','+mShift+')')
+      ws.factory('prod::'+mean2New+'('+mean2+','+mShift+')')
+      ws.factory('prod::'+mean3New+'('+mean3+','+mShift+')')
+      ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
+      ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
+      ws.factory('prod::'+sigma3New+'('+sigma3+','+sigmaShift+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+mean1+'='+mean1New+','+mean2+'='+mean2New+','+mean3+'='+mean3New+','
+          +sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+','+sigma3+'='+sigma3New+')')
+    else:
+      raise NameError('Cannot fix signal name "{0}"'.format(fitName))
 
   def BackgroundNameFixer(self,ws,fitName,Ext = True):
     dataName = '_'.join(['data',self.suffix])
@@ -872,8 +809,8 @@ class FitBuilder:
 
 
     elif fitName[0:-1] == 'Bern':
-      ps = []
-      psNew = []
+      pNames = []
+      pNamesNew= []
       if Ext:
         normName = 'norm'+fitName+'_'+self.suffix
         normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
