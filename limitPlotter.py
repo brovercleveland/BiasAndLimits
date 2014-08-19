@@ -25,14 +25,7 @@ extras = []
 
 
 def LimitPlot(CardOutput,AnalysisSuffix):
-  massList = [120.0,120.5,121.0,121.5,122.0,122.5,123.0,123.5,124.0,124.5,
-   124.6,124.7,124.8,124.9,125.0,125.1,125.2,125.3,125.4,125.5,
-   125.6,125.7,125.8,125.9,126.0,126.1,126.2,126.3,126.4,126.5,
-   127.0,127.5,128.0,128.5,129.0,129.5,130.0,
-   130.5,131.0,131.5,132.0,132.5,133.0,133.5,134.0,134.5,135.0,
-   135.5,136.0,136.5,137.0,137.5,138.0,138.5,139.0,139.5,140.0,
-   141.0,142.0,143.0,144.0,145.0,146.0,147.0,148.0,149.0,150.0,
-   151.0,152.0,153.0,154.0,155.0,156.0,157.0,158.0,159.0,160.0]
+  massList = [float(x) for x in cfl.massListBig]
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -52,30 +45,47 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     expExtra.append([])
   for mass in massList:
     if YR:
-      currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
+      #currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
+      currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass)])
     else:
       currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     #print currentDir
-    fileList = os.listdir(currentDir)
-    if cfl.syst:
-      thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
-    else:
-      thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
+    #fileList = os.listdir(currentDir)
+    #if cfl.syst:
+    #  thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
+    #else:
+    #  thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
     #print fileList
     #raw_input()
-    f = open('/'.join([currentDir,thisFile]))
+    thisFile = 'higgsCombineTest.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''))
+    #f = open('/'.join([currentDir,thisFile]))
+    f = TFile('/'.join([currentDir,thisFile]))
+    t = f.Get('limit')
     #print f
     #raw_input()
     xAxis.append(mass)
-    for line in f:
-      splitLine = line.split()
-      if 'Observed' in splitLine: obs.append(float(splitLine[-1]))
-      elif '2.5%:' in splitLine: exp2SigLow.append(float(splitLine[-1]))
-      elif '16.0%:' in splitLine: exp1SigLow.append(float(splitLine[-1]))
-      elif '50.0%:' in splitLine: exp.append(float(splitLine[-1]))
-      elif '84.0%:' in splitLine: exp1SigHi.append(float(splitLine[-1]))
-      elif '97.5%:' in splitLine: exp2SigHi.append(float(splitLine[-1]))
-    f.close()
+
+    #for line in f:
+    #  splitLine = line.split()
+    #  if 'Observed' in splitLine: obs.append(float(splitLine[-1]))
+    #  elif '2.5%:' in splitLine: exp2SigLow.append(float(splitLine[-1]))
+    #  elif '16.0%:' in splitLine: exp1SigLow.append(float(splitLine[-1]))
+    #  elif '50.0%:' in splitLine: exp.append(float(splitLine[-1]))
+    #  elif '84.0%:' in splitLine: exp1SigHi.append(float(splitLine[-1]))
+    #  elif '97.5%:' in splitLine: exp2SigHi.append(float(splitLine[-1]))
+    #f.close()
+
+    count = 0
+    for ev in t:
+      if count == 0: exp2SigLow.append(ev.limit)
+      elif count == 1: exp1SigLow.append(ev.limit)
+      elif count == 2: exp.append(ev.limit)
+      elif count == 3: exp1SigHi.append(ev.limit)
+      elif count == 4: exp2SigHi.append(ev.limit)
+      elif count == 5: obs.append(ev.limit)
+      count +=1
+    f.Close()
+
     if mass == 125.0:
       print mass
       print 'obs:', obs[-1]

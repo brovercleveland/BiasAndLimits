@@ -61,7 +61,7 @@ def makeCards(MVATest = cfl.doMVA):
 
     for lepton in leptonList:
       for cat in catList:
-        if cat == '0': continue
+        #if cat == '0': continue
         sigNameList = cfl.sigNameList
         if len(sigNameList)==5:
           sigNameList = ['ggH','qqH','WH','ZH','ttH']
@@ -219,28 +219,29 @@ def makeCards(MVATest = cfl.doMVA):
           card.write('{0:^15}\n'.format('-'))
 
           #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_scale_j','lnN']+['-']*3+[jes_vbf[cat]]+[jes_gg[cat]]+['-'])))
-          card.write('{0:<17} {1:<7} '.format('CMS_scale_j','lnN'))
-          for sig in prefixSigList[::-1]:
-            if 'ggH' in sig: card.write('{0:^15} '.format(jes_gg[cat]))
-            elif 'qqH' in sig: card.write('{0:^15} '.format(jes_vbf[cat]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
+          if cat != '0':
+            card.write('{0:<17} {1:<7} '.format('CMS_scale_j','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'ggH' in sig: card.write('{0:^15} '.format(jes_gg[cat]))
+              elif 'qqH' in sig: card.write('{0:^15} '.format(jes_vbf[cat]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
 
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
-          card.write('{0:<17} {1:<7} '.format('CMS_res_j','lnN'))
-          for sig in prefixSigList[::-1]:
-            if 'ggH' in sig: card.write('{0:^15} '.format(jer_gg[cat]))
-            elif 'qqH' in sig: card.write('{0:^15} '.format(jer_vbf[cat]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_res_j','lnN']+['-']*3+[jer_vbf[cat]]+[jer_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_res_j','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'ggH' in sig: card.write('{0:^15} '.format(jer_gg[cat]))
+              elif 'qqH' in sig: card.write('{0:^15} '.format(jer_vbf[cat]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
 
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
-          card.write('{0:<17} {1:<7} '.format('CMS_UEPS','lnN'))
-          for sig in prefixSigList[::-1]:
-            if 'ggH' in sig: card.write('{0:^15} '.format(ueps_gg[cat]))
-            elif 'qqH' in sig: card.write('{0:^15} '.format(ueps_vbf[cat]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_UEPS','lnN']+['-']*3+[ueps_vbf[cat]]+[ueps_gg[cat]]+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_UEPS','lnN'))
+            for sig in prefixSigList[::-1]:
+              if 'ggH' in sig: card.write('{0:^15} '.format(ueps_gg[cat]))
+              elif 'qqH' in sig: card.write('{0:^15} '.format(ueps_vbf[cat]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
 
           if cat == '5':
             #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15}\n'.format(*(['CMS_eff_id_j','lnN']+jetId+['-'])))

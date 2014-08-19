@@ -7,6 +7,7 @@ mode = cfl.mode
 doMVA = cfl.doMVA
 
 massList = cfl.massListBig
+#massList = ['350.0']
 
 YR = cfl.YR
 

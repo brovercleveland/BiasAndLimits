@@ -14,11 +14,19 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList
-  catListBig = cfl.catListBig[1:]
-  catListSmall = cfl.catListSmall[1:]
+  noCats = cfl.noCats
 
   YR = cfl.YR
   sigFit = cfl.sigFit
+  highMass = cfl.highMass
+
+  if noCats:
+    catListBig = ['0']
+    catListSmall = ['0']
+  else:
+    catListBig = cfl.catListBig[1:]
+    catListSmall = cfl.catListSmall[1:]
+
 
   owd = os.getcwd()
   if inputFolder == None:
@@ -45,6 +53,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     outputName = '_'.join(['Output','FullCombo','M'+mass,suffix])+'.txt'
     for tev in tevList:
       if doMVA and tev == '8TeV': catList = catListBig
+      if highMass and tev == '7TeV': continue
       else: catList = catListSmall
       for lepton in leptonList:
         for cat in catList:
@@ -59,7 +68,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
     print 'making combined cards'
     print 'combineCards.py '+cardNames+' > '+comboName
     os.system('combineCards.py '+cardNames+' > '+comboName)
-    os.system('combineCards.py '+cardNames7TeV+' > '+comboName7TeV)
+    if not highMass: os.system('combineCards.py '+cardNames7TeV+' > '+comboName7TeV)
     os.system('combineCards.py '+cardNames8TeV+' > '+comboName8TeV)
     #os.chdir('limitOutput')
     #print 'running limit software, M:',mass

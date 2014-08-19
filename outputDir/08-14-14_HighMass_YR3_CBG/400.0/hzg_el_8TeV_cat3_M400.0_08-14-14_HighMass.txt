@@ -1,0 +1,42 @@
+#removed vulgarity
+#cards produced by Brian Pollack
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_08-14-14_HighMass.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_08-14-14_HighMass.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_el_8TeV_cat3_400.0.root ws_card:ggH_hzg_el_cat3_8TeV
+---------------
+bin          el_8TeV_cat3
+observation  1314
+------------------------------
+bin                        el_8TeV_cat3    el_8TeV_cat3  
+process                       ggH_hzg           bkg      
+process                          0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                         0.0029838           1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       0.918/1.082          -       
+pdf_qqbar         lnN            -               -       
+QCDscale_ggH      lnN       0.946/1.058          -       
+QCDscale_qqH      lnN            -               -       
+QCDscale_VH       lnN            -               -       
+QCDscale_ttH      lnN            -               -       
+lumi_8TeV         lnN          1.026             -       
+CMS_eff_e         lnN          1.022             -       
+CMS_eff_g         lnN          1.006             -       
+CMS_scale_j       lnN          1.001             -       
+CMS_res_j         lnN          1.001             -       
+CMS_UEPS          lnN          1.002             -       
+CMS_hzg_err_BR    lnN       1.085/1.087          -       
+ggH_hzg_mShift_el_8TeV_cat3              param          1         0.01   
+ggH_hzg_sigmaShift_el_8TeV_cat3          param          1         0.05   
+bkg_p1_el_8TeV_cat3                           flatParam      
+bkg_p2_el_8TeV_cat3                           flatParam      
+bkg_p3_el_8TeV_cat3                           flatParam      
+bkg_p4_el_8TeV_cat3                           flatParam      
+bkg_p5_el_8TeV_cat3                           flatParam      
+bkg_sigma_el_8TeV_cat3                        flatParam      
+bkg_step_el_8TeV_cat3                         flatParam      
+bkg_el_8TeV_cat3_norm                         flatParam      

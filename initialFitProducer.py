@@ -63,11 +63,12 @@ def doInitialFits():
   if highMass:
     xmin = 150
     xmax = 500
+    binning = (xmax-xmin)/4
   else:
     xmin = 100
     xmax = 190
+    binning = (xmax-xmin)/2
 
-  binning = (xmax-xmin)/2
   print 'high!!!!!!!!!!!!!!!!!!'
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',xmin,xmax)
   mzg.setRange('full',xmax,xmin)
@@ -122,7 +123,15 @@ def doInitialFits():
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
-              if tmpSigMass[0]> int(mass)-10 and tmpSigMass[0]<int(mass)+10:
+
+              if highMass:
+                low = int(mass)*0.9
+                high = int(mass)*1.1
+              else:
+                low = int(mass)-10
+                high = int(mass)+10
+
+              if tmpSigMass[0]> low and tmpSigMass[0]<high:
                 if year is '2012' and mass is '160' and prod == 'ggH' and suffix == 'Proper':
                   mzg.setVal(tmpSigMass[0]+5)
                 else:

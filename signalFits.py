@@ -68,8 +68,6 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
   RooRandom.randomGenerator().SetSeed(8675309)
 
-  c = TCanvas("c","c",0,0,500,400)
-  c.cd()
   mzg = myWs.var('CMS_hzg_mass')
   cardDict = AutoVivification()
   for mass in massList:
@@ -123,7 +121,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massLow<=100:
           mzg.setRange('fitRegion1',115,int(massLow)+15)
         elif massLow > 160:
-          mzg.setRange('fitRegion1',int(massLow)-50,int(massLow)+50)
+          mzg.setRange('fitRegion1',int(massLow)*0.9,int(massLow)*1.1)
         else:
           mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+15)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
@@ -134,7 +132,10 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
 
         fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massLow))
-        SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)[0]
+        if highMass:
+          SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.1, sigmaCB = massLow*0.01)[0]
+        else:
+          SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)[0]
 
         SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
@@ -143,7 +144,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         if massHi<=100:
           mzg.setRange('fitRegion2',115,int(massHi)+15)
         elif massHi > 160:
-          mzg.setRange('fitRegion2',int(massHi)-50,int(massHi)+50)
+          mzg.setRange('fitRegion2',int(massHi)*0.9,int(massHi)*1.1)
         else:
           mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+15)
         sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
@@ -151,7 +152,10 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
         fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massHi))
-        SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
+        if highMass:
+          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.1, sigmaCB = massHi*0.01)[0]
+        else:
+          SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
 
         SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
 
@@ -161,7 +165,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       if mass<=100:
         mzg.setRange('fitRegion_'+massString,115,mass+15)
       elif mass > 160:
-        mzg.setRange('fitRegion_'+massString,mass-50,mass+50)
+        mzg.setRange('fitRegion_'+massString,mass*0.9,mass*1.1)
       else:
         mzg.setRange('fitRegion_'+massString,mass-15,mass+15)
       beta = RooRealVar('beta','beta', 0.5, 0., 1.)
@@ -186,9 +190,12 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
       fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(mass))
-      SigFit_Interp, paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
+      if highMass:
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.1, sigmaCB = mass*0.01)
+      else:
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
 
-      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum))
 
       for param in paramList:
         param.setConstant(True)
@@ -202,7 +209,14 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(yieldVar)
       cardDict[lep][tev][cat][str(mass)].commitTransaction()
 
-    testFrame = mzg.frame(float(massList[0])-15,float(massList[-1])+5)
+    c = TCanvas("c","c",0,0,500,400)
+    c.cd()
+
+    if highMass:
+      testFrame = mzg.frame(float(massList[0])*0.9,float(massList[-1])*1.1)
+      c.SetLogy()
+    else:
+      testFrame = mzg.frame(float(massList[0])-15,float(massList[-1])+5)
     for i,fit in enumerate(fitList):
       regionName = fit.GetName().split('_')[-1]
       #fit.plotOn(testFrame)
@@ -210,13 +224,14 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
       fit.paramOn(testFrame)
     for i,signal in enumerate(dsList):
-      signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
+      signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(80))
     testFrame.Draw()
     c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
+    c.SetLogy(False)
     if highMass:
-      testFrame = mzg.frame(float(testPoint)-50, float(testPoint)+50)
+      testFrame = mzg.frame(float(testPoint)*0.9, float(testPoint)*1.1)
     else:
       testFrame = mzg.frame(float(testPoint)-15, float(testPoint)+15)
     for i,fit in enumerate(fitList):
@@ -246,6 +261,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       testFrame.addObject(txt)
     testFrame.Draw()
     c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,'M'+testPoint,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+
 
   for prod in sigNameList:
     for mass in massList:

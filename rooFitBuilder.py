@@ -615,16 +615,16 @@ class FitBuilder:
     SetOwnership(sigmaVar,0)
     return gauss
 
-  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 20, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
-      n = 4, nLow = 0.5, nHigh = 50, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 20, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):
+  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 2000, alpha = 1, alphaLow = 0.5, alphaHigh = 1000,
+      n = 4, nLow = 0.5, nHigh = 500, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 2000, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):
 
     suffix = self.suffix+'_'+piece
     meanG = meanCB = mean
 
-    if meanGLow is -1: meanGLow = meanG-5
-    if meanGHigh is -1: meanGHigh = meanG+5
-    if meanCBLow is -1: meanCBLow = meanCB-5
-    if meanCBHigh is -1: meanCBHigh = meanCB+5
+    if meanGLow is -1: meanGLow = meanG*0.8
+    if meanGHigh is -1: meanGHigh = meanG*1.2
+    if meanCBLow is -1: meanCBLow = meanCB*0.8
+    if meanCBHigh is -1: meanCBHigh = meanCB*1.2
     meanGVar = RooRealVar('meanGCBG_'+suffix,'meanGCBG_'+suffix, meanG, meanGLow, meanGHigh)
     meanCBVar = RooRealVar('meanCBCBG_'+suffix,'meanCBCBG_'+suffix, meanCB, meanCBLow, meanCBHigh)
     sigmaCBVar = RooRealVar('sigmaCBCBG_'+suffix,'sigmaCBCBG_'+suffix,sigmaCB,sigmaCBLow,sigmaCBHigh)
