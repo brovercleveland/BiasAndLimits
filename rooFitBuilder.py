@@ -616,10 +616,11 @@ class FitBuilder:
     return gauss
 
   def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 2000, alpha = 1, alphaLow = 0.5, alphaHigh = 1000,
-      n = 4, nLow = 0.5, nHigh = 500, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 2000, frac = 0.1, fracLow = 0.0, fracHigh = 1.0):
+      n = 4, nLow = 0.5, nHigh = 500, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 2000, frac = 0.1, fracLow = 0.0, fracHigh = 0.3):
 
     suffix = self.suffix+'_'+piece
-    meanG = meanCB = mean
+    if meanG == -1: meanG = mean
+    if meanCB == -1: meanCB = mean
 
     if meanGLow is -1: meanGLow = meanG*0.8
     if meanGHigh is -1: meanGHigh = meanG*1.2
@@ -648,7 +649,7 @@ class FitBuilder:
     SetOwnership(fracVar,0)
     SetOwnership(crystal,0)
     SetOwnership(gauss,0)
-    paramList = [meanGVar,meanCBVar,sigmaCBVar,alphaVar,nVar,sigmaGVar,fracVar]
+    paramList = [meanGVar,meanCBVar,sigmaGVar,sigmaCBVar,alphaVar,nVar,fracVar]
     return CBG, paramList
 
 
@@ -725,6 +726,7 @@ class FitBuilder:
       ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
       ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
       ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
 
     elif fitName == 'TripG':
 

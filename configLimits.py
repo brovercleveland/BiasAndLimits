@@ -15,12 +15,12 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
-#suffix = 'Proper'
+suffix = 'Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVAHighMass'
-suffix = '08-14-14_HighMass'
+#suffix = '08-20-14_HighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVA'
 #suffix = '07-29-14_Proper'
@@ -39,11 +39,11 @@ massList = ['120','125','130','135','140','145','150','155','160']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 #sigNameList = ['ggH']
 YR = 'YR3'
-highMass = True
+highMass = False
 
 
 if highMass:
-  massList = ['200','250','300','350','400']
+  massList = ['200','250','300','350','400','450']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -85,7 +85,7 @@ doExt = False
 #sigFit = 'TripG'
 sigFit = 'CBG'
 
-testPoint = '138.0'
+testPoint = '125.0'
 
 massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
 '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -99,7 +99,8 @@ massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','
 #massListBig = ['120.0','125.0','130.0','135.0','140.0','145.0','150.0','155.0','160.0']
 #massListBig = ['125.0']
 if highMass:
-  massListBig = ['200.0','250.0','300.0','350.0','400.0']
+  massListBig = ['200.0','250.0','300.0','350.0','400.0','450.0']
+  #massListBig = ['200.0']
   testPoint = '400.0'
 
 ###############
@@ -121,8 +122,8 @@ if highMass:
 fullCombo = True
 byParts = False
 noCats = False
-#if highMass:
-#  noCats = True
+if highMass:
+  noCats = True
 
 ###############
 # batchLimits #

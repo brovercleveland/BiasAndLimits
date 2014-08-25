@@ -29,6 +29,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
+  if cfl.highMass: c.SetLogy()
 
   colorList = [kRed,kBlue,kGreen+1]
 

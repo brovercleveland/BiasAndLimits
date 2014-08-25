@@ -87,6 +87,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     fitList = []
     normList = []
     oldMassHi = oldMassLow = 0
+    startingVals = []
     for massString in massList:
 
       #############################################
@@ -132,12 +133,19 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
 
         fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massLow))
+
+        #if len(startingVals) !=0:
+        #  SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low',
+        #      meanG = startingVals[0], meanCB = startingVals[1], sigmaG = startingVals[2], sigmaCB = startingVals[3],
+        #      alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
         if highMass:
-          SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.1, sigmaCB = massLow*0.01)[0]
+          SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.1, sigmaCB = massLow*0.05)
         else:
-          SigFit_Low = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)[0]
+          SigFit_Low,tempParams = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)
 
         SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        startingVals = [x.getVal() for x in tempParams]
+
 
         ###### fit the hi mass point
         #if massHi<=125:
@@ -152,12 +160,16 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
         fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(massHi))
+        #SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi',
+        #    mean = massHi, sigmaG = startingVals[2], sigmaCB = startingVals[3],
+        #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
         if highMass:
-          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.1, sigmaCB = massHi*0.01)[0]
+          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.1, sigmaCB = massHi*0.05)[0]
         else:
           SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
 
         SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
+        #startingVals = [x.getVal() for x in tempParams]
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.
@@ -190,12 +202,16 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
 
       fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(mass))
+      #SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp',
+      #    mean = mass, sigmaG = startingVals[2], sigmaCB = startingVals[3],
+      #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
       if highMass:
-        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.1, sigmaCB = mass*0.01)
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.1, sigmaCB = mass*0.05)
       else:
         SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
 
       SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum))
+      #startingVals = [x.getVal() for x in paramList]
 
       for param in paramList:
         param.setConstant(True)

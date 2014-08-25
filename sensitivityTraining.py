@@ -5,24 +5,35 @@ import numpy as np
 #import pdb
 from rooFitBuilder import *
 from math import sqrt
+import configLimits as cfl
 
 gROOT.SetBatch()
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-leptonList = ['mu','el']
+leptonList = cfl.leptonList
 tevList = ['8TeV']
-catList = ['0','1','2','3','4','5']
-sigNameList = ['ggH','qqH','ttH','WH','ZH']
-#sigNameList = ['ttH']
+catList = cfl.catListSmall
+sigNameList = cfl.sigNameList
+highMass = cfl.highMass
+suffix = cfl.suffix
+sigFit = cfl.sigFit
+YR = cfl.YR
+if highMass:
+  mass = 'M200'
+else:
+  mass = 'M125'
 
 def Sensitivity(suffix = 'Proper'):
 
-  rooWsFile = TFile('outputDir/{0}/initRooFitOut_{0}.root'.format(suffix))
+  rooWsFile = TFile('outputDir/{0}_{1}_{2}/initRooFitOut_{0}.root'.format(suffix,YR,sigFit))
   myWs = rooWsFile.Get('ws')
 
   mzg = myWs.var('CMS_hzg_mass')
-  mzg.setRange('signal',120,130)
+  if highMass:
+    mzg.setRange('signal',180,220)
+  else:
+    mzg.setRange('signal',120,130)
 
   print suffix
   print
@@ -48,7 +59,8 @@ def Sensitivity(suffix = 'Proper'):
         totalSig = 0
         totalSigRaw = 0
         for prod in sigNameList:
-          sigName = '_'.join(['ds',prod,'hzg',lepton,tev,'cat'+cat,'M125'])
+          sigName = '_'.join(['ds',prod,'hzg',lepton,tev,'cat'+cat,mass])
+          print sigName
           sig_ds = myWs.data(sigName)
           if (prod == 'WH' and suffix != 'Proper'):
             totalSigS = totalSigS + sig_ds.sumEntries('1','signal')/10
@@ -68,7 +80,4 @@ def Sensitivity(suffix = 'Proper'):
 
 
 if __name__ == "__main__":
-  if len(sys.argv) > 1:
-    Sensitivity(sys.argv[1])
-  else:
-    Sensitivity()
+  Sensitivity(suffix)

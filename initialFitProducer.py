@@ -62,7 +62,7 @@ def doInitialFits():
 
   if highMass:
     xmin = 150
-    xmax = 500
+    xmax = 600
     binning = (xmax-xmin)/4
   else:
     xmin = 100
@@ -71,7 +71,7 @@ def doInitialFits():
 
   print 'high!!!!!!!!!!!!!!!!!!'
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',xmin,xmax)
-  mzg.setRange('full',xmax,xmin)
+  mzg.setRange('full',xmin,xmax)
   mzg.setBins((xmax-xmin)*4)
   mzg.setBins(50000,'cache')
 
