@@ -15,12 +15,12 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
-suffix = '09-3-14_Proper'
+#suffix = '09-3-14_Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVAHighMass'
-#suffix = '08-20-14_HighMass'
+suffix = '08-20-14_HighMass'
 #suffix = '07-25-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVA'
 #suffix = '07-29-14_Proper'
@@ -39,9 +39,9 @@ massList = ['120','125','130','135','140','145','150','155','160']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 #sigNameList = ['ggH']
 YR = 'YR3'
-highMass = False
+highMass = True
 
-modelIndependent = False
+modelIndependent = True
 
 if highMass:
   massList = ['200','250','300','350','400','450']
@@ -120,8 +120,8 @@ if highMass:
 # limitProducer #
 #################
 
-fullCombo = False
-byParts = True
+fullCombo = True
+byParts = False
 noCats = False
 if highMass:
   noCats = True
@@ -130,8 +130,8 @@ if highMass:
 # batchLimits #
 ###############
 
-#mode = 'Combo'
-mode = 'noCombo'
+mode = 'Combo'
+#mode = 'noCombo'
 
 syst = True
 

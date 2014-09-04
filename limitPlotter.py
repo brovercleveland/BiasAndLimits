@@ -30,7 +30,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
-  if cfl.highMass: c.SetLogy()
+  if cfl.highMass and not cfl.modelIndependent: c.SetLogy()
 
   colorList = [kRed,kBlue,kGreen+1]
 
@@ -209,7 +209,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   mg.Draw('AL3')
   #mg.Draw('Asame')
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
-  mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
+  if cfl.modelIndependent:
+    mg.GetYaxis().SetTitle('#sigma(gg->a)XBR(a->ll#gamma) (fb)')
+  else:
+    mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
   if YR:
@@ -227,7 +230,12 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
 if __name__=='__main__':
   if fullCombo:
     print 'FULL COMBO PLOT'
-    LimitPlot('FullCombo',suffix)
+    if mode == 'Combo':
+      cardName = '_'.join(['hzg','FullCombo_',suffix])
+    else:
+      cardName = '_'.join(['hzg',myLepton,tev,'cat'+cat+'_',suffix])
+    cardName = 'Output'+cardName[3:]
+    LimitPlot('FullCombo',suffix,cardName)
   if byParts:
     print 'BY PARTS PLOTS'
     leptonList = cfl.leptonList

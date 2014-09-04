@@ -1,7 +1,7 @@
 Combination of hzg_mu_8TeV_cat0_M300.0_08-20-14_HighMass.txt  hzg_el_8TeV_cat0_M300.0_08-20-14_HighMass.txt
 imax 2 number of bins
 jmax 1 number of processes minus 1
-kmax 11 number of nuisance parameters
+kmax 8 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *        ch1      CardBackground_08-20-14_HighMass.root ws_card:$PROCESS_mu_8TeV_cat0
 shapes bkg      ch1      CardBackground_08-20-14_HighMass.root ws_card:bkg_mu_8TeV_cat0
@@ -10,21 +10,18 @@ shapes *        ch2      CardBackground_08-20-14_HighMass.root ws_card:$PROCESS_
 shapes bkg      ch2      CardBackground_08-20-14_HighMass.root ws_card:bkg_el_8TeV_cat0
 shapes ggH_hzg  ch2      SignalOutput_el_8TeV_cat0_300.0.root ws_card:ggH_hzg_el_cat0_8TeV
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          ch1          ch2        
-observation  4357.0       4011.0     
+bin          ch1     ch2   
+observation  4357.0  4011.0
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                               ch1          ch1          ch2          ch2        
-process                           ggH_hzg      bkg          ggH_hzg      bkg        
-process                           0            1            0            1          
-rate                              0.0537       1.0000       0.0525       1.0000     
+bin                             ch1      ch1      ch2      ch2    
+process                         ggH_hzg  bkg      ggH_hzg  bkg    
+process                         0        1        0        1      
+rate                            2.5749   1.0000   2.5171   1.0000 
 ----------------------------------------------------------------------------------------------------------------------------------
-CMS_eff_e               lnN       -            -            1.022        -          
-CMS_eff_g               lnN       1.01         -            1.01         -          
-CMS_eff_m               lnN       1.037        -            -            -          
-CMS_hzg_err_BR          lnN       1.056/1.056  -            1.056/1.056  -          
-QCDscale_ggH            lnN       0.939/1.057  -            0.939/1.057  -          
-lumi_8TeV               lnN       1.026        -            1.026        -          
-pdf_gg                  lnN       0.921/1.077  -            0.921/1.077  -          
+CMS_eff_e               lnN     -        -        1.022    -      
+CMS_eff_g               lnN     1.01     -        1.01     -      
+CMS_eff_m               lnN     1.037    -        -        -      
+lumi_8TeV               lnN     1.026    -        1.026    -      
 ggH_hzg_mShift_mu_8TeV_cat0  param  1 0.01
 ggH_hzg_sigmaShift_el_8TeV_cat0  param  1 0.05
 ggH_hzg_mShift_el_8TeV_cat0  param  1 0.01

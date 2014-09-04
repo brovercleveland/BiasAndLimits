@@ -15,18 +15,11 @@ bin                        mu_8TeV_cat0    mu_8TeV_cat0
 process                       ggH_hzg           bkg      
 process                          0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                         0.032442            1       
+rate                          2.5884             1       
 -----------------------------------------------------------------------------------------------------------------------
-pdf_gg            lnN       0.918/1.080          -       
-pdf_qqbar         lnN            -               -       
-QCDscale_ggH      lnN       0.941/1.057          -       
-QCDscale_qqH      lnN            -               -       
-QCDscale_VH       lnN            -               -       
-QCDscale_ttH      lnN            -               -       
 lumi_8TeV         lnN          1.026             -       
 CMS_eff_m         lnN          1.037             -       
 CMS_eff_g         lnN          1.010             -       
-CMS_hzg_err_BR    lnN       1.087/1.076          -       
 ggH_hzg_mShift_mu_8TeV_cat0              param          1         0.01   
 ggH_hzg_sigmaShift_mu_8TeV_cat0          param          1         0.05   
 bkg_p1_mu_8TeV_cat0                           flatParam      
