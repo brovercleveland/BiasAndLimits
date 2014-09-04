@@ -92,7 +92,8 @@ def makeCards(MVATest = cfl.doMVA):
           cardName = 'outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+'_'.join(['hzg',lepton,tev,'cat'+cat,'M'+mass,suffix])+'.txt'
 
           if type(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]) == AutoVivification:
-            YR = 'YR2'
+            if YR == 'YR3': YR = 'YR2'
+            elif YR == 'YR2': YR = 'YR3'
 
           card = open(cardName, 'w')
           card.write('#removed vulgarity\n')
@@ -143,61 +144,62 @@ def makeCards(MVATest = cfl.doMVA):
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
 
           #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[tev][mass])]+['-']*3+[pdf_gg[tev][mass]]+['-'])))
-          card.write('{0:<17} {1:<7} '.format('pdf_gg','lnN'))
-          for sig in prefixSigList[::-1]:
-            #if 'ggH' in sig: card.write('{0:^15} '.format(pdf_gg[tev][mass]))
-            #elif 'ttH' in sig: card.write('{0:^15} '.format(KapSwap(pdf_tth[tev][mass])))
-            if 'ggH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            elif 'ttH' in sig: card.write('{0:^15} '.format(KapSwap(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass])))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
-
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[tev][mass]]+[pdf_wh[tev][mass]]+[pdf_vbf[tev][mass]]+['-']*2)))
-          card.write('{0:<17} {1:<7} '.format('pdf_qqbar','lnN'))
-          for sig in prefixSigList[::-1]:
-            #if 'ZH' in sig: card.write('{0:^15} '.format(pdf_zh[tev][mass]))
-            #elif 'WH' in sig: card.write('{0:^15} '.format(pdf_wh[tev][mass]))
-            #elif 'qqH' in sig: card.write('{0:^15} '.format(pdf_vbf[tev][mass]))
-            if 'ZH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            elif 'WH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            elif 'qqH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
-
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']*4+[qcd_gg[tev][mass]]+['-'])))
-          card.write('{0:<17} {1:<7} '.format('QCDscale_ggH','lnN'))
-          for sig in prefixSigList[::-1]:
-            #if 'ggH' in sig: card.write('{0:^15} '.format(qcd_gg[tev][mass]))
-            if 'ggH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
-
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_qqH','lnN']+['-']*3+[qcd_vbf[tev][mass]]+['-']*2)))
-          card.write('{0:<17} {1:<7} '.format('QCDscale_qqH','lnN'))
-          for sig in prefixSigList[::-1]:
-            #if 'qqH' in sig: card.write('{0:^15} '.format(qcd_vbf[tev][mass]))
-            if 'qqH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-            else: card.write('{0:^15} '.format('-'))
-          card.write('{0:^15}\n'.format('-'))
-
-          if cat != '5':
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_VH','lnN']+['-']+[qcd_zh[tev][mass]]+[qcd_wh[tev][mass]]+['-']*3)))
-            card.write('{0:<17} {1:<7} '.format('QCDscale_VH','lnN'))
+          if not modelIndependent:
+            card.write('{0:<17} {1:<7} '.format('pdf_gg','lnN'))
             for sig in prefixSigList[::-1]:
-              #if 'ZH' in sig: card.write('{0:^15} '.format(qcd_zh[tev][mass]))
-              #elif 'WH' in sig: card.write('{0:^15} '.format(qcd_wh[tev][mass]))
-              if 'ZH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
-              elif 'WH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              #if 'ggH' in sig: card.write('{0:^15} '.format(pdf_gg[tev][mass]))
+              #elif 'ttH' in sig: card.write('{0:^15} '.format(KapSwap(pdf_tth[tev][mass])))
+              if 'ggH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              elif 'ttH' in sig: card.write('{0:^15} '.format(KapSwap(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass])))
               else: card.write('{0:^15} '.format('-'))
             card.write('{0:^15}\n'.format('-'))
 
-            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ttH','lnN']+[qcd_tth[tev][mass]]+['-']*5)))
-            card.write('{0:<17} {1:<7} '.format('QCDscale_ttH','lnN'))
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_qqbar','lnN']+['-']+[pdf_zh[tev][mass]]+[pdf_wh[tev][mass]]+[pdf_vbf[tev][mass]]+['-']*2)))
+            card.write('{0:<17} {1:<7} '.format('pdf_qqbar','lnN'))
             for sig in prefixSigList[::-1]:
-              #if 'ttH' in sig: card.write('{0:^15} '.format(qcd_tth[tev][mass]))
-              if 'ttH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              #if 'ZH' in sig: card.write('{0:^15} '.format(pdf_zh[tev][mass]))
+              #elif 'WH' in sig: card.write('{0:^15} '.format(pdf_wh[tev][mass]))
+              #elif 'qqH' in sig: card.write('{0:^15} '.format(pdf_vbf[tev][mass]))
+              if 'ZH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              elif 'WH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              elif 'qqH' in sig: card.write('{0:^15} '.format(xsPDFErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
               else: card.write('{0:^15} '.format('-'))
             card.write('{0:^15}\n'.format('-'))
+
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ggH','lnN']+['-']*4+[qcd_gg[tev][mass]]+['-'])))
+            card.write('{0:<17} {1:<7} '.format('QCDscale_ggH','lnN'))
+            for sig in prefixSigList[::-1]:
+              #if 'ggH' in sig: card.write('{0:^15} '.format(qcd_gg[tev][mass]))
+              if 'ggH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_qqH','lnN']+['-']*3+[qcd_vbf[tev][mass]]+['-']*2)))
+            card.write('{0:<17} {1:<7} '.format('QCDscale_qqH','lnN'))
+            for sig in prefixSigList[::-1]:
+              #if 'qqH' in sig: card.write('{0:^15} '.format(qcd_vbf[tev][mass]))
+              if 'qqH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+              else: card.write('{0:^15} '.format('-'))
+            card.write('{0:^15}\n'.format('-'))
+
+            if cat != '5':
+              #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_VH','lnN']+['-']+[qcd_zh[tev][mass]]+[qcd_wh[tev][mass]]+['-']*3)))
+              card.write('{0:<17} {1:<7} '.format('QCDscale_VH','lnN'))
+              for sig in prefixSigList[::-1]:
+                #if 'ZH' in sig: card.write('{0:^15} '.format(qcd_zh[tev][mass]))
+                #elif 'WH' in sig: card.write('{0:^15} '.format(qcd_wh[tev][mass]))
+                if 'ZH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+                elif 'WH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+                else: card.write('{0:^15} '.format('-'))
+              card.write('{0:^15}\n'.format('-'))
+
+              #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['QCDscale_ttH','lnN']+[qcd_tth[tev][mass]]+['-']*5)))
+              card.write('{0:<17} {1:<7} '.format('QCDscale_ttH','lnN'))
+              for sig in prefixSigList[::-1]:
+                #if 'ttH' in sig: card.write('{0:^15} '.format(qcd_tth[tev][mass]))
+                if 'ttH' in sig: card.write('{0:^15} '.format(xsScaleErrDict[YR][tev][prodToPick[sig.rstrip('_hzg')]][mass]))
+                else: card.write('{0:^15} '.format('-'))
+              card.write('{0:^15}\n'.format('-'))
 
           #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['lumi_'+TeV,'lnN']+[lumi[tev]]*5+['-'])))
           card.write('{0:<17} {1:<7} '.format('lumi_'+TeV,'lnN'))
@@ -267,12 +269,13 @@ def makeCards(MVATest = cfl.doMVA):
               card.write('{0:^15} '.format(eff_R9[tev]))
             card.write('{0:^15}\n'.format('-'))
 
-          #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*5+['-'])))
-          card.write('{0:<17} {1:<7} '.format('CMS_hzg_err_BR','lnN'))
-          for sig in prefixSigList[::-1]:
-            #card.write('{0:^15} '.format(err_BR[mass]))
-            card.write('{0:^15} '.format(brErrDict[YR]['Zgamma'][mass]))
-          card.write('{0:^15}\n'.format('-'))
+          if not cfl.modelIndependent:
+            #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*5+['-'])))
+            card.write('{0:<17} {1:<7} '.format('CMS_hzg_err_BR','lnN'))
+            for sig in prefixSigList[::-1]:
+              #card.write('{0:^15} '.format(err_BR[mass]))
+              card.write('{0:^15} '.format(brErrDict[YR]['Zgamma'][mass]))
+            card.write('{0:^15}\n'.format('-'))
 
           for sig in prefixSigList:
             card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))

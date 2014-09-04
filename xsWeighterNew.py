@@ -30,7 +30,9 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt, YR,alt=False):
     print 'using YR2 br for ',year,sig,mass
     br = brDict['YR2']['Zgamma'][mass]
 
-  if alt:
+  if cfl.modelIndependent:
+    LumiXSWeight = nEvt
+  elif alt:
     if sig in ['WH','ZH']:
       LumiXSWeight = nEvt/(xs*br*0.10098*1000)
     if sig in ['ttH']:

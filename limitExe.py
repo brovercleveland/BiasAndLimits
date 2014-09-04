@@ -12,13 +12,13 @@ syst = sys.argv[5]
 
 cardName = sys.argv[3]
 if syst == 'True':
-  outputName = outPutFolder+'Output'+cardName[3:]
+  outputName = 'Output'+cardName[3:]
   print 'running limitProducer, {0}, mass: {1}'.format(cardName,mass)
-  os.system('combine -M Asymptotic --minimizerStrategy 0 -m {0} {1} > {2}'.format(mass,cardName,outputName))
+  os.system('combine -M Asymptotic --minimizerStrategy 0 -m {0} -n {2} {1}'.format(mass,cardName,outputName.replace('M'+mass,'').replace('.txt','')))
 else:
-  outputName = outPutFolder+'Output'+cardName[3:]+'_nosyst'
+  outputName = 'Output'+cardName[3:]+'_nosyst'
   print 'running limitProducer, {0}, mass: {1}'.format(cardName,mass)
-  os.system('combine -S 0 -M Asymptotic --minimizerStrategy 0 -m {0} {1} > {2}'.format(mass,cardName,outputName))
+  os.system('combine -S 0 -M Asymptotic --minimizerStrategy 0 -m {0} -n {2} {1}'.format(mass,cardName,outputName.replace('M'+mass,'').replace('.txt','')))
 
 
 print 'Done'

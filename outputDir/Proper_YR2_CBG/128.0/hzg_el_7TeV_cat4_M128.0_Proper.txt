@@ -1,0 +1,54 @@
+#removed vulgarity
+#cards produced by Brian Pollack
+imax *
+jmax *
+kmax *
+---------------
+shapes *        * CardBackground_Proper.root ws_card:$PROCESS_$CHANNEL
+shapes bkg      * CardBackground_Proper.root ws_card:bkg_$CHANNEL
+shapes ggH_hzg  * SignalOutput_el_7TeV_cat4_128.0.root ws_card:ggH_hzg_el_cat4_7TeV
+shapes qqH_hzg  * SignalOutput_el_7TeV_cat4_128.0.root ws_card:qqH_hzg_el_cat4_7TeV
+shapes WH_hzg   * SignalOutput_el_7TeV_cat4_128.0.root ws_card:WH_hzg_el_cat4_7TeV
+shapes ZH_hzg   * SignalOutput_el_7TeV_cat4_128.0.root ws_card:ZH_hzg_el_cat4_7TeV
+shapes ttH_hzg  * SignalOutput_el_7TeV_cat4_128.0.root ws_card:ttH_hzg_el_cat4_7TeV
+---------------
+bin          el_7TeV_cat4
+observation  576
+------------------------------
+bin                        el_7TeV_cat4    el_7TeV_cat4    el_7TeV_cat4    el_7TeV_cat4    el_7TeV_cat4    el_7TeV_cat4  
+process                       ttH_hzg         ZH_hzg          WH_hzg          qqH_hzg         ggH_hzg           bkg      
+process                         -4              -3              -2              -1               0               1       
+-----------------------------------------------------------------------------------------------------------------------
+rate                        0.00051851       0.0050104       0.0071179       0.011778         0.18826            1       
+-----------------------------------------------------------------------------------------------------------------------
+pdf_gg            lnN       1.032/0.907          -               -               -          1.077/1.070          -       
+pdf_qqbar         lnN            -          0.985/1.015     0.992/1.003     0.998/1.003          -               -       
+QCDscale_ggH      lnN            -               -               -               -          1.149/1.146          -       
+QCDscale_qqH      lnN            -               -               -          0.977/1.028          -               -       
+QCDscale_VH       lnN            -          0.949/1.051     0.957/1.038          -               -               -       
+QCDscale_ttH      lnN       0.823/1.117          -               -               -               -               -       
+lumi_7TeV         lnN          1.022           1.022           1.022           1.022           1.022             -       
+CMS_eff_e         lnN          1.011           1.011           1.011           1.011           1.011             -       
+CMS_eff_g         lnN          1.010           1.010           1.010           1.010           1.010             -       
+CMS_scale_j       lnN            -               -               -             1.022           1.001             -       
+CMS_res_j         lnN            -               -               -             1.014           1.001             -       
+CMS_UEPS          lnN            -               -               -             1.021           1.002             -       
+CMS_hzg_err_BR    lnN       0.914/1.087     0.914/1.087     0.914/1.087     0.914/1.087     0.914/1.087          -       
+ggH_hzg_mShift_el_7TeV_cat4              param          1         0.01   
+ggH_hzg_sigmaShift_el_7TeV_cat4          param          1         0.05   
+qqH_hzg_mShift_el_7TeV_cat4              param          1         0.01   
+qqH_hzg_sigmaShift_el_7TeV_cat4          param          1         0.05   
+WH_hzg_mShift_el_7TeV_cat4               param          1         0.01   
+WH_hzg_sigmaShift_el_7TeV_cat4           param          1         0.05   
+ZH_hzg_mShift_el_7TeV_cat4               param          1         0.01   
+ZH_hzg_sigmaShift_el_7TeV_cat4           param          1         0.05   
+ttH_hzg_mShift_el_7TeV_cat4              param          1         0.01   
+ttH_hzg_sigmaShift_el_7TeV_cat4          param          1         0.05   
+bkg_p1_el_7TeV_cat4                           flatParam      
+bkg_p2_el_7TeV_cat4                           flatParam      
+bkg_p3_el_7TeV_cat4                           flatParam      
+bkg_p4_el_7TeV_cat4                           flatParam      
+bkg_p5_el_7TeV_cat4                           flatParam      
+bkg_sigma_el_7TeV_cat4                        flatParam      
+bkg_step_el_7TeV_cat4                         flatParam      
+bkg_el_7TeV_cat4_norm                         flatParam      

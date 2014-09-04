@@ -15,7 +15,7 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
-suffix = 'Proper'
+suffix = '09-3-14_Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
@@ -41,6 +41,7 @@ sigNameList = ['ggH','qqH','ttH','WH','ZH']
 YR = 'YR3'
 highMass = False
 
+modelIndependent = False
 
 if highMass:
   massList = ['200','250','300','350','400','450']
@@ -119,8 +120,8 @@ if highMass:
 # limitProducer #
 #################
 
-fullCombo = True
-byParts = False
+fullCombo = False
+byParts = True
 noCats = False
 if highMass:
   noCats = True
@@ -129,8 +130,8 @@ if highMass:
 # batchLimits #
 ###############
 
-mode = 'Combo'
-#mode = 'noCombo'
+#mode = 'Combo'
+mode = 'noCombo'
 
 syst = True
 

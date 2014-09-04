@@ -16,6 +16,7 @@ YR = cfl.YR
 sigFit = cfl.sigFit
 #YR = 'YR2012ICHEP'
 suffix = cfl.suffix
+mode = cfl.mode
 #suffix = '04-28-14_Proper'
 #extras = ['04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
 extras = []
@@ -24,7 +25,7 @@ extras = []
 
 
 
-def LimitPlot(CardOutput,AnalysisSuffix):
+def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   massList = [float(x) for x in cfl.massListBig]
 
   c = TCanvas("c","c",0,0,500,400)
@@ -58,7 +59,7 @@ def LimitPlot(CardOutput,AnalysisSuffix):
     #  thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
     #print fileList
     #raw_input()
-    thisFile = 'higgsCombineTest.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''))
+    thisFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),cardName)
     #f = open('/'.join([currentDir,thisFile]))
     f = TFile('/'.join([currentDir,thisFile]))
     t = f.Get('limit')
@@ -242,7 +243,14 @@ if __name__=='__main__':
           else: myLepton = lepton
           outputName = '_'.join(['Output',myLepton,tev,'cat'+cat])
           print outputName
-          LimitPlot(outputName,suffix)
+          if mode == 'Combo':
+            cardName = '_'.join(['hzg','FullCombo_',suffix])
+          else:
+            cardName = '_'.join(['hzg',myLepton,tev,'cat'+cat+'_',suffix])
+          cardName = 'Output'+cardName[3:]
+
+
+          LimitPlot(outputName,suffix,cardName)
 
 
 
