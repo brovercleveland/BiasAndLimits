@@ -15,15 +15,15 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
+#suffix = '08-21-14_PhoMVA'
 #suffix = '09-3-14_Proper'
 #suffix = '05-07-14_Proper'
 #suffix = '05-07-14_PhoMVA'
 #suffix = '05-07-14_PhoMVAKinMVA'
 #suffix = '07-25-14_PhoMVAHighMass'
-suffix = '08-20-14_HighMass'
-#suffix = '07-25-14_PhoMVAKinMVA'
-#suffix = '07-25-14_PhoMVA'
-#suffix = '07-29-14_Proper'
+#suffix = '08-20-14_HighMass'
+#suffix = '09-5-14_HighMass'
+suffix = '09-7-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
 #leptonList = ['mu']
@@ -39,12 +39,12 @@ massList = ['120','125','130','135','140','145','150','155','160']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 #sigNameList = ['ggH']
 YR = 'YR3'
-highMass = True
+highMass = False
 
-modelIndependent = True
+modelIndependent = False
 
 if highMass:
-  massList = ['200','250','300','350','400','450']
+  massList = ['200','250','300','350','400','450','500']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -61,7 +61,7 @@ if highMass:
 debugPlots = True
 verbose = True
 rootrace = False
-allBiasFits= True# Turn on extra fits used in bias studies
+allBiasFits= False# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -100,7 +100,7 @@ massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','
 #massListBig = ['120.0','125.0','130.0','135.0','140.0','145.0','150.0','155.0','160.0']
 #massListBig = ['125.0']
 if highMass:
-  massListBig = ['200.0','250.0','300.0','350.0','400.0','450.0']
+  massListBig = ['200.0','250.0','300.0','350.0','400.0','450.0','500.0']
   #massListBig = ['200.0']
   testPoint = '400.0'
 
