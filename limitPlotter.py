@@ -194,7 +194,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   mg.Add(oneSigma)
   mg.Add(expected)
   if len(extras) == 0:
-    print 'non obs'
+   # print 'non obs'
     mg.Add(observed)
   else:
     for i,ar in enumerate(extraExpected):

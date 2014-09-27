@@ -615,8 +615,17 @@ class FitBuilder:
     SetOwnership(sigmaVar,0)
     return gauss
 
-  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 2000, alpha = 1, alphaLow = 0.5, alphaHigh = 1000,
-      n = 4, nLow = 0.5, nHigh = 500, sigmaG = 2, sigmaGLow = 0.3, sigmaGHigh = 2000, frac = 0.1, fracLow = 0.0, fracHigh = 0.3):
+  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 10, alpha = 1, alphaLow = 0.5, alphaHigh = 10,
+      n = 16, nLow = 0.5, nHigh = 500, sigmaG = 3, sigmaGLow = 0.3, sigmaGHigh = 10, frac = 0.3, fracLow = 0.0, fracHigh = 0.5):
+
+# good fit params for m=125, cat1, el, new proper
+    #  meanGCBG_8TeV_el_cat1_ggH_125_Low 122.628199189
+    #  meanCBCBG_8TeV_el_cat1_ggH_125_Low 124.755722062
+    #  sigmaGCBG_8TeV_el_cat1_ggH_125_Low 3.27087912216
+    #  sigmaCBCBG_8TeV_el_cat1_ggH_125_Low 1.49900133978
+    #  alphaCBG_8TeV_el_cat1_ggH_125_Low 0.944616084705
+    #  nCBG_8TeV_el_cat1_ggH_125_Low 16.4081813986
+    #  fracCBG_8TeV_el_cat1_ggH_125_Low 0.299323090074
 
     suffix = self.suffix+'_'+piece
     if meanG == -1: meanG = mean
@@ -626,6 +635,8 @@ class FitBuilder:
     if meanGHigh is -1: meanGHigh = meanG*1.2
     if meanCBLow is -1: meanCBLow = meanCB*0.8
     if meanCBHigh is -1: meanCBHigh = meanCB*1.2
+
+
     meanGVar = RooRealVar('meanGCBG_'+suffix,'meanGCBG_'+suffix, meanG, meanGLow, meanGHigh)
     meanCBVar = RooRealVar('meanCBCBG_'+suffix,'meanCBCBG_'+suffix, meanCB, meanCBLow, meanCBHigh)
     sigmaCBVar = RooRealVar('sigmaCBCBG_'+suffix,'sigmaCBCBG_'+suffix,sigmaCB,sigmaCBLow,sigmaCBHigh)

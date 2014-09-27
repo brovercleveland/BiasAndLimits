@@ -19,19 +19,22 @@ highMass = cfl.highMass
 suffix = cfl.suffix
 sigFit = cfl.sigFit
 YR = cfl.YR
-if highMass:
-  mass = 'M200'
-else:
-  mass = 'M125'
 
-def Sensitivity(suffix = 'Proper'):
+def Sensitivity(suffix = 'Proper',mass = None):
+  if mass == None:
+    if highMass:
+      mass = 'M200'
+    else:
+      mass = 'M125'
 
   rooWsFile = TFile('outputDir/{0}_{1}_{2}/initRooFitOut_{0}.root'.format(suffix,YR,sigFit))
   myWs = rooWsFile.Get('ws')
 
   mzg = myWs.var('CMS_hzg_mass')
+  massInt = int(mass[1:])
   if highMass:
-    mzg.setRange('signal',180,220)
+
+    mzg.setRange('signal',massInt-0.2*massInt,massInt+0.2*massInt)
   else:
     mzg.setRange('signal',120,130)
 
@@ -80,4 +83,8 @@ def Sensitivity(suffix = 'Proper'):
 
 
 if __name__ == "__main__":
-  Sensitivity(suffix)
+  if len(sys.argv)!=2:
+    Sensitivity(suffix)
+  else:
+    Sensitivity(suffix,sys.argv[1])
+

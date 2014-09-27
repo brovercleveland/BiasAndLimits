@@ -15,33 +15,29 @@ class AutoVivification(dict):
 ##########
 
 doMVA = False
+#suffix = 'Proper'
 #suffix = '08-21-14_PhoMVA'
 #suffix = '09-3-14_Proper'
-#suffix = '05-07-14_Proper'
-#suffix = '05-07-14_PhoMVA'
-#suffix = '05-07-14_PhoMVAKinMVA'
-#suffix = '07-25-14_PhoMVAHighMass'
-#suffix = '08-20-14_HighMass'
-#suffix = '09-5-14_HighMass'
-suffix = '09-7-14_PhoMVAKinMVA'
+suffix = '09-5-14_HighMass'
+#suffix = '09-7-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
-#leptonList = ['mu']
+#leptonList = ['el']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
 #tevList = ['8TeV']
 catListBig = ['0','1','2','3','4','5','6','7','8','9']
 catListSmall = ['0','1','2','3','4','5']
-#catListSmall = ['0']
+#catListSmall = ['5']
 massList = ['120','125','130','135','140','145','150','155','160']
 #massList = ['125']
 sigNameList = ['ggH','qqH','ttH','WH','ZH']
 #sigNameList = ['ggH']
 YR = 'YR3'
-highMass = False
+highMass = True
 
-modelIndependent = False
+modelIndependent = True
 
 if highMass:
   massList = ['200','250','300','350','400','450','500']
@@ -61,7 +57,7 @@ if highMass:
 debugPlots = True
 verbose = True
 rootrace = False
-allBiasFits= False# Turn on extra fits used in bias studies
+allBiasFits= True# Turn on extra fits used in bias studies
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -181,7 +177,7 @@ bgLimitDict[False]['8TeV']['el']['1'] = 'GaussBern4'
 bgLimitDict[False]['8TeV']['el']['2'] = 'GaussBern5'
 bgLimitDict[False]['8TeV']['el']['3'] = 'GaussBern5'
 bgLimitDict[False]['8TeV']['el']['4'] = 'GaussBern5'
-bgLimitDict[False]['8TeV']['el']['5'] = 'Bern3'
+bgLimitDict[False]['8TeV']['el']['5'] = 'Bern4'
 bgLimitDict[False]['8TeV']['el']['6'] = 'GaussBern5'
 bgLimitDict[False]['8TeV']['el']['7'] = 'GaussBern5'
 bgLimitDict[False]['8TeV']['el']['8'] = 'GaussBern5'
@@ -206,4 +202,21 @@ if __name__=='configLimits':
       myvalue = eval(name)
       if '__' not in name:
         print name, "=", myvalue
+
+##################################################################################################
+##################################################################################################
+########################################## BIAS STUDY ############################################
+##################################################################################################
+##################################################################################################
+
+######################
+# biasStudy_toyMaker #
+######################
+
+if highMass:
+  testFuncs = bgFitListHighMass
+else:
+  testFuncs = bgFitListTurnOn
+
+
 

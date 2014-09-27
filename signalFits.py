@@ -174,7 +174,10 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
 
         SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
-        #startingVals = [x.getVal() for x in tempParams]
+        startingVals = [x.getVal() for x in tempParams]
+        #for x in tempParams:
+        #  print x.GetName(), x.getVal()
+        #raw_input()
 
       ###### interpolate the two mass points
       massDiff = (massHi - mass)/5.

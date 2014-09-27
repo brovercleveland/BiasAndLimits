@@ -168,8 +168,8 @@ def doInitialFits():
 # during a future iteration
             if prod == 'ggH':
               if verbose: print 'signal mass loop', mass
-              histName = '_'.join(['sig',lepton,year,'cat'+cat,'M'+mass])
-              rangeName = '_'.join(['range',lepton,year,'cat'+cat,'M'+mass])
+              histName = '_'.join(['sig',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
+              rangeName = '_'.join(['range',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
 
               signalList.append(TH1F(histName, histName, 90, xmin, xmax))
 

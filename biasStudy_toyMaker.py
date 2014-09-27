@@ -1,28 +1,46 @@
 #!/usr/bin/env python
 import sys
-sys.argv.append('-b')
+from toyStructs import makeToyStucts
+makeToyStucts()
 from ROOT import *
 import numpy as np
-from toyStructs import makeToyStucts
+import configLimits as cfl
 
+gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
 gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
-verbose = True
-testFuncs = ['GaussBern3', 'GaussBern4', 'GaussBern5']
 colors = [kRed,kBlue,kGreen]
 
-def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', mass = '125', trials = 5, job = 0, plotEvery = 1):
+verbose = cfl.verbose
+
+doMVA = cfl.doMVA
+
+allBiasFits= cfl.allBiasFits# Turn on extra fits used in bias studies
+
+YR = cfl.YR
+
+sigFit = cfl.sigFit
+
+highMass = cfl.highMass
+
+testFuncs = cfl.testFuncs
+
+suffix = cfl.suffix
+
+def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', mass = '125', trials = 5, job = 0, plotEvery = 1):
   #get all the starting objects
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
+  print YR
+  print suffix
 
-  rooWsFile = TFile('testRooFitOut_Poter.root','r')
+  rooWsFile = TFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root','r')
   myWs = rooWsFile.Get('ws')
-  sigRangeName = '_'.join(['range',lepton,year,'cat'+cat,'M'+mass])
+  sigRangeName = '_'.join(['range',lepton,tev,'cat'+cat,'M'+mass])
 
   # get the x-axis
   mzg = myWs.var('CMS_hzg_mass')
@@ -31,7 +49,8 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
     print sigRangeName, mzg.getMin(sigRangeName), mzg.getMax(sigRangeName)
 
   # get the data
-  dataName = '_'.join(['data',lepton,year,'cat'+cat])
+  dataName = '_'.join(['data',lepton,tev,'cat'+cat])
+  print dataName
   data = myWs.data(dataName)
   realDataYield = data.sumEntries()
   bkgInSigWin= data.sumEntries('1',sigRangeName)
@@ -40,29 +59,29 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
 
 
   # get the gen pdf
-  genFitName = '_'.join([genFunc,year,lepton,'cat'+cat])
+  genFitName = '_'.join([genFunc,tev,lepton,'cat'+cat])
+  print genFitName
   genFit = myWs.pdf(genFitName)
   if verbose:
     print genFitName
     genFit.Print()
 
   # get the signal
-  sigName = '_'.join(['pdf','sig',lepton,year,'cat'+cat,'M'+mass])
+  sigName = '_'.join(['pdf','sig',lepton,tev,'cat'+cat,'M'+mass])
   sig = myWs.pdf(sigName)
   if verbose:
     print sigName
     sig.Print()
 
-  # get the test functions, turn them into extended pdfs with signal models.  Also include the gen function for closure tests
+  # get the test functions, turn them into extended pdfs with signal models.
   testPdfs = []
   testBkgNorms = []
   testPdfs_ext = []
   testSigNorms = []
   testSig_ext = []
   testModels = []
-  testFuncs = testFuncs + [genFunc]
   for func in testFuncs:
-    fitName = '_'.join([func,year,lepton,'cat'+cat])
+    fitName = '_'.join([func,tev,lepton,'cat'+cat])
     if func is genFunc:
       testPdfs.append(genFit)
     else:
@@ -86,17 +105,16 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
 
 
   # prep the outputs
-  outName = '_'.join(['biasToys',year,lepton,'cat'+cat,genFunc,mass,'job'+str(job)])+'.root'
+  outName = '_'.join(['biasToys',tev,lepton,'cat'+cat,genFunc,mass,'job'+str(job)])+'.root'
   outFile = TFile(outName, 'RECREATE')
   tree = TTree('toys','toys')
-  makeToyStucts()
+  #makeToyStucts()
 
 
   #set up branches
-  from ROOT import TOYDATA
-  toyDataStruct = TOYDATA()
+  toyDataStruct = getattr(sys.modules[__name__], 'TOYDATA')()
+  #toyDataStruct = TOYDATA()
   tree.Branch('toyData', toyDataStruct, 'totalData/I:sigWindowData')
-  from ROOT import GEN
   genStruct = GEN()
   tree.Branch('gen',genStruct, 'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
   for func in testFuncs:
@@ -118,6 +136,7 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
   r = TRandom3(1024+31*job)
   RooRandom.randomGenerator().SetSeed(1024+31*job)
 
+  """
 
   ############################
   # time to throw some toys! #
@@ -164,7 +183,7 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
         print 'yieldSig', testSigNormsDict[func].getVal()
         testModelsDict[func].getParameters(toyData).Print('v')
 
-      suffix = '_'.join([func,year,lepton,'cat'+cat])
+      suffix = '_'.join([func,tev,lepton,'cat'+cat])
       structDict[func].yieldBkg = testBkgNormsDict[func].getVal()
       structDict[func].yieldBkgErr = testBkgNormsDict[func].getError()
       structDict[func].yieldSig = testSigNormsDict[func].getVal()
@@ -205,7 +224,7 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
       for func in testFuncs:
         testModelsDict[func].plotOn(testFrame, RooFit.LineColor(ColorDict[func]), RooFit.Range('fullRange'))
       testFrame.Draw()
-      c.Print('debugPlots/'+'_'.join(['toyFits',lepton,year,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
+      c.Print('debugPlots/'+'_'.join(['toyFits',lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
 
     tree.Fill()
 
@@ -214,11 +233,11 @@ def doBiasStudy(year = '2012', lepton = 'mu', cat = '1', genFunc = 'GaussExp', m
   outFile.Close()
 
   print 'so many toys!'
-
+  """
 
 
 
 if __name__=="__main__":
-  doBiasStudy()
+  doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[0], mass = cfl.massList[0])
 
 
