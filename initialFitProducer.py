@@ -32,6 +32,8 @@ sigFit = cfl.sigFit
 
 highMass = cfl.highMass
 
+blind = cfl.blind
+
 
 
 # OK listen, we're gunna need to do some bullshit just to get a uniform RooRealVar name for our data objects.
@@ -72,6 +74,8 @@ def doInitialFits():
   print 'high!!!!!!!!!!!!!!!!!!'
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',xmin,xmax)
   mzg.setRange('full',xmin,xmax)
+  mzg.setRange('Blind1',150,200)
+  mzg.setRange('Blind2',500,600)
   mzg.setBins((xmax-xmin)*4)
   mzg.setBins(50000,'cache')
 
@@ -107,18 +111,20 @@ def doInitialFits():
           signalListDS = []
           for mass in massList:
           # store the unbinned signals for CB fitting
-            print 'm_llg_Signal'+year+sigNameListInput[j]+'M'+mass
-            signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass)
-            sigName = '_'.join(['ds',prod,'hzg',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
+            narrow = ''
+            if 'Narrow' in suffix: narrow = 'Narrow'
+            print 'm_llg_Signal'+year+sigNameListInput[j]+'M'+mass+narrow
+            signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass+narrow)
+            sigName = '_'.join(['ds',prod,'hzg',lepton,yearToTeV[year],'cat'+cat,'M'+mass+narrow])
             tmpSigMass= np.zeros(1,dtype = 'd')
             tmpSigWeight= np.zeros(1,dtype = 'd')
             tmpSigNumEvents = 0
             if cat is '0':
-              signalTree.SetBranchAddress('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
+              signalTree.SetBranchAddress('m_llg_Signal'+year+sigNameListInput[j]+'M'+mass+narrow,tmpSigMass)
             else:
-              signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigMass)
-            signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass,tmpSigWeight)
-            tmpSigNumEvents = signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass).GetBinContent(1)
+              signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass+narrow,tmpSigMass)
+            signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass+narrow,tmpSigWeight)
+            tmpSigNumEvents = signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass+narrow).GetBinContent(1)
             sig_argSW = RooArgSet(mzg,weight)
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
@@ -171,7 +177,7 @@ def doInitialFits():
               histName = '_'.join(['sig',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
               rangeName = '_'.join(['range',lepton,yearToTeV[year],'cat'+cat,'M'+mass])
 
-              signalList.append(TH1F(histName, histName, 90, xmin, xmax))
+              signalList.append(TH1F(histName, histName, xmax-xmin, xmin, xmax))
 
               signalList[-1].SetLineColor(kRed)
               signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+'ggM'+mass)
@@ -213,12 +219,12 @@ def doInitialFits():
             #    signal.plotOn(testFrame)
             #  testFrame.Draw()
             #  c.Print('debugPlots/'+'_'.join(['test','signals',suffix,year,lepton,'cat'+cat])+'.pdf')
-            #if debugPlots:
-            #  testFrame = mzg.frame()
-            #  for signal in signalListDS:
-            #    signal.plotOn(testFrame, RooFit.DrawOption('pl'))
-            #  testFrame.Draw()
-            #  c.Print('debugPlots/'+'_'.join(['test','ds','sig',suffix,prod,year,lepton,'cat'+cat])+'.pdf')
+            if debugPlots:
+              testFrame = mzg.frame()
+              for signal in signalListDS:
+                signal.plotOn(testFrame, RooFit.DrawOption('pl'))
+              testFrame.Draw()
+              c.Print('debugPlots/initialFits/'+'_'.join(['test','ds','sig',suffix,prod,year,lepton,'cat'+cat])+'.png')
             del signalTree
 
 
@@ -286,7 +292,14 @@ def doInitialFits():
         leg.SetHeader(', '.join([year,lepton,'cat'+cat]))
 
         testFrame = mzg.frame()
-        data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'))
+        #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind1'))
+        #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind2'))
+        if blind:
+          data_ds.plotOn(testFrame,RooFit.Binning(12,150,200),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(25,500,600),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
+        else:
+          data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'))
 
         for fitName in bgFitList:
 
@@ -295,7 +308,10 @@ def doInitialFits():
           fit = fitBuilder.Build(fitName)
           if type(fit) == tuple: fit = fit[0]
           if verbose: fit.Print()
-          fit.fitTo(data_ds, RooFit.Strategy(1))
+          if highMass:
+            fit.fitTo(data_ds, RooFit.Strategy(1))
+          else:
+            fit.fitTo(data_ds, RooFit.Strategy(1))
           fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
           testFrame.Draw()
           chi2 = testFrame.chiSquare(fitName,'data',ndof)
@@ -303,7 +319,7 @@ def doInitialFits():
           getattr(ws,'import')(fit)
 
         leg.Draw()
-        c.Print('debugPlots/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
+        c.Print('debugPlots/initialFits/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
         ws.commitTransaction()
         print 'commited'
 

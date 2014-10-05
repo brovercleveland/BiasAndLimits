@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-import sys
+import sys,os
 from toyStructs import makeToyStucts
 makeToyStucts()
 from ROOT import *
 import numpy as np
 import configLimits as cfl
+from rooFitBuilder import FitBuilder
 
 gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
@@ -30,23 +31,28 @@ highMass = cfl.highMass
 testFuncs = cfl.testFuncs
 
 suffix = cfl.suffix
+if cfl.rootrace: RooTrace.active(kTRUE)
 
 def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', mass = '125', trials = 5, job = 0, plotEvery = 1):
   #get all the starting objects
+
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
-  print YR
-  print suffix
 
-  rooWsFile = TFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root','r')
+
+
+  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root','r')
   myWs = rooWsFile.Get('ws')
   sigRangeName = '_'.join(['range',lepton,tev,'cat'+cat,'M'+mass])
 
   # get the x-axis
   mzg = myWs.var('CMS_hzg_mass')
+  binning = (mzg.getMax()-mzg.getMin())/4
   if verbose:
     mzg.Print()
     print sigRangeName, mzg.getMin(sigRangeName), mzg.getMax(sigRangeName)
+
+  fitBuilder = FitBuilder(mzg, tev, lepton, cat)
 
   # get the data
   dataName = '_'.join(['data',lepton,tev,'cat'+cat])
@@ -59,12 +65,12 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
 
 
   # get the gen pdf
-  genFitName = '_'.join([genFunc,tev,lepton,'cat'+cat])
-  print genFitName
-  genFit = myWs.pdf(genFitName)
-  if verbose:
-    print genFitName
-    genFit.Print()
+  #genFitName = '_'.join([genFunc,tev,lepton,'cat'+cat])
+  #print genFitName
+  #genFit = myWs.pdf(genFitName)
+  #if verbose:
+  #  print genFitName
+  #  genFit.Print()
 
   # get the signal
   sigName = '_'.join(['pdf','sig',lepton,tev,'cat'+cat,'M'+mass])
@@ -82,13 +88,12 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   testModels = []
   for func in testFuncs:
     fitName = '_'.join([func,tev,lepton,'cat'+cat])
-    if func is genFunc:
-      testPdfs.append(genFit)
-    else:
-      testPdfs.append(myWs.pdf(fitName))
+    testPdfs.append(myWs.pdf(fitName))
     if verbose:
       print fitName
       testPdfs[-1].Print()
+      print bkgInSigWin
+      print sigRangeName
     testBkgNorms.append(RooRealVar('norm'+fitName,'norm'+fitName,bkgInSigWin,0,3*bkgInSigWin))
     testPdfs_ext.append(RooExtendPdf('ext'+fitName,'ext'+fitName,testPdfs[-1],testBkgNorms[-1],sigRangeName))
     testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,0,-100,100))
@@ -101,11 +106,12 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   testModelsDict = dict(zip(testFuncs,testModels))
   testBkgNormsDict = dict(zip(testFuncs,testBkgNorms))
   testSigNormsDict = dict(zip(testFuncs,testSigNorms))
-  ColorDict = dict(zip(testFuncs,colors))
 
 
   # prep the outputs
+  if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy'): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy')
   outName = '_'.join(['biasToys',tev,lepton,'cat'+cat,genFunc,mass,'job'+str(job)])+'.root'
+  outName = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy/'+outName
   outFile = TFile(outName, 'RECREATE')
   tree = TTree('toys','toys')
   #makeToyStucts()
@@ -115,38 +121,46 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   toyDataStruct = getattr(sys.modules[__name__], 'TOYDATA')()
   #toyDataStruct = TOYDATA()
   tree.Branch('toyData', toyDataStruct, 'totalData/I:sigWindowData')
-  genStruct = GEN()
-  tree.Branch('gen',genStruct, 'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+  structDict = {}
   for func in testFuncs:
-    if func is 'GaussBern3':
-      from ROOT import GAUSSBERN3
-      GaussBern3Struct = GAUSSBERN3()
-      tree.Branch('GaussBern3',GaussBern3Struct,'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
-    if func is 'GaussBern4':
-      from ROOT import GAUSSBERN4
-      GaussBern4Struct = GAUSSBERN4()
-      tree.Branch('GaussBern4',GaussBern4Struct,'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
-    if func is 'GaussBern5':
-      from ROOT import GAUSSBERN5
-      GaussBern5Struct = GAUSSBERN5()
-      tree.Branch('GaussBern5',GaussBern5Struct,'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:paramP5:paramP5Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    structDict[func]= getattr(sys.modules[__name__], func.upper())()
+    if func in ['GaussBern3']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['GaussBern4']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['GaussBern5']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramSigma:paramSigmaErr:paramStep:paramStepErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:paramP5:paramP5Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['Pow']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramAlpha:paramAlphaErr:paramBeta:paramBetaErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['Exp2','PowDecay']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['PowLog','ExpSum']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['Laurent']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    else:
+      raise Exception('{0} is not defined for structDicts'.format(func))
 
-  structDict = dict(zip(testFuncs,[GaussBern3Struct,GaussBern4Struct,GaussBern5Struct]))
+  #structDict = dict(zip(testFuncs,[GaussBern3Struct,GaussBern4Struct,GaussBern5Struct]))
 
-  r = TRandom3(1024+31*job)
-  RooRandom.randomGenerator().SetSeed(1024+31*job)
+  r = TRandom3(1024+31*int(job))
+  RooRandom.randomGenerator().SetSeed(1024+31*int(job))
 
-  """
 
   ############################
   # time to throw some toys! #
   ############################
 
-  for i in range(0,trials):
+  for i in range(0,int(trials)):
+    if cfl.rootrace:
+      RooTrace.dump()
+      raw_input()
     print 'doing trial:',i
 
     genBkgYield = r.Poisson(data.numEntries())
-    toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
+    #toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
+
+    toyData = testModelsDict[genFunc].generate(RooArgSet(mzg),genBkgYield)
     bkg_est = toyData.sumEntries('1',sigRangeName)
     if verbose: print 'bkg_est',bkg_est
 
@@ -161,7 +175,7 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
       m.hesse()
       resHesse = m.save()
 
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1))
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(2),RooFit.Strategy(1))
 
       statusAll = res.status()
       statusMIGRAD = resMigrad.status()
@@ -183,28 +197,36 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
         print 'yieldSig', testSigNormsDict[func].getVal()
         testModelsDict[func].getParameters(toyData).Print('v')
 
-      suffix = '_'.join([func,tev,lepton,'cat'+cat])
+      selection = '_'.join([func,tev,lepton,'cat'+cat])
       structDict[func].yieldBkg = testBkgNormsDict[func].getVal()
       structDict[func].yieldBkgErr = testBkgNormsDict[func].getError()
       structDict[func].yieldSig = testSigNormsDict[func].getVal()
       structDict[func].yieldSigErr = testSigNormsDict[func].getError()
       if func in ['GaussBern3','GaussBern4','GaussBern5']:
-        structDict[func].paramSigma = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getVal()
-        structDict[func].paramSigmaErr = testModelsDict[func].getParameters(toyData)['sigma'+suffix].getError()
-        structDict[func].paramStep = testModelsDict[func].getParameters(toyData)['step'+suffix].getVal()
-        structDict[func].paramStepErr = testModelsDict[func].getParameters(toyData)['step'+suffix].getError()
-        structDict[func].paramP1 = testModelsDict[func].getParameters(toyData)['p1'+suffix].getVal()
-        structDict[func].paramP1Err = testModelsDict[func].getParameters(toyData)['p1'+suffix].getError()
-        structDict[func].paramP2 = testModelsDict[func].getParameters(toyData)['p2'+suffix].getVal()
-        structDict[func].paramP2Err = testModelsDict[func].getParameters(toyData)['p2'+suffix].getError()
-        structDict[func].paramP3 = testModelsDict[func].getParameters(toyData)['p3'+suffix].getVal()
-        structDict[func].paramP3Err = testModelsDict[func].getParameters(toyData)['p3'+suffix].getError()
+        structDict[func].paramSigma = testModelsDict[func].getParameters(toyData)['sigma'+selection].getVal()
+        structDict[func].paramSigmaErr = testModelsDict[func].getParameters(toyData)['sigma'+selection].getError()
+        structDict[func].paramStep = testModelsDict[func].getParameters(toyData)['step'+selection].getVal()
+        structDict[func].paramStepErr = testModelsDict[func].getParameters(toyData)['step'+selection].getError()
+      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog','Laurent']:
+        structDict[func].paramP1 = testModelsDict[func].getParameters(toyData)['p1'+selection].getVal()
+        structDict[func].paramP1Err = testModelsDict[func].getParameters(toyData)['p1'+selection].getError()
+      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog']:
+        structDict[func].paramP2 = testModelsDict[func].getParameters(toyData)['p2'+selection].getVal()
+        structDict[func].paramP2Err = testModelsDict[func].getParameters(toyData)['p2'+selection].getError()
+      if func in ['GaussBern3','GaussBern4','GaussBern5','ExpSum','PowLog']:
+        structDict[func].paramP3 = testModelsDict[func].getParameters(toyData)['p3'+selection].getVal()
+        structDict[func].paramP3Err = testModelsDict[func].getParameters(toyData)['p3'+selection].getError()
       if func in ['GaussBern4','GaussBern5']:
-        structDict[func].paramP4 = testModelsDict[func].getParameters(toyData)['p4'+suffix].getVal()
-        structDict[func].paramP4Err = testModelsDict[func].getParameters(toyData)['p4'+suffix].getError()
+        structDict[func].paramP4 = testModelsDict[func].getParameters(toyData)['p4'+selection].getVal()
+        structDict[func].paramP4Err = testModelsDict[func].getParameters(toyData)['p4'+selection].getError()
       if func in ['GaussBern5']:
-        structDict[func].paramP5 = testModelsDict[func].getParameters(toyData)['p5'+suffix].getVal()
-        structDict[func].paramP5Err = testModelsDict[func].getParameters(toyData)['p5'+suffix].getError()
+        structDict[func].paramP5 = testModelsDict[func].getParameters(toyData)['p5'+selection].getVal()
+        structDict[func].paramP5Err = testModelsDict[func].getParameters(toyData)['p5'+selection].getError()
+      if func in ['Pow']:
+        structDict[func].paramAlpha = testModelsDict[func].getParameters(toyData)['alpha'+selection].getVal()
+        structDict[func].paramAlphaErr = testModelsDict[func].getParameters(toyData)['alpha'+selection].getError()
+        structDict[func].paramBeta = testModelsDict[func].getParameters(toyData)['beta'+selection].getVal()
+        structDict[func].paramBetaErr = testModelsDict[func].getParameters(toyData)['beta'+selection].getError()
       structDict[func].statusAll = statusAll
       structDict[func].statusMIGRAD = statusMIGRAD
       structDict[func].statusHESSE = statusHESSE
@@ -218,13 +240,15 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
     toyDataStruct.totalData = toyData.numEntries()
     toyDataStruct.sigWindowData = bkg_est
 
-    if i%plotEvery is 0:
+    if i%int(plotEvery) is 0:
       testFrame = mzg.frame()
-      toyData.plotOn(testFrame)
+      print binning
+      toyData.plotOn(testFrame, RooFit.Binning(int(binning)), RooFit.Name('toyData'))
       for func in testFuncs:
-        testModelsDict[func].plotOn(testFrame, RooFit.LineColor(ColorDict[func]), RooFit.Range('fullRange'))
+        print func
+        testModelsDict[func].plotOn(testFrame, RooFit.LineColor(fitBuilder.FitColorDict[func]), RooFit.Range('fullRange'))
       testFrame.Draw()
-      c.Print('debugPlots/'+'_'.join(['toyFits',lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
+      c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasFits/'+'_'.join(['toyFits',suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
 
     tree.Fill()
 
@@ -233,11 +257,13 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   outFile.Close()
 
   print 'so many toys!'
-  """
 
 
 
 if __name__=="__main__":
-  doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[0], mass = cfl.massList[0])
+  if len(sys.argv) == 1:
+    doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[1], mass = cfl.massList[0])
+  else:
+    doBiasStudy(*sys.argv[1:])
 
 

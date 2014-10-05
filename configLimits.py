@@ -18,11 +18,13 @@ doMVA = False
 #suffix = 'Proper'
 #suffix = '08-21-14_PhoMVA'
 #suffix = '09-3-14_Proper'
-suffix = '09-5-14_HighMass'
+#suffix = '09-5-14_HighMass'
+suffix = '09-26-14_HighMass'
+#suffix = '09-26-14_HighMassNarrow'
 #suffix = '09-7-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
-#leptonList = ['el']
+#leptonList = ['mu']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -41,6 +43,7 @@ modelIndependent = True
 
 if highMass:
   massList = ['200','250','300','350','400','450','500']
+  #massList = ['200']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -54,15 +57,18 @@ if highMass:
 # initialFitProducer #
 ######################
 
-debugPlots = True
-verbose = True
+debugPlots = False
+verbose = False
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
+blind = True
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
 bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
-bgFitListHighMass = ['Pow','PowDecay','PowLog','Exp2','Laurent','ExpSum']
+#bgFitListHighMass = ['Exp2','Pow','PowDecay','PowLog','Laurent','ExpSum']
+bgFitListHighMass = ['Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum']
+#bgFitListHighMass = ['Exp2','ExpSum']
 
 
 if highMass:
@@ -218,5 +224,8 @@ if highMass:
 else:
   testFuncs = bgFitListTurnOn
 
+trials = 2000
+jobs = 10
+plotEvery = 100
 
 

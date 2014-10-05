@@ -66,7 +66,7 @@ class FitBuilder:
       'SechBern4':kBlack,
       'SechBern5':kGreen,
       'Exp':kBlue,
-      'Exp2':kOrange,
+      'Exp2':kBlue,
       'ExpSum':kGreen+2,
       'Laurent':kMagenta,
       'Pow':kCyan,
@@ -506,12 +506,12 @@ class FitBuilder:
 
     p1Var = RooRealVar('p1Exp2_'+self.suffix,'p1Exp2_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2Exp2_'+self.suffix,'p2Exp2_'+self.suffix,p2,p2Low,p2High)
-    Exp2 = RooGenericPdf('Exp2_'+self.suffix,'Exp2_'+self.suffix,'exp((-@0)/(@1+@2*@0))',RooArgList(self.mzg,p1Var,p2Var))
+    Exp2 = RooGenericPdf('Exp2_'+self.suffix,'Exp2_'+self.suffix,'(@2+@1*@0>0)*exp((-@0)/(@2+@1*@0))',RooArgList(self.mzg,p1Var,p2Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     return Exp2
 
-  def BuildExpSum(self,p1 = 1.3, p1Low = -20, p1High = 20, p2 = 0.1, p2Low = -20, p2High = 20, p3 = 0.01, p3Low = -20, p3High = 20):
+  def BuildExpSum(self,p1 = 1.3, p1Low = -20, p1High = 20, p2 = 0.1, p2Low = 0.0001, p2High = 20, p3 = 0.01, p3Low = 0.0001, p3High = 20):
 
     p1Var = RooRealVar('p1ExpSum_'+self.suffix,'p1ExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2ExpSum_'+self.suffix,'p2ExpSum_'+self.suffix,p2,p2Low,p2High)

@@ -65,6 +65,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
   rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
 #myWs.Print()
+  narrow = ''
+  if 'Narrow' in suffix: narrow = 'Narrow'
 
   RooRandom.randomGenerator().SetSeed(8675309)
 
@@ -125,7 +127,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           mzg.setRange('fitRegion1',int(massLow)*0.9,int(massLow)*1.1)
         else:
           mzg.setRange('fitRegion1',int(massLow)-15,int(massLow)+15)
-        sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)])
+        sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)+narrow])
         sig_ds_Low = myWs.data(sigNameLow)
         #sig_ds_Low = RooDataHist('dh'+sigNameLow[2:],'dh'+sigNameLow[2:],RooArgSet(mzg),sig_ds_Low)
         if massLow == massHi:
@@ -138,7 +140,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #  SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low',
         #      meanG = startingVals[0], meanCB = startingVals[1], sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #      alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
-        if highMass:
+        if highMass and narrow=='':
           SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.1, sigmaCB = massLow*0.05)
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
           SigFit_Low,tempParams = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, meanGLow = massLow*0.95, meanGHigh = massLow*1.05, meanCBLow = massLow*0.95, meanCBHigh = massLow*1.05)
@@ -158,7 +160,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
           mzg.setRange('fitRegion2',int(massHi)*0.9,int(massHi)*1.1)
         else:
           mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+15)
-        sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)])
+        sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)+narrow])
         sig_ds_Hi = myWs.data(sigNameHi)
         #sig_ds_Hi = RooDataHist('dh'+sigNameHi[2:],'dh'+sigNameHi[2:],RooArgSet(mzg),sig_ds_Hi)
 
@@ -166,7 +168,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi',
         #    mean = massHi, sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
-        if highMass:
+        if highMass and narrow == '':
           SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.1, sigmaCB = massHi*0.05)[0]
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
           SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, meanGLow = massHi*0.95, meanGHigh = massHi*1.05, meanCBLow = massHi*0.95, meanCBHigh = massHi*1.05)
@@ -207,13 +209,13 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       #raw_input()
 
 
-      sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)])
+      sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)+narrow])
 
       fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(mass))
       #SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp',
       #    mean = mass, sigmaG = startingVals[2], sigmaCB = startingVals[3],
       #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
-      if highMass:
+      if highMass and narrow == '':
         SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.1, sigmaCB = mass*0.05)
       elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
         SigFit_Interp,paramList= fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, meanGLow = mass*0.95, meanGHigh = mass*1.05, meanCBLow = mass*0.95, meanCBHigh = mass*1.05)
@@ -240,7 +242,8 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
     if highMass:
       testFrame = mzg.frame(float(massList[0])*0.9,float(massList[-1])*1.1)
-      c.SetLogy()
+      if narrow == '':
+        c.SetLogy()
     else:
       testFrame = mzg.frame(float(massList[0])-15,float(massList[-1])+5)
     for i,fit in enumerate(fitList):
@@ -252,7 +255,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(80))
     testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
     c.SetLogy(False)
@@ -270,7 +273,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
 
     if float(testPoint)%5==0:
       for i,signal in enumerate(dsList):
-        regionName = signal.GetName().split('_')[-1]
+        regionName = signal.GetName().split('_')[-1].rstrip('Narrow')
         if regionName == 'M'+testPoint[0:3]:
           signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(150))
       testFrame.Draw()
@@ -286,7 +289,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       txt.SetTextSize(0.04)
       testFrame.addObject(txt)
     testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/'+'_'.join(['test','sig','fit',sigFit,'M'+testPoint,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,'M'+testPoint,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
   for prod in sigNameList:
