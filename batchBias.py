@@ -29,14 +29,14 @@ for lepton in leptonList:
       else: myLepton = lepton
       for mass in massList:
         for func in testFuncs:
-          for job in range(jobs):
+          for job in range(1,jobs+1):
             consub = open('submit.cmd','w')
             consub.write('''
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
 Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/biasStudy_toyMaker.py
-Arguments               = {0} {1} {2} {3} {4} {5} {6} {7}
+Arguments               = --tev {0} --lepton {1} --cat {2} --genFunc {3} --mass {4} --trials {5} --job {6} --plotEvery {7}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
 +LENGTH                 = "LONG"

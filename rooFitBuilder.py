@@ -473,7 +473,7 @@ class FitBuilder:
     SetOwnership(tauVar,0)
     return Exp
 
-  def BuildPow(self,alpha = 115, alphaLow = -20, alphaHigh = 200, beta = 3, betaLow = -20, betaHigh = 20):
+  def BuildPow(self,alpha = 115, alphaLow = 1e-6, alphaHigh = 200, beta = 2, betaLow = 1e-4, betaHigh = 20):
 
     alphaVar = RooRealVar('alphaPow_'+self.suffix,'alphaPow_'+self.suffix,alpha,alphaLow,alphaHigh)
     betaVar = RooRealVar('betaPow_'+self.suffix,'betaPow_'+self.suffix,beta,betaLow,betaHigh)
@@ -491,18 +491,18 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return PowDecay
 
-  def BuildPowLog(self,p1 = 2, p1Low = -20, p1High = 20, p2 = -1, p2Low = -20, p2High = 20, p3 = 0.5, p3Low = -20, p3High = 20):
+  def BuildPowLog(self,p1 = 2, p1Low = -2, p1High = 2, p2 = -1, p2Low = -2, p2High = 2, p3 = 0.5, p3Low = -2, p3High = 2):
 
     p1Var = RooRealVar('p1PowLog_'+self.suffix,'p1PowLog_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2PowLog_'+self.suffix,'p2PowLog_'+self.suffix,p2,p2Low,p2High)
     p3Var = RooRealVar('p3PowLog_'+self.suffix,'p3PowLog_'+self.suffix,p3,p3Low,p3High)
-    PowLog = RooGenericPdf('PowLog_'+self.suffix,'PowLog_'+self.suffix,'(1-@0)^(@1)/(@0)^(@2+@3*log(@0))',RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    PowLog = RooGenericPdf('PowLog_'+self.suffix,'PowLog_'+self.suffix,'fabs(1-@0)^(@1)/(@0)^(@2+@3*log(@0))',RooArgList(self.mzg,p1Var,p2Var,p3Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     SetOwnership(p3Var,0)
     return PowLog
 
-  def BuildExp2(self,p1 = 1, p1Low = -20, p1High = 20, p2 = 1, p2Low = -20, p2High = 20):
+  def BuildExp2(self,p1 = 1, p1Low = 0, p1High = 20, p2 = 1, p2Low = 0, p2High = 20):
 
     p1Var = RooRealVar('p1Exp2_'+self.suffix,'p1Exp2_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2Exp2_'+self.suffix,'p2Exp2_'+self.suffix,p2,p2Low,p2High)
@@ -511,7 +511,7 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return Exp2
 
-  def BuildExpSum(self,p1 = 1.3, p1Low = -20, p1High = 20, p2 = 0.1, p2Low = 0.0001, p2High = 20, p3 = 0.01, p3Low = 0.0001, p3High = 20):
+  def BuildExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
 
     p1Var = RooRealVar('p1ExpSum_'+self.suffix,'p1ExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2ExpSum_'+self.suffix,'p2ExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -522,7 +522,7 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return ExpSum
 
-  def BuildLaurent(self,p1 = 1, p1Low = -20, p1High = 20):
+  def BuildLaurent(self,p1 = 0.5, p1Low = 0, p1High = 1):
 
     p1Var = RooRealVar('p1Laurent_'+self.suffix,'p1Laurent_'+self.suffix,p1,p1Low,p1High)
     Laurent = RooGenericPdf('Laurent_'+self.suffix,'Laurent_'+self.suffix,'(1-@1)*@0^(-4)+@1*@0^(-5)',RooArgList(self.mzg,p1Var))

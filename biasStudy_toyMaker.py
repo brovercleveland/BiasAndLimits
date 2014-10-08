@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import sys,os
+import ROOT
+ROOT.PyConfig.IgnoreCommandLineOptions = True
+import os,sys
+import argparse
 from toyStructs import makeToyStucts
 makeToyStucts()
 from ROOT import *
@@ -8,13 +11,11 @@ import configLimits as cfl
 from rooFitBuilder import FitBuilder
 
 gROOT.SetBatch()
-gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
-gROOT.ProcessLine('.x RooStepBernstein.cxx+')
-gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
+#gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
+#gROOT.ProcessLine('.x RooStepBernstein.cxx+')
+#gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
-
-colors = [kRed,kBlue,kGreen]
 
 verbose = cfl.verbose
 
@@ -31,10 +32,30 @@ highMass = cfl.highMass
 testFuncs = cfl.testFuncs
 
 suffix = cfl.suffix
+
 if cfl.rootrace: RooTrace.active(kTRUE)
 
-def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', mass = '125', trials = 5, job = 0, plotEvery = 1):
+def getArgs():
+  parser = argparse.ArgumentParser()
+  group = parser.add_mutually_exclusive_group()
+  group.add_argument("-v","--verbose",action = "store_true")
+  group.add_argument("-q","--quiet",action = "store_true")
+  parser.add_argument("--tev", help="CoM Energy", default = cfl.tevList[0], choices = ['7TeV','8TeV'] )
+  parser.add_argument("--lepton", help="Lepton Flavor", default = cfl.leptonList[0], choices = ['mu','el'])
+  parser.add_argument("--cat", help="Cat Number", default = cfl.catListSmall[0], type = int)
+  parser.add_argument("--genFunc", help="PDF used to generate toy data", default = cfl.testFuncs[0], type = str)
+  parser.add_argument("--mass", help="Mass of signal template", default = cfl.massList[0], type = int)
+  parser.add_argument("--trials", help="Number of trials", default = 1, type = int)
+  parser.add_argument("--job", help="Job number", default = 0, type = int)
+  parser.add_argument("--plotEvery", help="Plot every N trials", default = 1, type = int)
+  args = parser.parse_args()
+  return args
+
+
+
+def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1):
   #get all the starting objects
+  print genFunc
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -86,9 +107,12 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   testSigNorms = []
   testSig_ext = []
   testModels = []
+  myGenFunc = None
   for func in testFuncs:
     fitName = '_'.join([func,tev,lepton,'cat'+cat])
     testPdfs.append(myWs.pdf(fitName))
+    if func == genFunc:
+      myGenFunc = myWs.pdf(fitName).Clone()
     if verbose:
       print fitName
       testPdfs[-1].Print()
@@ -147,6 +171,7 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
   RooRandom.randomGenerator().SetSeed(1024+31*int(job))
 
 
+
   ############################
   # time to throw some toys! #
   ############################
@@ -160,7 +185,7 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
     genBkgYield = r.Poisson(data.numEntries())
     #toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
 
-    toyData = testModelsDict[genFunc].generate(RooArgSet(mzg),genBkgYield)
+    toyData = myGenFunc.generate(RooArgSet(mzg),genBkgYield)
     bkg_est = toyData.sumEntries('1',sigRangeName)
     if verbose: print 'bkg_est',bkg_est
 
@@ -175,7 +200,7 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
       m.hesse()
       resHesse = m.save()
 
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(2),RooFit.Strategy(1))
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1),RooFit.Strategy(1))
 
       statusAll = res.status()
       statusMIGRAD = resMigrad.status()
@@ -261,9 +286,12 @@ def doBiasStudy(tev = '8TeV', lepton = 'mu', cat = '1', genFunc = 'GaussExp', ma
 
 
 if __name__=="__main__":
-  if len(sys.argv) == 1:
-    doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[1], mass = cfl.massList[0])
-  else:
-    doBiasStudy(*sys.argv[1:])
+  args = getArgs()
+  print args
+  #if len(sys.argv) == 1:
+  #  doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[1], mass = cfl.massList[0])
+  #else:
+  #  doBiasStudy(*sys.argv[1:])
+  doBiasStudy(args.tev, args.lepton, str(args.cat),args.genFunc, str(args.mass), args.trials, args.job, args.plotEvery)
 
 

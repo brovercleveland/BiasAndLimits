@@ -141,7 +141,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #      meanG = startingVals[0], meanCB = startingVals[1], sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #      alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
         if highMass and narrow=='':
-          SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.1, sigmaCB = massLow*0.05)
+          SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.08, sigmaCB = massLow*0.03)
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
           SigFit_Low,tempParams = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, meanGLow = massLow*0.95, meanGHigh = massLow*1.05, meanCBLow = massLow*0.95, meanCBHigh = massLow*1.05)
 
@@ -169,7 +169,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
         #    mean = massHi, sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
         if highMass and narrow == '':
-          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.1, sigmaCB = massHi*0.05)[0]
+          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.08, sigmaCB = massHi*0.03)[0]
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
           SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, meanGLow = massHi*0.95, meanGHigh = massHi*1.05, meanCBLow = massHi*0.95, meanCBHigh = massHi*1.05)
         else:
@@ -216,7 +216,7 @@ def SignalFitMaker(lep, tev, cat, suffix, batch = False):
       #    mean = mass, sigmaG = startingVals[2], sigmaCB = startingVals[3],
       #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
       if highMass and narrow == '':
-        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.1, sigmaCB = mass*0.05)
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.08, sigmaCB = mass*0.03)
       elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
         SigFit_Interp,paramList= fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, meanGLow = mass*0.95, meanGHigh = mass*1.05, meanCBLow = mass*0.95, meanCBHigh = mass*1.05)
       else:

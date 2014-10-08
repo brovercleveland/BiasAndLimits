@@ -203,11 +203,11 @@ bgLimitDict[False]['7TeV']['el']['4'] = 'GaussBern5'
 
 bgLimitDict[False]['7TeV']['all']['5'] = 'Bern3'
 
-if __name__=='configLimits':
-  for name in dir():
-      myvalue = eval(name)
-      if '__' not in name:
-        print name, "=", myvalue
+#if __name__=='configLimits':
+#  for name in dir():
+#      myvalue = eval(name)
+#      if '__' not in name:
+#        print name, "=", myvalue
 
 ##################################################################################################
 ##################################################################################################
@@ -224,8 +224,8 @@ if highMass:
 else:
   testFuncs = bgFitListTurnOn
 
-trials = 2000
-jobs = 10
-plotEvery = 100
+trials = 1
+jobs = 1
+plotEvery = 1
 
 
