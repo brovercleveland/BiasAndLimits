@@ -24,7 +24,7 @@ suffix = '09-26-14_HighMass'
 #suffix = '09-7-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
-#leptonList = ['mu']
+#leptonList = ['el']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -49,6 +49,7 @@ if highMass:
   tevList = ['8TeV']
   if '5' in catListSmall: catListSmall.remove('5')
   if '5' in catListBig: catListBig.remove('5')
+  catListSmall = catListBig = ['0']
 
 
 
@@ -67,7 +68,7 @@ sigNameListInput = ['gg','vbf','tth','wh','zh']
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
 bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
 #bgFitListHighMass = ['Exp2','Pow','PowDecay','PowLog','Laurent','ExpSum']
-bgFitListHighMass = ['Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum']
+bgFitListHighMass = ['Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','PowDecayExp','TripExpSum','PowExpSum']
 #bgFitListHighMass = ['Exp2','ExpSum']
 
 
@@ -221,11 +222,25 @@ bgLimitDict[False]['7TeV']['all']['5'] = 'Bern3'
 
 if highMass:
   testFuncs = bgFitListHighMass
+  testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum']
+  genFuncs = ['Pow','Laurent','Exp2']
 else:
   testFuncs = bgFitListTurnOn
+  genFuncs = ['GaussPow']
 
-trials = 1
-jobs = 1
-plotEvery = 1
+trials = 200
+jobs = 100
+plotEvery = 50
+
+#############
+# pullPlots #
+#############
+
+# no special switches
+
+##############
+# makeTables #
+##############
+tableFuncs = ['ExpSum','TripExpSum','PowExpSum','PowDecay']
 
 

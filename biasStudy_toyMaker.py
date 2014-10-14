@@ -11,9 +11,6 @@ import configLimits as cfl
 from rooFitBuilder import FitBuilder
 
 gROOT.SetBatch()
-#gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
-#gROOT.ProcessLine('.x RooStepBernstein.cxx+')
-#gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
@@ -43,17 +40,17 @@ def getArgs():
   parser.add_argument("--tev", help="CoM Energy", default = cfl.tevList[0], choices = ['7TeV','8TeV'] )
   parser.add_argument("--lepton", help="Lepton Flavor", default = cfl.leptonList[0], choices = ['mu','el'])
   parser.add_argument("--cat", help="Cat Number", default = cfl.catListSmall[0], type = int)
-  parser.add_argument("--genFunc", help="PDF used to generate toy data", default = cfl.testFuncs[0], type = str)
+  parser.add_argument("--genFunc", help="PDF used to generate toy data", default = cfl.genFuncs[0], type = str)
   parser.add_argument("--mass", help="Mass of signal template", default = cfl.massList[0], type = int)
   parser.add_argument("--trials", help="Number of trials", default = 1, type = int)
-  parser.add_argument("--job", help="Job number", default = 0, type = int)
+  parser.add_argument("--job", help="Job number", default = -1, type = int)
   parser.add_argument("--plotEvery", help="Plot every N trials", default = 1, type = int)
   args = parser.parse_args()
   return args
 
 
 
-def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1):
+def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
   #get all the starting objects
   print genFunc
 
@@ -73,7 +70,6 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
     mzg.Print()
     print sigRangeName, mzg.getMin(sigRangeName), mzg.getMax(sigRangeName)
 
-  fitBuilder = FitBuilder(mzg, tev, lepton, cat)
 
   # get the data
   dataName = '_'.join(['data',lepton,tev,'cat'+cat])
@@ -107,12 +103,12 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
   testSigNorms = []
   testSig_ext = []
   testModels = []
-  myGenFunc = None
+
+  fitName = '_'.join([genFunc,tev,lepton,'cat'+cat])
+  myGenFunc = myWs.pdf(fitName).Clone()
   for func in testFuncs:
     fitName = '_'.join([func,tev,lepton,'cat'+cat])
     testPdfs.append(myWs.pdf(fitName))
-    if func == genFunc:
-      myGenFunc = myWs.pdf(fitName).Clone()
     if verbose:
       print fitName
       testPdfs[-1].Print()
@@ -158,8 +154,10 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramAlpha:paramAlphaErr:paramBeta:paramBetaErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     elif func in ['Exp2','PowDecay']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
-    elif func in ['PowLog','ExpSum']:
+    elif func in ['PowLog','ExpSum','PowDecayExp','PowExpSum']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['TripExpSum']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:paramP5:paramP5Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     elif func in ['Laurent']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     else:
@@ -167,8 +165,8 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
 
   #structDict = dict(zip(testFuncs,[GaussBern3Struct,GaussBern4Struct,GaussBern5Struct]))
 
-  r = TRandom3(1024+31*int(job))
-  RooRandom.randomGenerator().SetSeed(1024+31*int(job))
+  r = TRandom3(1024+31*job)
+  RooRandom.randomGenerator().SetSeed(1024+31*job)
 
 
 
@@ -176,7 +174,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
   # time to throw some toys! #
   ############################
 
-  for i in range(0,int(trials)):
+  for i in range(1,trials+1):
     if cfl.rootrace:
       RooTrace.dump()
       raw_input()
@@ -232,19 +230,19 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
         structDict[func].paramSigmaErr = testModelsDict[func].getParameters(toyData)['sigma'+selection].getError()
         structDict[func].paramStep = testModelsDict[func].getParameters(toyData)['step'+selection].getVal()
         structDict[func].paramStepErr = testModelsDict[func].getParameters(toyData)['step'+selection].getError()
-      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog','Laurent']:
+      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog','Laurent','TripExpSum','PowDecayExp','PowExpSum']:
         structDict[func].paramP1 = testModelsDict[func].getParameters(toyData)['p1'+selection].getVal()
         structDict[func].paramP1Err = testModelsDict[func].getParameters(toyData)['p1'+selection].getError()
-      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog']:
+      if func in ['GaussBern3','GaussBern4','GaussBern5','Exp2','PowDecay','ExpSum','PowLog','TripExpSum','PowDecayExp','PowExpSum']:
         structDict[func].paramP2 = testModelsDict[func].getParameters(toyData)['p2'+selection].getVal()
         structDict[func].paramP2Err = testModelsDict[func].getParameters(toyData)['p2'+selection].getError()
-      if func in ['GaussBern3','GaussBern4','GaussBern5','ExpSum','PowLog']:
+      if func in ['GaussBern3','GaussBern4','GaussBern5','ExpSum','PowLog','TripExpSum','PowDecayExp','PowExpSum']:
         structDict[func].paramP3 = testModelsDict[func].getParameters(toyData)['p3'+selection].getVal()
         structDict[func].paramP3Err = testModelsDict[func].getParameters(toyData)['p3'+selection].getError()
-      if func in ['GaussBern4','GaussBern5']:
+      if func in ['GaussBern4','GaussBern5','TripExpSum']:
         structDict[func].paramP4 = testModelsDict[func].getParameters(toyData)['p4'+selection].getVal()
         structDict[func].paramP4Err = testModelsDict[func].getParameters(toyData)['p4'+selection].getError()
-      if func in ['GaussBern5']:
+      if func in ['GaussBern5','TripExpSum']:
         structDict[func].paramP5 = testModelsDict[func].getParameters(toyData)['p5'+selection].getVal()
         structDict[func].paramP5Err = testModelsDict[func].getParameters(toyData)['p5'+selection].getError()
       if func in ['Pow']:
@@ -265,15 +263,17 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job = 0, plotEvery = 1)
     toyDataStruct.totalData = toyData.numEntries()
     toyDataStruct.sigWindowData = bkg_est
 
-    if i%int(plotEvery) is 0:
+    if (i%plotEvery == 0) or (i == 1):
       testFrame = mzg.frame()
       print binning
       toyData.plotOn(testFrame, RooFit.Binning(int(binning)), RooFit.Name('toyData'))
       for func in testFuncs:
         print func
-        testModelsDict[func].plotOn(testFrame, RooFit.LineColor(fitBuilder.FitColorDict[func]), RooFit.Range('fullRange'))
+        testModelsDict[func].plotOn(testFrame, RooFit.LineColor(FitBuilder.FitColorDict[func]), RooFit.Range('fullRange'))
       testFrame.Draw()
-      c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasFits/'+'_'.join(['toyFits',suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
+      plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasFits/'+lepton+'/'+genFunc+'/'+mass
+      if not os.path.isdir(plotDir): os.makedirs(plotDir)
+      c.Print(plotDir+'/'+'_'.join(['toyFits',suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
 
     tree.Fill()
 

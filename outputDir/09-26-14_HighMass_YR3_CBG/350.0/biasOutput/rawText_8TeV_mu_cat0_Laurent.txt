@@ -1,0 +1,6 @@
+bgPull:
+PowDecay, PowLog, ExpSum, TripExpSum, PowExpSum, 
+0.09, 0.03, 0.21, 0.05, 0.13, 
+typeA:
+PowDecay, PowLog, ExpSum, TripExpSum, PowExpSum, 
+-0.04, 0.01, -0.20, -0.07, -0.15, 

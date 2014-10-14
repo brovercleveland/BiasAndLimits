@@ -154,6 +154,28 @@ def makeToyStucts():
     Int_t numInvalidNLL;\
   };')
 
+  print 'making POWDECAYEXP...'
+  gROOT.ProcessLine(
+  'struct POWDECAYEXP{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
   print 'making POWLOG...'
   gROOT.ProcessLine(
   'struct POWLOG{\
@@ -207,6 +229,54 @@ def makeToyStucts():
     Double_t paramP2Err;\
     Double_t paramP3;\
     Double_t paramP3Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making POWEXPSUM...'
+  gROOT.ProcessLine(
+  'struct POWEXPSUM{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making TRIPEXPSUM...'
+  gROOT.ProcessLine(
+  'struct TRIPEXPSUM{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t paramP4;\
+    Double_t paramP4Err;\
+    Double_t paramP5;\
+    Double_t paramP5Err;\
     Double_t edm;\
     Double_t minNll;\
     Int_t statusAll;\

@@ -12,7 +12,7 @@ tevList = cfl.tevList
 catListBig = cfl.catListBig
 catListSmall = cfl.catListSmall
 
-testFuncs = cfl.testFuncs
+genFuncs = cfl.genFuncs
 massList = cfl.massList
 trials = cfl.trials
 plotEvery = cfl.plotEvery
@@ -28,8 +28,8 @@ for lepton in leptonList:
       elif cat == '5' and tev == '7TeV' and lepton == 'mu': continue
       else: myLepton = lepton
       for mass in massList:
-        for func in testFuncs:
-          for job in range(1,jobs+1):
+        for func in genFuncs:
+          for job in range(jobs):
             consub = open('submit.cmd','w')
             consub.write('''
 Universe                = vanilla

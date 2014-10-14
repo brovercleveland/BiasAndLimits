@@ -12,6 +12,59 @@ gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 #gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
 
 class FitBuilder:
+  FitColorDict = {
+      'GaussBern3':kViolet,
+      'SechBern3':kMagenta,
+      'GaussExp':kGray,
+      'GaussPow':kCyan,
+      'SechExp':kRed,
+      'SechPow':kYellow,
+      'GaussBern4':kPink,
+      'GaussBern5':kBlue,
+      'SechBern4':kBlack,
+      'SechBern5':kGreen,
+      'Bern2':kViolet,
+      'Bern3':kPink,
+      'Bern4':kGray,
+      'Bern5':kGreen,
+      'Exp':kBlue,
+      'Exp2':kBlue,
+      'ExpSum':kGreen+2,
+      'PowExpSum':kOrange,
+      'TripExpSum':kBlack,
+      'Laurent':kMagenta,
+      'Pow':kCyan,
+      'PowDecay':kYellow+1,
+      'PowLog':kRed+1,
+      'PowDecayExp':kGray,
+    }
+
+  FitNdofDict = {
+    'GaussBern3':5,
+    'SechBern3':5,
+    'GaussExp':3,
+    'GaussPow':3,
+    'SechExp':3,
+    'SechPow':3,
+    'GaussBern4':6,
+    'GaussBern5':7,
+    'SechBern4':6,
+    'SechBern5':7,
+    'Exp':1,
+    'Exp2':2,
+    'ExpSum':3,
+    'PowExpSum':3,
+    'TripExpSum':5,
+    'Laurent':1,
+    'Pow':2,
+    'Bern2':2,
+    'Bern3':3,
+    'Bern4':4,
+    'Bern5':5,
+    'PowDecay':2,
+    'PowDecayExp':3,
+    'PowLog':3
+  }
 
   def __init__(self,mzg,tev,lepton,cat,sig=None,mass=None):
     if sig == None:
@@ -43,9 +96,12 @@ class FitBuilder:
         'Exp': self.BuildExp,
         'Pow': self.BuildPow,
         'PowDecay': self.BuildPowDecay,
+        'PowDecayExp': self.BuildPowDecayExp,
         'PowLog': self.BuildPowLog,
         'Exp2': self.BuildExp2,
         'ExpSum': self.BuildExpSum,
+        'PowExpSum': self.BuildPowExpSum,
+        'TripExpSum': self.BuildTripExpSum,
         'Laurent': self.BuildLaurent,
         'Bern2': self.BuildBern2,
         'Bern3': self.BuildBern3,
@@ -54,53 +110,6 @@ class FitBuilder:
         'CBG': self.BuildCrystalBallGauss,
         'TripG': self.BuildTripleGauss}
 
-    self.FitColorDict = {
-      'GaussBern3':kViolet,
-      'SechBern3':kMagenta,
-      'GaussExp':kGray,
-      'GaussPow':kCyan,
-      'SechExp':kRed,
-      'SechPow':kYellow,
-      'GaussBern4':kPink,
-      'GaussBern5':kBlue,
-      'SechBern4':kBlack,
-      'SechBern5':kGreen,
-      'Exp':kBlue,
-      'Exp2':kBlue,
-      'ExpSum':kGreen+2,
-      'Laurent':kMagenta,
-      'Pow':kCyan,
-      'Bern2':kViolet,
-      'Bern3':kPink,
-      'Bern4':kGray,
-      'Bern5':kGreen,
-      'PowDecay':kYellow+1,
-      'PowLog':kRed+1,
-    }
-
-    self.FitNdofDict = {
-      'GaussBern3':5,
-      'SechBern3':5,
-      'GaussExp':3,
-      'GaussPow':3,
-      'SechExp':3,
-      'SechPow':3,
-      'GaussBern4':6,
-      'GaussBern5':7,
-      'SechBern4':6,
-      'SechBern5':7,
-      'Exp':1,
-      'Exp2':2,
-      'ExpSum':2,
-      'Laurent':1,
-      'Pow':2,
-      'Bern2':2,
-      'Bern3':3,
-      'Bern4':4,
-      'Bern5':5,
-      'PowDecay':2,
-      'PowLog':3
-    }
 
 
 
@@ -482,14 +491,25 @@ class FitBuilder:
     SetOwnership(betaVar,0)
     return Pow
 
-  def BuildPowDecay(self,p1 = 1, p1Low = -20, p1High = 20, p2 = 1, p2Low = -20, p2High = 20):
+  def BuildPowDecay(self,p1 = 1, p1Low = 0, p1High = 20, p2 = 1, p2Low = 0, p2High = 20):
 
     p1Var = RooRealVar('p1PowDecay_'+self.suffix,'p1PowDecay_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2PowDecay_'+self.suffix,'p2PowDecay_'+self.suffix,p2,p2Low,p2High)
-    PowDecay = RooGenericPdf('PowDecay_'+self.suffix,'PowDecay_'+self.suffix,'exp(-@1)*((@0)^(-@2))',RooArgList(self.mzg,p1Var,p2Var))
+    PowDecay = RooGenericPdf('PowDecay_'+self.suffix,'PowDecay_'+self.suffix,'exp(-@1*@0)*((@0)^(-@2))',RooArgList(self.mzg,p1Var,p2Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     return PowDecay
+
+  def BuildPowDecayExp(self,p1 = 1, p1Low = 0, p1High = 10, p2 = 2, p2Low = 0, p2High = 10, p3 = 0.3, p3Low = 0, p3High = 2000):
+
+    p1Var = RooRealVar('p1PowDecayExp_'+self.suffix,'p1PowDecayExp_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2PowDecayExp_'+self.suffix,'p2PowDecayExp_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3PowDecayExp_'+self.suffix,'p3PowDecayExp_'+self.suffix,p3,p3Low,p3High)
+    PowDecayExp = RooGenericPdf('PowDecayExp_'+self.suffix,'PowDecayExp_'+self.suffix,'exp(-@1*@0)*((@0)^(-@2))*(@3)^(-@0)',RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return PowDecayExp
 
   def BuildPowLog(self,p1 = 2, p1Low = -2, p1High = 2, p2 = -1, p2Low = -2, p2High = 2, p3 = 0.5, p3Low = -2, p3High = 2):
 
@@ -521,6 +541,34 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     SetOwnership(p3Var,0)
     return ExpSum
+
+  def BuildPowExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
+
+    p1Var = RooRealVar('p1PowExpSum_'+self.suffix,'p1PowExpSum_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2PowExpSum_'+self.suffix,'p2PowExpSum_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3PowExpSum_'+self.suffix,'p3PowExpSum_'+self.suffix,p3,p3Low,p3High)
+    PowExpSum = RooGenericPdf('PowExpSum_'+self.suffix,'PowExpSum_'+self.suffix,'(1-@1)*@0^(-@2)+@1*exp(-@3*@0)',RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return PowExpSum
+
+  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.1, p2Low = 0, p2High = 1, p3 = 0.2, p3Low = 0.00001, p3High = 3,
+      p4 = 0.1, p4Low = 0.00001, p4High = 3, p5 = 0.1, p5Low = 0.00001, p5High = 3):
+
+    p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
+    p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
+    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'(1-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0)*(@1+@2<1)',
+        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    SetOwnership(p4Var,0)
+    SetOwnership(p5Var,0)
+    return TripExpSum
 
   def BuildLaurent(self,p1 = 0.5, p1Low = 0, p1High = 1):
 
