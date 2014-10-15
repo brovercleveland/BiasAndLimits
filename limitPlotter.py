@@ -195,7 +195,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   mg.Add(expected)
   if len(extras) == 0:
     print 'non obs'
-    #mg.Add(observed)
+    mg.Add(observed)
   else:
     for i,ar in enumerate(extraExpected):
       ar.SetMarkerColor(kBlack)
@@ -245,7 +245,7 @@ if __name__=='__main__':
     for lepton in leptonList:
       for tev in tevList:
         for cat in catListSmall:
-          if cat == '0': continue
+          if cat == '0' and not cfl.highMass: continue
           if cat == '5' and tev == '7TeV' and lepton == 'el': myLepton = 'all'
           elif cat == '5' and tev == '7TeV' and lepton == 'mu': continue
           else: myLepton = lepton

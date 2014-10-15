@@ -14,7 +14,7 @@ cardName = sys.argv[3]
 if syst == 'True':
   outputName = 'Output'+cardName[3:]
   print 'running limitProducer, {0}, mass: {1}'.format(cardName,mass)
-  os.system('combine -M Asymptotic --minimizerStrategy 0 -m {0} -n {2} {1}'.format(mass,cardName,outputName.replace('M'+mass,'').replace('.txt','')))
+  os.system('combine -M Asymptotic --minimizerStrategy 1 -m {0} -n {2} {1}'.format(mass,cardName,outputName.replace('M'+mass,'').replace('.txt','')))
 else:
   outputName = 'Output'+cardName[3:]+'_nosyst'
   print 'running limitProducer, {0}, mass: {1}'.format(cardName,mass)

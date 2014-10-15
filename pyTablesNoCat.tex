@@ -4,31 +4,30 @@
 \definecolor{Yellow}{rgb}{1,1,0}
 \usepackage{pdflscape}
 \begin{document}
-\begin{landscape}
 \begin{table}[htb]
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=200}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=200}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.31 \slash 0.28 \slash 0.28 & \cellcolor{Yellow}{\bf 0.08 \slash 0.05 \slash 0.06} & 0.02 \slash -0.01 \slash -0.78 & 0.22 \slash 0.21 \slash -0.33 \\ 
+  0 & -0.20 \slash -0.16 \slash 0.40 & -0.31 \slash -0.26 \slash -0.28 & 0.01 \slash 0.07 \slash 1.02 & \cellcolor{Yellow}{\bf -0.08 \slash -0.04 \slash -0.06} \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.31 \slash 0.26 \slash 0.33 & \cellcolor{Yellow}{\bf 0.16 \slash 0.10 \slash 0.15} & 0.02 \slash -0.01 \slash -0.26 & 0.23 \slash 0.20 \slash -0.11 \\ 
+  0 & -0.25 \slash -0.18 \slash 0.18 & -0.34 \slash -0.27 \slash -0.36 & -0.01 \slash 0.06 \slash 0.41 & \cellcolor{Yellow}{\bf -0.18 \slash -0.10 \slash -0.16} \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 200, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 200.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -36,26 +35,26 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=250}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=250}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & -0.36 \slash -0.34 \slash -0.18 & \cellcolor{Yellow}{\bf -0.09 \slash -0.06 \slash 0.01} & 0.02 \slash 0.08 \slash -0.78 & 0.38 \slash 0.42 \slash 0.15 \\ 
+  0 & -0.21 \slash -0.24 \slash -0.08 & 0.21 \slash 0.20 \slash 0.10 & 0.02 \slash -0.03 \slash 0.65 & \cellcolor{Yellow}{\bf 0.08 \slash 0.05 \slash 0.01} \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & -0.34 \slash -0.34 \slash -0.30 & \cellcolor{Yellow}{\bf -0.10 \slash -0.11 \slash -0.07} & 0.05 \slash 0.07 \slash 0.17 & 0.40 \slash 0.42 \slash 0.45 \\ 
+  0 & -0.24 \slash -0.25 \slash -0.27 & 0.22 \slash 0.22 \slash 0.20 & \cellcolor{Yellow}{\bf -0.02 \slash -0.03 \slash -0.13} & 0.09 \slash 0.09 \slash 0.08 \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 250, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 250.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -63,26 +62,26 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=300}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=300}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & -0.23 \slash -0.22 \slash -0.25 & \cellcolor{Yellow}{\bf -0.07 \slash -0.07 \slash -0.09} & 0.11 \slash 0.12 \slash 0.02 & 0.30 \slash 0.30 \slash 0.52 \\ 
+  0 & -0.19 \slash -0.19 \slash -0.37 & \cellcolor{Yellow}{\bf 0.16 \slash 0.16 \slash 0.18} & -0.04 \slash -0.04 \slash -0.02 & 0.10 \slash 0.10 \slash 0.13 \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & -0.24 \slash -0.22 \slash -0.30 & \cellcolor{Yellow}{\bf -0.12 \slash -0.10 \slash -0.15} & 0.07 \slash 0.12 \slash 0.58 & 0.28 \slash 0.29 \slash 0.69 \\ 
+  0 & -0.18 \slash -0.17 \slash -0.45 & 0.17 \slash 0.18 \slash 0.22 & -0.04 \slash -0.03 \slash -0.58 & \cellcolor{Yellow}{\bf 0.13 \slash 0.14 \slash 0.19} \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 300, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 300.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -90,26 +89,26 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=350}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=350}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.21 \slash 0.21 \slash 0.06 & \cellcolor{Yellow}{\bf 0.04 \slash 0.05 \slash -0.01} & 0.14 \slash 0.13 \slash 0.51 & 0.11 \slash 0.09 \slash 0.59 \\ 
+  0 & -0.07 \slash -0.04 \slash -0.53 & -0.20 \slash -0.20 \slash -0.06 & -0.21 \slash -0.15 \slash -0.93 & \cellcolor{Yellow}{\bf -0.05 \slash -0.07 \slash 0.02} \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.21 \slash 0.21 \slash 0.11 & \cellcolor{Yellow}{\bf 0.09 \slash 0.10 \slash 0.05} & 0.15 \slash 0.15 \slash 0.54 & 0.10 \slash 0.08 \slash 0.54 \\ 
+  0 & -0.07 \slash -0.04 \slash -0.47 & -0.21 \slash -0.20 \slash -0.11 & -0.20 \slash -0.15 \slash -0.89 & \cellcolor{Yellow}{\bf -0.13 \slash -0.13 \slash -0.07} \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 350, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 350.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -117,26 +116,26 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=400}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=400}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.46 \slash 0.45 \slash 0.31 & \cellcolor{Yellow}{\bf 0.11 \slash 0.08 \slash 0.07} & 0.19 \slash 0.14 \slash 0.69 & -0.11 \slash -0.13 \slash 0.36 \\ 
+  0 & 0.17 \slash 0.20 \slash -0.35 & -0.48 \slash -0.48 \slash -0.33 & -0.30 \slash -0.29 \slash -1.52 & \cellcolor{Yellow}{\bf -0.16 \slash -0.14 \slash -0.11} \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.46 \slash 0.46 \slash 0.41 & \cellcolor{Yellow}{\bf 0.16 \slash 0.17 \slash 0.15} & 0.18 \slash 0.15 \slash 0.30 & -0.10 \slash -0.13 \slash 0.15 \\ 
+  0 & 0.16 \slash 0.20 \slash -0.11 & -0.50 \slash -0.49 \slash -0.46 & -0.37 \slash -0.29 \slash -0.62 & \cellcolor{Yellow}{\bf -0.16 \slash -0.16 \slash -0.15} \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 400, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 400.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -144,26 +143,26 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=450}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=450}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.42 \slash 0.42 \slash 0.35 & \cellcolor{Yellow}{\bf 0.10 \slash 0.07 \slash 0.07} & 0.18 \slash 0.17 \slash 0.85 & -0.26 \slash -0.27 \slash 0.03 \\ 
+  0 & 0.36 \slash 0.35 \slash 0.05 & -0.45 \slash -0.46 \slash -0.37 & -0.33 \slash -0.39 \slash -1.76 & \cellcolor{Yellow}{\bf -0.16 \slash -0.14 \slash -0.10} \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.41 \slash 0.42 \slash 0.46 & \cellcolor{Yellow}{\bf 0.17 \slash 0.13 \slash 0.13} & 0.22 \slash 0.17 \slash 0.18 & -0.27 \slash -0.26 \slash -0.19 \\ 
+  0 & 0.36 \slash 0.34 \slash 0.32 & -0.43 \slash -0.45 \slash -0.49 & -0.39 \slash -0.40 \slash -0.28 & \cellcolor{Yellow}{\bf -0.16 \slash -0.17 \slash -0.18} \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 450, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 450.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
@@ -171,28 +170,27 @@
  \begin{center}
   \begin{tabular}{|c|c|c|c|c|}
   \multicolumn{5}{c}{~} \\ 
-  \multicolumn{5}{c}{{\bf Type-A Bias, Gaussian turn-on mH=500}} \\ 
+  \multicolumn{5}{c}{{\bf Type-A Bias, mH=500}} \\ 
   \multicolumn{5}{c}{~} \\ 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV mu} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & \cellcolor{Yellow}{\bf 0.12 \slash 0.11 \slash 0.15} & 0.01 \slash 0.01 \slash 0.05 & 0.18 \slash 0.24 \slash 0.91 & -0.35 \slash -0.36 \slash -0.30 \\ 
+  0 & 0.47 \slash 0.49 \slash 0.47 & \cellcolor{Yellow}{\bf -0.05 \slash -0.03 \slash -0.12} & -0.41 \slash -0.43 \slash -1.82 & 0.02 \slash 0.01 \slash -0.03 \\ 
   \hline 
   \multicolumn{5}{c}{~} \\ 
   \hline 
   \multicolumn{5}{|c|}{8TeV el} \\ 
   \hline 
-  cat. & ExpSum(Pow/Laurent/Exp2) & TripExpSum(Pow/Laurent/Exp2) & PowExpSum(Pow/Laurent/Exp2) & PowDecay(Pow/Laurent/Exp2) \\ 
+  cat. & PowDecay(P/L/E) & ExpSum(P/L/E) & PowExpSum(P/L/E) & TripExpSum(P/L/E) \\ 
   \hline 
-  0 & 0.12 \slash 0.10 \slash 0.21 & \cellcolor{Yellow}{\bf 0.07 \slash 0.10 \slash 0.16} & 0.20 \slash 0.23 \slash -0.01 & -0.35 \slash -0.36 \slash -0.50 \\ 
+  0 & 0.46 \slash 0.47 \slash 0.73 & \cellcolor{Yellow}{\bf -0.05 \slash -0.02 \slash -0.17} & -0.49 \slash -0.41 \slash 0.20 & -0.12 \slash -0.08 \slash -0.19 \\ 
   \hline 
   \end{tabular}
- \caption{4-Category bgPull Bias, 500, Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
+ \caption{typeA Bias, 500.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }
  \label{tab:pull}
  \end{center}
 \end{table}
-\end{landscape}
 \end{document}

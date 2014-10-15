@@ -27,7 +27,7 @@ Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
 Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/signalFits.py
-Arguments               = {0} {1} {2} {3} {5}
+Arguments               = --lepton {0} --tev {1} --cat {2} --suffix {3} --cores {5}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
 +LENGTH                 = "LONG"
@@ -39,7 +39,7 @@ should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
 Queue
-      '''.format(myLepton,tev,cat,suffix,YR,'True',sigFit))
+      '''.format(myLepton,tev,cat,suffix,YR,1,sigFit))
       consub.close()
 
       os.system('condor_submit submit.cmd')

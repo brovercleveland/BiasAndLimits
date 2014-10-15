@@ -98,7 +98,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
       elif dist in ['sigErr','bgErr']:
         tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, 0, 50)
       elif dist in ['nSig','nBG']:
-        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -200, 200)
+        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -50, 50)
       elif dist == 'typeA':
         tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -10, 10)
 

@@ -13,11 +13,13 @@ def doTables():
   leptonList = cfl.leptonList
   tevList = cfl.tevList
   genList = cfl.genFuncs
-  genListAbbr = ['GE', 'GP', 'SE', 'SP']
+  #genListAbbr = ['GE', 'GP', 'SE', 'SP']
+  genListAbbr = ['P', 'L', 'E']
   catList = cfl.catListSmall
   fitList = cfl.tableFuncs
-  doLandscape = True
-  biasMethod ='bgPull'
+  doLandscape = False
+  #biasMethod ='bgPull'
+  biasMethod ='typeA'
 
 # get all the txt files from the pull plots, put them in a dictionary (they
 # are all uniquely named so you can just key on their names, makes callback
@@ -41,7 +43,7 @@ def doTables():
 # category number
     latexFile.write('  \\begin{tabular}{'+'|c'*(len(fitList)+1)+'|}\n')
     latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{~} \\\\ \n')
-    latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{{\\bf Type-A Bias, Gaussian turn-on mH='+mass+'}} \\\\ \n')
+    latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{{\\bf Type-A Bias, mH='+mass+'}} \\\\ \n')
     latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{~} \\\\ \n')
     for lepton in leptonList:
       for tev in tevList:
@@ -52,8 +54,8 @@ def doTables():
         latexFile.write('  cat. & ')
 # we're about to write the header for the individual table, letting it know
 # how many fit functions and how many gen functions
-        #fitListAndGenAbbr = [x +'('+'/'.join(genListAbbr)+')' for x in fitList]
-        fitListAndGenAbbr = [x +'('+'/'.join(genList)+')' for x in fitList]
+        fitListAndGenAbbr = [x +'('+'/'.join(genListAbbr)+')' for x in fitList]
+        #fitListAndGenAbbr = [x +'('+'/'.join(genList)+')' for x in fitList]
         latexFile.write((' & ').join(fitListAndGenAbbr))
         latexFile.write(' \\\\ \n')
         latexFile.write('  \\hline \n')
@@ -93,7 +95,7 @@ def doTables():
         latexFile.write('  \\hline \n')
 
     latexFile.write('  \\end{tabular}\n')
-    latexFile.write(' \\caption{4-Category '+biasMethod+' Bias, '+mass+', Gaussian turn-on for fit.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The four numbers given for each background fit model correspond to toys generated from either an gauss*exponential, gauss*power-law, sech*exponential, or sech*power-law truth model.  Boldface and yellow highlight is used to indicate the lowest-order polynomial that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }\n')
+    latexFile.write(' \\caption{'+biasMethod+' Bias, '+mass+'.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }\n')
     latexFile.write(' \\label{tab:pull}\n')
     latexFile.write(' \\end{center}\n')
     latexFile.write('\\end{table}\n')
