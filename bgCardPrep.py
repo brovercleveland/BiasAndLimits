@@ -85,7 +85,7 @@ for tev in tevList:
         c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,tev,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
-        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.9,sumEntries*1.1)
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.8,sumEntries*1.2)
 
 
       ###### Import the fit and data, and rename them to the card convention

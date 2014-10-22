@@ -243,7 +243,7 @@ def doInitialFits():
         else:
           dataTree.SetBranchAddress('m_llgCAT'+cat+'_DATA',tmpMassEventOld)
         data_argS = RooArgSet(mzg)
-        if cat == '5':
+        if cat == '5' or highMass:
           data_ds = RooDataSet(dataName,dataName,data_argS)
         else:
           data_ds = RooDataHist(dataName,dataName,data_argS)

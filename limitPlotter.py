@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import sys
-sys.argv.append('-b')
 import os
 from ROOT import *
 import numpy as np
 from collections import defaultdict
 import configLimits as cfl
 
+gROOT.SetBatch()
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
 
@@ -25,7 +25,7 @@ extras = []
 
 
 
-def LimitPlot(CardOutput,AnalysisSuffix,cardName):
+def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   massList = [float(x) for x in cfl.massListBig]
 
   c = TCanvas("c","c",0,0,500,400)
@@ -195,7 +195,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   mg.Add(expected)
   if len(extras) == 0:
     print 'non obs'
-    mg.Add(observed)
+    #mg.Add(observed)
   else:
     for i,ar in enumerate(extraExpected):
       ar.SetMarkerColor(kBlack)
@@ -217,7 +217,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
   c.RedrawAxis()
   if YR:
     if cfl.syst:
-      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
+      if extraSuffix:
+        c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'_'+extraSuffix+'.pdf')
+      else:
+        c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
     else:
       c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'_nosyst.pdf')
   else:
@@ -228,6 +231,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName):
 
 
 if __name__=='__main__':
+  try:
+    extraSuffix = sys.argv[1]
+  except:
+    extraSuffix = None
   if fullCombo:
     print 'FULL COMBO PLOT'
     if mode == 'Combo':
@@ -235,7 +242,7 @@ if __name__=='__main__':
     else:
       cardName = '_'.join(['hzg',myLepton,tev,'cat'+cat+'_',suffix])
     cardName = 'Output'+cardName[3:]
-    LimitPlot('FullCombo',suffix,cardName)
+    LimitPlot('FullCombo',suffix,cardName,extraSuffix)
   if byParts:
     print 'BY PARTS PLOTS'
     leptonList = cfl.leptonList
@@ -258,7 +265,7 @@ if __name__=='__main__':
           cardName = 'Output'+cardName[3:]
 
 
-          LimitPlot(outputName,suffix,cardName)
+          LimitPlot(outputName,suffix,cardName,extraSuffix)
 
 
 

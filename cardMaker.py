@@ -2,7 +2,6 @@
 import sys
 import os
 import math
-sys.argv.append('-b')
 from ROOT import *
 from systematics import *
 import numpy as np
@@ -12,6 +11,7 @@ from collections import defaultdict
 from configLimits import AutoVivification
 import configLimits as cfl
 import pickle
+gROOT.SetBatch()
 
 f = open('XSBR.p')
 xsDict = pickle.load(f)
@@ -72,7 +72,10 @@ def makeCards(MVATest = cfl.doMVA):
         if cat in ['1','2','3','6','7','8']: phoGeom = 'EB'
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
-        if cat is '5':
+        if cfl.highMass:
+          #bkgParams = ['p1','p2','p3','p4','p5','norm']
+          bkgParams = ['p1','p2','p3','p4','p5','norm']
+        elif cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = filter(lambda i: i in ['ggH', 'qqH'],sigNameList)
         elif cat is '1' and (lepton is 'el' or (lepton is 'mu' and tev is '7TeV')):
@@ -283,8 +286,8 @@ def makeCards(MVATest = cfl.doMVA):
               card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
           else:
             for sig in prefixSigList:
-              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.001))
-              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.005))
+              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
+              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
 
           for param in bkgParams[:-1]:
             card.write('{0:<45} {1:<15}\n'.format('bkg_'+param+'_'+channel,'flatParam'))

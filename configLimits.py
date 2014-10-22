@@ -62,7 +62,7 @@ debugPlots = False
 verbose = False
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
-blind = True
+blind = False
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -113,7 +113,8 @@ if highMass:
       '360.0', '365.0', '370.0', '375.0', '380.0', '385.0', '390.0', '395.0', '400.0', '405.0', '410.0',
       '415.0', '420.0', '425.0', '430.0', '435.0', '440.0', '445.0', '450.0', '455.0', '460.0',
       '465.0', '470.0', '475.0', '480.0', '485.0', '490.0', '495.0', '500.0']
-  testPoint = '400.0'
+  #massListBig = ['250.0']
+  testPoint = '250.0'
 
 ###############
 # batchSignal #
@@ -131,8 +132,8 @@ if highMass:
 # limitProducer #
 #################
 
-fullCombo = True
-byParts = False
+fullCombo = False
+byParts = True
 noCats = False
 if highMass:
   noCats = True
@@ -141,8 +142,8 @@ if highMass:
 # batchLimits #
 ###############
 
-mode = 'Combo'
-#mode = 'noCombo'
+#mode = 'Combo'
+mode = 'noCombo'
 
 syst = True
 
@@ -154,7 +155,7 @@ syst = True
 
 bgLimitDict = AutoVivification()
 #bgLimitDict[highMass][tev][lepton][cat]
-bgLimitDict[True]['8TeV']['mu']['0'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['mu']['0'] = 'TripExpSum'
 bgLimitDict[True]['8TeV']['mu']['1'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['2'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['3'] = 'PowDecay'
@@ -165,7 +166,7 @@ bgLimitDict[True]['8TeV']['mu']['7'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['8'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['9'] = 'PowDecay'
 
-bgLimitDict[True]['8TeV']['el']['0'] = 'PowDecay'
+bgLimitDict[True]['8TeV']['el']['0'] = 'TripExpSum'
 bgLimitDict[True]['8TeV']['el']['1'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['el']['2'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['el']['3'] = 'PowDecay'

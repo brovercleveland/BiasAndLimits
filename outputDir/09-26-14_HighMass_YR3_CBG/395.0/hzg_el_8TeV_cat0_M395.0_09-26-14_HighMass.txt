@@ -27,6 +27,4 @@ bkg_p2_el_8TeV_cat0                           flatParam
 bkg_p3_el_8TeV_cat0                           flatParam      
 bkg_p4_el_8TeV_cat0                           flatParam      
 bkg_p5_el_8TeV_cat0                           flatParam      
-bkg_sigma_el_8TeV_cat0                        flatParam      
-bkg_step_el_8TeV_cat0                         flatParam      
 bkg_el_8TeV_cat0_norm                         flatParam      

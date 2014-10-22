@@ -553,8 +553,8 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.1, p2Low = 0, p2High = 1, p3 = 0.2, p3Low = 0.00001, p3High = 3,
-      p4 = 0.1, p4Low = 0.00001, p4High = 3, p5 = 0.1, p5Low = 0.00001, p5High = 3):
+  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0, p1High = 10, p2 = 0.1, p2Low = 0, p2High = 10, p3 = 0.2, p3Low = 0.0000001, p3High = 20,
+      p4 = 0.1, p4Low = 0.0000001, p4High = 20, p5 = 0.1, p5Low = 0.0000001, p5High = 20):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -700,7 +700,8 @@ class FitBuilder:
     fracVar = RooRealVar('fracCBG_'+suffix,'fracCBG_'+suffix,frac,fracLow,fracHigh)
 
     crystal = RooCBShape('crystalCBG_'+suffix,'crystalCBG_'+suffix,self.mzg,meanCBVar,sigmaCBVar,alphaVar,nVar)
-    gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanGVar,sigmaGVar)
+    #gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanGVar,sigmaGVar)
+    gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanCBVar,sigmaGVar)
     cbArgs = RooArgList(gauss,crystal)
     fracArg = RooArgList(fracVar)
     CBG = RooAddPdf('CBG_'+suffix,'CBG_'+suffix,cbArgs,fracArg,True)
@@ -786,12 +787,13 @@ class FitBuilder:
       sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
       ws.factory(mShift+'[1]')
       ws.factory(sigmaShift+'[1]')
-      ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
+      #ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
       ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
       ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
-      ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
-      ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+      #ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
+      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
       #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+')')
 
     elif fitName == 'TripG':
 
@@ -914,13 +916,47 @@ class FitBuilder:
       p2NameNew  = '_'.join(['bkg','p2',newSuffix])
 
       if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
-      ws.factory(p1NameNew+'[{0}]'.format(ws.function(p1Name).getVal()))
-      ws.factory(p2NameNew+'[{0}]'.format(ws.function(p2Name).getVal()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
 
       editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
       if Ext: editString += ','+normName+'='+normNameNew
       editString += ','+p1Name+'='+p1NameNew
       editString += ','+p2Name+'='+p2NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'TripExpSum':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+      p3Name = 'p3'+fitName+'_'+self.suffix
+      p3NameNew  = '_'.join(['bkg','p3',newSuffix])
+      p4Name = 'p4'+fitName+'_'+self.suffix
+      p4NameNew  = '_'.join(['bkg','p4',newSuffix])
+      p5Name = 'p5'+fitName+'_'+self.suffix
+      p5NameNew  = '_'.join(['bkg','p5',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(), ws.function(p4Name).getMax()))
+      ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(), ws.function(p5Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ','+p3Name+'='+p3NameNew
+      editString += ','+p4Name+'='+p4NameNew
+      editString += ','+p5Name+'='+p5NameNew
       editString += ')'
 
       ws.factory(editString)
