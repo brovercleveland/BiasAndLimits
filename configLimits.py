@@ -19,8 +19,9 @@ doMVA = False
 #suffix = '08-21-14_PhoMVA'
 #suffix = '09-3-14_Proper'
 #suffix = '09-5-14_HighMass'
-suffix = '09-26-14_HighMass'
-#suffix = '09-26-14_HighMassNarrow'
+#suffix = '09-26-14_HighMass'
+#suffix = '10-5-14_HighMass'
+suffix = '09-26-14_HighMassNarrow'
 #suffix = '09-7-14_PhoMVAKinMVA'
 
 leptonList = ['mu','el']
@@ -88,8 +89,10 @@ doExt = False
 
 #sigFit = 'TripG'
 sigFit = 'CBG'
+#sigFit = 'DCB'
+#sigFit = 'DCB2'
 
-testPoint = '125.0'
+testPoints = ['125.0']
 
 massListBig = ['120.0','120.5','121.0','121.5','122.0','122.5','123.0','123.5','124.0','124.5',
 '124.6','124.7','124.8','124.9','125.0','125.1','125.2','125.3','125.4','125.5',
@@ -113,8 +116,8 @@ if highMass:
       '360.0', '365.0', '370.0', '375.0', '380.0', '385.0', '390.0', '395.0', '400.0', '405.0', '410.0',
       '415.0', '420.0', '425.0', '430.0', '435.0', '440.0', '445.0', '450.0', '455.0', '460.0',
       '465.0', '470.0', '475.0', '480.0', '485.0', '490.0', '495.0', '500.0']
-  #massListBig = ['250.0']
-  testPoint = '250.0'
+  #massListBig= ['200.0','250.0','300.0','350.0','400.0','450.0','500.0']
+  testPoints = ['200.0','250.0','300.0','350.0','400.0','450.0','500.0']
 
 ###############
 # batchSignal #
@@ -132,8 +135,8 @@ if highMass:
 # limitProducer #
 #################
 
-fullCombo = False
-byParts = True
+fullCombo = True
+byParts = False
 noCats = False
 if highMass:
   noCats = True
@@ -142,8 +145,8 @@ if highMass:
 # batchLimits #
 ###############
 
-#mode = 'Combo'
-mode = 'noCombo'
+mode = 'Combo'
+#mode = 'noCombo'
 
 syst = True
 

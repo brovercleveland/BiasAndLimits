@@ -195,7 +195,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   mg.Add(expected)
   if len(extras) == 0:
     print 'non obs'
-    #mg.Add(observed)
+    mg.Add(observed)
   else:
     for i,ar in enumerate(extraExpected):
       ar.SetMarkerColor(kBlack)

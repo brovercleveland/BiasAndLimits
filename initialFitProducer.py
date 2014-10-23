@@ -130,9 +130,12 @@ def doInitialFits():
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
 
-              if highMass:
-                low = int(mass)*0.9
-                high = int(mass)*1.1
+              if highMass and narrow == '':
+                low = int(mass)*0.7
+                high = int(mass)*1.3
+              elif highMass:
+                low = int(mass)*0.92
+                high = int(mass)*1.08
               else:
                 low = int(mass)-10
                 high = int(mass)+10

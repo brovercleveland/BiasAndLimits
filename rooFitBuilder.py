@@ -108,6 +108,8 @@ class FitBuilder:
         'Bern4': self.BuildBern4,
         'Bern5': self.BuildBern5,
         'CBG': self.BuildCrystalBallGauss,
+        'DCB': self.BuildDoubleCrystalBall,
+        'DCB2': self.BuildDoubleCrystalBall2,
         'TripG': self.BuildTripleGauss}
 
 
@@ -663,8 +665,8 @@ class FitBuilder:
     SetOwnership(sigmaVar,0)
     return gauss
 
-  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 10, alpha = 1, alphaLow = -10, alphaHigh = 10,
-      n = 16, nLow = 0.5, nHigh = 500, sigmaG = 3, sigmaGLow = 0.3, sigmaGHigh = 10, frac = 0.3, fracLow = 0.0, fracHigh = 0.5):
+  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 10, alpha = 1, alphaLow = 0, alphaHigh = 3,
+      n = 70, nLow = 50, nHigh = 500, sigmaG = 6, sigmaGLow = 0.3, sigmaGHigh = 10, frac = 0.2, fracLow = 0.0, fracHigh = 0.3):
 
 # good fit params for m=125, cat1, el, new proper
     #  meanGCBG_8TeV_el_cat1_ggH_125_Low 122.628199189
@@ -717,6 +719,97 @@ class FitBuilder:
     SetOwnership(gauss,0)
     paramList = [meanGVar,meanCBVar,sigmaGVar,sigmaCBVar,alphaVar,nVar,fracVar]
     return CBG, paramList
+
+  def BuildDoubleCrystalBall(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigma = 1.5, sigmaLow = 0.3, sigmaHigh = 10,
+      alphaCB1 = 1, alphaCB1Low = 0, alphaCB1High = 8,
+      alphaCB2 = -1, alphaCB2Low = -8, alphaCB2High = 0,
+      nCB1 = 5, nCB1Low = 4, nCB1High = 6,
+      nCB2 = 5, nCB2Low = 4, nCB2High =6,
+      frac = 0.5, fracLow = 0, fracHigh = 1):
+
+    if sigma > sigmaHigh:
+      sigmaHigh = sigma * 2
+      sigmaLow = sigma * 0.5
+
+    suffix = self.suffix+'_'+piece
+
+    if meanLow is -1: meanLow = mean*0.8
+    if meanHigh is -1: meanHigh = mean*1.2
+
+
+    meanVar = RooRealVar('meanDCB_'+suffix,'meanDCB_'+suffix, mean, meanLow, meanHigh)
+    alphaCB1Var = RooRealVar('alphaCB1DCB_'+suffix,'alphaCB1DCB_'+suffix,alphaCB1,alphaCB1Low,alphaCB1High)
+    alphaCB2Var = RooRealVar('alphaCB2DCB_'+suffix,'alphaCB2DCB_'+suffix,alphaCB2,alphaCB2Low,alphaCB2High)
+    nCB1Var = RooRealVar('nCB1DCB_'+suffix,'nCB1DCB_'+suffix,nCB1,nCB1Low,nCB1High)
+    nCB2Var = RooRealVar('nCB2DCB_'+suffix,'nCB2DCB_'+suffix,nCB2,nCB2Low,nCB2High)
+    sigmaVar = RooRealVar('sigmaDCB_'+suffix,'sigmaDCB_'+suffix,sigma,sigmaLow,sigmaHigh)
+    fracVar = RooRealVar('fracDCB_'+suffix,'fracDCB_'+suffix,frac,fracLow,fracHigh)
+
+    crystal1 = RooCBShape('crystal1DCB_'+suffix,'crystal1DCB_'+suffix,self.mzg,meanVar,sigmaVar,alphaCB1Var,nCB1Var)
+    crystal2 = RooCBShape('crystal2DCB_'+suffix,'crystal2DCB_'+suffix,self.mzg,meanVar,sigmaVar,alphaCB2Var,nCB2Var)
+    cbArgs = RooArgList(crystal1,crystal2)
+    fracArg = RooArgList(fracVar)
+    DCB = RooAddPdf('DCB_'+suffix,'DCB_'+suffix,cbArgs,fracArg,True)
+
+    SetOwnership(meanVar,0)
+    SetOwnership(sigmaVar,0)
+    SetOwnership(alphaCB1Var,0)
+    SetOwnership(alphaCB2Var,0)
+    SetOwnership(nCB1Var,0)
+    SetOwnership(nCB2Var,0)
+    SetOwnership(fracVar,0)
+    SetOwnership(crystal1,0)
+    SetOwnership(crystal2,0)
+    paramList = [meanVar,sigmaVar,alphaCB1Var,alphaCB2Var,nCB1Var,nCB2Var,fracVar]
+    return DCB, paramList
+
+  def BuildDoubleCrystalBall2(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigmaCB1 = 1.5, sigmaCB1Low = 0.3, sigmaCB1High = 10, sigmaCB2 = 1.5, sigmaCB2Low = 0.3, sigmaCB2High = 10,
+      alphaCB1 = 1, alphaCB1Low = 0, alphaCB1High = 8,
+      alphaCB2 = -1, alphaCB2Low = -8, alphaCB2High = 0,
+      nCB1 = 5, nCB1Low = 0, nCB1High = 10,
+      nCB2 = 5, nCB2Low = 0, nCB2High =10,
+      frac = 0.5, fracLow = 0, fracHigh = 1):
+
+    if sigmaCB1 > sigmaCB1High:
+      sigmaCB1High = sigmaCB1 * 5
+      sigmaCB1Low = sigmaCB1 * 0.2
+    if sigmaCB2 > sigmaCB2High:
+      sigmaCB2High = sigmaCB2 * 5
+      sigmaCB2Low = sigmaCB2 * 0.2
+
+    suffix = self.suffix+'_'+piece
+
+    if meanLow is -1: meanLow = mean*0.8
+    if meanHigh is -1: meanHigh = mean*1.2
+
+
+    meanVar = RooRealVar('meanDCB_'+suffix,'meanDCB_'+suffix, mean, meanLow, meanHigh)
+    alphaCB1Var = RooRealVar('alphaCB1DCB_'+suffix,'alphaCB1DCB_'+suffix,alphaCB1,alphaCB1Low,alphaCB1High)
+    alphaCB2Var = RooRealVar('alphaCB2DCB_'+suffix,'alphaCB2DCB_'+suffix,alphaCB2,alphaCB2Low,alphaCB2High)
+    nCB1Var = RooRealVar('nCB1DCB_'+suffix,'nCB1DCB_'+suffix,nCB1,nCB1Low,nCB1High)
+    nCB2Var = RooRealVar('nCB2DCB_'+suffix,'nCB2DCB_'+suffix,nCB2,nCB2Low,nCB2High)
+    sigmaCB1Var = RooRealVar('sigmaCB1DCB_'+suffix,'sigmaCB1DCB_'+suffix,sigmaCB1,sigmaCB1Low,sigmaCB1High)
+    sigmaCB2Var = RooRealVar('sigmaCB2DCB_'+suffix,'sigmaCB2DCB_'+suffix,sigmaCB2,sigmaCB2Low,sigmaCB2High)
+    fracVar = RooRealVar('fracDCB_'+suffix,'fracDCB_'+suffix,frac,fracLow,fracHigh)
+
+    crystal1 = RooCBShape('crystal1DCB_'+suffix,'crystal1DCB_'+suffix,self.mzg,meanVar,sigmaCB1Var,alphaCB1Var,nCB1Var)
+    crystal2 = RooCBShape('crystal2DCB_'+suffix,'crystal2DCB_'+suffix,self.mzg,meanVar,sigmaCB2Var,alphaCB2Var,nCB2Var)
+    cbArgs = RooArgList(crystal1,crystal2)
+    fracArg = RooArgList(fracVar)
+    DCB = RooAddPdf('DCB_'+suffix,'DCB_'+suffix,cbArgs,fracArg,True)
+
+    SetOwnership(meanVar,0)
+    SetOwnership(sigmaCB1Var,0)
+    SetOwnership(sigmaCB2Var,0)
+    SetOwnership(alphaCB1Var,0)
+    SetOwnership(alphaCB2Var,0)
+    SetOwnership(nCB1Var,0)
+    SetOwnership(nCB2Var,0)
+    SetOwnership(fracVar,0)
+    SetOwnership(crystal1,0)
+    SetOwnership(crystal2,0)
+    paramList = [meanVar,sigmaCB1Var,sigmaCB2Var,alphaCB1Var,alphaCB2Var,nCB1Var,nCB2Var,fracVar]
+    return DCB, paramList
 
 
   def BuildTripleGauss(self, piece, mean = 125, mean1 = -1, mean1Low = -1, mean1High = -1, sigma1 = 2, sigma1Low = 1, sigma1High = 8,
@@ -790,10 +883,45 @@ class FitBuilder:
       #ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
       ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
       ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
-      #ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
+      ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
       #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
-      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
-      ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
+      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+')')
+
+    elif fitName == 'DCB':
+
+      fitName = '_'.join(['DCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      newFitName = '_'.join([self.sig,'hzg',self.lepton,'cat'+self.cat,self.tev])
+      mean = '_'.join(['meanDCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma = '_'.join(['sigmaDCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      meanNew = '_'.join(['sig',self.sig,'mean',self.lepton,self.tev,'cat'+self.cat])
+      sigmaNew = '_'.join(['sig',self.sig,'sigma',self.lepton,self.tev,'cat'+self.cat])
+      mShift = '_'.join(['sig',self.sig,'mShift',self.lepton,self.tev,'cat'+self.cat])
+      sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
+      ws.factory(mShift+'[1]')
+      ws.factory(sigmaShift+'[1]')
+      ws.factory('prod::'+meanNew+'('+mean+','+mShift+')')
+      ws.factory('prod::'+sigmaNew+'('+sigma+','+sigmaShift+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+mean+'='+meanNew+','+sigma+'='+sigmaNew+')')
+
+    elif fitName == 'DCB2':
+
+      fitName = '_'.join(['DCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      newFitName = '_'.join([self.sig,'hzg',self.lepton,'cat'+self.cat,self.tev])
+      mean = '_'.join(['meanDCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma1 = '_'.join(['sigmaCB1DCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      sigma2 = '_'.join(['sigmaCB2DCB',self.tev,self.lepton,'cat'+self.cat,self.sig,self.mass,'Interp'])
+      meanNew = '_'.join(['sig',self.sig,'mean',self.lepton,self.tev,'cat'+self.cat])
+      sigma1New = '_'.join(['sig',self.sig,'sigma1',self.lepton,self.tev,'cat'+self.cat])
+      sigma2New = '_'.join(['sig',self.sig,'sigma2',self.lepton,self.tev,'cat'+self.cat])
+      mShift = '_'.join(['sig',self.sig,'mShift',self.lepton,self.tev,'cat'+self.cat])
+      sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
+      ws.factory(mShift+'[1]')
+      ws.factory(sigmaShift+'[1]')
+      ws.factory('prod::'+meanNew+'('+mean+','+mShift+')')
+      ws.factory('prod::'+sigma1New+'('+sigma1+','+sigmaShift+')')
+      ws.factory('prod::'+sigma2New+'('+sigma2+','+sigmaShift+')')
+      ws.factory('EDIT::'+newFitName+'('+fitName+','+mean+'='+meanNew+','+sigma1+'='+sigma1New+','+sigma2+'='+sigma2New+')')
 
     elif fitName == 'TripG':
 

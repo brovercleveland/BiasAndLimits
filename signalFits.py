@@ -19,7 +19,7 @@ gStyle.SetOptStat(0)
 
 YR = cfl.YR
 sigFit = cfl.sigFit
-testPoint = cfl.testPoint
+testPoints = cfl.testPoints
 highMass = cfl.highMass
 
 # rounding function for interpolation
@@ -101,17 +101,40 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
     dsList = []
     fitList = []
     normList = []
+    startingValsLow = []
+    startingValsHi = []
     oldMassHi = oldMassLow = 0
-    startingVals = []
-    paramHists = [
-        TH1F('meanGCBG', 'meanGCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('meanCBCBG', 'meanCBCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('sigmaGCBG', 'sigmaGCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('sigmaCBCBG', 'sigmaCBCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('alphaCBG', 'alphaCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('nCBG', 'nCBG', len(massList), float(massList[0]), float(massList[-1])),
-        TH1F('fracCBG', 'fracCBG', len(massList), float(massList[0]), float(massList[-1])),
-      ]
+    if sigFit == 'DCB':
+      paramHists = [
+          TH1F('meanDCB', 'meanDCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('sigmaDCB', 'sigmaDCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('alpha1DCB', 'alpha1DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('alpha2DCB', 'alpha2DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('n1DCB', 'n1DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('n2DCB', 'n2DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('fracDCB', 'fracDCB', len(massList), float(massList[0]), float(massList[-1])),
+        ]
+    elif sigFit == 'DCB2':
+      paramHists = [
+          TH1F('meanDCB', 'meanDCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('sigma1DCB', 'sigma1DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('sigma2DCB', 'sigma2DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('alpha1DCB', 'alpha1DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('alpha2DCB', 'alpha2DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('n1DCB', 'n1DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('n2DCB', 'n2DCB', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('fracDCB', 'fracDCB', len(massList), float(massList[0]), float(massList[-1])),
+        ]
+    else:
+      paramHists = [
+          TH1F('meanGCBG', 'meanGCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('meanCBCBG', 'meanCBCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('sigmaGCBG', 'sigmaGCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('sigmaCBCBG', 'sigmaCBCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('alphaCBG', 'alphaCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('nCBG', 'nCBG', len(massList), float(massList[0]), float(massList[-1])),
+          TH1F('fracCBG', 'fracCBG', len(massList), float(massList[0]), float(massList[-1])),
+        ]
     for massString in massList:
 
       #############################################
@@ -159,7 +182,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         if massLow<=100:
           mzg.setRange('fitRegion1',115,int(massLow)+15)
         elif massLow > 160:
-          mzg.setRange('fitRegion1',int(massLow)*0.9,int(massLow)*1.1)
+          mzg.setRange('fitRegion1',int(massLow)*0.8,int(massLow)*1.2)
         else:
           mzg.setRange('fitRegion1',int(massLow)*0.92,int(massLow)*1.08)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)+narrow])
@@ -177,16 +200,21 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         #  SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low',
         #      meanG = startingVals[0], meanCB = startingVals[1], sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #      alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
-        if highMass and narrow=='':
-          SigFit_Low,tempParams= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.08, sigmaCB = massLow*0.03)
+        if sigFit == 'DCB':
+          SigFit_Low,tempParamsLow= fitBuilder.Build(sigFit, piece = 'Low',mean=massLow, sigma = massLow*0.03)
+        elif sigFit == 'DCB2':
+          SigFit_Low,tempParamsLow= fitBuilder.Build(sigFit, piece = 'Low',mean=massLow, sigmaCB1 = massLow*0.03, sigmaCB2 = massLow*0.03)
+        elif highMass and narrow=='':
+          SigFit_Low,tempParamsLow= fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaG = massLow*0.08, sigmaCB = massLow*0.03)
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
-          SigFit_Low,tempParams = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, meanGLow = massLow*0.95, meanGHigh = massLow*1.05, meanCBLow = massLow*0.95, meanCBHigh = massLow*1.05)
-
+          SigFit_Low,tempParamsLow = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, meanGLow = massLow*0.95, meanGHigh = massLow*1.05, meanCBLow = massLow*0.95, meanCBHigh = massLow*1.05)
         else:
-          SigFit_Low,tempParams = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow)
+          SigFit_Low,tempParamsLow = fitBuilder.Build(sigFit, piece = 'Low', mean = massLow, sigmaCB = massLow*0.01)
 
-        SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
-        startingVals = [x.getVal() for x in tempParams]
+        SigFit_Low.fitTo(sig_ds_Low, RooFit.Range('fitRegion1'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum))
+
+        #raw_input()
+        startingValsLow = [x.getVal() for x in tempParamsLow]
 
 
         ###### fit the hi mass point
@@ -194,7 +222,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         if massHi<=100:
           mzg.setRange('fitRegion2',115,int(massHi)+15)
         elif massHi > 160:
-          mzg.setRange('fitRegion2',int(massHi)*0.9,int(massHi)*1.1)
+          mzg.setRange('fitRegion2',int(massHi)*0.8,int(massHi)*1.2)
         else:
           mzg.setRange('fitRegion2',int(massHi)*0.92,int(massHi)*1.08)
           #mzg.setRange('fitRegion2',int(massHi)-15,int(massHi)+15)
@@ -208,15 +236,20 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         #SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi',
         #    mean = massHi, sigmaG = startingVals[2], sigmaCB = startingVals[3],
         #    alpha = startingVals[4], n = startingVals[5], frac=startingVals[6])
-        if highMass and narrow == '':
-          SigFit_Hi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.08, sigmaCB = massHi*0.03)[0]
+        if sigFit == 'DCB':
+          SigFit_Hi,tempParamsHi= fitBuilder.Build(sigFit, piece = 'Hi',mean=massHi, sigma = massHi*0.03)
+        elif sigFit == 'DCB2':
+          SigFit_Hi,tempParamsHi= fitBuilder.Build(sigFit, piece = 'Hi',mean=massHi, sigmaCB1 = massHi*0.03, sigmaCB2 = massHi*0.03)
+        elif highMass and narrow == '':
+          SigFit_Hi,tempParamsHi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, sigmaG = massHi*0.08, sigmaCB = massHi*0.03)
         elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
-          SigFit_Hi,tempParams = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, meanGLow = massHi*0.95, meanGHigh = massHi*1.05, meanCBLow = massHi*0.95, meanCBHigh = massHi*1.05)
+          SigFit_Hi,tempParamsHi = fitBuilder.Build(sigFit, piece = 'Hi', mean = massHi, meanGLow = massHi*0.95, meanGHigh = massHi*1.05, meanCBLow = massHi*0.95, meanCBHigh = massHi*1.05)
         else:
-          SigFit_Hi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi)[0]
+          SigFit_Hi,tempParamsHi = fitBuilder.Build(sigFit,piece = 'Hi', mean = massHi, sigmaCB = massHi*0.01)
 
-        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum), RooFit.PrintLevel(-1))
-        startingVals = [x.getVal() for x in tempParams]
+        SigFit_Hi.fitTo(sig_ds_Hi, RooFit.Range('fitRegion2'), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum))
+        #raw_input()
+        startingValsHi = [x.getVal() for x in tempParamsHi]
         #for x in tempParams:
         #  print x.GetName(), x.getVal()
         #raw_input()
@@ -230,7 +263,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
       if mass<=100:
         mzg.setRange('fitRegion_'+massString,115,mass+15)
       elif mass > 160:
-        mzg.setRange('fitRegion_'+massString,mass*0.9,mass*1.1)
+        mzg.setRange('fitRegion_'+massString,mass*0.8,mass*1.2)
       else:
         mzg.setRange('fitRegion_'+massString,mass*0.92,mass*1.08)
       beta = RooRealVar('beta','beta', 0.5, 0., 1.)
@@ -239,42 +272,75 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
       else:
         beta.setVal(massDiff)
 
-      if massDiff != 0.:
+      #if massDiff != 0.:
         #print 'lol'
-        interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', SigFit_Low, SigFit_Hi, mzg, beta)
+        #interp_pdf = RooIntegralMorph('interp_pdf', 'interp_pdf', SigFit_Low, SigFit_Hi, mzg, beta)
         #print 'lol'
         #interp_pdf.Print()
         #interp_ds = interp_pdf.generate(RooArgSet(mzg), (sig_ds_Hi.numEntries()+sig_ds_Low.numEntries())/2)
-        interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
+        #interp_ds = interp_pdf.generate(RooArgSet(mzg), 10000)
+        #yieldNum = (sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
+        #normList.append(yieldNum)
+        #yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
+        #yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
+        #interpVals = [pL+(pH-pL)*((mass-massLo)/(massHi-massLo)) for pL,pH in zip(startingValsLo, startingValsHi)]
+      #else:
+        #interp_ds = sig_ds_Low
+        #yieldNum = sig_ds_Low.sumEntries()
+        #normList.append(yieldNum)
+        #yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
+        #yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
+
+
+      if massDiff != 0.:
+        interpVals = [pL+(pH-pL)*((mass-massLow)/(massHi-massLow)) for pL,pH in zip(startingValsLow, startingValsHi)]
         yieldNum = (sig_ds_Low.sumEntries()*massDiff+sig_ds_Hi.sumEntries()*(1-massDiff))
-        normList.append(yieldNum)
-        yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
-        yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
+        #print startingValsLo
+        #print startingValsHi
+        #print interpVals
+        #raw_input()
       else:
-        interp_ds = sig_ds_Low
-        yieldNum = sig_ds_Low.sumEntries()
-        normList.append(yieldNum)
-        yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
-        yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
+        interpVals = startingValsHi
+        yieldNum = sig_ds_Hi.sumEntries()
+        #print startingValsLo
+        #print startingValsHi
+        #print interpVals
+        #raw_input()
+
+      normList.append(yieldNum)
+      yieldName = '_'.join([prod,'hzg','yield',lep,tev,'cat'+cat])
+      yieldVar = RooRealVar(yieldName,yieldName,yieldNum)
 
       sigNameInterp = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(mass)+narrow])
 
       fitBuilder.__init__(mzg,tev,lep,cat,sig=prod,mass=str(mass))
-      if highMass and narrow == '':
-        SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.08, sigmaCB = mass*0.03)
-      elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
-        SigFit_Interp,paramList= fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, meanGLow = mass*0.95, meanGHigh = mass*1.05, meanCBLow = mass*0.95, meanCBHigh = mass*1.05)
+      #if highMass and narrow == '':
+      #  SigFit_Interp,paramList = fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, sigmaG = mass*0.08, sigmaCB = mass*0.03)
+      #elif suffix == '09-3-14_Proper' and cat == '5' and lep == 'el':
+      #  SigFit_Interp,paramList= fitBuilder.Build(sigFit, piece = 'Interp', mean = mass, meanGLow = mass*0.95, meanGHigh = mass*1.05, meanCBLow = mass*0.95, meanCBHigh = mass*1.05)
+      #else:
+      #  SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
+      if sigFit == 'DCB':
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = interpVals[0], sigma = interpVals[1], alphaCB1 = interpVals[2],alphaCB2 = interpVals[3], nCB1 = interpVals[4], nCB2 = interpVals[5], frac = interpVals[6])
+      elif sigFit == 'DCB2':
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = interpVals[0], sigmaCB1 = interpVals[1], sigmaCB2 = interpVals[2], alphaCB1 = interpVals[3],alphaCB2 = interpVals[4], nCB1 = interpVals[5], nCB2 = interpVals[6], frac = interpVals[7])
       else:
-        SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass)
+        SigFit_Interp,paramList = fitBuilder.Build(sigFit,piece = 'Interp', mean = mass, meanG = interpVals[0], meanCB = interpVals[1], sigmaG = interpVals[2], sigmaCB = interpVals[3], alpha = interpVals[4], n = interpVals[5], frac = interpVals[6])
 
-      SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(2), RooFit.NumCPU(cpuNum))
+      for i in paramList:
+        print i.getVal()
+      #raw_input()
+
+      #SigFit_Interp.fitTo(interp_ds, RooFit.Range('fitRegion_'+massString), RooFit.SumW2Error(kTRUE), RooFit.Strategy(1), RooFit.NumCPU(cpuNum))
       #raw_input()
 
       for i,param in enumerate(paramList):
         param.setConstant(True)
         paramHists[i].SetBinContent(paramHists[i].FindBin(mass),param.getVal())
         paramHists[i].SetBinError(paramHists[i].FindBin(mass),param.getError())
+
       fitList.append(SigFit_Interp)
+      #fitList.append(SigFit_Low)
 
 
       getattr(cardDict[lep][tev][cat][str(mass)],'import')(SigFit_Interp)
@@ -286,7 +352,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
     c.cd()
 
     if highMass:
-      testFrame = mzg.frame(float(massList[0])*0.9,float(massList[-1])*1.1)
+      testFrame = mzg.frame(float(massList[0])*0.8,float(massList[-1])*1.2)
       if narrow == '':
         c.SetLogy()
     else:
@@ -296,7 +362,6 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
       #fit.plotOn(testFrame)
       #fit.plotOn(testFrame, RooFit.NormRange('fitRegion_'+regionName))
       fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
-      fit.paramOn(testFrame)
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(80))
     if highMass: testFrame.SetMinimum(0.0005)
@@ -315,41 +380,48 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
       c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalParams/'+'_'.join(['test',hist.GetName(),sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
-    if highMass:
-      testFrame = mzg.frame(float(testPoint)*0.9, float(testPoint)*1.1)
-    else:
-      testFrame = mzg.frame(float(testPoint)-15, float(testPoint)+15)
     for i,fit in enumerate(fitList):
       regionName = fit.GetName().split('_')[-2]
       #fit.plotOn(testFrame)
       #fit.plotOn(testFrame, RooFit.NormRange('fitRegion_'+regionName))
-      if regionName == testPoint:
+      if (float(regionName) in map(lambda x: float(x), testPoints)):
+        if highMass:
+          testFrame = mzg.frame(float(regionName)*0.8, float(regionName)*1.2)
+        else:
+          testFrame = mzg.frame(float(regionName)-15, float(regionName)+15)
         fit.plotOn(testFrame, RooFit.Name('model'),RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*10)))
-        fit.paramOn(testFrame)
+        #fit.plotOn(testFrame)
+        fit.paramOn(testFrame,RooFit.ShowConstants(True))
+        testFrame.getAttText().SetTextSize(0.027)
 
-    if float(testPoint)%5==0:
-      for i,signal in enumerate(dsList):
-        regionName = signal.GetName().split('_')[-1].rstrip('Narrow')
-        if regionName == 'M'+testPoint[0:3]:
+      #if float(regionName)%5==0:
+      #  for i,signal in enumerate(dsList):
+      #    regionName = signal.GetName().split('_')[-1].rstrip('Narrow')
+      #    if regionName == 'M'+testPoint[0:3]:
+      #      signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(600))
+        if float(regionName)%5==0:
+
+          for x in dsList:
+            print x.GetName().split('_')[-1].rstrip('Narrow')
+          signal = filter(lambda x: float(x.GetName().split('_')[-1].rstrip('Narrow').lstrip('M')) == float(regionName), dsList)[0]
           signal.plotOn(testFrame, RooFit.Name('data'),RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(600))
-      testFrame.Draw()
-
-      ndof = 0
-      if sigFit == 'TripG': ndof = 8
-      else: ndof = 7
-      chi2 = testFrame.chiSquare('model','data',ndof)
-      txt = TText(0,0,'chi2/ndof: '+'{0:.3f}'.format(chi2))
-      txt.SetNDC()
-      txt.SetX(0.7)
-      txt.SetY(0.7)
-      txt.SetTextSize(0.04)
-      testFrame.addObject(txt)
-    testFrame.GetXaxis().SetTitle('m_{H} (GeV)')
-    testFrame.GetYaxis().SetTitle('Normalized Yield')
-    testFrame.GetYaxis().CenterTitle()
-    testFrame.SetTitle('Fit for M'+testPoint)
-    testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,'M'+testPoint,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+          testFrame.Draw()
+          ndof = 0
+          if sigFit == 'TripG': ndof = 8
+          else: ndof = 7
+          chi2 = testFrame.chiSquare('model','data',ndof)
+          txt = TText(0,0,'chi2/ndof: '+'{0:.3f}'.format(chi2))
+          txt.SetNDC()
+          txt.SetX(0.3)
+          txt.SetY(0.2)
+          txt.SetTextSize(0.04)
+          testFrame.addObject(txt)
+        testFrame.GetXaxis().SetTitle('m_{H} (GeV)')
+        testFrame.GetYaxis().SetTitle('Normalized Yield')
+        testFrame.GetYaxis().CenterTitle()
+        testFrame.SetTitle('Fit for M'+regionName)
+        testFrame.Draw()
+        c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,'M'+regionName,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
   for prod in sigNameList:
