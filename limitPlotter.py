@@ -20,6 +20,8 @@ mode = cfl.mode
 #suffix = '04-28-14_Proper'
 #extras = ['04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
 extras = []
+doObs = cfl.obs
+syst = cfl.syst
 
 
 
@@ -124,7 +126,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
         else:
           currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
         fileList = os.listdir(currentDir)
-        if cfl.syst:
+        if syst:
           thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
         else:
           thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
@@ -193,10 +195,9 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   mg.Add(twoSigma)
   mg.Add(oneSigma)
   mg.Add(expected)
-  if len(extras) == 0:
-    print 'non obs'
+  if len(extras) == 0 and doObs:
     mg.Add(observed)
-  else:
+  elif len(extras) != 0:
     for i,ar in enumerate(extraExpected):
       ar.SetMarkerColor(kBlack)
       ar.SetMarkerStyle(kFullCircle)
@@ -205,6 +206,8 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
       ar.SetLineWidth(2)
       ar.SetLineStyle(2)
       mg.Add(ar)
+  else:
+    print 'no obs'
 
   mg.Draw('AL3')
   #mg.Draw('Asame')
@@ -215,19 +218,15 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
-  if YR:
-    if cfl.syst:
-      if extraSuffix:
-        c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'_'+extraSuffix+'.pdf')
-      else:
-        c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'.pdf')
-    else:
-      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_'+YR+'_'+sigFit+'_nosyst.pdf')
-  else:
-    if cfl.syst:
-      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'.pdf')
-    else:
-      c.Print('debugPlots/limitPlot_'+CardOutput+'_'+suffix+'_nosyst.pdf')
+  if extraSuffix == None and not doObs: extraSuffix = 'noObs'
+  global syst
+  if syst == False: syst = 'nosyst'
+  saveNames = ['limitPlot']
+  for saveName in [CardOutput, suffix, YR, sigFit, extraSuffix, syst]:
+    if type(saveName) == str:
+      saveNames.append(saveName)
+
+  c.Print('debugPlots/'+'_'.join(saveNames)+'.pdf')
 
 
 if __name__=='__main__':

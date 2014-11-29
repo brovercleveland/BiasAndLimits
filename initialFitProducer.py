@@ -131,8 +131,8 @@ def doInitialFits():
               signalTree.GetEntry(i)
 
               if highMass and narrow == '':
-                low = int(mass)*0.7
-                high = int(mass)*1.3
+                low = int(mass)*0.5
+                high = int(mass)*1.5
               elif highMass:
                 low = int(mass)*0.92
                 high = int(mass)*1.08
@@ -298,12 +298,14 @@ def doInitialFits():
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind1'))
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind2'))
         if blind:
-          data_ds.plotOn(testFrame,RooFit.Binning(12,150,200),RooFit.Name('data'))
-          data_ds.plotOn(testFrame,RooFit.Binning(25,500,600),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(6,150,180),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(10,550,600),RooFit.Name('data'))
           data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
           data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'))
 
+        realFit = None
+        fit_result = None
         for fitName in bgFitList:
 
           color = fitBuilder.FitColorDict[fitName]
@@ -315,6 +317,7 @@ def doInitialFits():
             fit.fitTo(data_ds, RooFit.Strategy(1))
           else:
             fit.fitTo(data_ds, RooFit.Strategy(1))
+
           fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
           testFrame.Draw()
           chi2 = testFrame.chiSquare(fitName,'data',ndof)
@@ -323,6 +326,7 @@ def doInitialFits():
 
         leg.Draw()
         c.Print('debugPlots/initialFits/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
+
         ws.commitTransaction()
         print 'commited'
 

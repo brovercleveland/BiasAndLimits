@@ -555,15 +555,15 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0, p1High = 10, p2 = 0.1, p2Low = 0, p2High = 10, p3 = 0.2, p3Low = 0.0000001, p3High = 20,
-      p4 = 0.1, p4Low = 0.0000001, p4High = 20, p5 = 0.1, p5Low = 0.0000001, p5High = 20):
+  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0.0001, p1High = 0.9999, p2 = 0.1, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 1,
+      p4 = 0.1, p4Low = 0.0001, p4High = 1, p5 = 0.1, p5Low = 0.0001, p5High = 1):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
     p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
     p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
     p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
-    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'(1-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0)*(@1+@2<1)',
+    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'(2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0)*(@1+@2<2)',
         RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
@@ -665,8 +665,8 @@ class FitBuilder:
     SetOwnership(sigmaVar,0)
     return gauss
 
-  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = 0.3, sigmaCBHigh = 10, alpha = 1, alphaLow = 0, alphaHigh = 3,
-      n = 70, nLow = 50, nHigh = 500, sigmaG = 6, sigmaGLow = 0.3, sigmaGHigh = 10, frac = 0.2, fracLow = 0.0, fracHigh = 0.3):
+  def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = -1, sigmaCBHigh = -1, alpha = 1, alphaLow = 0.1, alphaHigh = 5,
+      n = 5, nLow = 0.001, nHigh = 10, sigmaG = 6, sigmaGLow = 0, sigmaGHigh = -1, frac = 0.1, fracLow = 0.01, fracHigh = 0.3):
 
 # good fit params for m=125, cat1, el, new proper
     #  meanGCBG_8TeV_el_cat1_ggH_125_Low 122.628199189
@@ -677,11 +677,11 @@ class FitBuilder:
     #  nCBG_8TeV_el_cat1_ggH_125_Low 16.4081813986
     #  fracCBG_8TeV_el_cat1_ggH_125_Low 0.299323090074
     if sigmaCB > sigmaCBHigh:
-      sigmaCBHigh = sigmaCB * 5
-      sigmaCBLow = sigmaCB * 0.2
+      sigmaCBHigh = sigmaCB *1.5
+      sigmaCBLow = sigmaCB * 0.5
     if sigmaG > sigmaGHigh:
-      sigmaGHigh = sigmaG * 5
-      sigmaGLow = sigmaG * 0.2
+      sigmaGHigh = sigmaG * 1.5
+      sigmaGLow = sigmaG * 0.5
 
     suffix = self.suffix+'_'+piece
     if meanG == -1: meanG = mean
@@ -704,6 +704,7 @@ class FitBuilder:
     crystal = RooCBShape('crystalCBG_'+suffix,'crystalCBG_'+suffix,self.mzg,meanCBVar,sigmaCBVar,alphaVar,nVar)
     #gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanGVar,sigmaGVar)
     gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanCBVar,sigmaGVar)
+    #gauss = RooGaussian('gaussCBG_'+suffix,'gaussCBG_'+suffix,self.mzg,meanCBVar,sigmaCBVar)
     cbArgs = RooArgList(gauss,crystal)
     fracArg = RooArgList(fracVar)
     CBG = RooAddPdf('CBG_'+suffix,'CBG_'+suffix,cbArgs,fracArg,True)
@@ -720,12 +721,12 @@ class FitBuilder:
     paramList = [meanGVar,meanCBVar,sigmaGVar,sigmaCBVar,alphaVar,nVar,fracVar]
     return CBG, paramList
 
-  def BuildDoubleCrystalBall(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigma = 1.5, sigmaLow = 0.3, sigmaHigh = 10,
-      alphaCB1 = 1, alphaCB1Low = 0, alphaCB1High = 8,
-      alphaCB2 = -1, alphaCB2Low = -8, alphaCB2High = 0,
+  def BuildDoubleCrystalBall(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigma = 1.5, sigmaLow = 0, sigmaHigh = -1,
+      alphaCB1 = 0.6, alphaCB1Low = 0.4, alphaCB1High = 1,
+      alphaCB2 = -0.6, alphaCB2Low = -2, alphaCB2High = -0.001,
       nCB1 = 5, nCB1Low = 4, nCB1High = 6,
-      nCB2 = 5, nCB2Low = 4, nCB2High =6,
-      frac = 0.5, fracLow = 0, fracHigh = 1):
+      nCB2 = 7, nCB2Low = 6, nCB2High =20,
+      frac = 0.5, fracLow = 0.4, fracHigh = 0.9):
 
     if sigma > sigmaHigh:
       sigmaHigh = sigma * 2

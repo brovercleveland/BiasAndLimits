@@ -39,7 +39,7 @@ should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
 Queue
-      '''.format(myLepton,tev,cat,suffix,YR,1,sigFit))
+      '''.format(myLepton,tev,cat,suffix,YR,12,sigFit))
       consub.close()
 
       os.system('condor_submit submit.cmd')

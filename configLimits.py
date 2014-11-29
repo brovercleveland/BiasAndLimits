@@ -20,9 +20,11 @@ doMVA = False
 #suffix = '09-3-14_Proper'
 #suffix = '09-5-14_HighMass'
 #suffix = '09-26-14_HighMass'
-#suffix = '10-5-14_HighMass'
-suffix = '09-26-14_HighMassNarrow'
+#suffix = '10-30-14_HighMass'
+#suffix = '09-26-14_HighMassNarrow'
 #suffix = '09-7-14_PhoMVAKinMVA'
+#suffix = '11-28-14_HighMass'
+suffix = '11-28-14_HighMassNarrow'
 
 leptonList = ['mu','el']
 #leptonList = ['el']
@@ -63,7 +65,7 @@ debugPlots = False
 verbose = False
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
-blind = False
+blind = True
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -82,6 +84,7 @@ if highMass:
 ##############
 
 doExt = False
+doFancy = True
 
 ################
 # signalCBFits #
@@ -116,7 +119,7 @@ if highMass:
       '360.0', '365.0', '370.0', '375.0', '380.0', '385.0', '390.0', '395.0', '400.0', '405.0', '410.0',
       '415.0', '420.0', '425.0', '430.0', '435.0', '440.0', '445.0', '450.0', '455.0', '460.0',
       '465.0', '470.0', '475.0', '480.0', '485.0', '490.0', '495.0', '500.0']
-  #massListBig= ['200.0','250.0','300.0','350.0','400.0','450.0','500.0']
+  #massListBig= ['200.0']
   testPoints = ['200.0','250.0','300.0','350.0','400.0','450.0','500.0']
 
 ###############
@@ -149,6 +152,12 @@ mode = 'Combo'
 #mode = 'noCombo'
 
 syst = True
+
+################
+# limitPlotter #
+################
+
+obs = True
 
 ########################
 ########################

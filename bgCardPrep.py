@@ -22,6 +22,8 @@ catListBig = cfl.catListBig
 YR = cfl.YR
 sigFit = cfl.sigFit
 highMass = cfl.highMass
+blind = cfl.blind
+doFancy = cfl.doFancy
 
 
 #rooWsFile = TFile('testRooFitOut_Poter.root')
@@ -85,6 +87,7 @@ for tev in tevList:
         c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,tev,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
+        #norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.1,sumEntries*5)
         norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.8,sumEntries*1.2)
 
 
@@ -107,7 +110,105 @@ for tev in tevList:
       #fit_ext.Print()
       fitBuilder = FitBuilder(mzg,tev,lepton,cat)
       fitBuilder.BackgroundNameFixer(card_ws,fitNameHeader,doExt)
-      #BackgroundNameFixer(tev,lepton,cat,card_ws,cat,doExt)
+
+      if doFancy:
+        ######################
+        # making fancy plots #
+        ######################
+
+        fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
+        fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
+        fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)))
+
+        testFrame = mzg.frame()
+        binning = (600-150)/10
+
+        if blind:
+          data.plotOn(testFrame,RooFit.Binning(3,150,180),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(5,550,600),RooFit.Name('data'), RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
+        else:
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data').RooFit.MarkerSize(0.5))
+
+        #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
+        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),2), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
+        fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
+                   RooFit.VisualizeError(fit_res,2, False), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
+        #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"1sigma"),
+        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),1), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
+        fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"1sigma"),
+                   RooFit.VisualizeError(fit_res,1, False), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
+        fit_ext.plotOn(testFrame, RooFit.Name(fitExtName), RooFit.LineColor(kBlue), RooFit.LineWidth(1))
+        #fit_ext.paramOn(testFrame,RooFit.ShowConstants(True), RooFit.Layout(0.6, 1.0, 0.98))
+        #testFrame.getAttText().SetTextSize(0.021)
+
+        if blind:
+          data.plotOn(testFrame,RooFit.Binning(3,150,180),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(5,550,600),RooFit.Name('data'), RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
+        else:
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+
+        #if hjp:
+        #  testFrame.SetMaximum(12)
+        #elif cat in ['0']:
+        #  testFrame.SetMaximum(82)
+        #elif cat in ['m1','m2','m3','m4','m5','m6']:
+        #  testFrame.SetMaximum(22)
+        #elif cat in ['m7']:
+        #  testFrame.SetMaximum(42)
+        #else:
+        #  testFrame.SetMaximum(65)
+
+        testFrame.Draw()
+        #hsig[0].SetAxisRange(115,135,"X")
+        #hsig[0].SetLineColor(kRed+1)
+        #hsig[0].SetLineWidth(2)
+        #hsig[0].Draw('same hist')
+
+
+        if lepton=='mu':
+          testFrame.SetTitle(";m_{#mu#mu#gamma} (GeV);Events/"+str(10)+" GeV")
+        elif lepton=='el':
+          testFrame.SetTitle(";m_{ee#gamma} (GeV);Events/"+str(10)+" GeV")
+
+        #if hjp: leg  = TLegend(0.45,0.62,0.91,0.87)
+        leg  = TLegend(0.51,0.62,0.91,0.87)
+        leg.SetFillColor(0)
+        leg.SetBorderSize(1)
+        #leg.AddEntry(hsig[0],'Expected signal x'+str(factor),'f')
+        #leg.AddEntry(testFrame.findObject(bkgModel+'1sigma'),"Background Model",'f')
+        leg.AddEntry(testFrame.findObject(fitExtName),"Background Model",'le')
+        leg.AddEntry(data,'Data','lep')
+        leg.SetTextSize(0.045)
+        leg.Draw()
+
+        leg2  = TLegend(0.55,0.62,0.91,0.7)
+        leg2.SetNColumns(2)
+        leg2.SetFillColor(0)
+        leg2.SetBorderSize(0)
+        leg2.AddEntry(testFrame.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
+        leg2.AddEntry(testFrame.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')
+        leg2.SetTextSize(0.045)
+        leg2.Draw()
+
+        #proc = 'Z#rightarrow J/#Psi#gamma#rightarrow#mu#mu#gamma'
+        lat = TLatex()
+        lat.SetNDC()
+        lat.SetTextSize(0.035)
+        #if hjp:
+        #  lat.DrawLatex(0.18,0.95, 'H #rightarrow J/#Psi#gamma#rightarrow#mu#mu#gamma')
+        if lepton=='el':
+          lat.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow ee#gamma')
+        else:
+          lat.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow#mu#mu#gamma')
+        #CMS_lumi(c, 2, 11)
+
+        gPad.RedrawAxis()
+        if blind:
+          c.Print('debugPlots/fancyPlots/'+'_'.join(['PAS','fit','blind',suffix,tev,lepton,'cat'+cat])+'.pdf')
+        else:
+          c.Print('debugPlots/fancyPlots/'+'_'.join(['PAS','fit',suffix,tev,lepton,'cat'+cat])+'.pdf')
 
 card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/CardBackground_'+suffixCard+'.root')
 
