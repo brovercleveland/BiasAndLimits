@@ -177,7 +177,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         ###### fit the low mass point
         if massLow<=100:
           mzg.setRange('fitRegion1',115,int(massLow)+15)
-        elif massLow > 160 and narrow != '':
+        elif massLow > 160 and narrow == '':
           mzg.setRange('fitRegion1',int(massLow)*0.7,int(massLow)*1.3)
         else:
           mzg.setRange('fitRegion1',int(massLow)*0.92,int(massLow)*1.08)
@@ -209,7 +209,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         ###### fit the hi mass point
         if massHi<=100:
           mzg.setRange('fitRegion2',115,int(massHi)+15)
-        elif massHi > 160:
+        elif massHi > 160 and narrow == '':
           mzg.setRange('fitRegion2',int(massHi)*0.7,int(massHi)*1.3)
         else:
           mzg.setRange('fitRegion2',int(massHi)*0.92,int(massHi)*1.08)

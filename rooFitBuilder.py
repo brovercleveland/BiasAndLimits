@@ -666,7 +666,7 @@ class FitBuilder:
     return gauss
 
   def BuildCrystalBallGauss(self, piece, mean = 125, meanG = -1, meanGLow = -1, meanGHigh = -1, meanCB = -1, meanCBLow = -1, meanCBHigh = -1,sigmaCB = 1.5, sigmaCBLow = -1, sigmaCBHigh = -1, alpha = 1, alphaLow = 0.1, alphaHigh = 5,
-      n = 5, nLow = 0.001, nHigh = 10, sigmaG = 6, sigmaGLow = 0, sigmaGHigh = -1, frac = 0.1, fracLow = 0.01, fracHigh = 0.3):
+      n = 1, nLow = 0.001, nHigh = 7, sigmaG = 6, sigmaGLow = 0, sigmaGHigh = -1, frac = 0.1, fracLow = 0.01, fracHigh = 0.3):
 
 # good fit params for m=125, cat1, el, new proper
     #  meanGCBG_8TeV_el_cat1_ggH_125_Low 122.628199189
@@ -681,7 +681,7 @@ class FitBuilder:
       sigmaCBLow = sigmaCB * 0.5
     if sigmaG > sigmaGHigh:
       sigmaGHigh = sigmaG * 1.5
-      sigmaGLow = sigmaG * 0.5
+      sigmaGLow = sigmaG * 0.8
 
     suffix = self.suffix+'_'+piece
     if meanG == -1: meanG = mean

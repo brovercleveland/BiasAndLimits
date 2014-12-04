@@ -25,6 +25,8 @@ doMVA = False
 #suffix = '09-7-14_PhoMVAKinMVA'
 #suffix = '11-28-14_HighMass'
 suffix = '11-28-14_HighMassNarrow'
+#suffix = '11-28-14_HighMass_noEngCor'
+#suffix = '11-28-14_HighMassNarrow_noEngCor'
 
 leptonList = ['mu','el']
 #leptonList = ['el']
@@ -84,15 +86,17 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = True
+doFancy = False
 
 ################
 # signalCBFits #
 ################
 
+if 'Narrow' in suffix:
+  sigFit = 'CBG'
+else:
+  sigFit = 'DCB'
 #sigFit = 'TripG'
-sigFit = 'CBG'
-#sigFit = 'DCB'
 #sigFit = 'DCB2'
 
 testPoints = ['125.0']
@@ -151,7 +155,7 @@ if highMass:
 mode = 'Combo'
 #mode = 'noCombo'
 
-syst = True
+syst = False
 
 ################
 # limitPlotter #

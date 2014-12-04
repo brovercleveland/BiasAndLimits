@@ -19,7 +19,8 @@ suffix = cfl.suffix
 mode = cfl.mode
 #suffix = '04-28-14_Proper'
 #extras = ['04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
-extras = []
+#extra = 'Output_FullCombo__11-28-14_HighMass_nosyst'
+extra = False
 doObs = cfl.obs
 syst = cfl.syst
 
@@ -44,40 +45,23 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   exp2SigHi = []
   exp2SigLow = []
 
-  expExtra = []
-  for ex in extras:
-    expExtra.append([])
+  expEx = []
+
   for mass in massList:
     if YR:
-      #currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
       currentDir = '/'.join(['outputDir',AnalysisSuffix+'_'+YR+'_'+sigFit,str(mass)])
     else:
       currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
-    #print currentDir
-    #fileList = os.listdir(currentDir)
-    #if cfl.syst:
-    #  thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
-    #else:
-    #  thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
-    #print fileList
-    #raw_input()
     thisFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),cardName)
-    #f = open('/'.join([currentDir,thisFile]))
     f = TFile('/'.join([currentDir,thisFile]))
     t = f.Get('limit')
-    #print f
-    #raw_input()
+    if extra:
+      extraFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),extra)
+      fex = TFile('/'.join([currentDir,extraFile]))
+      tex = fex.Get('limit')
+
     xAxis.append(mass)
 
-    #for line in f:
-    #  splitLine = line.split()
-    #  if 'Observed' in splitLine: obs.append(float(splitLine[-1]))
-    #  elif '2.5%:' in splitLine: exp2SigLow.append(float(splitLine[-1]))
-    #  elif '16.0%:' in splitLine: exp1SigLow.append(float(splitLine[-1]))
-    #  elif '50.0%:' in splitLine: exp.append(float(splitLine[-1]))
-    #  elif '84.0%:' in splitLine: exp1SigHi.append(float(splitLine[-1]))
-    #  elif '97.5%:' in splitLine: exp2SigHi.append(float(splitLine[-1]))
-    #f.close()
 
     count = 0
     for ev in t:
@@ -89,6 +73,12 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
       elif count == 5: obs.append(ev.limit)
       count +=1
     f.Close()
+    if extra:
+      count = 0
+      for ev in tex:
+        if count == 2: expEx.append(ev.limit)
+        count +=1
+      fex.Close()
 
     if mass == 125.0:
       print mass
@@ -119,31 +109,6 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
       print 'exp2SigHi busted for',mass
       raw_input()
 
-    if len(extras) != 0:
-      for i,extraSuffix in enumerate(extras):
-        if YR:
-          currentDir = '/'.join(['outputDir',extraSuffix+'_'+YR+'_'+sigFit,str(mass),'limitOutput'])
-        else:
-          currentDir = '/'.join(['outputDir',extraSuffix,str(mass),'limitOutput'])
-        fileList = os.listdir(currentDir)
-        if syst:
-          thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' not in fileName,fileList)[0]
-        else:
-          thisFile = filter(lambda fileName: CardOutput in fileName and 'nosyst' in fileName,fileList)[0]
-        f = open('/'.join([currentDir,thisFile]))
-        for line in f:
-          splitLine = line.split()
-          if '50.0%:' in splitLine: expExtra[i].append(float(splitLine[-1]))
-        f.close()
-
-
-  #print 'masses:', xAxis
-  #print 'obs:',obs
-  #print 'exp:',exp
-  #print exp2SigLow
-  #print exp1SigLow
-  #print exp1SigHi
-  #print exp2SigHi
 
   exp2SigLowErr = [a-b for a,b in zip(exp,exp2SigLow)]
   exp1SigLowErr = [a-b for a,b in zip(exp,exp1SigLow)]
@@ -164,6 +129,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   exp2SigHiErr_Array = np.array(exp2SigHiErr,dtype=float)
   zeros_Array = np.zeros(len(xAxis),dtype = float)
 
+  if extra:
+    expEx_Array = np.array(expEx,dtype='d')
+
+
   mg = TMultiGraph()
   mg.SetTitle('')
 
@@ -172,10 +141,8 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
-  if len(extras) != 0:
-    extraExpected = []
-    for ar in expExtra:
-      extraExpected.append(TGraphAsymmErrors(nPoints,xAxis_Array,np.array(ar,dtype='d'),zeros_Array,zeros_Array,zeros_Array,zeros_Array))
+  if extra:
+    expectedEx = TGraphAsymmErrors(nPoints,xAxis_Array,expEx_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
 
 
   #expected.Print()
@@ -192,20 +159,16 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   expected.SetLineStyle(2)
 
   observed.SetLineWidth(2)
+
+  if extra:
+    expectedEx.SetLineColor(kBlue)
   mg.Add(twoSigma)
   mg.Add(oneSigma)
   mg.Add(expected)
-  if len(extras) == 0 and doObs:
+  if not extra and doObs:
     mg.Add(observed)
-  elif len(extras) != 0:
-    for i,ar in enumerate(extraExpected):
-      ar.SetMarkerColor(kBlack)
-      ar.SetMarkerStyle(kFullCircle)
-      ar.SetMarkerSize(1.5)
-      ar.SetLineColor(colorList[i])
-      ar.SetLineWidth(2)
-      ar.SetLineStyle(2)
-      mg.Add(ar)
+  elif extra:
+    mg.Add(expectedEx)
   else:
     print 'no obs'
 
@@ -240,7 +203,8 @@ if __name__=='__main__':
       cardName = '_'.join(['hzg','FullCombo_',suffix])
     else:
       cardName = '_'.join(['hzg',myLepton,tev,'cat'+cat+'_',suffix])
-    cardName = 'Output'+cardName[3:]
+    if syst == False: cardName = 'Output'+cardName[3:]+'_nosyst'
+    else: cardName = 'Output'+cardName[3:]
     LimitPlot('FullCombo',suffix,cardName,extraSuffix)
   if byParts:
     print 'BY PARTS PLOTS'
