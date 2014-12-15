@@ -15,12 +15,13 @@ byParts = cfl.byParts
 YR = cfl.YR
 sigFit = cfl.sigFit
 #YR = 'YR2012ICHEP'
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 mode = cfl.mode
-#suffix = '04-28-14_Proper'
-#extras = ['04-28-14_PhoMVA','04-28-14_PhoMVAKinMVA']
-#extra = 'Output_FullCombo__11-28-14_HighMass_nosyst'
-extra = False
+
+#extraList = False
+extraList = ['Output_FullCombo__12-04-14_HighMass','Output_FullCombo__12-04-14_HighMass800', 'Output_FullCombo__12-04-14_HighMass900']
+extraPath = ['12-04-14_HighMass', '12-04-14_HighMass800', '12-04-14_HighMass900']
+
 doObs = cfl.obs
 syst = cfl.syst
 
@@ -45,7 +46,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   exp2SigHi = []
   exp2SigLow = []
 
-  expEx = []
+  if extraList: expExList = [ [] for i in extraList]
 
   for mass in massList:
     if YR:
@@ -55,10 +56,17 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     thisFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),cardName)
     f = TFile('/'.join([currentDir,thisFile]))
     t = f.Get('limit')
-    if extra:
-      extraFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),extra)
-      fex = TFile('/'.join([currentDir,extraFile]))
-      tex = fex.Get('limit')
+    fex = []
+    tex = []
+    if extraList:
+      for i, extra in enumerate(extraList):
+        if extraPath[i] == None:
+          extraDir = currentDir
+        else:
+          extraDir = '/'.join(['outputDir',extraPath[i]+'_'+YR+'_'+sigFit,str(mass)])
+        extraFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),extra)
+        fex.append(TFile('/'.join([extraDir,extraFile])))
+        tex.append(fex[-1].Get('limit'))
 
     xAxis.append(mass)
 
@@ -73,12 +81,13 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
       elif count == 5: obs.append(ev.limit)
       count +=1
     f.Close()
-    if extra:
-      count = 0
-      for ev in tex:
-        if count == 2: expEx.append(ev.limit)
-        count +=1
-      fex.Close()
+    if extraList:
+      for i,extra in enumerate(extraList):
+        count = 0
+        for ev in tex[i]:
+          if count == 2: expExList[i].append(ev.limit)
+          count +=1
+        fex[i].Close()
 
     if mass == 125.0:
       print mass
@@ -129,8 +138,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   exp2SigHiErr_Array = np.array(exp2SigHiErr,dtype=float)
   zeros_Array = np.zeros(len(xAxis),dtype = float)
 
-  if extra:
-    expEx_Array = np.array(expEx,dtype='d')
+  if extraList:
+    expEx_Array = []
+    for i, expEx in enumerate(expExList):
+      expEx_Array.append(np.array(expEx,dtype='d'))
 
 
   mg = TMultiGraph()
@@ -141,8 +152,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
-  if extra:
-    expectedEx = TGraphAsymmErrors(nPoints,xAxis_Array,expEx_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
+  if extraList:
+    expectedEx  = []
+    for expExArr in expEx_Array:
+      expectedEx.append(TGraphAsymmErrors(nPoints,xAxis_Array,expExArr,zeros_Array,zeros_Array,zeros_Array,zeros_Array))
 
 
   #expected.Print()
@@ -160,15 +173,18 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
 
   observed.SetLineWidth(2)
 
-  if extra:
-    expectedEx.SetLineColor(kBlue)
+  if extraList:
+    for i, graph in enumerate(expectedEx):
+      graph.SetLineColor(kBlue+10*i)
+      graph.SetLineWidth(2)
   mg.Add(twoSigma)
   mg.Add(oneSigma)
   mg.Add(expected)
-  if not extra and doObs:
+  if not extraList and doObs:
     mg.Add(observed)
-  elif extra:
-    mg.Add(expectedEx)
+  elif extraList:
+    for graph in expectedEx:
+      mg.Add(graph)
   else:
     print 'no obs'
 

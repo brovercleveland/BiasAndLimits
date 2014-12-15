@@ -24,7 +24,6 @@ doMVA = cfl.doMVA
 
 allBiasFits= cfl.allBiasFits# Turn on extra fits used in bias studies
 
-suffix = cfl.suffix
 
 YR = cfl.YR
 
@@ -45,10 +44,12 @@ TH1.SetDefaultSumw2(kTRUE)
 if rootrace: RooTrace.active(kTRUE)
 def doInitialFits():
   print 'loading up the files'
+  suffix = cfl.suffix
 
   dataDict = {'mu2012_4cat':TFile('inputFiles/m_llgFile_MuMu2012ABCD_'+suffix+'.root','r'),'el2012_4cat':TFile('inputFiles/m_llgFile_EE2012ABCD_'+suffix+'.root','r'),'mu2011_4cat':TFile('inputFiles/m_llgFile_MuMu2011ABCD_Proper.root','r'),'el2011_4cat':TFile('inputFiles/m_llgFile_EE2011ABCD_Proper.root','r'),'all2011_4cat':TFile('inputFiles/m_llgFile_All2011ABCD_Proper.root','r')}
 
   signalDict = dataDict
+  suffix = cfl.suffixPostFix
 
   leptonList = cfl.leptonList
   yearList = cfl.yearList
@@ -62,20 +63,18 @@ def doInitialFits():
 
   weight  = RooRealVar('Weight','Weight',0,100)
 
+  xmax = cfl.bgRange[1]
+  xmin = cfl.bgRange[0]
   if highMass:
-    xmin = 150
-    xmax = 600
     binning = (xmax-xmin)/4
   else:
-    xmin = 100
-    xmax = 190
     binning = (xmax-xmin)/2
 
   print 'high!!!!!!!!!!!!!!!!!!'
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',xmin,xmax)
   mzg.setRange('full',xmin,xmax)
-  mzg.setRange('Blind1',150,200)
-  mzg.setRange('Blind2',500,600)
+  mzg.setRange('Blind1',xmin,cfl.blindRange[0])
+  mzg.setRange('Blind2',cfl.blindRange[1],xmax)
   mzg.setBins((xmax-xmin)*4)
   mzg.setBins(50000,'cache')
 
@@ -131,8 +130,8 @@ def doInitialFits():
               signalTree.GetEntry(i)
 
               if highMass and narrow == '':
-                low = int(mass)*0.5
-                high = int(mass)*1.5
+                low = int(mass)*0.4
+                high = int(mass)*1.6
               elif highMass:
                 low = int(mass)*0.92
                 high = int(mass)*1.08
@@ -298,8 +297,8 @@ def doInitialFits():
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind1'))
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind2'))
         if blind:
-          data_ds.plotOn(testFrame,RooFit.Binning(6,150,180),RooFit.Name('data'))
-          data_ds.plotOn(testFrame,RooFit.Binning(10,550,600),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(6,xmin,cfl.blindRange[0]),RooFit.Name('data'))
+          data_ds.plotOn(testFrame,RooFit.Binning(10,cfl.blindRange[1],xmax),RooFit.Name('data'))
           data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
           data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'))
@@ -310,11 +309,14 @@ def doInitialFits():
 
           color = fitBuilder.FitColorDict[fitName]
           ndof = fitBuilder.FitNdofDict[fitName]
-          fit = fitBuilder.Build(fitName)
+          if highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 700 and lepton == 'mu':
+            fit = fitBuilder.Build(fitName, p3 = 0.01)
+          else:
+            fit = fitBuilder.Build(fitName)
           if type(fit) == tuple: fit = fit[0]
           if verbose: fit.Print()
-          if highMass:
-            fit.fitTo(data_ds, RooFit.Strategy(1))
+          if highMass and fitName == 'TripExpSum':
+            fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True))
           else:
             fit.fitTo(data_ds, RooFit.Strategy(1))
 

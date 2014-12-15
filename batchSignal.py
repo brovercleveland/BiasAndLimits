@@ -2,7 +2,7 @@
 import os
 import configLimits as cfl
 
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 doMVA = cfl.doMVA
 
 leptonList = cfl.leptonList

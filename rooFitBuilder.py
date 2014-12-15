@@ -493,7 +493,7 @@ class FitBuilder:
     SetOwnership(betaVar,0)
     return Pow
 
-  def BuildPowDecay(self,p1 = 1, p1Low = 0, p1High = 20, p2 = 1, p2Low = 0, p2High = 20):
+  def BuildPowDecay(self,p1 = 0.5, p1Low = 0, p1High = 20, p2 = 0.5, p2Low = 0, p2High = 20):
 
     p1Var = RooRealVar('p1PowDecay_'+self.suffix,'p1PowDecay_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2PowDecay_'+self.suffix,'p2PowDecay_'+self.suffix,p2,p2Low,p2High)
@@ -555,8 +555,8 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.1, p1Low = 0.0001, p1High = 0.9999, p2 = 0.1, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 1,
-      p4 = 0.1, p4Low = 0.0001, p4High = 1, p5 = 0.1, p5Low = 0.0001, p5High = 1):
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 2,
+      p4 = 0.001, p4Low = 0.00001, p4High = 2, p5 = 0.01, p5Low = 0.0001, p5High = 2):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -722,11 +722,11 @@ class FitBuilder:
     return CBG, paramList
 
   def BuildDoubleCrystalBall(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigma = 1.5, sigmaLow = 0, sigmaHigh = -1,
-      alphaCB1 = 0.6, alphaCB1Low = 0.4, alphaCB1High = 1,
-      alphaCB2 = -0.6, alphaCB2Low = -2, alphaCB2High = -0.001,
-      nCB1 = 5, nCB1Low = 4, nCB1High = 6,
-      nCB2 = 7, nCB2Low = 6, nCB2High =20,
-      frac = 0.5, fracLow = 0.4, fracHigh = 0.9):
+      alphaCB1 = 1, alphaCB1Low = 0.001, alphaCB1High = 5,
+      alphaCB2 = -1, alphaCB2Low = -5, alphaCB2High = -0.001,
+      nCB1 = 3, nCB1Low = 0.1, nCB1High = 10,
+      nCB2 = 2, nCB2Low = 0.1, nCB2High =10,
+      frac = 0.5, fracLow = 0.1, fracHigh = 0.9):
 
     if sigma > sigmaHigh:
       sigmaHigh = sigma * 2

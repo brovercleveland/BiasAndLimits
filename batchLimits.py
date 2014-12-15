@@ -2,7 +2,7 @@
 import os
 import configLimits as cfl
 
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 mode = cfl.mode
 doMVA = cfl.doMVA
 

@@ -10,7 +10,7 @@ def produceLimits(inputFolder = None, outPutFolder = None, mass = '125.0'):
   byParts = cfl.byParts
   doMVA = cfl.doMVA
 
-  suffix = cfl.suffix
+  suffix = cfl.suffixPostFix
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList

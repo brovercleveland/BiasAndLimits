@@ -23,13 +23,18 @@ doMVA = False
 #suffix = '10-30-14_HighMass'
 #suffix = '09-26-14_HighMassNarrow'
 #suffix = '09-7-14_PhoMVAKinMVA'
-#suffix = '11-28-14_HighMass'
-suffix = '11-28-14_HighMassNarrow'
+suffix = '11-28-14_HighMass'
+#suffix = '11-28-14_HighMassNarrow'
 #suffix = '11-28-14_HighMass_noEngCor'
 #suffix = '11-28-14_HighMassNarrow_noEngCor'
+#suffix = '12-04-14_HighMass'
+#suffix = '12-04-14_HighMassNarrow'
+#suffixPostFix = suffix+'900'
+suffixPostFix = suffix
+
 
 leptonList = ['mu','el']
-#leptonList = ['el']
+#leptonList = ['mu']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -76,6 +81,12 @@ bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
 bgFitListHighMass = ['Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','TripExpSum','PowExpSum']
 #bgFitListHighMass = ['Exp2','ExpSum']
 
+bgRange = [100,190]
+if highMass:
+  #bgRange = [150,600]
+  #bgRange = [150,700]
+  bgRange = [150,900]
+blindRange = [180,550]
 
 if highMass:
   sigNameListInput = ['gg']
@@ -86,7 +97,7 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = False
+doFancy = True
 
 ################
 # signalCBFits #
@@ -155,13 +166,13 @@ if highMass:
 mode = 'Combo'
 #mode = 'noCombo'
 
-syst = False
+syst = True
 
 ################
 # limitPlotter #
 ################
 
-obs = True
+obs = False
 
 ########################
 ########################

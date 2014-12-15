@@ -33,7 +33,7 @@ prodToPick = {'ggH':'ggF','qqH':'VBF','WH':'WH','ZH':'ZH','ttH':'ttH'}
 #################################################
 
 def makeCards(MVATest = cfl.doMVA):
-  suffix = cfl.suffix
+  suffix = cfl.suffixPostFix
 
   leptonList = cfl.leptonList
   tevList = cfl.tevList

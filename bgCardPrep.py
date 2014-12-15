@@ -12,7 +12,7 @@ CMSStyle()
 
 doMVA = cfl.doMVA
 doExt = cfl.doExt
-suffixCard = cfl.suffix
+suffixCard = cfl.suffixPostFix
 
 leptonList = cfl.leptonList
 tevList = cfl.tevList
@@ -121,11 +121,11 @@ for tev in tevList:
         fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)))
 
         testFrame = mzg.frame()
-        binning = (600-150)/10
+        binning = (cfl.bgRange[1]-cfl.bgRange[0])/10
 
         if blind:
-          data.plotOn(testFrame,RooFit.Binning(3,150,180),RooFit.Name('data'),RooFit.MarkerSize(0.5))
-          data.plotOn(testFrame,RooFit.Binning(5,550,600),RooFit.Name('data'), RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(3,cfl.bgRange[0],cfl.blindRange[1]),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data').RooFit.MarkerSize(0.5))
@@ -143,8 +143,8 @@ for tev in tevList:
         #testFrame.getAttText().SetTextSize(0.021)
 
         if blind:
-          data.plotOn(testFrame,RooFit.Binning(3,150,180),RooFit.Name('data'),RooFit.MarkerSize(0.5))
-          data.plotOn(testFrame,RooFit.Binning(5,550,600),RooFit.Name('data'), RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(3,cfl.bgRange[0],cfl.blindRange[1]),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5))
