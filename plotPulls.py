@@ -15,7 +15,7 @@ sigFit = cfl.sigFit
 highMass = cfl.highMass
 genFuncs = cfl.genFuncs
 testFuncs = cfl.testFuncs
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 
 def getArgs():
   parser = argparse.ArgumentParser()
@@ -78,10 +78,10 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
   for fitFunc in testFuncs:
     cutStr = ''
     #cutStr = 'stat'+fitFunc+'==0&&covQual'+fitFunc+'>=1'
-    if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
-      cutStr = cutStr+fitFunc+'.yieldBkgErr>2'
-    elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):
-      cutStr = cutStr+fitFunc+'.paramP3Err<1.2'
+    #if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
+    #  cutStr = cutStr+fitFunc+'.yieldBkgErr>2'
+    #elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):
+    #  cutStr = cutStr+fitFunc+'.paramP3Err<1.2'
     #elif genFunc is 'GaussPow' and 'GaussBern5' in fitFunc and int(mass) < 140:
     #  cutStr = cutStr+'&&fitbkg'+fitFunc+'err>40'
     #elif '130' is mass:

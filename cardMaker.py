@@ -147,7 +147,7 @@ def makeCards(MVATest = cfl.doMVA):
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
 
           #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[tev][mass])]+['-']*3+[pdf_gg[tev][mass]]+['-'])))
-          if not cfl.modelIndependent:
+          if not cfl.modelIndependent and not cfl.highMass:
             card.write('{0:<17} {1:<7} '.format('pdf_gg','lnN'))
             for sig in prefixSigList[::-1]:
               #if 'ggH' in sig: card.write('{0:^15} '.format(pdf_gg[tev][mass]))
@@ -272,7 +272,7 @@ def makeCards(MVATest = cfl.doMVA):
               card.write('{0:^15} '.format(eff_R9[tev]))
             card.write('{0:^15}\n'.format('-'))
 
-          if not cfl.modelIndependent:
+          if not cfl.modelIndependent and not cfl.highMass:
             #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['CMS_hzg_err_BR','lnN']+[err_BR[mass]]*5+['-'])))
             card.write('{0:<17} {1:<7} '.format('CMS_hzg_err_BR','lnN'))
             for sig in prefixSigList[::-1]:
@@ -280,10 +280,14 @@ def makeCards(MVATest = cfl.doMVA):
               card.write('{0:^15} '.format(brErrDict[YR]['Zgamma'][mass]))
             card.write('{0:^15}\n'.format('-'))
 
+
+          if cfl.highMass:
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15}\n'.format('CMS_hzgHigh_acc','lnN',pdfSys,'-'))
+
           if cfl.highMass:
             for sig in prefixSigList:
               card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
-              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.05))
+              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.10))
           else:
             for sig in prefixSigList:
               card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))

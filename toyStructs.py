@@ -114,6 +114,68 @@ def makeToyStucts():
     Int_t numInvalidNLL;\
   };')
 
+  print 'making HILL...'
+  gROOT.ProcessLine(
+  'struct HILL{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramK;\
+    Double_t paramKErr;\
+    Double_t paramL;\
+    Double_t paramLErr;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making WEIBULL...'
+  gROOT.ProcessLine(
+  'struct WEIBULL{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramK;\
+    Double_t paramKErr;\
+    Double_t paramL;\
+    Double_t paramLErr;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making GAMMA...'
+  gROOT.ProcessLine(
+  'struct GAMMA{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramGamma;\
+    Double_t paramGammaErr;\
+    Double_t paramBeta;\
+    Double_t paramBetaErr;\
+    Double_t paramMu;\
+    Double_t paramMuErr;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
   print 'making EXP2...'
   gROOT.ProcessLine(
   'struct EXP2{\
@@ -285,6 +347,33 @@ def makeToyStucts():
     Int_t covQual;\
     Int_t numInvalidNLL;\
   };')
+
+  print 'making TRIPPOWSUM...'
+  gROOT.ProcessLine(
+  'struct TRIPPOWSUM{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t paramP4;\
+    Double_t paramP4Err;\
+    Double_t paramP5;\
+    Double_t paramP5Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
 
   print 'making GEN...'
   gROOT.ProcessLine(

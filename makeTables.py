@@ -5,7 +5,7 @@ import configLimits as cfl
 YR = cfl.YR
 sigFit = cfl.sigFit
 highMass = cfl.highMass
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 
 def doTables():
 
@@ -14,10 +14,10 @@ def doTables():
   tevList = cfl.tevList
   genList = cfl.genFuncs
   #genListAbbr = ['GE', 'GP', 'SE', 'SP']
-  genListAbbr = ['P', 'L', 'E']
+  genListAbbr = ['P', 'L', 'E', 'G', 'W', 'H']
   catList = cfl.catListSmall
   fitList = cfl.tableFuncs
-  doLandscape = False
+  doLandscape = True
   #biasMethod ='bgPull'
   biasMethod ='typeA'
 
@@ -31,6 +31,7 @@ def doTables():
   latexFile.write('\\documentclass[11pt,final]{article}\n')
   latexFile.write('\\usepackage[margin=1in]{geometry}\n')
   latexFile.write('\\usepackage{color, colortbl}\n')
+  latexFile.write('\\usepackage{graphics}\n')
   latexFile.write('\\definecolor{Yellow}{rgb}{1,1,0}\n')
   latexFile.write('\\usepackage{pdflscape}\n')
   latexFile.write('\\begin{document}\n')
@@ -41,6 +42,7 @@ def doTables():
     latexFile.write(' \\begin{center}\n')
 # we are making a column for each fit function (plus and extra column for the
 # category number
+    latexFile.write('  \\resizebox{\columnwidth}{!}{%\n')
     latexFile.write('  \\begin{tabular}{'+'|c'*(len(fitList)+1)+'|}\n')
     latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{~} \\\\ \n')
     latexFile.write('  \\multicolumn{'+str(len(fitList)+1)+'}{c}{{\\bf Type-A Bias, mH='+mass+'}} \\\\ \n')
@@ -94,7 +96,8 @@ def doTables():
           latexFile.write(' \\\\ \n')
         latexFile.write('  \\hline \n')
 
-    latexFile.write('  \\end{tabular}\n')
+    latexFile.write('  \\end{tabular}%\n')
+    latexFile.write('  }\n')
     latexFile.write(' \\caption{'+biasMethod+' Bias, '+mass+'.  Columns show results for the various background models used in combined signal+background fits to background-only toys.  The three numbers given for each background fit model correspond to toys generated from either a power law, Laurent polynomial, or exponential-like truth model.  Boldface and yellow highlight is used to indicate the lowest-order functional form that satisfies the "low-bias" criterion: $|\mu(nS/\sigma(nBG))|<=0.2$  }\n')
     latexFile.write(' \\label{tab:pull}\n')
     latexFile.write(' \\end{center}\n')

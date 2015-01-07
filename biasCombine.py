@@ -24,7 +24,7 @@ def getArgs():
 
 def hadd(tev,lepton,cat,genFunc,mass):
   biasPath = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'
-  biasPath = biasPath+cfl.suffix+'_'+cfl.YR+'_'+cfl.sigFit+'/biasStudy'
+  biasPath = biasPath+cfl.suffixPostFix+'_'+cfl.YR+'_'+cfl.sigFit+'/biasStudy'
 
   if not os.path.isdir(biasPath+'/combine/'): os.mkdir(biasPath+'/combine/')
 

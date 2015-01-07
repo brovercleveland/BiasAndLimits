@@ -18,9 +18,9 @@ sigFit = cfl.sigFit
 suffix = cfl.suffixPostFix
 mode = cfl.mode
 
-#extraList = False
-extraList = ['Output_FullCombo__12-04-14_HighMass','Output_FullCombo__12-04-14_HighMass800', 'Output_FullCombo__12-04-14_HighMass900']
-extraPath = ['12-04-14_HighMass', '12-04-14_HighMass800', '12-04-14_HighMass900']
+extraList = False
+#extraList = ['Output_FullCombo__12-04-14_HighMass','Output_FullCombo__12-04-14_HighMass800', 'Output_FullCombo__12-04-14_HighMass900']
+#extraPath = ['12-04-14_HighMass', '12-04-14_HighMass800', '12-04-14_HighMass900']
 
 doObs = cfl.obs
 syst = cfl.syst

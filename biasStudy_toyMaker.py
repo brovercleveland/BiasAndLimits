@@ -28,7 +28,7 @@ highMass = cfl.highMass
 
 testFuncs = cfl.testFuncs
 
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 
 if cfl.rootrace: RooTrace.active(kTRUE)
 
@@ -106,6 +106,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
 
   fitName = '_'.join([genFunc,tev,lepton,'cat'+cat])
   myGenFunc = myWs.pdf(fitName).Clone()
+  myGenFunc.Print()
   for func in testFuncs:
     fitName = '_'.join([func,tev,lepton,'cat'+cat])
     testPdfs.append(myWs.pdf(fitName))
@@ -156,10 +157,14 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     elif func in ['PowLog','ExpSum','PowDecayExp','PowExpSum']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
-    elif func in ['TripExpSum']:
+    elif func in ['TripExpSum','TripPowSum']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:paramP2:paramP2Err:paramP3:paramP3Err:paramP4:paramP4Err:paramP5:paramP5Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     elif func in ['Laurent']:
       tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramP1:paramP1Err:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['Hill','Weibull']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramK:paramKErr:paramL:paramLErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
+    elif func in ['Gamma']:
+      tree.Branch(func,structDict[func],'yieldBkg/D:yieldBkgErr:yieldSig:yieldSigErr:paramGamma:paramGammaErr:paramBeta:paramBetaErr:paramMu:paramMuErr:edm:minNll:statusAll/I:statusMIGRAD:statusHESSE:covQual:numInvalidNLL')
     else:
       raise Exception('{0} is not defined for structDicts'.format(func))
 
@@ -181,9 +186,11 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
     print 'doing trial:',i
 
     genBkgYield = r.Poisson(data.numEntries())
+    print'bg yield'
     #toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
 
     toyData = myGenFunc.generate(RooArgSet(mzg),genBkgYield)
+    print'toy made'
     bkg_est = toyData.sumEntries('1',sigRangeName)
     if verbose: print 'bkg_est',bkg_est
 

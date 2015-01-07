@@ -1,0 +1,63 @@
+Max likelihood, signal = 0
+>>> including systematics
+>>> method used to compute upper limit is MaxLikelihoodFit
+>>> random number generator seed is 123456
+[?1034h
+
+ --- now with extra fixes ... 
+
+
+Computing limit starting from expected outcome
+Created Branches
+
+ --- MaxLikelihoodFit ---
+Best fit r: 0.0131367  -20.0131/+3.31041  (68% CL)
+nll S+B -> 0.000174722  nll B -> -4.73483e-09
+Done in 0.01 min (cpu), 0.01 min (real)
+[?1034h
+
+ --- now with extra fixes ... 
+
+
+name                                              b-only fit            s+b fit         rho
+CMS_eff_e                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_eff_g                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_eff_m                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_hzgHigh_acc                                  +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_mShift_el_8TeV_cat0                      +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_mShift_mu_8TeV_cat0                      +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_sigmaShift_el_8TeV_cat0                  +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_sigmaShift_mu_8TeV_cat0                  +0.00, 1.00        +0.00, 1.00       +0.00
+lumi_8TeV                                        +0.00, 1.00        +0.00, 1.00       +0.00
+
+Max likelihood, signal = 1
+>>> including systematics
+>>> method used to compute upper limit is MaxLikelihoodFit
+>>> random number generator seed is 123456
+[?1034h
+
+ --- now with extra fixes ... 
+
+
+Computing limit starting from expected outcome
+Created Branches
+
+ --- MaxLikelihoodFit ---
+Best fit r: 1  -21/+3.35422  (68% CL)
+nll S+B -> -0.044811  nll B -> -0.0060268
+Done in 0.01 min (cpu), 0.01 min (real)
+[?1034h
+
+ --- now with extra fixes ... 
+
+
+name                                              b-only fit            s+b fit         rho
+CMS_eff_e                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_eff_g                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_eff_m                                        +0.00, 1.00        +0.00, 1.00       +0.00
+CMS_hzgHigh_acc                                  +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_mShift_el_8TeV_cat0                      +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_mShift_mu_8TeV_cat0                      +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_sigmaShift_el_8TeV_cat0                  +0.00, 1.00        +0.00, 1.00       +0.00
+ggH_hzg_sigmaShift_mu_8TeV_cat0                  +0.00, 1.00        +0.00, 1.00       +0.00
+lumi_8TeV                                        +0.00, 1.00        +0.00, 1.00       +0.00

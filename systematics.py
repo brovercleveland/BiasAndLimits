@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from collections import defaultdict
+import configLimits as cfl
 
 qcd_gg = defaultdict(dict)
 qcd_gg['8TeV'] = {'120.0': '0.931/1.075',
@@ -1576,7 +1577,10 @@ pdf_zh['7TeV'] = {'120.0': '0.965/1.035',
 lumi = {'8TeV':'1.026', '7TeV':'1.022'}
 
 eff_l = defaultdict(dict)
-eff_l['8TeV'] = {'mu':'1.014', 'el':'1.008'}
+if cfl.highMass:
+  eff_l['8TeV'] = {'mu':'1.02', 'el':'1.02'}
+else:
+  eff_l['8TeV'] = {'mu':'1.014', 'el':'1.008'}
 eff_l['7TeV'] = {'mu':'1.007', 'el':'1.008', 'all':'1.008'}
 
 eff_trig = defaultdict(dict)
@@ -1588,7 +1592,10 @@ eff_PU['8TeV'] = {'mu':'1.004', 'el':'1.008'}
 eff_PU['7TeV'] = {'mu':'1.004', 'el':'1.006', 'all':'1.006'}
 
 eff_g = defaultdict(dict)
-eff_g['8TeV'] = {'EB':'1.006','EE':'1.010'}
+if cfl.highMass:
+  eff_g['8TeV'] = {'EB':'1.01','EE':'1.026'}
+else:
+  eff_g['8TeV'] = {'EB':'1.006','EE':'1.010'}
 eff_g['7TeV'] = {'EB':'1.005','EE':'1.010'}
 
 eff_R9 = {'8TeV':'1.050','7TeV':'1.050'}
@@ -1682,3 +1689,5 @@ ueps_vbf = {'1':'1.026','2':'1.035','3':'1.018','4':'1.021','5':'1.070','6':'1.0
 
 jetId = ['1.016','1.017']
 jetAcc = ['1.009','1.021']
+
+pdfSys = '1.03'

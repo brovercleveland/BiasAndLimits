@@ -23,14 +23,14 @@ doMVA = False
 #suffix = '10-30-14_HighMass'
 #suffix = '09-26-14_HighMassNarrow'
 #suffix = '09-7-14_PhoMVAKinMVA'
-suffix = '11-28-14_HighMass'
+#suffix = '11-28-14_HighMass'
 #suffix = '11-28-14_HighMassNarrow'
 #suffix = '11-28-14_HighMass_noEngCor'
 #suffix = '11-28-14_HighMassNarrow_noEngCor'
 #suffix = '12-04-14_HighMass'
-#suffix = '12-04-14_HighMassNarrow'
-#suffixPostFix = suffix+'900'
-suffixPostFix = suffix
+suffix = '12-04-14_HighMassNarrow'
+suffixPostFix = suffix+'800'
+#suffixPostFix = suffix
 
 
 leptonList = ['mu','el']
@@ -78,14 +78,15 @@ sigNameListInput = ['gg','vbf','tth','wh','zh']
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
 bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
 #bgFitListHighMass = ['Exp2','Pow','PowDecay','PowLog','Laurent','ExpSum']
-bgFitListHighMass = ['Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','TripExpSum','PowExpSum']
-#bgFitListHighMass = ['Exp2','ExpSum']
+bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','TripExpSum','PowExpSum','TripPowSum']
+#bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','Laurent','Exp2']
+#bgFitListHighMass = ['TripExpSum']
 
 bgRange = [100,190]
 if highMass:
   #bgRange = [150,600]
   #bgRange = [150,700]
-  bgRange = [150,900]
+  bgRange = [150,800]
 blindRange = [180,550]
 
 if highMass:
@@ -97,7 +98,7 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = True
+doFancy = False
 
 ################
 # signalCBFits #
@@ -172,7 +173,7 @@ syst = True
 # limitPlotter #
 ################
 
-obs = False
+obs = True
 
 ########################
 ########################
@@ -258,8 +259,9 @@ bgLimitDict[False]['7TeV']['all']['5'] = 'Bern3'
 
 if highMass:
   testFuncs = bgFitListHighMass
-  testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum']
-  genFuncs = ['Pow','Laurent','Exp2']
+  #testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum','TripPowSum']
+  testFuncs = ['PowDecay','ExpSum','TripExpSum','PowExpSum','TripPowSum']
+  genFuncs = ['Pow','Laurent','Exp2','Gamma','Weibull','Hill']
 else:
   testFuncs = bgFitListTurnOn
   genFuncs = ['GaussPow']
@@ -277,6 +279,6 @@ plotEvery = 50
 ##############
 # makeTables #
 ##############
-tableFuncs = ['PowDecay','ExpSum','PowExpSum','TripExpSum']
+tableFuncs = ['PowDecay','ExpSum','PowExpSum','TripExpSum','TripPowSum']
 
 

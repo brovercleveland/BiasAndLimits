@@ -315,7 +315,7 @@ def doInitialFits():
             fit = fitBuilder.Build(fitName)
           if type(fit) == tuple: fit = fit[0]
           if verbose: fit.Print()
-          if highMass and fitName == 'TripExpSum':
+          if highMass and fitName in ['TripExpSum']:
             fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True))
           else:
             fit.fitTo(data_ds, RooFit.Strategy(1))

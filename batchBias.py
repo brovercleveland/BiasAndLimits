@@ -2,7 +2,7 @@
 import os
 import configLimits as cfl
 
-suffix = cfl.suffix
+suffix = cfl.suffixPostFix
 doMVA = cfl.doMVA
 highMass = cfl.highMass
 YR = cfl.YR
@@ -38,7 +38,7 @@ Notification            = Error
 Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/biasStudy_toyMaker.py
 Arguments               = --tev {0} --lepton {1} --cat {2} --genFunc {3} --mass {4} --trials {5} --job {6} --plotEvery {7}
 Rank                    = Mips
-Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
+Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer) && (machine!="ttnode0008")
 +LENGTH                 = "LONG"
 GetEnv                  = True
 Input                   = /dev/null
