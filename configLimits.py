@@ -27,8 +27,8 @@ doMVA = False
 #suffix = '11-28-14_HighMassNarrow'
 #suffix = '11-28-14_HighMass_noEngCor'
 #suffix = '11-28-14_HighMassNarrow_noEngCor'
-#suffix = '12-04-14_HighMass'
-suffix = '12-04-14_HighMassNarrow'
+suffix = '12-04-14_HighMass'
+#suffix = '12-04-14_HighMassNarrow'
 suffixPostFix = suffix+'800'
 #suffixPostFix = suffix
 
@@ -72,7 +72,7 @@ debugPlots = False
 verbose = False
 rootrace = False
 allBiasFits= True# Turn on extra fits used in bias studies
-blind = True
+blind = False
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
@@ -98,7 +98,7 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = False
+doFancy = True
 
 ################
 # signalCBFits #

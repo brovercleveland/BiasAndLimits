@@ -1578,7 +1578,7 @@ lumi = {'8TeV':'1.026', '7TeV':'1.022'}
 
 eff_l = defaultdict(dict)
 if cfl.highMass:
-  eff_l['8TeV'] = {'mu':'1.02', 'el':'1.02'}
+  eff_l['8TeV'] = {'mu':'1.02', 'el':'1.05'}
 else:
   eff_l['8TeV'] = {'mu':'1.014', 'el':'1.008'}
 eff_l['7TeV'] = {'mu':'1.007', 'el':'1.008', 'all':'1.008'}

@@ -205,7 +205,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     if type(saveName) == str:
       saveNames.append(saveName)
 
-  c.Print('debugPlots/'+'_'.join(saveNames)+'.pdf')
+  c.Print('debugPlots/limitPlots/'+'_'.join(saveNames)+'.pdf')
 
 
 if __name__=='__main__':

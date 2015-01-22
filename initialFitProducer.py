@@ -66,7 +66,7 @@ def doInitialFits():
   xmax = cfl.bgRange[1]
   xmin = cfl.bgRange[0]
   if highMass:
-    binning = (xmax-xmin)/4
+    binning = (xmax-xmin)/8
   else:
     binning = (xmax-xmin)/2
 

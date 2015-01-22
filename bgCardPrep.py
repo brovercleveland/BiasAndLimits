@@ -73,10 +73,11 @@ for tev in tevList:
       dataYieldName = '_'.join(['data','yield',lepton,tev,'cat'+cat])
       dataYield = RooRealVar(dataYieldName,dataYieldName,sumEntries)
       if doExt:
-        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.5,sumEntries*1.5)
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.1,sumEntries*2)
         print 'start', norm.getVal()
         fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
         fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
+        #fit_ext = fit
 
         fit_ext.fitTo(data,RooFit.Range('fullRegion'))
 
@@ -87,8 +88,8 @@ for tev in tevList:
         c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,tev,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
-        #norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.1,sumEntries*5)
-        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.8,sumEntries*1.2)
+        norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.1,sumEntries*5)
+        #norm = RooRealVar(normName,normName,sumEntries,sumEntries*0.8,sumEntries*1.2)
 
 
       ###### Import the fit and data, and rename them to the card convention
@@ -118,26 +119,34 @@ for tev in tevList:
 
         fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
         fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
-        fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)))
+        #fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit2"))
+        #fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit"))
+        fit_res = None
+        if lepton == 'mu':
+          fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.InitialHesse(True), RooFit.Minos(True), RooFit.Minimizer("Minuit"))
+        else:
+          fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(0), RooFit.Extended(), RooFit.Minimizer("Minuit2"))
 
         testFrame = mzg.frame()
-        binning = (cfl.bgRange[1]-cfl.bgRange[0])/10
+        binning = (cfl.bgRange[1]-cfl.bgRange[0])/20
 
         if blind:
           data.plotOn(testFrame,RooFit.Binning(3,cfl.bgRange[0],cfl.blindRange[1]),RooFit.Name('data'),RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
-          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data').RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5))
 
+        linearInterp = True
+        if lepton == 'mu': linearInterp = False
         #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
-        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),2), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
+        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),2,False), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
         fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
-                   RooFit.VisualizeError(fit_res,2, False), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
+                   RooFit.VisualizeError(fit_res,2, linearInterp), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
         #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"1sigma"),
-        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),1), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
+        #           RooFit.VisualizeError(fit_res,RooArgSet(norm),1,False), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
         fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"1sigma"),
-                   RooFit.VisualizeError(fit_res,1, False), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
+                   RooFit.VisualizeError(fit_res,1, linearInterp), RooFit.FillColor(kGreen), RooFit.LineColor(kBlack))
         fit_ext.plotOn(testFrame, RooFit.Name(fitExtName), RooFit.LineColor(kBlue), RooFit.LineWidth(1))
         #fit_ext.paramOn(testFrame,RooFit.ShowConstants(True), RooFit.Layout(0.6, 1.0, 0.98))
         #testFrame.getAttText().SetTextSize(0.021)
@@ -168,9 +177,9 @@ for tev in tevList:
 
 
         if lepton=='mu':
-          testFrame.SetTitle(";m_{#mu#mu#gamma} (GeV);Events/"+str(10)+" GeV")
+          testFrame.SetTitle(";m_{#mu#mu#gamma} (GeV);Events/"+str(20)+" GeV")
         elif lepton=='el':
-          testFrame.SetTitle(";m_{ee#gamma} (GeV);Events/"+str(10)+" GeV")
+          testFrame.SetTitle(";m_{ee#gamma} (GeV);Events/"+str(20)+" GeV")
 
         #if hjp: leg  = TLegend(0.45,0.62,0.91,0.87)
         leg  = TLegend(0.51,0.62,0.91,0.87)

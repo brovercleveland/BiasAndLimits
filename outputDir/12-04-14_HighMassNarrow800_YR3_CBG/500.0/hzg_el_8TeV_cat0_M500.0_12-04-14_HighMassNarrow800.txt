@@ -18,7 +18,7 @@ process                          0               1
 rate                          2.5299             1       
 -----------------------------------------------------------------------------------------------------------------------
 lumi_8TeV         lnN          1.026             -       
-CMS_eff_e         lnN          1.029             -       
+CMS_eff_e         lnN          1.054             -       
 CMS_eff_g         lnN          1.026             -       
 CMS_hzgHigh_acc   lnN          1.03              -       
 ggH_hzg_mShift_el_8TeV_cat0              param          1         0.01   

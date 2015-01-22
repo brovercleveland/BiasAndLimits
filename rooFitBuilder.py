@@ -28,10 +28,10 @@ class FitBuilder:
       'Bern4':kGray,
       'Bern5':kGreen,
       'Exp':kBlue,
-      'Exp2':kBlue,
+      'Exp2':kBlack,
       'ExpSum':kGreen+2,
       'PowExpSum':kOrange,
-      'TripExpSum':kBlack,
+      'TripExpSum':kBlue,
       'TripPowSum':kGray+2,
       'Laurent':kRed,
       'Pow':kCyan,
@@ -602,8 +602,10 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.0001, p3High = 4,
-      p4 = 0.001, p4Low = 0.00001, p4High = 4, p5 = 0.01, p5Low = 0.0001, p5High = 4):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.0001, p3High = 10,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 10, p2 = 0.6, p2Low = 0.0001, p2High = 10, p3 = 0.2, p3Low = 0.0001, p3High = 10,
+      p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)

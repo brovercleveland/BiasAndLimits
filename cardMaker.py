@@ -147,6 +147,7 @@ def makeCards(MVATest = cfl.doMVA):
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
 
           #card.write('{0:<17} {1:<7} {2:^15} {3:^15} {4:^15} {5:^15} {6:^15} {7:^15}\n'.format(*(['pdf_gg','lnN']+[KapSwap(pdf_tth[tev][mass])]+['-']*3+[pdf_gg[tev][mass]]+['-'])))
+
           if not cfl.modelIndependent and not cfl.highMass:
             card.write('{0:<17} {1:<7} '.format('pdf_gg','lnN'))
             for sig in prefixSigList[::-1]:
