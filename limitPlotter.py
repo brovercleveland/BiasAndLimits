@@ -20,7 +20,17 @@ mode = cfl.mode
 
 extraList = False
 #extraList = ['Output_FullCombo__12-04-14_HighMass','Output_FullCombo__12-04-14_HighMass800', 'Output_FullCombo__12-04-14_HighMass900']
+#extraList = ['Output_FullCombo__12-04-14_HighMassNarrow800']
+#extraList = ['Output_FullCombo__01-29-15_HighMassUp800','Output_FullCombo__01-29-15_HighMassDown800']
+#extraList = ['Output_FullCombo__01-29-15_HighMassUpNarrow800','Output_FullCombo__01-29-15_HighMassDownNarrow800']
+#extraList = ['Output_FullCombo__02-03-15_HighMassPUWeightUp800']
+extraList = ['Output_FullCombo__02-04-15_HighMassZ75800']
 #extraPath = ['12-04-14_HighMass', '12-04-14_HighMass800', '12-04-14_HighMass900']
+#extraPath = ['12-04-14_HighMassNarrow800']
+#extraPath = ['01-29-15_HighMassUp800','01-29-15_HighMassDown800']
+#extraPath = ['01-29-15_HighMassUpNarrow800','01-29-15_HighMassDownNarrow800']
+#extraPath = ['02-03-15_HighMassPUWeightUp800']
+extraPath = ['02-04-15_HighMassZ75800']
 
 doObs = cfl.obs
 syst = cfl.syst
@@ -156,6 +166,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     expectedEx  = []
     for expExArr in expEx_Array:
       expectedEx.append(TGraphAsymmErrors(nPoints,xAxis_Array,expExArr,zeros_Array,zeros_Array,zeros_Array,zeros_Array))
+      print max([100.0*(i-j)/j for i,j in zip(expExArr,exp_Array)])
 
 
   #expected.Print()
@@ -192,7 +203,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   #mg.Draw('Asame')
   mg.GetXaxis().SetTitle('m_{H} (GeV)')
   if cfl.modelIndependent:
-    mg.GetYaxis().SetTitle('#sigma(gg->a)XBR(a->ll#gamma) (fb)')
+    mg.GetYaxis().SetTitle('#sigma(gg#rightarrowA)#timesBR(A#rightarrowZ(ll)#gamma) (fb)')
   else:
     mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);

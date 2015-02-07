@@ -61,11 +61,12 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
 
   rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix.rstrip('_Cut')+'.root','r')
   myWs = rooWsFile.Get('ws')
+  rooWsFile.Close()
   sigRangeName = '_'.join(['range',lepton,tev,'cat'+cat,'M'+mass])
 
   # get the x-axis
   mzg = myWs.var('CMS_hzg_mass')
-  binning = (mzg.getMax()-mzg.getMin())/4
+  binning = (mzg.getMax()-mzg.getMin())/8
   if verbose:
     mzg.Print()
     print sigRangeName, mzg.getMin(sigRangeName), mzg.getMax(sigRangeName)
@@ -189,7 +190,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
     print'bg yield'
     #toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
 
-    toyData = myGenFunc.generate(RooArgSet(mzg),genBkgYield)
+    toyData = myGenFunc.generate(RooArgSet(mzg),genBkgYield,RooFit.Verbose(True), RooFit.AllBinned())
     print'toy made'
     bkg_est = toyData.sumEntries('1',sigRangeName)
     if verbose: print 'bkg_est',bkg_est
@@ -205,7 +206,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       m.hesse()
       resHesse = m.save()
 
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1),RooFit.Strategy(1))
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kFALSE),RooFit.Verbose(kFALSE))
 
       statusAll = res.status()
       statusMIGRAD = resMigrad.status()
@@ -265,6 +266,14 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       structDict[func].minNll = minNll
       structDict[func].covQual = covQual
 
+      res.IsA().Destructor(res)
+      resHesse.IsA().Destructor(resHesse)
+      resMigrad.IsA().Destructor(resMigrad)
+      m.IsA().Destructor(m)
+      nll.IsA().Destructor(nll)
+
+
+
 
 
     toyDataStruct.totalData = toyData.numEntries()
@@ -283,6 +292,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       c.Print(plotDir+'/'+'_'.join(['toyFits',suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
 
     tree.Fill()
+    toyData.IsA().Destructor(toyData)
 
   outFile.cd()
   tree.Write()

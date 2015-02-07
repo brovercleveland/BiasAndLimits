@@ -15,13 +15,14 @@ bin                        el_8TeV_cat0    el_8TeV_cat0
 process                       ggH_hzg           bkg      
 process                          0               1       
 -----------------------------------------------------------------------------------------------------------------------
-rate                          1.9172             1       
+rate                          18.993             1       
 -----------------------------------------------------------------------------------------------------------------------
 lumi_8TeV         lnN          1.026             -       
-CMS_eff_e         lnN          1.022             -       
-CMS_eff_g         lnN          1.010             -       
+CMS_eff_e         lnN          1.054             -       
+CMS_eff_g         lnN          1.026             -       
+CMS_hzgHigh_acc   lnN          1.03              -       
 ggH_hzg_mShift_el_8TeV_cat0              param          1         0.01   
-ggH_hzg_sigmaShift_el_8TeV_cat0          param          1         0.05   
+ggH_hzg_sigmaShift_el_8TeV_cat0          param          1         0.1    
 bkg_p1_el_8TeV_cat0                           flatParam      
 bkg_p2_el_8TeV_cat0                           flatParam      
 bkg_p3_el_8TeV_cat0                           flatParam      

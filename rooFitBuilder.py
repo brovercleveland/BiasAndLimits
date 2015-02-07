@@ -520,7 +520,7 @@ class FitBuilder:
     SetOwnership(lVar, 0)
     return Weibull
 
-  def BuildGamma(self, gamma = 1, gammaLow = 1e-8, gammaHigh = 50, beta = 1, betaLow = 1e-8, betaHigh = 500, mu = 1, muLow = -10, muHigh = 10):
+  def BuildGamma(self, gamma = 0.1, gammaLow = 0.01, gammaHigh = 2, beta = 100, betaLow = 50, betaHigh = 150, mu = 100, muLow = 1, muHigh = 149):
 
     gammaVar = RooRealVar('gammaGamma_'+self.suffix,'gammaGamma_'+self.suffix,gamma,gammaLow,gammaHigh)
     betaVar = RooRealVar('betaGamma_'+self.suffix,'betaGamma_'+self.suffix,beta,betaLow,betaHigh)
@@ -540,7 +540,7 @@ class FitBuilder:
     SetOwnership(betaVar,0)
     return Pow
 
-  def BuildPowDecay(self,p1 = 0.5, p1Low = 0, p1High = 20, p2 = 0.5, p2Low = 0, p2High = 20):
+  def BuildPowDecay(self,p1 = 0.5, p1Low = 1e-6, p1High = 20, p2 = 0.5, p2Low = 1e-6, p2High = 20):
 
     p1Var = RooRealVar('p1PowDecay_'+self.suffix,'p1PowDecay_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2PowDecay_'+self.suffix,'p2PowDecay_'+self.suffix,p2,p2Low,p2High)
@@ -602,10 +602,10 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.0001, p3High = 10,
-  #    p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 10, p2 = 0.6, p2Low = 0.0001, p2High = 10, p3 = 0.2, p3Low = 0.0001, p3High = 10,
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.0001, p3High = 10,
       p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 10, p2 = 0.6, p2Low = 0.0001, p2High = 10, p3 = 0.2, p3Low = 0.0001, p3High = 10,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)

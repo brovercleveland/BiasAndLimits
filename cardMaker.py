@@ -140,8 +140,11 @@ def makeCards(MVATest = cfl.doMVA):
           #if cat is not '5':
           #card.write('{0:<25} {1:^15.5} {2:^15.5} {3:^15.5} {4:^15.5} {5:^15.5} {6:^15}\n'.format(*(['rate']+sigYields+[1])))
           card.write('{0:<25} '.format('rate'))
+          zBR = 1
+          if cfl.highMass: zBR = 0.10098
+          else: zBR = 1
           for sig in prefixSigList[::-1]:
-            card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()))
+            card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()/zBR))
           card.write('{0:^15}\n'.format(1))
 
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
@@ -284,6 +287,7 @@ def makeCards(MVATest = cfl.doMVA):
 
           if cfl.highMass:
             card.write('{0:<17} {1:<7} {2:^15} {3:^15}\n'.format('CMS_hzgHigh_acc','lnN',pdfSys,'-'))
+            card.write('{0:<17} {1:<7} {2:^15} {3:^15}\n'.format('CMS_hzgHigh_pu','lnN',puSys,'-'))
 
           if cfl.highMass:
             for sig in prefixSigList:

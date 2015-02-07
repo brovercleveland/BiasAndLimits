@@ -1,7 +1,7 @@
 Combination of hzg_mu_8TeV_cat0_M235.0_11-28-14_HighMass.txt  hzg_el_8TeV_cat0_M235.0_11-28-14_HighMass.txt
 imax 2 number of bins
 jmax 1 number of processes minus 1
-kmax 8 number of nuisance parameters
+kmax 9 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *        ch1      CardBackground_11-28-14_HighMass.root ws_card:$PROCESS_mu_8TeV_cat0
 shapes bkg      ch1      CardBackground_11-28-14_HighMass.root ws_card:bkg_mu_8TeV_cat0
@@ -13,19 +13,20 @@ shapes ggH_hzg  ch2      SignalOutput_el_8TeV_cat0_235.0.root ws_card:ggH_hzg_el
 bin          ch1     ch2   
 observation  2051.0  1802.0
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                             ch1      ch1      ch2      ch2    
-process                         ggH_hzg  bkg      ggH_hzg  bkg    
-process                         0        1        0        1      
-rate                            2.3505   1.0000   2.0513   1.0000 
+bin                                ch1      ch1      ch2      ch2    
+process                            ggH_hzg  bkg      ggH_hzg  bkg    
+process                            0        1        0        1      
+rate                               23.3220  1.0000   20.3430  1.0000 
 ----------------------------------------------------------------------------------------------------------------------------------
-CMS_eff_e               lnN     -        -        1.022    -      
-CMS_eff_g               lnN     1.01     -        1.01     -      
-CMS_eff_m               lnN     1.037    -        -        -      
-lumi_8TeV               lnN     1.026    -        1.026    -      
+CMS_eff_e               lnN        -        -        1.054    -      
+CMS_eff_g               lnN        1.026    -        1.026    -      
+CMS_eff_m               lnN        1.04     -        -        -      
+CMS_hzgHigh_acc         lnN        1.03     -        1.03     -      
+lumi_8TeV               lnN        1.026    -        1.026    -      
 ggH_hzg_mShift_mu_8TeV_cat0  param  1 0.01
-ggH_hzg_sigmaShift_el_8TeV_cat0  param  1 0.05
+ggH_hzg_sigmaShift_el_8TeV_cat0  param  1 0.1
 ggH_hzg_mShift_el_8TeV_cat0  param  1 0.01
-ggH_hzg_sigmaShift_mu_8TeV_cat0  param  1 0.05
+ggH_hzg_sigmaShift_mu_8TeV_cat0  param  1 0.1
 bkg_p5_el_8TeV_cat0  flatParam
 bkg_p3_el_8TeV_cat0  flatParam
 bkg_p1_el_8TeV_cat0  flatParam

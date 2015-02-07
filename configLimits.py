@@ -27,8 +27,17 @@ doMVA = False
 #suffix = '11-28-14_HighMassNarrow'
 #suffix = '11-28-14_HighMass_noEngCor'
 #suffix = '11-28-14_HighMassNarrow_noEngCor'
-suffix = '12-04-14_HighMass'
+#suffix = '12-04-14_HighMass'
 #suffix = '12-04-14_HighMassNarrow'
+#suffix = '01-23-14_HighMassATLAS'
+#suffix = '01-29-15_HighMass'
+#suffix = '01-29-15_HighMassNarrow'
+#suffix = '01-29-15_HighMassDown'
+#suffix = '01-29-15_HighMassDownNarrow'
+#suffix = '01-29-15_HighMassUp'
+suffix = '01-29-15_HighMassUpNarrow'
+#suffix = '02-03-15_HighMassPUWeightUp'
+#suffix = '02-04-15_HighMassZ75'
 suffixPostFix = suffix+'800'
 #suffixPostFix = suffix
 
@@ -81,6 +90,7 @@ bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
 bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','TripExpSum','PowExpSum','TripPowSum']
 #bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','Laurent','Exp2']
 #bgFitListHighMass = ['TripExpSum']
+#bgFitListHighMass = ['Gamma']
 
 bgRange = [100,190]
 if highMass:
@@ -98,7 +108,7 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = True
+doFancy = False
 
 ################
 # signalCBFits #
@@ -261,14 +271,18 @@ if highMass:
   testFuncs = bgFitListHighMass
   #testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum','TripPowSum']
   testFuncs = ['PowDecay','ExpSum','TripExpSum','PowExpSum','TripPowSum']
+  #testFuncs = ['PowDecay']
   genFuncs = ['Pow','Laurent','Exp2','Gamma','Weibull','Hill']
 else:
   testFuncs = bgFitListTurnOn
   genFuncs = ['GaussPow']
 
 trials = 200
+#trials = 1
 jobs = 100
+#jobs = 1
 plotEvery = 50
+#plotEvery = 1
 
 #############
 # pullPlots #
