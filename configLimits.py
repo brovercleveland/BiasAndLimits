@@ -35,15 +35,18 @@ doMVA = False
 #suffix = '01-29-15_HighMassDown'
 #suffix = '01-29-15_HighMassDownNarrow'
 #suffix = '01-29-15_HighMassUp'
-suffix = '01-29-15_HighMassUpNarrow'
+#suffix = '01-29-15_HighMassUpNarrow'
 #suffix = '02-03-15_HighMassPUWeightUp'
 #suffix = '02-04-15_HighMassZ75'
+suffix = '02-11-15_HighMass'
+#suffix = '02-11-15_HighMassNarrow'
+#suffix = '02-11-15_HighMassElePt15'
 suffixPostFix = suffix+'800'
 #suffixPostFix = suffix
 
 
-leptonList = ['mu','el']
-#leptonList = ['mu']
+#leptonList = ['mu','el']
+leptonList = ['mu']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -61,8 +64,8 @@ highMass = True
 modelIndependent = True
 
 if highMass:
-  massList = ['200','250','300','350','400','450','500']
-  #massList = ['200']
+  #massList = ['200','250','300','350','400','450','500']
+  massList = ['500']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -108,7 +111,9 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = False
+doFancy = True
+if 'Narrow' in suffix:
+  doFancy = False
 
 ################
 # signalCBFits #
@@ -271,13 +276,14 @@ if highMass:
   testFuncs = bgFitListHighMass
   #testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum','TripPowSum']
   testFuncs = ['PowDecay','ExpSum','TripExpSum','PowExpSum','TripPowSum']
-  #testFuncs = ['PowDecay']
+  #testFuncs = ['TripExpSum']
   genFuncs = ['Pow','Laurent','Exp2','Gamma','Weibull','Hill']
+  #genFuncs = ['Gamma','Weibull','Hill']
 else:
   testFuncs = bgFitListTurnOn
   genFuncs = ['GaussPow']
 
-trials = 200
+trials = 100
 #trials = 1
 jobs = 100
 #jobs = 1

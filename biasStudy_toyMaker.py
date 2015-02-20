@@ -116,9 +116,9 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       testPdfs[-1].Print()
       print bkgInSigWin
       print sigRangeName
-    testBkgNorms.append(RooRealVar('norm'+fitName,'norm'+fitName,bkgInSigWin,0,3*bkgInSigWin))
+    testBkgNorms.append(RooRealVar('norm'+fitName,'norm'+fitName,bkgInSigWin,0.1*bkgInSigWin,1.9*bkgInSigWin))
     testPdfs_ext.append(RooExtendPdf('ext'+fitName,'ext'+fitName,testPdfs[-1],testBkgNorms[-1],sigRangeName))
-    testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,0,-100,100))
+    testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,0,-50,50))
     testSig_ext.append(RooExtendPdf('extSig'+fitName,'ext'+fitName,sig,testSigNorms[-1]))
     testModels.append(RooAddPdf('model'+fitName,'model'+fitName,RooArgList(testSig_ext[-1],testPdfs_ext[-1])))
     if verbose:
@@ -205,8 +205,11 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       resMigrad = m.save()
       m.hesse()
       resHesse = m.save()
+      m.setPrintLevel(-100000)
 
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kFALSE),RooFit.Verbose(kFALSE))
+      RooMsgService.instance().setGlobalKillBelow(RooFit.ERROR)
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(0),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Verbose(kFALSE))
 
       statusAll = res.status()
       statusMIGRAD = resMigrad.status()

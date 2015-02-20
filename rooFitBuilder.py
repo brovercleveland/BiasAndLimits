@@ -580,7 +580,7 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return Exp2
 
-  def BuildExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
+  def BuildExpSum(self,p1 = 0.1, p1Low = 0.0001, p1High = 0.9999, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
 
     p1Var = RooRealVar('p1ExpSum_'+self.suffix,'p1ExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2ExpSum_'+self.suffix,'p2ExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -591,7 +591,7 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return ExpSum
 
-  def BuildPowExpSum(self,p1 = 0.1, p1Low = 0, p1High = 1, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
+  def BuildPowExpSum(self,p1 = 0.1, p1Low = 0, p1High = 0.99999, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 4, p3Low = 0.001, p3High = 10):
 
     p1Var = RooRealVar('p1PowExpSum_'+self.suffix,'p1PowExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2PowExpSum_'+self.suffix,'p2PowExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -602,10 +602,10 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.0001, p3High = 10,
-      p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
-  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 10, p2 = 0.6, p2Low = 0.0001, p2High = 10, p3 = 0.2, p3Low = 0.0001, p3High = 10,
-  #    p4 = 0.001, p4Low = 0.00001, p4High = 10, p5 = 0.01, p5Low = 0.0001, p5High = 10):
+  def BuildTripExpSum(self,p1 = 0.5, p1Low = 0.001, p1High = 0.99999, p2 = 0.01, p2Low = 0.0001, p2High = 0.2, p3 = 3, p3Low = 0.01, p3High = 5,
+      p4 = 0.001, p4Low = 0.00001, p4High = 5, p5 = 0.01, p5Low = 0.00001, p5High = 5):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
@@ -613,6 +613,7 @@ class FitBuilder:
     p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
     p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
     TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
+    #TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((1-@1 -)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
         RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
@@ -621,15 +622,15 @@ class FitBuilder:
     SetOwnership(p5Var,0)
     return TripExpSum
 
-  def BuildTripPowSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 20,
-      p4 = 0.2, p4Low = 0.00001, p4High = 20, p5 = 0.2, p5Low = 0.0001, p5High = 20):
+  def BuildTripPowSum(self,p1 = 0.5, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 5,
+      p4 = 0.2, p4Low = 0.00001, p4High = 8, p5 = 0.2, p5Low = 0.0001, p5High = 8):
 
     p1Var = RooRealVar('p1TripPowSum_'+self.suffix,'p1TripPowSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripPowSum_'+self.suffix,'p2TripPowSum_'+self.suffix,p2,p2Low,p2High)
     p3Var = RooRealVar('p3TripPowSum_'+self.suffix,'p3TripPowSum_'+self.suffix,p3,p3Low,p3High)
     p4Var = RooRealVar('p4TripPowSum_'+self.suffix,'p4TripPowSum_'+self.suffix,p4,p4Low,p4High)
     p5Var = RooRealVar('p5TripPowSum_'+self.suffix,'p5TripPowSum_'+self.suffix,p5,p5Low,p5High)
-    TripPowSum = RooGenericPdf('TripPowSum_'+self.suffix,'TripPowSum_'+self.suffix,'((2-@1-@2)*@0^(-@3)+@1*@0^(-@4)+@2*@0^(-@5))*(@1+@2<2)',
+    TripPowSum = RooGenericPdf('TripPowSum_'+self.suffix,'TripPowSum_'+self.suffix,'((2-@1-@2)*@0^(-@3)+@1*@0^(-@4)+@2*@0^(-@5))',
         RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)

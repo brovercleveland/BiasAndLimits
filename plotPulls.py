@@ -77,9 +77,11 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
   # build the fit func name
   for fitFunc in testFuncs:
     cutStr = ''
+    #if fitFunc in ['TripExpSum','ExpSum','PowDecay']:
+    #  cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<19.999'
+    #cutStr = cutStr+fitFunc+'.bkgYieldErr>0.0001'
     #cutStr = 'stat'+fitFunc+'==0&&covQual'+fitFunc+'>=1'
     #if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
-    #  cutStr = cutStr+fitFunc+'.yieldBkgErr>2'
     #elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):
     #  cutStr = cutStr+fitFunc+'.paramP3Err<1.2'
     #elif genFunc is 'GaussPow' and 'GaussBern5' in fitFunc and int(mass) < 140:
@@ -94,7 +96,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
     for i,dist in enumerate(distList):
 
       if dist in ['sigPull','bgPull']:
-        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -6, 6)
+        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -8, 8)
       elif dist in ['sigErr','bgErr']:
         tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, 0, 50)
       elif dist in ['nSig','nBG']:

@@ -18,8 +18,8 @@ def doTables():
   catList = cfl.catListSmall
   fitList = cfl.tableFuncs
   doLandscape = True
-  #biasMethod ='bgPull'
-  biasMethod ='typeA'
+  biasMethod ='bgPull'
+  #biasMethod ='typeA'
 
 # get all the txt files from the pull plots, put them in a dictionary (they
 # are all uniquely named so you can just key on their names, makes callback
@@ -64,7 +64,7 @@ def doTables():
         for cat in catList:
           latexFile.write('  '+cat+' & ')
           fullFitValList = []
-          yellow = False
+          #yellow = False
           for fit in fitList:
             print fit
             fitValList = []
@@ -84,14 +84,14 @@ def doTables():
                   tmpIndex = nameList.index(fit)
                   valList = [x.strip(',') for x in myFile.readline().split()]
                   fitValList.append(valList[tmpIndex])
-            if not yellow:
-              if all(abs(float(x))<0.2 for x in fitValList):
-                fullFitValList.append('\\cellcolor{Yellow}{\\bf '+' \\slash '.join(fitValList)+'}')
-                yellow = True
-              else:
-                fullFitValList.append(' \\slash '.join(fitValList))
+            #if not yellow:
+            if all(abs(float(x))<0.21 for x in fitValList):
+              fullFitValList.append('\\cellcolor{Yellow}{\\bf '+' \\slash '.join(fitValList)+'}')
+              #yellow = True
             else:
               fullFitValList.append(' \\slash '.join(fitValList))
+            #else:
+            #  fullFitValList.append(' \\slash '.join(fitValList))
           latexFile.write(' & '.join(fullFitValList))
           latexFile.write(' \\\\ \n')
         latexFile.write('  \\hline \n')

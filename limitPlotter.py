@@ -24,13 +24,13 @@ extraList = False
 #extraList = ['Output_FullCombo__01-29-15_HighMassUp800','Output_FullCombo__01-29-15_HighMassDown800']
 #extraList = ['Output_FullCombo__01-29-15_HighMassUpNarrow800','Output_FullCombo__01-29-15_HighMassDownNarrow800']
 #extraList = ['Output_FullCombo__02-03-15_HighMassPUWeightUp800']
-extraList = ['Output_FullCombo__02-04-15_HighMassZ75800']
+#extraList = ['Output_FullCombo__02-04-15_HighMassZ75800']
 #extraPath = ['12-04-14_HighMass', '12-04-14_HighMass800', '12-04-14_HighMass900']
 #extraPath = ['12-04-14_HighMassNarrow800']
 #extraPath = ['01-29-15_HighMassUp800','01-29-15_HighMassDown800']
 #extraPath = ['01-29-15_HighMassUpNarrow800','01-29-15_HighMassDownNarrow800']
 #extraPath = ['02-03-15_HighMassPUWeightUp800']
-extraPath = ['02-04-15_HighMassZ75800']
+#extraPath = ['02-04-15_HighMassZ75800']
 
 doObs = cfl.obs
 syst = cfl.syst

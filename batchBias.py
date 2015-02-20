@@ -35,7 +35,7 @@ for lepton in leptonList:
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
-Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/biasStudy_toyMaker.py
+Executable              = biasStudy_toyMaker.py
 Arguments               = --tev {0} --lepton {1} --cat {2} --genFunc {3} --mass {4} --trials {5} --job {6} --plotEvery {7}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer) && (machine!="ttnode0008")
@@ -46,7 +46,7 @@ Output                  = biasRes/job_{0}_{1}_{2}_{3}_{4}_{6}_{8}.out
 Error                   = biasRes/job_{0}_{1}_{2}_{3}_{4}_{6}_{8}.err
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
-transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py, toyStructs.py
+transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py, toyStructs.py, biasStudy_toyMaker.py
 Queue
             '''.format(tev,myLepton,cat,func,mass,trials,job,plotEvery,suffix))
             consub.close()
