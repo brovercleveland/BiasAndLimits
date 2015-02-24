@@ -1,3 +1,0 @@
-NLL at global minimum of data: 2.64327e+149 (r = 2)
-
-Make global fit of asimov data

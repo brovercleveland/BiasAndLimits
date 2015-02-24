@@ -1,1 +1,0 @@
-NLL at global minimum of asimov: -82205.5 (r = 5.76626e-05)

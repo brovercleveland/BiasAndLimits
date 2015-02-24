@@ -1,2 +1,0 @@
-Median for expected limits: 5.67188
-Sigma  for expected limits: 2.89387

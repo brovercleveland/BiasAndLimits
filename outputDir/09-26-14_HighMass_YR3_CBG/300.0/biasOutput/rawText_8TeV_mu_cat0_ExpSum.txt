@@ -1,6 +1,0 @@
-bgPull:
-Pow, PowDecay, PowLog, Laurent, Exp2, ExpSum, 
--0.94, -0.91, -0.58, -0.87, -1.39, -0.02, 
-typeA:
-Pow, PowDecay, PowLog, Laurent, Exp2, ExpSum, 
-1.03, 0.87, 0.16, 1.13, 1.51, 0.02, 

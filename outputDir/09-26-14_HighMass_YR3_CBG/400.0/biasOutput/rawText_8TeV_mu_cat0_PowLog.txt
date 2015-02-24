@@ -1,6 +1,0 @@
-bgPull:
-Pow, Laurent, Exp2, 
-0.97, 0.83, 0.04, 
-typeA:
-Pow, Laurent, Exp2, 
--1.21, -0.76, -0.10, 
