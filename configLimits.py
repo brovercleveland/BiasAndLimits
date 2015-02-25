@@ -14,6 +14,11 @@ class AutoVivification(dict):
 # common #
 ##########
 
+batch = True
+#localDirectory = '/uscms/home/bpollack/nobackup/CMSSW_6_1_2/src/BiasAndLimits'
+localDirectory = '.'
+#localDirectory = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits'
+
 doMVA = False
 #suffix = 'Proper'
 #suffix = '08-21-14_PhoMVA'
@@ -46,7 +51,7 @@ suffixPostFix = suffix+'800'
 
 
 #leptonList = ['mu','el']
-leptonList = ['mu']
+leptonList = ['el']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -64,8 +69,8 @@ highMass = True
 modelIndependent = True
 
 if highMass:
-  #massList = ['200','250','300','350','400','450','500']
-  massList = ['500']
+  massList = ['200','250','300','350','400','450','500']
+  #massList = ['500']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']

@@ -7,8 +7,8 @@ import numpy as np
 
 gROOT.SetBatch()
 gSystem.SetIncludePath( "-I$ROOFITSYS/include/" );
-gROOT.ProcessLine('.x RooStepBernstein.cxx+')
-gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
+#gROOT.ProcessLine('.x RooStepBernstein.cxx+')
+#gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 #gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
 
 class FitBuilder:

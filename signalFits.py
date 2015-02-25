@@ -1,12 +1,13 @@
 #!/usr/bin/env python
+
 import sys
+import os
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from ROOT import *
 import numpy as np
 #import pdb
 from rooFitBuilder import *
-import os
 import configLimits as cfl
 from configLimits import AutoVivification
 import argparse
@@ -64,10 +65,11 @@ def getArgs():
   parser.add_argument("--cat", help="Cat Number", default = cfl.catListSmall[0], type = int)
   parser.add_argument("--suffix", help="Specify suffix", default = cfl.suffixPostFix, type = str)
   parser.add_argument("--cores", help="Number of CPU cores for use (must be 1 for batch mode)", default = 12, type = int)
+  parser.add_argument("--batch", help="Condor batch mode?", default = False, type = bool)
   args = parser.parse_args()
   return args
 
-def SignalFitMaker(lep, tev, cat, suffix, cores):
+def SignalFitMaker(lep, tev, cat, suffix, cores, batch):
   cpuNum = cores
 
   set_palette()
@@ -75,9 +77,12 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
   massList = cfl.massListBig
   sigNameList = cfl.sigNameList
 
-  rooWsFile = TFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix+'.root')
+  if(batch):
+    rooWsFile = TFile('initRooFitOut_'+suffix+'.root')
+  else:
+    rooWsFile = TFile(cfl.localDirectory+'/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/initRooFitOut_'+suffix+'.root')
   myWs = rooWsFile.Get('ws')
-  #myWs.Print()
+  myWs.Print()
   narrow = ''
   if 'Narrow' in suffix: narrow = 'Narrow'
 
@@ -183,6 +188,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
           mzg.setRange('fitRegion1',int(massLow)*0.92,int(massLow)*1.08)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)+narrow])
         sig_ds_Low = myWs.data(sigNameLow)
+        sig_ds_Low.Print()
         if massLow == massHi:
           dsList.append(sig_ds_Low)
 
@@ -316,14 +322,20 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
     testFrame.GetYaxis().CenterTitle()
     testFrame.SetTitle('Interpolation Fits')
     testFrame.Draw()
-    c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    if batch:
+      c.Print('_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+    else:
+      c.Print(cfl.localDirectory+'/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
     c.SetLogy(False)
 
     for hist in paramHists:
       hist.SetTitle(hist.GetName())
       hist.Draw('EP')
-      c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalParams/'+'_'.join(['test',hist.GetName(),sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+      if batch:
+        c.Print('_'.join(['test',hist.GetName(),sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+      else:
+        c.Print(cfl.localDirectory+'/debugPlots/signalParams/'+'_'.join(['test',hist.GetName(),sigFit,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
 
     for i,fit in enumerate(fitList):
@@ -360,7 +372,10 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         testFrame.GetYaxis().CenterTitle()
         testFrame.SetTitle('Fit for M'+regionName)
         testFrame.Draw()
-        c.Print('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,'M'+regionName,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+        if batch:
+          c.Print(cfl.localDirectory+'/debugPlots/signalFits/'+'_'.join(['test','sig','fit',sigFit,'M'+regionName,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
+        else:
+          c.Print('_'.join(['test','sig','fit',sigFit,'M'+regionName,suffix,prod,lep,tev,'cat'+cat])+'.pdf')
 
   for prod in sigNameList:
     for mass in massList:
@@ -369,11 +384,14 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
 
   for mass in massList:
     fileName = '_'.join(['SignalOutput',lep,tev,'cat'+cat,mass])
-    if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass)
-    cardDict[lep][tev][cat][mass].writeToFile('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+fileName+'.root')
+    if batch:
+      cardDict[lep][tev][cat][mass].writeToFile(fileName+'.root')
+    else:
+      if not os.path.isdir(cfl.localDirectory+'/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass): os.makedirs(cfl.localDirectory+'/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass)
+      cardDict[lep][tev][cat][mass].writeToFile(cfl.localDirectory+'/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass+'/'+fileName+'.root')
 
 
 if __name__=="__main__":
   args = getArgs()
-  SignalFitMaker(args.lepton, args.tev, str(args.cat), args.suffix, args.cores)
+  SignalFitMaker(args.lepton, args.tev, str(args.cat), args.suffix, args.cores, args.batch)
 

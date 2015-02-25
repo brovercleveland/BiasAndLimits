@@ -45,6 +45,7 @@ def getArgs():
   parser.add_argument("--trials", help="Number of trials", default = 1, type = int)
   parser.add_argument("--job", help="Job number", default = -1, type = int)
   parser.add_argument("--plotEvery", help="Plot every N trials", default = 1, type = int)
+  parser.add_argument("--batch", help="Condor batch mode?", default = False, type = bool)
   args = parser.parse_args()
   return args
 
@@ -312,6 +313,6 @@ if __name__=="__main__":
   #  doBiasStudy(tev = cfl.tevList[0], lepton = cfl.leptonList[0], cat = cfl.catListSmall[0], genFunc = cfl.testFuncs[1], mass = cfl.massList[0])
   #else:
   #  doBiasStudy(*sys.argv[1:])
-  doBiasStudy(args.tev, args.lepton, str(args.cat),args.genFunc, str(args.mass), args.trials, args.job, args.plotEvery)
+  doBiasStudy(args.tev, args.lepton, str(args.cat),args.genFunc, str(args.mass), args.trials, args.job, args.plotEvery, args.batch)
 
 

@@ -12,6 +12,7 @@ catListSmall = cfl.catListSmall
 
 YR = cfl.YR
 sigFit = cfl.sigFit
+os.chdir('signalStage')
 
 for lepton in leptonList:
   for tev in tevList:
@@ -26,18 +27,19 @@ for lepton in leptonList:
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
-Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/signalFits.py
-Arguments               = --lepton {0} --tev {1} --cat {2} --suffix {3} --cores {5}
+Executable              = ../signalWrapper.sh
+Arguments               = --lepton {0} --tev {1} --cat {2} --suffix {3} --cores {5} --batch True
 Rank                    = Mips
-Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
+Requirements            = (OpSys == "LINUX") && (HasFileTransfer)
 +LENGTH                 = "LONG"
 GetEnv                  = True
 Input                   = /dev/null
-Output                  = signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.out
-Error                   = signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.err
+Output                  = ../signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.out
+Log                     = ../signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.log
+Error                   = ../signalRes/job_{0}_{1}_{2}_{3}_{4}_{6}.err
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
-transfer_input_files    = rooFitBuilder.py, CMSStyle.C, RooStepBernstein.cxx, RooGaussStepBernstein.cxx, RooStepBernstein.h, RooGaussStepBernstein.h, configLimits.py
+transfer_input_files    = ../rooFitBuilder.py, ../CMSStyle.C, ../configLimits.py, ../signalFits.py, ../outputDir/02-11-15_HighMass800_YR3_DCB/initRooFitOut_02-11-15_HighMass800.root
 Queue
       '''.format(myLepton,tev,cat,suffix,YR,12,sigFit))
       consub.close()
