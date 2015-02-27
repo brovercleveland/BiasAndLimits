@@ -79,7 +79,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
     cutStr = ''
     #if fitFunc in ['TripExpSum','ExpSum','PowDecay']:
     #  cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<19.999'
-    #cutStr = cutStr+fitFunc+'.bkgYieldErr>0.0001'
+    #cutStr = cutStr+fitFunc+'.bkgYieldErr>0.1'
     #cutStr = 'stat'+fitFunc+'==0&&covQual'+fitFunc+'>=1'
     #if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
     #elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):

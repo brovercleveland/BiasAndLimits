@@ -18,8 +18,8 @@ def doTables():
   catList = cfl.catListSmall
   fitList = cfl.tableFuncs
   doLandscape = True
-  biasMethod ='bgPull'
-  #biasMethod ='typeA'
+  #biasMethod ='bgPull'
+  biasMethod ='typeA'
 
 # get all the txt files from the pull plots, put them in a dictionary (they
 # are all uniquely named so you can just key on their names, makes callback

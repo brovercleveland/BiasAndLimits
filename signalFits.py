@@ -180,7 +180,8 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         elif massLow > 160 and narrow == '':
           mzg.setRange('fitRegion1',int(massLow)*0.61,int(massLow)*1.39)
         else:
-          mzg.setRange('fitRegion1',int(massLow)*0.92,int(massLow)*1.08)
+          #mzg.setRange('fitRegion1',int(massLow)*0.92,int(massLow)*1.08)
+          mzg.setRange('fitRegion1',int(massLow)*0.80,int(massLow)*1.2)
         sigNameLow = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massLow)+narrow])
         sig_ds_Low = myWs.data(sigNameLow)
         if massLow == massHi:
@@ -216,7 +217,8 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         elif massHi > 160 and narrow == '':
           mzg.setRange('fitRegion2',int(massHi)*0.61,int(massHi)*1.39)
         else:
-          mzg.setRange('fitRegion2',int(massHi)*0.92,int(massHi)*1.08)
+          #mzg.setRange('fitRegion2',int(massHi)*0.92,int(massHi)*1.08)
+          mzg.setRange('fitRegion2',int(massHi)*0.80,int(massHi)*1.2)
         sigNameHi = '_'.join(['ds',prod,'hzg',lep,tev,'cat'+cat,'M'+str(massHi)+narrow])
         sig_ds_Hi = myWs.data(sigNameHi)
 
@@ -300,7 +302,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
     c.cd()
 
     if highMass:
-      testFrame = mzg.frame(float(massList[0])*0.61,float(massList[-1])*1.39)
+      testFrame = mzg.frame(float(massList[0])*0.8,float(massList[-1])*1.2)
       if narrow == '':
         c.SetLogy()
     else:

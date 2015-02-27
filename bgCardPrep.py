@@ -6,6 +6,7 @@ import numpy as np
 #import pdb
 from rooFitBuilder import *
 import configLimits as cfl
+import CMS_lumi
 
 gROOT.ProcessLine('.L ./CMSStyle.C')
 CMSStyle()
@@ -114,6 +115,7 @@ for tev in tevList:
       fitBuilder.BackgroundNameFixer(card_ws,fitNameHeader,doExt)
 
       if doFancy:
+        c.SetTopMargin(0.075);
         ######################
         # making fancy plots #
         ######################
@@ -137,7 +139,7 @@ for tev in tevList:
           data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
-          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0))
 
         linearInterp = True
         if lepton == 'el' or lepton == 'mu': linearInterp = False
@@ -158,7 +160,7 @@ for tev in tevList:
           data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
-          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0))
 
         #if hjp:
         #  testFrame.SetMaximum(12)
@@ -185,41 +187,60 @@ for tev in tevList:
         elif lepton=='el':
           testFrame.SetTitle(";m_{ee#gamma} (GeV);Events/"+str(20)+" GeV")
         testFrame.GetYaxis().CenterTitle()
+        testFrame.GetXaxis().SetTitleOffset(0.8)
+        testFrame.GetYaxis().SetTitleOffset(0.85)
 
         #if hjp: leg  = TLegend(0.45,0.62,0.91,0.87)
-        leg  = TLegend(0.46,0.73,0.80,0.95)
+        #leg  = TLegend(0.46,0.73,0.80,0.95)
+        #leg.SetFillColor(0)
+        #leg.SetFillStyle(0)
+        #leg.SetBorderSize(0)
+        ##leg.AddEntry(hsig[0],'Expected signal x'+str(factor),'f')
+        ##leg.AddEntry(testFrame.findObject(bkgModel+'1sigma'),"Background Model",'f')
+        #leg.AddEntry(testFrame.findObject(fitExtName),"Background Model",'l')
+        #leg.AddEntry(data,'Data','lep')
+        #leg.SetTextSize(0.042)
+        #leg.Draw()
+
+        #leg2  = TLegend(0.70,0.70,0.98,0.8)
+        #leg2.SetNColumns(2)
+        #leg2.SetFillColor(0)
+        #leg2.SetFillStyle(0)
+        #leg2.SetBorderSize(0)
+        #leg2.AddEntry(c.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
+        #leg2.AddEntry(c.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')
+        #leg2.SetTextSize(0.042)
+        #leg2.Draw()
+
+        leg  = TLegend(0.2,0.2,0.6,0.45)
         leg.SetFillColor(0)
         leg.SetFillStyle(0)
         leg.SetBorderSize(0)
-        #leg.AddEntry(hsig[0],'Expected signal x'+str(factor),'f')
-        #leg.AddEntry(testFrame.findObject(bkgModel+'1sigma'),"Background Model",'f')
+        if lepton=='el':
+          leg.SetHeader('A #rightarrowZ#gamma#rightarrow ee#gamma')
+        else:
+          leg.SetHeader('A #rightarrowZ#gamma#rightarrow#mu#mu#gamma')
         leg.AddEntry(testFrame.findObject(fitExtName),"Background Model",'l')
-        leg.AddEntry(data,'Data','lep')
+        leg.AddEntry(testFrame.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
+        leg.AddEntry(testFrame.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')
         leg.SetTextSize(0.042)
         leg.Draw()
 
-        leg2  = TLegend(0.70,0.70,0.98,0.8)
-        leg2.SetNColumns(2)
-        leg2.SetFillColor(0)
-        leg2.SetFillStyle(0)
-        leg2.SetBorderSize(0)
-        leg2.AddEntry(testFrame.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
-        leg2.AddEntry(testFrame.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')
-        leg2.SetTextSize(0.042)
-        leg2.Draw()
+        #lat1 = TLatex()
+        #lat1.SetNDC()
+        #lat1.SetTextSize(0.040)
+        #if lepton=='el':
+        #  lat1.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow ee#gamma')
+        #else:
+        #  lat1.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow#mu#mu#gamma')
 
-        lat1 = TLatex()
-        lat1.SetNDC()
-        lat1.SetTextSize(0.040)
-        if lepton=='el':
-          lat1.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow ee#gamma')
-        else:
-          lat1.DrawLatex(0.18,0.95, 'A #rightarrowZ#gamma#rightarrow#mu#mu#gamma')
+        #lat2 = TLatex()
+        #lat2.SetNDC()
+        #lat2.SetTextSize(0.040)
+        #lat2.DrawLatex(0.40,0.95, 'CMS Preliminary')
 
-        lat2 = TLatex()
-        lat2.SetNDC()
-        lat2.SetTextSize(0.040)
-        lat2.DrawLatex(0.40,0.95, 'CMS Preliminary')
+        #CMS_lumi.relPosX = 0.08
+        CMS_lumi.CMS_lumi(c,2,33)
 
         gPad.RedrawAxis()
         if blind:

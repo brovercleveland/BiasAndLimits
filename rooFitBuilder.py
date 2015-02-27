@@ -602,10 +602,10 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.5, p1Low = 0.001, p1High = 0.99999, p2 = 0.01, p2Low = 0.0001, p2High = 0.2, p3 = 3, p3Low = 0.01, p3High = 5,
-      p4 = 0.001, p4Low = 0.00001, p4High = 5, p5 = 0.01, p5Low = 0.00001, p5High = 5):
-  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
-  #    p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
+  #def BuildTripExpSum(self,p1 = 0.5, p1Low = 0.001, p1High = 0.99999, p2 = 0.01, p2Low = 0.0001, p2High = 0.2, p3 = 3, p3Low = 0.01, p3High = 5,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 5, p5 = 0.01, p5Low = 0.00001, p5High = 5):
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
+      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)

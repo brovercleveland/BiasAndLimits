@@ -5,6 +5,7 @@ from ROOT import *
 import numpy as np
 from collections import defaultdict
 import configLimits as cfl
+import CMS_lumi
 
 gROOT.SetBatch()
 gROOT.ProcessLine('.L ./CMSStyle.C')
@@ -44,6 +45,8 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
+  c.SetTopMargin(0.075);
+
   if cfl.highMass and not cfl.modelIndependent: c.SetLogy()
 
   colorList = [kRed,kBlue,kGreen+1]
@@ -160,7 +163,9 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   nPoints = len(xAxis)
   expected = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
   oneSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp1SigLowErr_Array,exp1SigHiErr_Array)
+  oneSigma.SetName('oneSigma')
   twoSigma = TGraphAsymmErrors(nPoints,xAxis_Array,exp_Array,zeros_Array,zeros_Array,exp2SigLowErr_Array,exp2SigHiErr_Array)
+  twoSigma.SetName('twoSigma')
   observed = TGraphAsymmErrors(nPoints,xAxis_Array,obs_Array,zeros_Array,zeros_Array,zeros_Array,zeros_Array)
   if extraList:
     expectedEx  = []
@@ -172,8 +177,9 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   #expected.Print()
   #raw_input()
   oneSigma.SetFillColor(kGreen)
-
   twoSigma.SetFillColor(kYellow)
+  oneSigma.SetLineStyle(2)
+  twoSigma.SetLineStyle(2)
 
   expected.SetMarkerColor(kBlack)
   expected.SetMarkerStyle(kFullCircle)
@@ -200,14 +206,58 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     print 'no obs'
 
   mg.Draw('AL3')
+  if 'Narrow' in suffix:
+    mg.SetMinimum(0.05)
+  else:
+    mg.SetMinimum(0.15)
+
   #mg.Draw('Asame')
-  mg.GetXaxis().SetTitle('m_{H} (GeV)')
+  if cfl.highMass:
+    mg.GetXaxis().SetTitle('m_{A} (GeV)')
+  else:
+    mg.GetXaxis().SetTitle('m_{H} (GeV)')
   if cfl.modelIndependent:
-    mg.GetYaxis().SetTitle('#sigma(gg#rightarrowA)#timesBR(A#rightarrowZ(ll)#gamma) (fb)')
+    mg.GetYaxis().SetTitle('#sigma(gg#rightarrowA)#timesBR(A#rightarrowZ#gamma#rightarrowll#gamma) (fb)')
   else:
     mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
   c.RedrawAxis()
+
+  mg.GetXaxis().SetTitleOffset(0.8)
+  mg.GetYaxis().SetTitleOffset(0.85)
+  mg.GetYaxis().CenterTitle()
+
+
+  leg  = TLegend(0.60,0.65,0.98,0.85)
+  leg.SetFillColor(0)
+  leg.SetFillStyle(0)
+  leg.SetBorderSize(0)
+  if 'Narrow' in suffix:
+    leg.SetHeader('Narrow signal model')
+  else:
+    leg.SetHeader('Broad signal model')
+  leg.AddEntry(observed, "Observed",'l')
+  leg.AddEntry(oneSigma,"Expected #pm 1 #sigma",'fl')
+  leg.AddEntry(twoSigma,"Expected #pm 2 #sigma",'fl')
+  leg.SetTextSize(0.042)
+  leg.Draw()
+
+  #cmsText = TLatex()
+  #cmsText.SetNDC()
+  #cmsText.SetTextSize(0.06)
+  #cmsText.SetTextFont(61)
+  #cmsText.DrawLatex(0.2,0.89, 'CMS')
+  #cmsText.Draw()
+
+  #prelimText = TLatex()
+  #prelimText.SetNDC()
+  #prelimText.SetTextSize(0.055)
+  #prelimText.SetTextFont(52)
+  #prelimText.DrawLatex(0.2,0.89, 'Preliminary')
+  #prelimText.Draw()
+  CMS_lumi.relPosX = 0.08
+  CMS_lumi.CMS_lumi(c,2,11)
+
   if extraSuffix == None and not doObs: extraSuffix = 'noObs'
   global syst
   if syst == False: syst = 'nosyst'

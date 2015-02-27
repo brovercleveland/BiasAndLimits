@@ -326,6 +326,8 @@ def doInitialFits():
           leg.AddEntry(testFrame.findObject(fitName),fitName+' #chi2 = {0:.3f}'.format(chi2),'l')
           getattr(ws,'import')(fit)
 
+        c.SetLogy()
+        #testFrame.Draw()
         leg.Draw()
         c.Print('debugPlots/initialFits/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
 

@@ -208,7 +208,8 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       m.setPrintLevel(-100000)
 
       RooMsgService.instance().setGlobalKillBelow(RooFit.ERROR)
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE))
       #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(0),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Verbose(kFALSE))
 
       statusAll = res.status()
