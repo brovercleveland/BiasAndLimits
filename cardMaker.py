@@ -74,7 +74,7 @@ def makeCards(MVATest = cfl.doMVA):
         channel = '_'.join([lepton,tev,'cat'+cat])
         if cfl.highMass:
           #bkgParams = ['p1','p2','p3','p4','p5','norm']
-          bkgParams = ['p1','p2','p3','p4','p5','norm']
+          bkgParams = ['p1','p2','p3','p4','p5','p6','norm']
         elif cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = filter(lambda i: i in ['ggH', 'qqH'],sigNameList)

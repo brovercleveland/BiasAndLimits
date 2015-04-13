@@ -50,6 +50,8 @@ def doInitialFits():
 
   signalDict = dataDict
   suffix = cfl.suffixPostFix
+  ext = False
+  if 'Ext' in suffix: ext = True
 
   leptonList = cfl.leptonList
   yearList = cfl.yearList
@@ -65,8 +67,13 @@ def doInitialFits():
 
   xmax = cfl.bgRange[1]
   xmin = cfl.bgRange[0]
+  if ext:
+    xmaxExt = cfl.bgRangeExt[1]
+    xminExt = cfl.bgRangeExt[0]
   if highMass:
     binning = (xmax-xmin)/8
+    if ext:
+      binningExt = (xmaxExt-xminExt)/8
   else:
     binning = (xmax-xmin)/2
 
@@ -77,6 +84,12 @@ def doInitialFits():
   mzg.setRange('Blind2',cfl.blindRange[1],xmax)
   mzg.setBins((xmax-xmin)*4)
   mzg.setBins(50000,'cache')
+
+  if ext:
+    mzgExt  = RooRealVar('CMS_hzg_mass_ext','CMS_hzg_mass_ext',xminExt,xmaxExt)
+    mzgExt.setRange('full',xminExt,xmaxExt)
+    mzgExt.setBins((xmaxExt-xminExt)*4)
+    mzgExt.setBins(50000,'cache')
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
@@ -245,8 +258,11 @@ def doInitialFits():
         else:
           dataTree.SetBranchAddress('m_llgCAT'+cat+'_DATA',tmpMassEventOld)
         data_argS = RooArgSet(mzg)
+        if ext: data_argS_ext = RooArgSet(mzgExt)
         if cat == '5' or highMass:
           data_ds = RooDataSet(dataName,dataName,data_argS)
+          if ext:
+            data_ds_ext = RooDataSet(dataName+'_ext',dataName+'_ext',data_argS_ext)
         else:
           data_ds = RooDataHist(dataName,dataName,data_argS)
         for i in range(0,dataTree.GetEntries()):
@@ -254,6 +270,10 @@ def doInitialFits():
           if tmpMassEventOld[0]> xmin and tmpMassEventOld[0]<xmax:
             mzg.setVal(tmpMassEventOld[0])
             data_ds.add(data_argS)
+          if ext:
+            if tmpMassEventOld[0]> xminExt and tmpMassEventOld[0]<xmaxExt:
+              mzgExt.setVal(tmpMassEventOld[0])
+              data_ds_ext.add(data_argS_ext)
 
         dataTree.ResetBranchAddresses()
 
@@ -287,13 +307,20 @@ def doInitialFits():
         else:
           bgFitList = [cfl.bgLimitDict[highMass][yearToTeV[year]][lepton][cat]]
 
+        if ext:
+          fitBuilderExt = FitBuilder(mzgExt, yearToTeV[year], lepton, cat)
+          bgFitListExt = cfl.bgFitListHighMass
+
+
         leg  = TLegend(0.7,0.7,1.0,1.0)
         leg.SetFillColor(0)
         leg.SetShadowColor(0)
         leg.SetBorderSize(1)
         leg.SetHeader(', '.join([year,lepton,'cat'+cat]))
 
+        c.SetLogy()
         testFrame = mzg.frame()
+        testFrame.SetMinimum(0.0001)
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind1'))
         #data_ds.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.CutRange('Blind2'))
         if blind:
@@ -315,21 +342,57 @@ def doInitialFits():
             fit = fitBuilder.Build(fitName)
           if type(fit) == tuple: fit = fit[0]
           if verbose: fit.Print()
-          if highMass and fitName in ['TripExpSum','Gamma']:
+          #if highMass and fitName in ['TripExpSum','Gamma']:
+          if highMass and fitName in ['Gamma']:
+            #fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True),RooFit.Range(150,800))
             fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True))
           else:
             fit.fitTo(data_ds, RooFit.Strategy(1))
 
-          fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
+          testFrame.SetMinimum(0.0001)
+          fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName),RooFit.Range("full"))
+          testFrame.SetMinimum(0.0001)
           testFrame.Draw()
           chi2 = testFrame.chiSquare(fitName,'data',ndof)
           leg.AddEntry(testFrame.findObject(fitName),fitName+' #chi2 = {0:.3f}'.format(chi2),'l')
           getattr(ws,'import')(fit)
 
-        c.SetLogy()
         #testFrame.Draw()
         leg.Draw()
         c.Print('debugPlots/initialFits/'+'_'.join(['test','fits',suffix,year,lepton,'cat'+cat])+'.pdf')
+
+        if ext:
+
+          leg  = TLegend(0.7,0.7,1.0,1.0)
+          leg.SetFillColor(0)
+          leg.SetShadowColor(0)
+          leg.SetBorderSize(1)
+          leg.SetHeader(', '.join(['Ext',year,lepton,'cat'+cat]))
+
+          c.SetLogy()
+          testFrame = mzgExt.frame()
+          data_ds_ext.plotOn(testFrame,RooFit.Binning(binningExt),RooFit.Name('data'))
+
+          realFit = None
+          fit_result = None
+          for fitName in bgFitListExt:
+
+            color = fitBuilderExt.FitColorDict[fitName]
+            ndof = fitBuilderExt.FitNdofDict[fitName]
+            fit = fitBuilderExt.Build(fitName)
+            if type(fit) == tuple: fit = fit[0]
+            if verbose: fit.Print()
+            fit.fitTo(data_ds_ext, RooFit.Strategy(2))
+
+            fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName))
+            testFrame.Draw()
+            chi2 = testFrame.chiSquare(fitName,'data',ndof)
+            leg.AddEntry(testFrame.findObject(fitName),fitName+' #chi2 = {0:.3f}'.format(chi2),'l')
+            getattr(ws,'import')(fit)
+
+          leg.Draw()
+          c.Print('debugPlots/initialFits/'+'_'.join(['test','fits','ext',suffix,year,lepton,'cat'+cat])+'.pdf')
+
 
         ws.commitTransaction()
         print 'commited'

@@ -147,17 +147,32 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
 
       mass = float(massString)
       if highMass:
-        if mass%50.0 == 0.0:
-          massHi = int(mass)
-          massLow = int(mass)
-        else:
-          massRound = roundToN(massString,50)
-          if mass<massRound:
-            massHi = massRound
-            massLow = massRound-50
+        if mass <= 500:
+          if mass%50.0 == 0.0:
+            massHi = int(mass)
+            massLow = int(mass)
           else:
-            massHi = massRound+50
-            massLow = massRound
+            massRound = roundToN(massString,50)
+            if mass<massRound:
+              massHi = massRound
+              massLow = massRound-50
+            else:
+              massHi = massRound+50
+              massLow = massRound
+        else:
+          if mass in [800,1200,1600]:
+            massHi = int(mass)
+            massLow = int(mass)
+          else:
+            tmpHighList = [500,800,1200,1600]
+            massRound = min(tmpHighList, key=lambda x:abs(x-mass))
+            if mass<massRound:
+              massHi = massRound
+              massLow = tmpHighList[tmpHighList.index(massRound)-1]
+            else:
+              massHi = tmpHighList[tmpHighList.index(massRound)+1]
+              massLow = massRound
+
       else:
         if mass%5.0 == 0.0:
           massHi = int(mass)
@@ -244,7 +259,13 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
 
       ###### interpolate the two mass points
       if highMass:
-        massDiff = (massHi - mass)/50.
+        if massHi <= 500:
+          massDiff = (massHi - mass)/50.
+        elif massHi <=800:
+          massDiff = (massHi - mass)/300.
+        else:
+          massDiff = (massHi - mass)/400.
+
       else:
         massDiff = (massHi - mass)/5.
       if mass<=100:
@@ -288,7 +309,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
         paramHists[i].SetBinError(paramHists[i].FindBin(mass),param.getError())
         param.setConstant(True)
 
-      if((highMass and mass%50==0) or (not highMass and mass%5==0)):
+      if((highMass and ((mass<=500 and  mass%50==0) or (mass in [800,1200,1600]))) or (not highMass and mass%5==0)):
         fitList.append(SigFit_Low)
       else:
         fitList.append(SigFit_Interp)
@@ -312,7 +333,7 @@ def SignalFitMaker(lep, tev, cat, suffix, cores):
       fit.plotOn(testFrame, RooFit.Normalization(normList[i],RooAbsReal.NumEvent),RooFit.LineColor(TColor.GetColorPalette(i*15)))
     for i,signal in enumerate(dsList):
       signal.plotOn(testFrame, RooFit.MarkerStyle(20+i), RooFit.MarkerSize(1),RooFit.Binning(80))
-    if highMass: testFrame.SetMinimum(0.0005)
+    if highMass: testFrame.SetMinimum(0.00005)
     testFrame.GetXaxis().SetTitle('m_{H} (GeV)')
     testFrame.GetYaxis().SetTitle('Normalized Yield')
     testFrame.GetYaxis().CenterTitle()

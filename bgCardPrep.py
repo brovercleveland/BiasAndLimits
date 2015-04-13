@@ -181,6 +181,10 @@ for tev in tevList:
         testFrame.SetMinimum(0.1)
         c.SetLogy()
 
+        testFrame.GetXaxis().SetTitleFont(42)
+        testFrame.GetYaxis().SetTitleFont(42)
+        testFrame.GetXaxis().SetLabelFont(42)
+        testFrame.GetYaxis().SetLabelFont(42)
 
         if lepton=='mu':
           testFrame.SetTitle(";m_{#mu#mu#gamma} (GeV);Events/"+str(20)+" GeV")
@@ -216,10 +220,11 @@ for tev in tevList:
         leg.SetFillColor(0)
         leg.SetFillStyle(0)
         leg.SetBorderSize(0)
+        leg.SetTextFont(42)
         if lepton=='el':
-          leg.SetHeader('A #rightarrowZ#gamma#rightarrow ee#gamma')
+          leg.SetHeader('pp#rightarrow ee#gamma')
         else:
-          leg.SetHeader('A #rightarrowZ#gamma#rightarrow#mu#mu#gamma')
+          leg.SetHeader('pp#rightarrow #mu#mu#gamma')
         leg.AddEntry(testFrame.findObject(fitExtName),"Background Model",'l')
         leg.AddEntry(testFrame.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
         leg.AddEntry(testFrame.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')

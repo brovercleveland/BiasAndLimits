@@ -495,7 +495,7 @@ class FitBuilder:
     SetOwnership(tail,0)
     return SechBern5
 
-  def BuildExp(self,tau = 1, tauLow = -50, tauHigh = 50):
+  def BuildExp(self,tau = -0.005, tauLow = -50, tauHigh = 50):
 
     tauVar = RooRealVar('tauExp_'+self.suffix,'tauExp_'+self.suffix,tau,tauLow,tauHigh)
     Exp = RooExponential('Exp_'+self.suffix,'Exp_'+self.suffix,self.mzg,tauVar)
@@ -602,24 +602,25 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  #def BuildTripExpSum(self,p1 = 0.5, p1Low = 0.001, p1High = 0.99999, p2 = 0.01, p2Low = 0.0001, p2High = 0.2, p3 = 3, p3Low = 0.01, p3High = 5,
-  #    p4 = 0.001, p4Low = 0.00001, p4High = 5, p5 = 0.01, p5Low = 0.00001, p5High = 5):
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
-      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.002, p3Low = 0.000001, p3High = 20,
+      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.0015, p5Low = 0.00001, p5High = 0.05, p6 = -10, p6Low = -30, p6High = -0.000001):
 
     p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
     p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
     p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
     p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
-    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
-    #TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((1-@1 -)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
-        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
+    p6Var = RooRealVar('p6TripExpSum_'+self.suffix,'p6TripExpSum_'+self.suffix,p6,p6Low,p6High)
+    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0+@6))',
+        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     SetOwnership(p3Var,0)
     SetOwnership(p4Var,0)
     SetOwnership(p5Var,0)
+    SetOwnership(p6Var,0)
     return TripExpSum
 
   def BuildTripPowSum(self,p1 = 0.5, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 5,
@@ -647,8 +648,7 @@ class FitBuilder:
     SetOwnership(p1Var,0)
     return Laurent
 
-  def BuildBern2(self,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30):
-#def BuildBern2(self,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30):
+  def BuildBern2(self,p0 = 1 ,p1 = 100, p1Low = 1e-6, p1High = 300, p2 = 5, p2Low = 1e-6, p2High = 300):
 
     p0Var = RooRealVar('p0Bern2_'+self.suffix, 'p0Bern2_'+self.suffix,p0)
     p1Var = RooRealVar('p1Bern2_'+self.suffix, 'p1Bern2_'+self.suffix,p1,p1Low,p1High)
@@ -659,16 +659,12 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return Bern2
 
-  def BuildBern3(self,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30):
-#def BuildBern3(self,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30, p3 = 5, p3Low =1e-3, p3High = 30):
+  def BuildBern3(self,p0 = 1 ,p1 = 5, p1Low = 1e-6, p1High = 30, p2 = 5, p2Low = 1e-6, p2High = 30, p3 = 5, p3Low = 1e-6, p3High = 30):
 
     p0Var = RooRealVar('p0Bern3_'+self.suffix, 'p0Bern3_'+self.suffix,p0)
-    #p1Var = RooRealVar('p1Bern3_'+self.suffix, 'p1Bern3_'+self.suffix,p1,p1Low,p1High)
-    #p2Var = RooRealVar('p2Bern3_'+self.suffix, 'p2Bern3_'+self.suffix,p2,p2Low,p2High)
-    #p3Var = RooRealVar('p3Bern3_'+self.suffix, 'p3Bern3_'+self.suffix,p3,p3Low,p3High)
-    p1Var = RooRealVar('p1Bern3_'+self.suffix, 'p1Bern3_'+self.suffix,p1)
-    p2Var = RooRealVar('p2Bern3_'+self.suffix, 'p2Bern3_'+self.suffix,p2)
-    p3Var = RooRealVar('p3Bern3_'+self.suffix, 'p3Bern3_'+self.suffix,p3)
+    p1Var = RooRealVar('p1Bern3_'+self.suffix, 'p1Bern3_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Bern3_'+self.suffix, 'p2Bern3_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3Bern3_'+self.suffix, 'p3Bern3_'+self.suffix,p3,p3Low,p3High)
     Bern3 = RooBernstein('Bern3_'+self.suffix,'Bern3_'+self.suffix,self.mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
     SetOwnership(p0Var,0)
     SetOwnership(p1Var,0)
@@ -676,44 +672,7 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return Bern3
 
-  def BuildPoly3(self,p0 = 1 ,p1 = -28, p1Low = -100, p1High = 100, p2 = 0, p2Low = -10, p2High = 10, p3 = 0, p3Low = -10, p3High = 10):
-
-    p0Var = RooRealVar('p0Poly3_'+self.suffix, 'p0Poly3_'+self.suffix,p0)
-    p1Var = RooRealVar('p1Poly3_'+self.suffix, 'p1Poly3_'+self.suffix,p1,p1Low,p1High)
-    p2Var = RooRealVar('p2Poly3_'+self.suffix, 'p2Poly3_'+self.suffix,p2,p2Low,p2High)
-    p3Var = RooRealVar('p3Poly3_'+self.suffix, 'p3Poly3_'+self.suffix,p3,p3Low,p3High)
-    Poly3 = RooPolynomial('Poly3_'+self.suffix,'Poly3_'+self.suffix,self.mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
-    SetOwnership(p0Var,0)
-    SetOwnership(p1Var,0)
-    SetOwnership(p2Var,0)
-    SetOwnership(p3Var,0)
-    return Poly3
-
-  def BuildPoly7(self,p0 = 1 ,p1 = -83, p1Low = -100, p1High = 100, p2 = 0, p2Low = -10, p2High = 10, p3 = 0, p3Low = -10, p3High = 10,
-      p4 = -28, p4Low = -100, p4High = 100, p5 = 0, p5Low = -10, p5High = 10, p6 = 0, p6Low = -10, p6High = 10, p7 = 0, p7Low = -10, p7High = 10):
-
-    p0Var = RooRealVar('p0Poly7_'+self.suffix, 'p0Poly7_'+self.suffix,p0)
-    p1Var = RooRealVar('p1Poly7_'+self.suffix, 'p1Poly7_'+self.suffix,p1,p1Low,p1High)
-    p2Var = RooRealVar('p2Poly7_'+self.suffix, 'p2Poly7_'+self.suffix,p2,p2Low,p2High)
-    p3Var = RooRealVar('p3Poly7_'+self.suffix, 'p3Poly7_'+self.suffix,p3,p3Low,p3High)
-    p4Var = RooRealVar('p4Poly7_'+self.suffix, 'p4Poly7_'+self.suffix,p4,p4Low,p4High)
-    p5Var = RooRealVar('p5Poly7_'+self.suffix, 'p5Poly7_'+self.suffix,p5,p5Low,p5High)
-    p6Var = RooRealVar('p6Poly7_'+self.suffix, 'p6Poly7_'+self.suffix,p6,p6Low,p6High)
-    p7Var = RooRealVar('p7Poly7_'+self.suffix, 'p7Poly7_'+self.suffix,p7,p7Low,p7High)
-    Poly7 = RooPolynomial('Poly7_'+self.suffix,'Poly7_'+self.suffix,self.mzg,RooArgList(p0Var,p1Var,p2Var, p3Var, p4Var, p5Var, p6Var, p7Var))
-    SetOwnership(p0Var,0)
-    SetOwnership(p1Var,0)
-    SetOwnership(p2Var,0)
-    SetOwnership(p3Var,0)
-    SetOwnership(p4Var,0)
-    SetOwnership(p5Var,0)
-    SetOwnership(p6Var,0)
-    SetOwnership(p7Var,0)
-    return Poly7
-
-
-  def BuildBern4(self,p0 = 1 ,p1 = 5, p1Low = -1e-6, p1High = 30, p2 = 5, p2Low = -1e-6, p2High = 30, p3 = 5, p3Low = -1e-6, p3High = 30, p4 = 5, p4Low = -1e-6, p4High = 30):
-#def BuildBern4(self,p0 = 1 ,p1 = 5, p1Low =1e-3, p1High = 30, p2 = 5, p2Low =1e-3, p2High = 30, p3 = 5, p3Low =1e-3, p3High = 30, p4 = 5, p4Low =1e-3, p4High = 30):
+  def BuildBern4(self,p0 = 1 ,p1 = 5, p1Low = 1e-6, p1High = 300, p2 = 5, p2Low = 1e-6, p2High = 300, p3 = 100, p3Low = 1e-6, p3High = 300, p4 = 1, p4Low = 1e-6, p4High = 300):
 
     p0Var = RooRealVar('p0Bern4_'+self.suffix, 'p0Bern4_'+self.suffix,p0)
     p1Var = RooRealVar('p1Bern4_'+self.suffix, 'p1Bern4_'+self.suffix,p1,p1Low,p1High)
@@ -765,6 +724,43 @@ class FitBuilder:
     SetOwnership(p5Var,0)
     SetOwnership(p6Var,0)
     return Bern6
+
+  def BuildPoly3(self,p0 = 1 ,p1 = -28, p1Low = -100, p1High = 100, p2 = 0, p2Low = -10, p2High = 10, p3 = 0, p3Low = -10, p3High = 10):
+
+    p0Var = RooRealVar('p0Poly3_'+self.suffix, 'p0Poly3_'+self.suffix,p0)
+    p1Var = RooRealVar('p1Poly3_'+self.suffix, 'p1Poly3_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Poly3_'+self.suffix, 'p2Poly3_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3Poly3_'+self.suffix, 'p3Poly3_'+self.suffix,p3,p3Low,p3High)
+    Poly3 = RooPolynomial('Poly3_'+self.suffix,'Poly3_'+self.suffix,self.mzg,RooArgList(p0Var,p1Var,p2Var, p3Var))
+    SetOwnership(p0Var,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return Poly3
+
+  def BuildPoly7(self,p0 = 1 ,p1 = -83, p1Low = -100, p1High = 100, p2 = 0, p2Low = -10, p2High = 10, p3 = 0, p3Low = -10, p3High = 10,
+      p4 = -28, p4Low = -100, p4High = 100, p5 = 0, p5Low = -10, p5High = 10, p6 = 0, p6Low = -10, p6High = 10, p7 = 0, p7Low = -10, p7High = 10):
+
+    p0Var = RooRealVar('p0Poly7_'+self.suffix, 'p0Poly7_'+self.suffix,p0)
+    p1Var = RooRealVar('p1Poly7_'+self.suffix, 'p1Poly7_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Poly7_'+self.suffix, 'p2Poly7_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3Poly7_'+self.suffix, 'p3Poly7_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4Poly7_'+self.suffix, 'p4Poly7_'+self.suffix,p4,p4Low,p4High)
+    p5Var = RooRealVar('p5Poly7_'+self.suffix, 'p5Poly7_'+self.suffix,p5,p5Low,p5High)
+    p6Var = RooRealVar('p6Poly7_'+self.suffix, 'p6Poly7_'+self.suffix,p6,p6Low,p6High)
+    p7Var = RooRealVar('p7Poly7_'+self.suffix, 'p7Poly7_'+self.suffix,p7,p7Low,p7High)
+    Poly7 = RooPolynomial('Poly7_'+self.suffix,'Poly7_'+self.suffix,self.mzg,RooArgList(p0Var,p1Var,p2Var, p3Var, p4Var, p5Var, p6Var, p7Var))
+    SetOwnership(p0Var,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    SetOwnership(p4Var,0)
+    SetOwnership(p5Var,0)
+    SetOwnership(p6Var,0)
+    SetOwnership(p7Var,0)
+    return Poly7
+
+
 
   def BuildBern8(self,p0 = 100 , p0Low = 1e-8, p0High = 1000,p1 = 100, p1Low = 1e-8, p1High = 200, p2 = 100, p2Low = 1e-8, p2High = 200, p3 = 100, p3Low = 1e-8, p3High = 200, p4 = 100, p4Low = 1e-8, p4High = 200,
       p5 = 100, p5Low = 1e-8, p5High = 200, p6 = 100, p6Low = 1e-8, p6High = 200, p7 = 100, p7Low = 1e-8, p7High = 200,  p8 = 100, p8Low = 1e-8, p8High = 200):
@@ -1206,6 +1202,8 @@ class FitBuilder:
       p4NameNew  = '_'.join(['bkg','p4',newSuffix])
       p5Name = 'p5'+fitName+'_'+self.suffix
       p5NameNew  = '_'.join(['bkg','p5',newSuffix])
+      p6Name = 'p6'+fitName+'_'+self.suffix
+      p6NameNew  = '_'.join(['bkg','p6',newSuffix])
 
       if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
       ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
@@ -1213,6 +1211,7 @@ class FitBuilder:
       ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
       ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(), ws.function(p4Name).getMax()))
       ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(), ws.function(p5Name).getMax()))
+      ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(), ws.function(p6Name).getMax()))
 
       editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
       if Ext: editString += ','+normName+'='+normNameNew
@@ -1221,6 +1220,7 @@ class FitBuilder:
       editString += ','+p3Name+'='+p3NameNew
       editString += ','+p4Name+'='+p4NameNew
       editString += ','+p5Name+'='+p5NameNew
+      editString += ','+p6Name+'='+p6NameNew
       editString += ')'
 
       ws.factory(editString)

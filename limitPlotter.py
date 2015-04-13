@@ -47,7 +47,8 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   c.cd()
   c.SetTopMargin(0.075);
 
-  if cfl.highMass and not cfl.modelIndependent: c.SetLogy()
+  if cfl.highMass and '2000' in suffix: c.SetLogy()
+
 
   colorList = [kRed,kBlue,kGreen+1]
 
@@ -207,10 +208,14 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
 
   mg.Draw('AL3')
   if 'Narrow' in suffix:
-    mg.SetMinimum(0.05)
+    mg.SetMinimum(0.005)
   else:
     mg.SetMinimum(0.15)
 
+  mg.GetXaxis().SetTitleFont(42)
+  mg.GetYaxis().SetTitleFont(42)
+  mg.GetXaxis().SetLabelFont(42)
+  mg.GetYaxis().SetLabelFont(42)
   #mg.Draw('Asame')
   if cfl.highMass:
     mg.GetXaxis().SetTitle('m_{A} (GeV)')
@@ -229,6 +234,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
 
 
   leg  = TLegend(0.60,0.65,0.98,0.85)
+  leg.SetTextFont(42)
   leg.SetFillColor(0)
   leg.SetFillStyle(0)
   leg.SetBorderSize(0)
