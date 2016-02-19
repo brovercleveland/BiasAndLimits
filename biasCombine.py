@@ -28,8 +28,14 @@ def hadd(tev,lepton,cat,genFunc,mass):
 
   if not os.path.isdir(biasPath+'/combine/'): os.mkdir(biasPath+'/combine/')
 
-  outName = biasPath+'/combine/'+'_'.join(['combined',tev,lepton,cat,genFunc,mass])+'.root'
-  inName = biasPath+'/'+'_'.join(['biasToys',tev,lepton,'cat'+cat,genFunc,mass,'job*'])+'.root'
+  if cfl.injectedSignalSize:
+    biasToysName = 'biasToysInj'
+    combName = 'combinedInj'
+  else:
+    biasToysName = 'biasToys'
+    combName = 'combined'
+  outName = biasPath+'/combine/'+'_'.join([combName,tev,lepton,cat,genFunc,mass])+'.root'
+  inName = biasPath+'/'+'_'.join([biasToysName,tev,lepton,'cat'+cat,genFunc,mass,'job*'])+'.root'
   os.system('hadd -f '+outName+' '+inName)
   #print output, inputs
 

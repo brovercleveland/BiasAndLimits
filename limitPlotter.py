@@ -41,13 +41,14 @@ syst = cfl.syst
 
 
 def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
+  #massList = [float(x) for x in cfl.massListBig if float(x)<501]
   massList = [float(x) for x in cfl.massListBig]
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
   c.SetTopMargin(0.075);
 
-  if cfl.highMass and '2000' in suffix: c.SetLogy()
+  #if cfl.highMass: c.SetLogy()
 
 
   colorList = [kRed,kBlue,kGreen+1]
@@ -68,6 +69,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     else:
       currentDir = '/'.join(['outputDir',AnalysisSuffix,str(mass),'limitOutput'])
     thisFile = 'higgsCombine{1}.Asymptotic.mH{0}.root'.format(str(mass).replace('.0',''),cardName)
+    print thisFile
     f = TFile('/'.join([currentDir,thisFile]))
     t = f.Get('limit')
     fex = []
@@ -107,28 +109,36 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
       print mass
       print 'obs:', obs[-1]
       print 'exp:', exp[-1]
+
     if len(obs) != len(xAxis):
       obs.append(0.0)
+      #obs.append(obs[-1])
       print 'obs busted for',mass
       raw_input()
     if len(exp) != len(xAxis):
       exp.append(0.0)
+      #exp.append(exp[-1])
       print 'exp busted for',mass
       raw_input()
     if len(exp1SigLow) != len(xAxis):
       exp1SigLow.append(0.0)
+      #exp1SigLow.append(exp1SigLow[-1])
+      #exp2SigLow[-1] = exp2SigLow[-2]
       print 'exp1SigLow busted for',mass
       raw_input()
     if len(exp2SigLow) != len(xAxis):
       exp2SigLow.append(0.0)
+      #exp2SigLow.append(exp2SigLow[-1])
       print 'exp2SigLow busted for',mass
       raw_input()
     if len(exp1SigHi) != len(xAxis):
       exp1SigHi.append(0.0)
+      #exp1SigHi.append(exp1SigHi[-1])
       print 'exp1SigHi busted for',mass
       raw_input()
     if len(exp2SigHi) != len(xAxis):
       exp2SigHi.append(0.0)
+      #exp2SigHi.append(exp2SigHi[-1])
       print 'exp2SigHi busted for',mass
       raw_input()
 
@@ -207,10 +217,14 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
     print 'no obs'
 
   mg.Draw('AL3')
-  if 'Narrow' in suffix:
-    mg.SetMinimum(0.005)
+  if cfl.scale13TeV:
+    mg.SetMinimum(0.001)
+  elif 'Narrow' in suffix:
+    mg.SetMinimum(0.02)
   else:
-    mg.SetMinimum(0.15)
+    mg.SetMinimum(0.04)
+    mg.SetMaximum(3)
+    #mg.SetMinimum(0.15)
 
   mg.GetXaxis().SetTitleFont(42)
   mg.GetYaxis().SetTitleFont(42)
@@ -229,7 +243,10 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   c.RedrawAxis()
 
   mg.GetXaxis().SetTitleOffset(0.8)
-  mg.GetYaxis().SetTitleOffset(0.85)
+  if cfl.scale13TeV:
+    mg.GetYaxis().SetTitleOffset(1.05)
+  else:
+    mg.GetYaxis().SetTitleOffset(0.85)
   mg.GetYaxis().CenterTitle()
 
 
@@ -238,11 +255,13 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   leg.SetFillColor(0)
   leg.SetFillStyle(0)
   leg.SetBorderSize(0)
-  if 'Narrow' in suffix:
+  if cfl.scale13TeV:
+    leg.SetHeader("13 TeV Extrapolation")
+  elif 'Narrow' in suffix:
     leg.SetHeader('Narrow signal model')
   else:
     leg.SetHeader('Broad signal model')
-  leg.AddEntry(observed, "Observed",'l')
+  if doObs: leg.AddEntry(observed, "Observed",'l')
   leg.AddEntry(oneSigma,"Expected #pm 1 #sigma",'fl')
   leg.AddEntry(twoSigma,"Expected #pm 2 #sigma",'fl')
   leg.SetTextSize(0.042)
@@ -265,6 +284,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   CMS_lumi.CMS_lumi(c,2,11)
 
   if extraSuffix == None and not doObs: extraSuffix = 'noObs'
+  if cfl.scale13TeV: extraSuffix+='13TeVScale'
   global syst
   if syst == False: syst = 'nosyst'
   saveNames = ['limitPlot']

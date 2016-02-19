@@ -602,25 +602,33 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
-  #    p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.002, p3Low = 0.000001, p3High = 20,
-      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.0015, p5Low = 0.00001, p5High = 0.05, p6 = -10, p6Low = -30, p6High = -0.000001):
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
+      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.0001, p1High = 0.1, p2 = 0.01, p2Low = 0.001, p2High = 0.1, p3 = 10, p3Low = 1, p3High = 20,
+  #    p4 = 0.001, p4Low = 0.0001, p4High = 0.1, p5 = 0.01, p5Low = 0.001, p5High = 0.1):
+  #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.002, p3Low = 0.000001, p3High = 20,
+  #    p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.0015, p5Low = 0.00001, p5High = 0.9, p6 = -10, p6Low = -100, p6High = -0.000001):
 
-    p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
-    p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
-    p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
-    p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
-    p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
-    p6Var = RooRealVar('p6TripExpSum_'+self.suffix,'p6TripExpSum_'+self.suffix,p6,p6Low,p6High)
-    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0+@6))',
-        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var))
+    #p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
+    #p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
+    #p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
+    #p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
+    #p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
+    p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    #TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0+@6))',
+    #    RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var))
+    TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
+        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     SetOwnership(p3Var,0)
     SetOwnership(p4Var,0)
     SetOwnership(p5Var,0)
-    SetOwnership(p6Var,0)
+    #SetOwnership(p6Var,0)
     return TripExpSum
 
   def BuildTripPowSum(self,p1 = 0.5, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 5,
@@ -853,10 +861,15 @@ class FitBuilder:
     return CBG, paramList
 
   def BuildDoubleCrystalBall(self, piece, mean = 125,  meanLow = -1, meanHigh = -1, sigma = 1.5, sigmaLow = 0, sigmaHigh = -1,
-      alphaCB1 = 1, alphaCB1Low = 0.001, alphaCB1High = 5,
-      alphaCB2 = -1, alphaCB2Low = -5, alphaCB2High = -0.001,
-      nCB1 = 3, nCB1Low = 0.1, nCB1High = 10,
-      nCB2 = 2, nCB2Low = 0.1, nCB2High =10,
+      #alphaCB1 = 1, alphaCB1Low = 0.001, alphaCB1High = 5,
+      #alphaCB2 = -1, alphaCB2Low = -5, alphaCB2High = -0.001,
+      #nCB1 = 3, nCB1Low = 0.1, nCB1High = 10,
+      #nCB2 = 2, nCB2Low = 0.1, nCB2High =10,
+      #frac = 0.5, fracLow = 0.1, fracHigh = 0.9):
+      alphaCB1 = 2, alphaCB1Low = 0.001, alphaCB1High = 5,
+      alphaCB2 = -2, alphaCB2Low = -5, alphaCB2High = -0.001,
+      nCB1 = 10, nCB1Low = 0, nCB1High = 80,
+      nCB2 = 10, nCB2Low = 0, nCB2High =80,
       frac = 0.5, fracLow = 0.1, fracHigh = 0.9):
 
     if sigma > sigmaHigh:
@@ -1202,8 +1215,8 @@ class FitBuilder:
       p4NameNew  = '_'.join(['bkg','p4',newSuffix])
       p5Name = 'p5'+fitName+'_'+self.suffix
       p5NameNew  = '_'.join(['bkg','p5',newSuffix])
-      p6Name = 'p6'+fitName+'_'+self.suffix
-      p6NameNew  = '_'.join(['bkg','p6',newSuffix])
+      #p6Name = 'p6'+fitName+'_'+self.suffix
+      #p6NameNew  = '_'.join(['bkg','p6',newSuffix])
 
       if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
       ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
@@ -1211,7 +1224,7 @@ class FitBuilder:
       ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
       ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(), ws.function(p4Name).getMax()))
       ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(), ws.function(p5Name).getMax()))
-      ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(), ws.function(p6Name).getMax()))
+      #ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(), ws.function(p6Name).getMax()))
 
       editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
       if Ext: editString += ','+normName+'='+normNameNew
@@ -1220,7 +1233,33 @@ class FitBuilder:
       editString += ','+p3Name+'='+p3NameNew
       editString += ','+p4Name+'='+p4NameNew
       editString += ','+p5Name+'='+p5NameNew
-      editString += ','+p6Name+'='+p6NameNew
+      #editString += ','+p6Name+'='+p6NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'ExpSum':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+      p3Name = 'p3'+fitName+'_'+self.suffix
+      p3NameNew  = '_'.join(['bkg','p3',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ','+p3Name+'='+p3NameNew
       editString += ')'
 
       ws.factory(editString)

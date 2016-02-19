@@ -30,6 +30,8 @@ testFuncs = cfl.testFuncs
 
 suffix = cfl.suffixPostFix
 
+injectedSignalSize = cfl.injectedSignalSize
+
 if cfl.rootrace: RooTrace.active(kTRUE)
 
 def getArgs():
@@ -56,6 +58,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
 
   c = TCanvas("c","c",0,0,500,400)
   c.cd()
+  c.SetLogy()
 
 
 
@@ -116,9 +119,13 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       testPdfs[-1].Print()
       print bkgInSigWin
       print sigRangeName
-    testBkgNorms.append(RooRealVar('norm'+fitName,'norm'+fitName,bkgInSigWin,0.1*bkgInSigWin,1.9*bkgInSigWin))
+    testBkgNorms.append(RooRealVar('norm'+fitName,'norm'+fitName,bkgInSigWin,0.0,5*bkgInSigWin))
     testPdfs_ext.append(RooExtendPdf('ext'+fitName,'ext'+fitName,testPdfs[-1],testBkgNorms[-1],sigRangeName))
-    testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,0,-50,50))
+    #testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,0,-5*bkgInSigWin,5*bkgInSigWin))
+    if injectedSignalSize:
+      testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,injectedSignalSize,-5*injectedSignalSize, 5*injectedSignalSize))
+    else:
+      testSigNorms.append(RooRealVar('normSig'+fitName,'normSig'+fitName,injectedSignalSize,-50, 50))
     testSig_ext.append(RooExtendPdf('extSig'+fitName,'ext'+fitName,sig,testSigNorms[-1]))
     testModels.append(RooAddPdf('model'+fitName,'model'+fitName,RooArgList(testSig_ext[-1],testPdfs_ext[-1])))
     if verbose:
@@ -132,7 +139,12 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
 
   # prep the outputs
   if not os.path.isdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy'): os.mkdir('/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy')
-  outName = '_'.join(['biasToys',tev,lepton,'cat'+cat,genFunc,mass,'job'+str(job)])+'.root'
+
+  if injectedSignalSize:
+    biasToysName = 'biasToysInj'
+  else:
+    biasToysName = 'biasToys'
+  outName = '_'.join([biasToysName,tev,lepton,'cat'+cat,genFunc,mass,'job'+str(job)])+'.root'
   outName = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/biasStudy/'+outName
   outFile = TFile(outName, 'RECREATE')
   tree = TTree('toys','toys')
@@ -142,7 +154,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
   #set up branches
   toyDataStruct = getattr(sys.modules[__name__], 'TOYDATA')()
   #toyDataStruct = TOYDATA()
-  tree.Branch('toyData', toyDataStruct, 'totalData/I:sigWindowData')
+  tree.Branch('toyData', toyDataStruct, 'totalData/I:sigWindowData:sigWindowInject')
   structDict = {}
   for func in testFuncs:
     structDict[func]= getattr(sys.modules[__name__], func.upper())()
@@ -186,11 +198,16 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       raw_input()
     print 'doing trial:',i
 
-    genBkgYield = r.Poisson(data.numEntries())
+    #genBkgYield = r.Poisson(data.numEntries())
+    genBkgYield = data.numEntries()
     print'bg yield'
     #toyData = genFit.generate(RooArgSet(mzg),genBkgYield)
 
     toyData = myGenFunc.generate(RooArgSet(mzg),genBkgYield,RooFit.Verbose(True), RooFit.AllBinned())
+    if injectedSignalSize:
+      print 'injecting signal!!!!!'
+      toySignal = sig.generate(RooArgSet(mzg),injectedSignalSize,RooFit.Verbose(True), RooFit.AllBinned())
+      toyData.append(toySignal)
     print'toy made'
     bkg_est = toyData.sumEntries('1',sigRangeName)
     if verbose: print 'bkg_est',bkg_est
@@ -199,22 +216,42 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       testSigNormsDict[func].setVal(0)
       testBkgNormsDict[func].setVal(bkg_est)
 
-      nll = testModelsDict[func].createNLL(toyData,RooFit.Extended())
-      m = RooMinuit(nll)
-      m.migrad()
-      resMigrad = m.save()
-      m.hesse()
-      resHesse = m.save()
-      m.setPrintLevel(-100000)
+      #nll = testModelsDict[func].createNLL(toyData,RooFit.Extended())
+      #m = RooMinuit(nll)
+      #m.migrad()
+      #resMigrad = m.save()
+      #m.hesse()
+      #resHesse = m.save()
+      #m.setPrintLevel(-100000)
+      #m.minos()
+      #res = m.save()
 
       RooMsgService.instance().setGlobalKillBelow(RooFit.ERROR)
-      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
-      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE))
-      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(0),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Verbose(kFALSE))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
+      #testModelsDict[func].fitTo(toyData,RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(True))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(True))
+      res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(True))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE))
+
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE),RooFit.Minos(True))
+
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.NumCPU(6),RooFit.SumW2Error(kTRUE),RooFit.Minos(True))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(1),RooFit.SumW2Error(kTRUE), RooFit.Minos(True))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.InitialHesse(True),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE), RooFit.Minos(True),RooFit.Minimizer("Minuit"))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit"))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(2),RooFit.SumW2Error(kTRUE))
+      #res = testModelsDict[func].fitTo(toyData,RooFit.Save(),RooFit.PrintLevel(-1000000),RooFit.Strategy(1),RooFit.SumW2Error(kTRUE), RooFit.Minimizer("Minuit"),RooFit.Minos(RooArgSet(testBkgNormsDict[func],testSigNormsDict[func])))
 
       statusAll = res.status()
-      statusMIGRAD = resMigrad.status()
-      statusHESSE = resHesse.status()
+      try:
+        statusMIGRAD = resMigrad.status()
+      except:
+        statusMIGRAD = 0
+      try:
+        statusHESSE = resHesse.status()
+      except:
+        statusHESSE = 0
       numInvalidNLL = res.numInvalidNLL()
       edm = res.edm()
       minNll = res.minNll()
@@ -271,10 +308,14 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       structDict[func].covQual = covQual
 
       res.IsA().Destructor(res)
-      resHesse.IsA().Destructor(resHesse)
-      resMigrad.IsA().Destructor(resMigrad)
-      m.IsA().Destructor(m)
-      nll.IsA().Destructor(nll)
+      try: resHesse.IsA().Destructor(resHesse)
+      except: pass
+      try: resMigrad.IsA().Destructor(resMigrad)
+      except: pass
+      try: m.IsA().Destructor(m)
+      except: pass
+      try: nll.IsA().Destructor(nll)
+      except: pass
 
 
 
@@ -282,6 +323,7 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
 
     toyDataStruct.totalData = toyData.numEntries()
     toyDataStruct.sigWindowData = bkg_est
+    toyDataStruct.sigWindowInject =injectedSignalSize
 
     if (i%plotEvery == 0) or (i == 1):
       testFrame = mzg.frame()
@@ -293,7 +335,10 @@ def doBiasStudy(tev, lepton, cat, genFunc, mass, trials, job, plotEvery):
       testFrame.Draw()
       plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasFits/'+lepton+'/'+genFunc+'/'+mass
       if not os.path.isdir(plotDir): os.makedirs(plotDir)
-      c.Print(plotDir+'/'+'_'.join(['toyFits',suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
+      toyFitsName = 'toyFits'
+      if injectedSignalSize == 0: toyFitsName = toyFitsName + 'NoSig'
+      else: toyFitsName = toyFitsName + 'InjSig'
+      c.Print(plotDir+'/'+'_'.join([toyFitsName,suffix,lepton,tev,'cat'+cat,genFunc,'M'+mass,'job'+str(job),'trial'+str(i)])+'.pdf')
 
     tree.Fill()
     toyData.IsA().Destructor(toyData)

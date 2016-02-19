@@ -26,6 +26,7 @@ CMSStyle()
 
 prodToPick = {'ggH':'ggF','qqH':'VBF','WH':'WH','ZH':'ZH','ttH':'ttH'}
 
+
 #################################################
 # We're finally ready to make the datacards     #
 # Pull the info out, make the cards, write them #
@@ -43,6 +44,7 @@ def makeCards(MVATest = cfl.doMVA):
 
   YR = cfl.YR
   sigFit = cfl.sigFit
+  scale13TeV = cfl.scale13TeV
 
   bgFile = TFile('outputDir/'+suffix+'_'+YR+'_'+sigFit+'/CardBackground_'+suffix+'.root')
   bgWs = bgFile.Get('ws_card')
@@ -73,8 +75,8 @@ def makeCards(MVATest = cfl.doMVA):
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
         if cfl.highMass:
-          #bkgParams = ['p1','p2','p3','p4','p5','norm']
-          bkgParams = ['p1','p2','p3','p4','p5','p6','norm']
+          bkgParams = ['p1','p2','p3','p4','p5','norm']
+          #bkgParams = ['p1','p2','p3','p4','p5','p6','norm']
         elif cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = filter(lambda i: i in ['ggH', 'qqH'],sigNameList)
@@ -144,8 +146,14 @@ def makeCards(MVATest = cfl.doMVA):
           if cfl.highMass: zBR = 0.10098
           else: zBR = 1
           for sig in prefixSigList[::-1]:
-            card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()/zBR))
-          card.write('{0:^15}\n'.format(1))
+            if scale13TeV:
+              card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()*5.0/zBR))
+            else:
+              card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()/zBR))
+          if scale13TeV:
+            card.write('{0:^15}\n'.format(10))
+          else:
+            card.write('{0:^15}\n'.format(1))
 
           card.write('-----------------------------------------------------------------------------------------------------------------------\n')
 
@@ -304,7 +312,7 @@ def makeCards(MVATest = cfl.doMVA):
 
 
           card.close()
-          print cardName, 'created'
+  print 'cards created'
 
 
 

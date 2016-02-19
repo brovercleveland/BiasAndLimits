@@ -24,10 +24,10 @@ def LumiXSWeighter(year, lepton, sig, mass, nEvt, YR,alt=False):
   br = brDict[YR]['Zgamma'][mass]
 
   if type(xs) != float:
-    print 'using YR2 xs for ',year,sig,mass
+    #print 'using YR2 xs for ',year,sig,mass
     xs = xsDict['YR2'][year][sig][mass]
   if type(br) != float:
-    print 'using YR2 br for ',year,sig,mass
+    #print 'using YR2 br for ',year,sig,mass
     br = brDict['YR2']['Zgamma'][mass]
 
   if cfl.modelIndependent:

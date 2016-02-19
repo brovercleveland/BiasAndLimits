@@ -40,18 +40,28 @@ doMVA = False
 #suffix = '02-04-15_HighMassZ75'
 #suffix = '02-11-15_HighMass'
 #suffix = '04-1-15_HighMass'
-suffix = '04-1-15_HighMassNarrow'
+#suffix = '04-1-15_HighMassNarrow'
+#suffix = '04-27-15_HighMassNarrow'
+#suffix = '04-28-15_HighMassHZZCutNarrow'
+#suffix = '05-5-15_HighMass'
+#suffix = '05-6-15_HighMass'
+suffix = '05-29-15_HighMass'
 #suffix = '02-11-15_HighMassNarrow'
 #suffix = '02-11-15_HighMassElePt15'
 #suffix = '02-11-15_HighMassNarrowElePt15'
 #suffixPostFix = suffix+'1400'
 #suffixPostFix = suffix+'Ext2000'
-suffixPostFix = suffix+'2000'
+#suffixPostFix = suffix+'2000'
+#suffixPostFix = suffix+'BiasTests'
+#suffixPostFix = suffix+'FancyTests'
+#suffixPostFix = suffix+'800'
 #suffixPostFix = suffix
+suffixPostFix = suffix+'Redux800'
 
 
-leptonList = ['mu','el']
-#leptonList = ['el']
+#leptonList = ['mu','el']
+#leptonList = ['mu']
+leptonList = ['el']
 yearList = ['2011','2012']
 #yearList = ['2012']
 tevList = ['7TeV','8TeV']
@@ -70,10 +80,12 @@ modelIndependent = True
 
 if highMass:
   #massList = ['200','250','300','350','400','450','500','800','1200','1600']
+  #massList = ['200','250','300','350','400','450','500','800','1200']
   #massList = ['200','250','300','350','400','450','500','800']
-  #massList = ['200','250','300','350','400','450','500']
+  massList = ['200','250','300','350','400','450','500']
   #massList = ['500','800','1200','1600']
-  massList = ['800','1200','1600']
+  #massList = ['800','1200']
+  #massList = ['200']
   sigNameList = ['ggH']
   yearList = ['2012']
   tevList = ['8TeV']
@@ -91,14 +103,15 @@ if highMass:
 debugPlots = False
 verbose = False
 rootrace = False
-allBiasFits= True# Turn on extra fits used in bias studies
+allBiasFits= False# Turn on extra fits used in bias studies
 blind = False
 sigNameListInput = ['gg','vbf','tth','wh','zh']
 
 bgFitListTurnOn = ['GaussPow','GaussExp','GaussBern3','GaussBern4','GaussBern5']
 bgFitListVBF = ['Exp','Pow','Bern2','Bern3','Bern4']
 #bgFitListHighMass = ['Exp2','Pow','PowDecay','PowLog','Laurent','ExpSum']
-bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','PowDecay','PowLog','Laurent','Exp2','ExpSum','TripExpSum','PowExpSum','TripPowSum']
+bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','PowDecay','PowLog','Laurent','Exp2','PowExpSum','TripPowSum','TripExpSum','ExpSum']
+#bgFitListHighMass = ['ExpSum']
 #bgFitListHighMass = ['Gamma','Weibull','Hill','Pow','Laurent','Exp2']
 #bgFitListHighMass = ['TripExpSum']
 #bgFitListHighMass = ['Gamma']
@@ -107,10 +120,12 @@ bgRange = [100,190]
 if highMass:
   #bgRange = [150,600]
   #bgRange = [150,700]
-  #bgRange = [150,800]
-  #bgRange = [150,800]
-  bgRange = [150,2000]
-  bgRangeExt = [400,2000]
+  #bgRange = [150,1900]
+  bgRange = [150,800]
+  #bgRange = [150,2000]
+  #bgRange = [400,2000]
+  #bgRange = [150,1200]
+  bgRangeExt = [400,1800]
 blindRange = [180,550]
 
 if highMass:
@@ -122,7 +137,7 @@ if highMass:
 ##############
 
 doExt = False
-doFancy = True
+doFancy = False
 if 'Narrow' in suffix:
   doFancy = False
 
@@ -160,20 +175,19 @@ if highMass:
       '305.0', '310.0', '315.0', '320.0', '325.0', '330.0', '335.0', '340.0', '345.0', '350.0', '355.0',
       '360.0', '365.0', '370.0', '375.0', '380.0', '385.0', '390.0', '395.0', '400.0', '405.0', '410.0',
       '415.0', '420.0', '425.0', '430.0', '435.0', '440.0', '445.0', '450.0', '455.0', '460.0',
-      '465.0', '470.0', '475.0', '480.0', '485.0', '490.0', '495.0', '500.0',
-  #massListBig=   ['510.0', '520.0', '530.0', '540.0', '550.0', '560.0', '570.0', '580.0', '590.0', '600.0',
-      '510.0', '520.0', '530.0', '540.0', '550.0', '560.0', '570.0', '580.0', '590.0', '600.0',
-      '610.0', '620.0', '630.0', '640.0', '650.0', '660.0', '670.0', '680.0', '690.0', '700.0',
-      '710.0', '720.0', '730.0', '740.0', '750.0', '760.0', '770.0', '780.0', '790.0', '800.0',
-      '810.0', '820.0', '830.0', '840.0', '850.0', '860.0', '870.0', '880.0', '890.0', '900.0',
-      '910.0', '920.0', '930.0', '940.0', '950.0', '960.0', '970.0', '980.0', '990.0', '1000.0',
-      '1010.0', '1020.0', '1030.0', '1040.0', '1050.0', '1060.0', '1070.0', '1080.0', '1090.0', '1100.0',
-      '1110.0', '1120.0', '1130.0', '1140.0', '1150.0', '1160.0', '1170.0', '1180.0', '1190.0', '1200.0',
-      '1210.0', '1220.0', '1230.0', '1240.0', '1250.0', '1260.0', '1270.0', '1280.0', '1290.0', '1300.0',
-      '1310.0', '1320.0', '1330.0', '1340.0', '1350.0', '1360.0', '1370.0', '1380.0', '1390.0', '1400.0',
-      '1410.0', '1420.0', '1430.0', '1440.0', '1450.0', '1460.0', '1470.0', '1480.0', '1490.0', '1500.0',
-      '1510.0', '1520.0', '1530.0', '1540.0', '1550.0', '1560.0', '1570.0', '1580.0', '1590.0', '1600.0']
-  #massListBig= ['200.0']
+      '465.0', '470.0', '475.0', '480.0', '485.0', '490.0', '495.0', '500.0',]
+      #'510.0', '520.0', '530.0', '540.0', '550.0', '560.0', '570.0', '580.0', '590.0', '600.0',
+      #'610.0', '620.0', '630.0', '640.0', '650.0', '660.0', '670.0', '680.0', '690.0', '700.0',
+      #'710.0', '720.0', '730.0', '740.0', '750.0', '760.0', '770.0', '780.0', '790.0', '800.0',
+      #'810.0', '820.0', '830.0', '840.0', '850.0', '860.0', '870.0', '880.0', '890.0', '900.0',
+      #'910.0', '920.0', '930.0', '940.0', '950.0', '960.0', '970.0', '980.0', '990.0', '1000.0',
+      #'1010.0', '1020.0', '1030.0', '1040.0', '1050.0', '1060.0', '1070.0', '1080.0', '1090.0', '1100.0',
+      #'1110.0', '1120.0', '1130.0', '1140.0', '1150.0', '1160.0', '1170.0', '1180.0', '1190.0', '1200.0']
+      #'1210.0', '1220.0', '1230.0', '1240.0', '1250.0', '1260.0', '1270.0', '1280.0', '1290.0', '1300.0',
+      #'1310.0', '1320.0', '1330.0', '1340.0', '1350.0', '1360.0', '1370.0', '1380.0', '1390.0', '1400.0',
+      #'1410.0', '1420.0', '1430.0', '1440.0', '1450.0', '1460.0', '1470.0', '1480.0', '1490.0', '1500.0',
+      #'1510.0', '1520.0', '1530.0', '1540.0', '1550.0', '1560.0', '1570.0', '1580.0', '1590.0', '1600.0']
+  #massListBig= ['335.0']
   testPoints = ['200.0','250.0','300.0','350.0','400.0','450.0','500.0','800.0','1200.0','1600.0']
 
 ###############
@@ -187,13 +201,14 @@ if highMass:
 #############
 
 #no special switches
+scale13TeV = False
 
 #################
 # limitProducer #
 #################
 
-fullCombo = True
-byParts = False
+fullCombo = False
+byParts = True
 noCats = False
 if highMass:
   noCats = True
@@ -202,8 +217,8 @@ if highMass:
 # batchLimits #
 ###############
 
-mode = 'Combo'
-#mode = 'noCombo'
+#mode = 'Combo'
+mode = 'noCombo'
 
 syst = True
 
@@ -222,6 +237,8 @@ obs = True
 bgLimitDict = AutoVivification()
 #bgLimitDict[highMass][tev][lepton][cat]
 bgLimitDict[True]['8TeV']['mu']['0'] = 'TripExpSum'
+#bgLimitDict[True]['8TeV']['mu']['0'] = 'ExpSum'
+#bgLimitDict[True]['8TeV']['mu']['0'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['1'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['2'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['3'] = 'PowDecay'
@@ -233,6 +250,7 @@ bgLimitDict[True]['8TeV']['mu']['8'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['mu']['9'] = 'PowDecay'
 
 bgLimitDict[True]['8TeV']['el']['0'] = 'TripExpSum'
+#bgLimitDict[True]['8TeV']['el']['0'] = 'ExpSum'
 bgLimitDict[True]['8TeV']['el']['1'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['el']['2'] = 'PowDecay'
 bgLimitDict[True]['8TeV']['el']['3'] = 'PowDecay'
@@ -300,13 +318,15 @@ if highMass:
   #testFuncs = ['PowDecay','PowLog','ExpSum','TripExpSum','PowExpSum','TripPowSum']
   #testFuncs = ['PowDecay','ExpSum','TripExpSum','PowExpSum','TripPowSum']
   testFuncs = ['TripExpSum']
-  genFuncs = ['Pow','Laurent','Exp2','Gamma','Weibull','Hill']
-  #genFuncs = ['Gamma']
+  #testFuncs = ['ExpSum']
+  #genFuncs = ['Pow','Laurent','Exp2','Gamma','Weibull','Hill']
+  genFuncs = ['Laurent']
+  injectedSignalSize = 10
 else:
   testFuncs = bgFitListTurnOn
   genFuncs = ['GaussPow']
 
-trials = 100
+trials = 200
 #trials = 1
 jobs = 100
 #jobs = 1
@@ -322,6 +342,8 @@ plotEvery = 50
 ##############
 # makeTables #
 ##############
-tableFuncs = ['PowDecay','ExpSum','PowExpSum','TripExpSum','TripPowSum']
+#tableFuncs = ['PowDecay','ExpSum','PowExpSum','TripExpSum','TripPowSum']
+#tableFuncs = ['TripExpSum']
+tableFuncs = ['ExpSum']
 
 

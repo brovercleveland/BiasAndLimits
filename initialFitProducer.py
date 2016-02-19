@@ -80,6 +80,7 @@ def doInitialFits():
   print 'high!!!!!!!!!!!!!!!!!!'
   mzg  = RooRealVar('CMS_hzg_mass','CMS_hzg_mass',xmin,xmax)
   mzg.setRange('full',xmin,xmax)
+  mzg.setRange('reduced',xmin,1400)
   mzg.setRange('Blind1',xmin,cfl.blindRange[0])
   mzg.setRange('Blind2',cfl.blindRange[1],xmax)
   mzg.setBins((xmax-xmin)*4)
@@ -142,9 +143,14 @@ def doInitialFits():
             for i in range(0,signalTree.GetEntries()):
               signalTree.GetEntry(i)
 
-              if highMass and narrow == '':
+              if highMass and narrow == '' and int(mass)<=500:
                 low = int(mass)*0.4
                 high = int(mass)*1.6
+              elif highMass and narrow == '':
+                low = int(mass)*0.4
+                high = int(mass)*1.6
+                #low = int(mass)*0.8
+                #high = int(mass)*1.2
               elif highMass:
                 low = int(mass)*0.92
                 high = int(mass)*1.08
@@ -336,16 +342,25 @@ def doInitialFits():
 
           color = fitBuilder.FitColorDict[fitName]
           ndof = fitBuilder.FitNdofDict[fitName]
-          if highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 700 and lepton == 'mu':
-            fit = fitBuilder.Build(fitName, p3 = 0.01)
+          if highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 2000 and lepton == 'mu':
+            fit = fitBuilder.Build(fitName)
+          elif highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 2000 and lepton == 'el':
+            fit = fitBuilder.Build(fitName)
+          elif highMass and fitName == 'TripExpSum' and cfl.bgRange[1]> 700 and lepton == 'mu':
+            fit = fitBuilder.Build(fitName)
           else:
             fit = fitBuilder.Build(fitName)
           if type(fit) == tuple: fit = fit[0]
           if verbose: fit.Print()
           #if highMass and fitName in ['TripExpSum','Gamma']:
-          if highMass and fitName in ['Gamma']:
-            #fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True),RooFit.Range(150,800))
-            fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True))
+          #if highMass and fitName in ['TripExpSum','Gamma']:
+          #  fit.fitTo(data_ds, RooFit.Strategy(1),RooFit.SumW2Error(True))
+          if highMass and fitName in ['TripExpSum','Gamma'] and lepton in ['el']:
+            fit.fitTo(data_ds, RooFit.Minos(False), RooFit.Strategy(0),RooFit.SumW2Error(False))
+          elif highMass and fitName in ['TripExpSum','Gamma'] and lepton in ['mu']:
+            fit.fitTo(data_ds, RooFit.Strategy(0), RooFit.Minos(True),RooFit.SumW2Error(False))
+          elif fitName in ['ExpSum']:
+            fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True),RooFit.SumW2Error(False))
           else:
             fit.fitTo(data_ds, RooFit.Strategy(1))
 

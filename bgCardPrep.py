@@ -63,6 +63,7 @@ for tev in tevList:
       normName = 'norm'+fitName
 
       data = myWs.data(dataName)
+      data.Print()
       fit = myWs.pdf(fitName)
       fit.Print()
 
@@ -86,7 +87,7 @@ for tev in tevList:
         testFrame = mzg.frame()
         data.plotOn(testFrame)
         fit_ext.plotOn(testFrame)
-        testFrame.Draw()
+        testFrame.Draw('e0')
         c.Print('debugPlots/'+'_'.join(['test','data','fit',lepton,tev,'cat'+cat])+'.pdf')
         print 'end', norm.getVal()
       else:
@@ -122,16 +123,22 @@ for tev in tevList:
 
         fitExtName = '_'.join(['bkgTmp',lepton,tev,'cat'+cat])
         fit_ext = RooExtendPdf(fitExtName,fitExtName, fit,norm)
-        #fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit2"))
-        #fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit"))
+        #fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit2"))
+        #fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minos(RooArgSet(norm)), RooFit.Minimizer("Minuit"))
         fit_res = None
-        if lepton == 'mu' or lepton == 'el':
-          fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.InitialHesse(True), RooFit.Minos(True), RooFit.Minimizer("Minuit"))
-        else:
-          #fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minimizer("Minuit2"))
-          fit_res = fit_ext.fitTo(data,RooFit.Range('fullRegion'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended())
+        if lepton == 'mu':
+          #fit_res = fit_ext.fitTo(data,RooFit.Range('reduced'), RooFit.Save(), RooFit.Strategy(0), RooFit.Extended(), RooFit.InitialHesse(True), RooFit.Minos(True), RooFit.Minimizer("Minuit"))
 
-        testFrame = mzg.frame()
+          fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(2),RooFit.Extended())
+        else:
+          #fit_res = fit_ext.fitTo(data,RooFit.Range('reduced'), RooFit.Save(), RooFit.Strategy(0), RooFit.Extended(), RooFit.InitialHesse(True), RooFit.Minos(True), RooFit.Minimizer("Minuit"))
+
+          fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended())
+          #fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(1), RooFit.InitialHesse(True), RooFit.Extended())
+          #fit_res = fit_ext.fitTo(data,RooFit.Range('full'), RooFit.Save(), RooFit.Strategy(2), RooFit.Extended(), RooFit.Minimizer("Minuit"))
+          #fit_res = fit_ext.fitTo(data,RooFit.Range('reduced'), RooFit.Save(), RooFit.Strategy(0), RooFit.Extended(), RooFit.InitialHesse(True), RooFit.Minos(True), RooFit.Minimizer("Minuit"))
+
+        testFrame = mzg.frame(RooFit.Range('reduced'))
         binning = (cfl.bgRange[1]-cfl.bgRange[0])/20
 
         if blind:
@@ -139,10 +146,11 @@ for tev in tevList:
           data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
-          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0))
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Range('reduced'),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0),RooFit.DataError(RooAbsData.SumW2))
 
-        linearInterp = True
-        if lepton == 'el' or lepton == 'mu': linearInterp = False
+        linearInterp = False
+        if lepton == 'mu': linearInterp = False
+
         #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
         #           RooFit.VisualizeError(fit_res,RooArgSet(norm),2,False), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
         fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
@@ -160,25 +168,10 @@ for tev in tevList:
           data.plotOn(testFrame,RooFit.Binning(5,cfl.blindRange[1],cfl.bgRange[1]),RooFit.Name('data'), RooFit.MarkerSize(0.5))
           data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.Invisible())
         else:
-          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0))
-
-        #if hjp:
-        #  testFrame.SetMaximum(12)
-        #elif cat in ['0']:
-        #  testFrame.SetMaximum(82)
-        #elif cat in ['m1','m2','m3','m4','m5','m6']:
-        #  testFrame.SetMaximum(22)
-        #elif cat in ['m7']:
-        #  testFrame.SetMaximum(42)
-        #else:
-        #  testFrame.SetMaximum(65)
+          data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Name('data'),RooFit.MarkerSize(0.5),RooFit.XErrorSize(0),RooFit.DataError(RooAbsData.SumW2))
 
         testFrame.Draw()
-        #hsig[0].SetAxisRange(115,135,"X")
-        #hsig[0].SetLineColor(kRed+1)
-        #hsig[0].SetLineWidth(2)
-        #hsig[0].Draw('same hist')
-        testFrame.SetMinimum(0.1)
+        testFrame.SetMinimum(0.01)
         c.SetLogy()
 
         testFrame.GetXaxis().SetTitleFont(42)
@@ -194,29 +187,8 @@ for tev in tevList:
         testFrame.GetXaxis().SetTitleOffset(0.8)
         testFrame.GetYaxis().SetTitleOffset(0.85)
 
-        #if hjp: leg  = TLegend(0.45,0.62,0.91,0.87)
-        #leg  = TLegend(0.46,0.73,0.80,0.95)
-        #leg.SetFillColor(0)
-        #leg.SetFillStyle(0)
-        #leg.SetBorderSize(0)
-        ##leg.AddEntry(hsig[0],'Expected signal x'+str(factor),'f')
-        ##leg.AddEntry(testFrame.findObject(bkgModel+'1sigma'),"Background Model",'f')
-        #leg.AddEntry(testFrame.findObject(fitExtName),"Background Model",'l')
-        #leg.AddEntry(data,'Data','lep')
-        #leg.SetTextSize(0.042)
-        #leg.Draw()
-
-        #leg2  = TLegend(0.70,0.70,0.98,0.8)
-        #leg2.SetNColumns(2)
-        #leg2.SetFillColor(0)
-        #leg2.SetFillStyle(0)
-        #leg2.SetBorderSize(0)
-        #leg2.AddEntry(c.findObject(fitExtName+'1sigma'),"#pm 1 #sigma",'f')
-        #leg2.AddEntry(c.findObject(fitExtName+'2sigma'),"#pm 2 #sigma",'f')
-        #leg2.SetTextSize(0.042)
-        #leg2.Draw()
-
-        leg  = TLegend(0.2,0.2,0.6,0.45)
+        #leg  = TLegend(0.2,0.2,0.6,0.45)
+        leg  = TLegend(0.3,0.7,0.5,0.9)
         leg.SetFillColor(0)
         leg.SetFillStyle(0)
         leg.SetBorderSize(0)

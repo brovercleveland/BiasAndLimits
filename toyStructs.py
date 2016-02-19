@@ -8,6 +8,7 @@ def makeToyStucts():
   'struct TOYDATA{\
     Int_t totalData;\
     Int_t sigWindowData;\
+    Int_t sigWindowInject;\
   };')
 
   print 'making GAUSSBERN3...'

@@ -38,7 +38,7 @@ Notification            = Error
 Executable              = biasStudy_toyMaker.py
 Arguments               = --tev {0} --lepton {1} --cat {2} --genFunc {3} --mass {4} --trials {5} --job {6} --plotEvery {7}
 Rank                    = Mips
-Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer) && (machine!="ttnode0008")
+Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
 +LENGTH                 = "LONG"
 GetEnv                  = True
 Input                   = /dev/null
@@ -55,3 +55,4 @@ Queue
             os.system('rm submit.cmd')
 
 
+#Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer) && (machine!="ttnode0008")

@@ -16,6 +16,7 @@ highMass = cfl.highMass
 genFuncs = cfl.genFuncs
 testFuncs = cfl.testFuncs
 suffix = cfl.suffixPostFix
+injectedSignalSize = cfl.injectedSignalSize
 
 def getArgs():
   parser = argparse.ArgumentParser()
@@ -39,13 +40,17 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
   #get the toy file and tree
   biasPath = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'
   biasPath = biasPath+suffix+'_'+YR+'_'+sigFit+'/biasStudy'
-  toyFileName = biasPath+'/combine/'+'_'.join(['combined',tev,lepton,cat,genFunc,mass])+'.root'
+  if cfl.injectedSignalSize:
+    combName = 'combinedInj'
+  else:
+    combName = 'combined'
+  toyFileName = biasPath+'/combine/'+'_'.join([combName,tev,lepton,cat,genFunc,mass])+'.root'
 
   print toyFileName
   toyFile = TFile(toyFileName)
   toyTree = toyFile.Get('toys')
 
-  gStyle.SetOptStat(0)
+  gStyle.SetOptStat(111111)
   gStyle.SetTitleFontSize(2.7)
   gStyle.SetTitleH(0.08) # Set the height of the title box
   gStyle.SetTitleW(1)    # Set the width of the title box
@@ -78,8 +83,9 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
   for fitFunc in testFuncs:
     cutStr = ''
     #if fitFunc in ['TripExpSum','ExpSum','PowDecay']:
-    #  cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<19.999'
-    #cutStr = cutStr+fitFunc+'.bkgYieldErr>0.1'
+    #cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<40.01'
+    #cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<12'
+    #cutStr = cutStr+fitFunc+'.yieldSigErr<50'
     #cutStr = 'stat'+fitFunc+'==0&&covQual'+fitFunc+'>=1'
     #if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
     #elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):
@@ -113,7 +119,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
 
       if dist == 'sigPull':
         #toyTree.Draw('(yield.fitsig'+fitFunc+'/yield.fitsig'+fitFunc+'err)>>'+dist+'_'+fitFunc ,cutStr,'goff')
-        toyTree.Draw('('+fitFunc+'.yieldSig/'+fitFunc+'.yieldSigErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        toyTree.Draw('(('+fitFunc+'.yieldSig-toyData.sigWindowInject)/'+fitFunc+'.yieldSigErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nSig/#sigma(nSig)')
       elif dist == 'bgPull':
         toyTree.Draw('(('+fitFunc+'.yieldBkg-toyData.sigWindowData)/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
@@ -131,14 +137,14 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
         toyTree.Draw('('+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('#sigma(nBG)')
       elif dist == 'typeA':
-        toyTree.Draw('('+fitFunc+'.yieldSig/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        toyTree.Draw('(('+fitFunc+'.yieldSig-toyData.sigWindowInject)/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nSig/#sigma(nBG)')
 
       tmpHist.GetYaxis().SetTitle('A.U.')
       tmpHist.GetYaxis().CenterTitle()
 
       print fitFunc,dist,tmpHist.GetEntries()
-      if(tmpHist.Integral()>0): tmpHist.Scale(1./tmpHist.Integral())
+      #if(tmpHist.Integral()>0): tmpHist.Scale(1./tmpHist.Integral())
 
       histListDict[dist].append(tmpHist)
       legList[i].AddEntry(tmpHist,fitFunc+': #mu={0:.2f}, #sigma={1:.2f}'.format(tmpHist.GetMean(), tmpHist.GetRMS()),'l')
@@ -146,12 +152,15 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
 
   #make the plots
 
-  plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls'
-  if not os.path.isdir(plotDir): os.mkdir(plotDir)
+  if injectedSignalSize:
+    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/injSig'
+  else:
+    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/noSig'
+  if not os.path.isdir(plotDir): os.makedirs(plotDir)
 
   #get a txt file ready for the latex
   biasPathText = biasPath.rstrip('biasStudy')+mass+'.0/biasOutput'
-  if not os.path.isdir(biasPathText): os.mkdir(biasPathText)
+  if not os.path.isdir(biasPathText): os.makedirs(biasPathText)
 
   with open(biasPathText+'/'+'_'.join(['rawText',tev,lepton,'cat'+cat, genFunc])+'.txt','w') as f:
     for i,dist in enumerate(distList):
@@ -165,7 +174,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
       #raw_input()
       for j in range(1,len(histListDict[dist])):
         histListDict[dist][j].Draw('same')
-      legList[i].Draw('same')
+      if dist in ['typeA','bgPull']:legList[i].Draw('same')
       canList[i].Print(plotDir+'/'+'_'.join([dist,tev,lepton,'cat'+cat, genFunc,'M'+mass])+'.pdf')
 
       if dist == 'typeA':
