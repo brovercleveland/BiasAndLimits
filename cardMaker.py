@@ -75,8 +75,11 @@ def makeCards(MVATest = cfl.doMVA):
         else: phoGeom = 'EE'
         channel = '_'.join([lepton,tev,'cat'+cat])
         if cfl.highMass:
-          bkgParams = ['p1','p2','p3','p4','p5','norm']
+          #bkgParams = ['p1','p2','p3','p4','p5','norm']
           #bkgParams = ['p1','p2','p3','p4','p5','p6','norm']
+          #bkgParams = ['p1','p2','p3','p4','k','norm']
+          #bkgParams = ['p1','p2','p3','k','norm']
+          bkgParams = ['p1','p2','norm']
         elif cat is '5':
           bkgParams = ['p1','p2','p3','norm']
           sigNameList = filter(lambda i: i in ['ggH', 'qqH'],sigNameList)
@@ -149,7 +152,8 @@ def makeCards(MVATest = cfl.doMVA):
             if scale13TeV:
               card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()*5.0/zBR))
             else:
-              card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()/zBR))
+              #card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()/zBR))
+              card.write('{0:^15.5} '.format(sigWs.var('_'.join([sig,'yield',lepton,tev,'cat'+cat])).getVal()))
           if scale13TeV:
             card.write('{0:^15}\n'.format(10))
           else:
@@ -300,7 +304,7 @@ def makeCards(MVATest = cfl.doMVA):
           if cfl.highMass:
             for sig in prefixSigList:
               card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))
-              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.10))
+              card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_sigmaShift_'+channel,'param', 1, 0.1))
           else:
             for sig in prefixSigList:
               card.write('{0:<40} {1:<10} {2:^10} {3:^10}\n'.format(sig+'_mShift_'+channel,'param', 1, 0.01))

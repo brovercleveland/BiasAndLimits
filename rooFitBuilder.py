@@ -11,6 +11,19 @@ gROOT.ProcessLine('.x RooStepBernstein.cxx+')
 gROOT.ProcessLine('.x RooGaussStepBernstein.cxx+')
 #gROOT.ProcessLine('.x HZGRooPdfs.cxx++')
 
+def Lag0():
+  return '1'
+def Lag1(x):
+  return '(1-({0}))'.format(x)
+def Lag2(x):
+  return '(({0})**2-4*({0})+2)*0.5'.format(x)
+def Lag3(x):
+  return '(-({0})**3+9*({0})**2-18*({0})+6)/6.0'.format(x)
+def Lag4(x):
+  return '(({0})**4-16*({0})**3+72*({0})**2-96*({0})+24)/24.0'.format(x)
+def Lag5(x):
+  return '(-({0})**5+25*({0})**4-200*({0})**3+600*({0})**2-600*({0})+120)/120.0'.format(x)
+
 class FitBuilder:
   FitColorDict = {
       'GaussBern3':kViolet,
@@ -30,8 +43,11 @@ class FitBuilder:
       'Exp':kBlue,
       'Exp2':kBlack,
       'ExpSum':kGreen+2,
+      'ExpSum2':kGreen+3,
       'PowExpSum':kOrange,
+      'Dijet':kOrange,
       'TripExpSum':kBlue,
+      'TripExpSumv2':kBlue,
       'TripPowSum':kGray+2,
       'Laurent':kRed,
       'Pow':kCyan,
@@ -43,6 +59,18 @@ class FitBuilder:
       'Hill':kTeal-8,
       'Weibull':kViolet,
       'Gamma':kMagenta-9,
+      'Laguerre1':kTeal,
+      'Laguerre2':kTeal+1,
+      'Laguerre3':kTeal+2,
+      'Laguerre4':kTeal+3,
+      'Laguerre5':kTeal+4,
+      'BesselK1':kTeal,
+      'BesselK2':kTeal+1,
+      'BesselK3':kTeal+2,
+      'BesselK3b':kTeal+2,
+      'BesselK4':kTeal+3,
+      'BesselK4b':kTeal+3,
+      'BesselK5':kTeal+4,
     }
 
   FitNdofDict = {
@@ -59,8 +87,11 @@ class FitBuilder:
     'Exp':1,
     'Exp2':2,
     'ExpSum':3,
+    'ExpSum2':3,
     'PowExpSum':3,
+    'Dijet':2,
     'TripExpSum':5,
+    'TripExpSumv2':6,
     'TripPowSum':5,
     'Laurent':1,
     'Pow':2,
@@ -76,6 +107,18 @@ class FitBuilder:
     'Hill':2,
     'Weibull':2,
     'Gamma':3,
+    'Laguerre1':2,
+    'Laguerre2':3,
+    'Laguerre3':4,
+    'Laguerre4':5,
+    'Laguerre5':6,
+    'BesselK1':2,
+    'BesselK2':3,
+    'BesselK3':4,
+    'BesselK3b':3,
+    'BesselK4':5,
+    'BesselK4b':4,
+    'BesselK5':6,
   }
 
   def __init__(self,mzg,tev,lepton,cat,sig=None,mass=None):
@@ -112,9 +155,24 @@ class FitBuilder:
         'PowLog': self.BuildPowLog,
         'Exp2': self.BuildExp2,
         'ExpSum': self.BuildExpSum,
+        'ExpSum2': self.BuildExpSum2,
         'PowExpSum': self.BuildPowExpSum,
+        'Dijet': self.BuildDijet,
         'TripExpSum': self.BuildTripExpSum,
+        'TripExpSumv2': self.BuildTripExpSumv2,
         'TripPowSum': self.BuildTripPowSum,
+        'Laguerre1': self.BuildLaguerre1,
+        'Laguerre2': self.BuildLaguerre2,
+        'Laguerre3': self.BuildLaguerre3,
+        'Laguerre4': self.BuildLaguerre4,
+        #'Laguerre5': self.BuildLaguerre5,
+        'BesselK1': self.BuildBesselK1,
+        'BesselK2': self.BuildBesselK2,
+        'BesselK3': self.BuildBesselK3,
+        'BesselK3b': self.BuildBesselK3b,
+        #'BesselK4': self.BuildBesselK4,
+        #'BesselK5': self.BuildBesselK5,
+        'BesselK4b': self.BuildBesselK4b,
         'Laurent': self.BuildLaurent,
         'Bern2': self.BuildBern2,
         'Bern3': self.BuildBern3,
@@ -132,9 +190,151 @@ class FitBuilder:
 
 
 
-
   def Build(self, funcName, **kargs):
     return self.BuildDict[funcName](**kargs)
+
+  def BuildBesselK1(self, k=1e-5,kLow=0,kHigh=1,p1 = 0.00001, p1Low = 0, p1High=1):
+    kVar = RooRealVar('kBesselK1_'+self.suffix,'kBesselK1_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1BesselK1_'+self.suffix,'p1BesselK1_'+self.suffix,p1,p1Low,p1High)
+    u = '@1*(@0-140)'
+    bessString = '@2*@1*ROOT::Math::cyl_bessel_k(0,'+u+')'
+    BesselK1 = RooGenericPdf('BesselK1_'+self.suffix,'BesselK1_'+self.suffix, bessString,
+        RooArgList(self.mzg,kVar,p1Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    return BesselK1
+
+  def BuildBesselK2(self, k=1e-5,kLow=1e-7,kHigh=1,
+      p1 = 0.5, p1Low = 1e-7, p1High=1,
+      p2 = 0.5, p2Low = 1e-7, p2High=1):
+    kVar = RooRealVar('kBesselK2_'+self.suffix,'kBesselK2_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1BesselK2_'+self.suffix,'p1BesselK2_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2BesselK2_'+self.suffix,'p2BesselK2_'+self.suffix,p2,p2Low,p2High)
+    u = '@1*(@0)'
+    bessString = '@1*(@2*ROOT::Math::cyl_bessel_k(0,'+u+')+@3*ROOT::Math::cyl_bessel_k(1,'+u+'))'
+    BesselK2 = RooGenericPdf('BesselK2_'+self.suffix,'BesselK2_'+self.suffix, bessString,
+        RooArgList(self.mzg,kVar,p1Var,p2Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    return BesselK2
+
+  def BuildBesselK3(self, k=1e-5,kLow=0,kHigh=1,
+      p1 = 0.5, p1Low = 0, p1High=1,
+      p2 = 0.5, p2Low = 0, p2High=1,
+      p3 = 0.5, p3Low = 0, p3High=1):
+    kVar = RooRealVar('kBesselK3_'+self.suffix,'kBesselK3_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1BesselK3_'+self.suffix,'p1BesselK3_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2BesselK3_'+self.suffix,'p2BesselK3_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3BesselK3_'+self.suffix,'p3BesselK3_'+self.suffix,p3,p3Low,p3High)
+    u = '@1*(@0-140)'
+    bessString = '@1*(@2*ROOT::Math::cyl_bessel_k(0,'+u+')+@3*ROOT::Math::cyl_bessel_k(1,'+u+')+@4*ROOT::Math::cyl_bessel_k(2,'+u+'))'
+    BesselK3 = RooGenericPdf('BesselK3_'+self.suffix,'BesselK3_'+self.suffix, bessString,
+        RooArgList(self.mzg,kVar,p1Var,p2Var,p3Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return BesselK3
+
+  def BuildBesselK3b(self,
+      p1 = 0.5, p1Low = 0, p1High=1,
+      p2 = 0.5, p2Low = 0, p2High=1,
+      p3 = 0.5, p3Low = 0, p3High=1):
+    p1Var = RooRealVar('p1BesselK3b_'+self.suffix,'p1BesselK3b_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2BesselK3b_'+self.suffix,'p2BesselK3b_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3BesselK3b_'+self.suffix,'p3BesselK3b_'+self.suffix,p3,p3Low,p3High)
+    u = '(@0-149)/1.0e4'
+    bessString = '(@1*ROOT::Math::cyl_bessel_k(0,'+u+')+@2*ROOT::Math::cyl_bessel_k(1,'+u+')+@3*ROOT::Math::cyl_bessel_k(2,'+u+'))'
+    BesselK3b = RooGenericPdf('BesselK3b_'+self.suffix,'BesselK3b_'+self.suffix, bessString,
+        RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return BesselK3b
+
+  def BuildBesselK4b(self,
+      p1 = 0.5, p1Low = 0, p1High=1,
+      p2 = 0.5, p2Low = 0, p2High=1,
+      p3 = 0.5, p3Low = 0, p3High=1,
+      p4 = 0.5, p4Low = 0, p4High=1):
+    p1Var = RooRealVar('p1BesselK4b_'+self.suffix,'p1BesselK4b_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2BesselK4b_'+self.suffix,'p2BesselK4b_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3BesselK4b_'+self.suffix,'p3BesselK4b_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4BesselK4b_'+self.suffix,'p4BesselK4b_'+self.suffix,p4,p4Low,p4High)
+    u = '(@0-149)/1.0e4'
+    bessString = '(@1*ROOT::Math::cyl_bessel_k(0,'+u+')+@2*ROOT::Math::cyl_bessel_k(1,'+u+')+@3*ROOT::Math::cyl_bessel_k(2,'+u+')+@4*ROOT::Math::cyl_bessel_k(3,'+u+'))'
+    BesselK4b = RooGenericPdf('BesselK4b_'+self.suffix,'BesselK4b_'+self.suffix, bessString,
+        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    SetOwnership(p4Var,0)
+    return BesselK4b
+
+  def BuildLaguerre1(self,k = 0.001, kLow=0, kHigh=1, p1 = 0.00001, p1Low = -1, p1High=1):
+    kVar = RooRealVar('kLaguerre1_'+self.suffix,'kLaguerre1_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1Laguerre1_'+self.suffix,'p1Laguerre1_'+self.suffix,p1,p1Low,p1High)
+    u = '@1*(@0-150)'
+    lagString = '('+Lag0()+'+@2*'+Lag1(u)+')*@1*exp(-'+u+')'
+    Laguerre1 = RooGenericPdf('Laguerre1_'+self.suffix,'Laguerre1_'+self.suffix, lagString,
+        RooArgList(self.mzg,kVar,p1Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    return Laguerre1
+
+  def BuildLaguerre2(self,k = 0.001, kLow=0, kHigh=1, p1 = 0.00001, p1Low = -1e6, p1High=1e6,
+      p2 = 0.00001, p2Low = -1e6, p2High=1e6):
+    kVar = RooRealVar('kLaguerre2_'+self.suffix,'kLaguerre2_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1Laguerre2_'+self.suffix,'p1Laguerre2_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Laguerre2_'+self.suffix,'p2Laguerre2_'+self.suffix,p2,p2Low,p2High)
+    u = '@1*(@0-150)'
+    lagString = '('+Lag0()+'+@2*'+Lag1(u)+'+@3*'+Lag2(u)+')*@1*exp(-'+u+')'
+    Laguerre2 = RooGenericPdf('Laguerre2_'+self.suffix,'Laguerre2_'+self.suffix, lagString,
+        RooArgList(self.mzg,kVar,p1Var,p2Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    return Laguerre2
+
+  def BuildLaguerre3(self,k = 0.001, kLow=0, kHigh=1,
+      p1 = 0.00001, p1Low = -1e6, p1High=1e6,
+      p2 = 0.00001, p2Low = -1e6, p2High=1e6,
+      p3 = 0.00001, p3Low = -1e6, p3High=1e6):
+    kVar = RooRealVar('kLaguerre3_'+self.suffix,'kLaguerre3_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1Laguerre3_'+self.suffix,'p1Laguerre3_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Laguerre3_'+self.suffix,'p2Laguerre3_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3Laguerre3_'+self.suffix,'p3Laguerre3_'+self.suffix,p3,p3Low,p3High)
+    u = '@1*(@0-150)'
+    lagString = '('+Lag0()+'+@2*'+Lag1(u)+'+@3*'+Lag2(u)+'+@4*'+Lag3(u)+')*@1*exp(-'+u+')'
+    Laguerre3 = RooGenericPdf('Laguerre3_'+self.suffix,'Laguerre3_'+self.suffix, lagString,
+        RooArgList(self.mzg,kVar,p1Var,p2Var,p3Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return Laguerre3
+
+  def BuildLaguerre4(self,k = 0.001, kLow=0, kHigh=1,
+      p1 = 0.00001, p1Low = -1, p1High=1,
+      p2 = 0.00001, p2Low = -1, p2High=1,
+      p3 = 0.00001, p3Low = -1, p3High=1,
+      p4 = 0.00001, p4Low = -1, p4High=1):
+    kVar = RooRealVar('kLaguerre4_'+self.suffix,'kLaguerre4_'+self.suffix,k,kLow,kHigh)
+    p1Var = RooRealVar('p1Laguerre4_'+self.suffix,'p1Laguerre4_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Laguerre4_'+self.suffix,'p2Laguerre4_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3Laguerre4_'+self.suffix,'p3Laguerre4_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4Laguerre4_'+self.suffix,'p4Laguerre4_'+self.suffix,p4,p4Low,p4High)
+    u = '@1*(@0-150)'
+    lagString = '('+Lag0()+'+@2*'+Lag1(u)+'+@3*'+Lag2(u)+'+@4*'+Lag3(u)+'+@4*'+Lag4(u)+')*@1*exp(-'+u+')'
+    Laguerre4 = RooGenericPdf('Laguerre4_'+self.suffix,'Laguerre4_'+self.suffix, lagString,
+        RooArgList(self.mzg,kVar,p1Var,p2Var,p3Var,p4Var))
+    SetOwnership(kVar,0)
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    SetOwnership(p4Var,0)
+    return Laguerre4
 
   def BuildBetaAndBern(self,rangeName,frac = 0.1, fracLow = 0, fracHigh = 0.9):
 
@@ -580,16 +780,27 @@ class FitBuilder:
     SetOwnership(p2Var,0)
     return Exp2
 
-  def BuildExpSum(self,p1 = 0.1, p1Low = 0.0001, p1High = 0.9999, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 0.2, p3Low = 0.00001, p3High = 20):
+  def BuildExpSum(self,p1 = 0.1, p1Low = 1e-7, p1High = 0.9999, p2 = 0.01, p2Low = 1e-7, p2High = 1, p3 = 0.03, p3Low = 0.01, p3High = 1):
 
     p1Var = RooRealVar('p1ExpSum_'+self.suffix,'p1ExpSum_'+self.suffix,p1,p1Low,p1High)
     p2Var = RooRealVar('p2ExpSum_'+self.suffix,'p2ExpSum_'+self.suffix,p2,p2Low,p2High)
     p3Var = RooRealVar('p3ExpSum_'+self.suffix,'p3ExpSum_'+self.suffix,p3,p3Low,p3High)
-    ExpSum = RooGenericPdf('ExpSum_'+self.suffix,'ExpSum_'+self.suffix,'(1-@1)*exp(-@2*@0)+@1*exp(-@3*@0)',RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    ExpSum = RooGenericPdf('ExpSum_'+self.suffix,'ExpSum_'+self.suffix,'(1-@1)*exp(-@2*(@0-150))+@1*exp(-@3*(@0-150))',RooArgList(self.mzg,p1Var,p2Var,p3Var))
     SetOwnership(p1Var,0)
     SetOwnership(p2Var,0)
     SetOwnership(p3Var,0)
     return ExpSum
+
+  def BuildExpSum2(self,p1 = 0.1, p1Low = 1e-7, p1High = 0.9999, p2 = 0.01, p2Low = 1e-7, p2High = 1, p3 = 0.5, p3Low = 1e-7, p3High = 1):
+
+    p1Var = RooRealVar('p1ExpSum2_'+self.suffix,'p1ExpSum2_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2ExpSum2_'+self.suffix,'p2ExpSum2_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3ExpSum2_'+self.suffix,'p3ExpSum2_'+self.suffix,p3,p3Low,p3High)
+    ExpSum2 = RooGenericPdf('ExpSum2_'+self.suffix,'ExpSum2_'+self.suffix,'(1-@1)*exp(-@2*(@0-150))+@1*@3**((@0-150))',RooArgList(self.mzg,p1Var,p2Var,p3Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    return ExpSum2
 
   def BuildPowExpSum(self,p1 = 0.1, p1Low = 0, p1High = 0.99999, p2 = 0.01, p2Low = 0.00001, p2High = 20, p3 = 4, p3Low = 0.001, p3High = 10):
 
@@ -602,8 +813,17 @@ class FitBuilder:
     SetOwnership(p3Var,0)
     return PowExpSum
 
-  def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.2, p3Low = 0.00001, p3High = 20,
-      p4 = 0.001, p4Low = 0.00001, p4High = 20, p5 = 0.01, p5Low = 0.00001, p5High = 20):
+  def BuildDijet(self,p1 = -0.1, p1Low = -10, p1High = 1e-6, p2 = -0.1, p2Low = -10, p2High = 1e-6):
+
+    p1Var = RooRealVar('p1Dijet_'+self.suffix,'p1Dijet_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2Dijet_'+self.suffix,'p2Dijet_'+self.suffix,p2,p2Low,p2High)
+    Dijet = RooGenericPdf('Dijet_'+self.suffix,'Dijet_'+self.suffix,'(@0)^(@1+@2*log(@0))',RooArgList(self.mzg,p1Var,p2Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    return Dijet
+
+  def BuildTripExpSum(self,p1 = 0.001, p1Low = 1e-7, p1High = 1, p2 = 0.6, p2Low = 1e-7, p2High = 1, p3 = 0.2, p3Low = 1e-7, p3High = 1,
+      p4 = 0.001, p4Low = 1e-7, p4High = 1, p5 = 0.01, p5Low = 1e-7, p5High = 1):
   #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.0001, p1High = 0.1, p2 = 0.01, p2Low = 0.001, p2High = 0.1, p3 = 10, p3Low = 1, p3High = 20,
   #    p4 = 0.001, p4Low = 0.0001, p4High = 0.1, p5 = 0.01, p5Low = 0.001, p5High = 0.1):
   #def BuildTripExpSum(self,p1 = 0.001, p1Low = 0.00001, p1High = 0.99999, p2 = 0.6, p2Low = 0.0001, p2High = 0.99999, p3 = 0.002, p3Low = 0.000001, p3High = 20,
@@ -614,11 +834,11 @@ class FitBuilder:
     #p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
     #p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
     #p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
-    p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,1e-6,1e-7,1)
-    p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,1e-6,1e-7,1)
-    p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,1e-6,1e-7,1)
-    p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,1e-6,1e-7,1)
-    p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,1e-6,1e-7,1)
+    p1Var = RooRealVar('p1TripExpSum_'+self.suffix,'p1TripExpSum_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2TripExpSum_'+self.suffix,'p2TripExpSum_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3TripExpSum_'+self.suffix,'p3TripExpSum_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4TripExpSum_'+self.suffix,'p4TripExpSum_'+self.suffix,p4,p4Low,p4High)
+    p5Var = RooRealVar('p5TripExpSum_'+self.suffix,'p5TripExpSum_'+self.suffix,p5,p5Low,p5High)
     #TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0+@6))',
     #    RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var))
     TripExpSum = RooGenericPdf('TripExpSum_'+self.suffix,'TripExpSum_'+self.suffix,'((2-@1-@2)*exp(-@3*@0)+@1*exp(-@4*@0)+@2*exp(-@5*@0))',
@@ -630,6 +850,25 @@ class FitBuilder:
     SetOwnership(p5Var,0)
     #SetOwnership(p6Var,0)
     return TripExpSum
+
+  def BuildTripExpSumv2(self,p1 = 0.001, p1Low = 1e-7, p1High = 1, p2 = 0.6, p2Low = 1e-7, p2High = 1, p3 = 0.2, p3Low = 1e-7, p3High = 1,
+      p4 = 0.001, p4Low = 1e-7, p4High = 1, p5 = 0.01, p5Low = 1e-7, p5High = 1, p6 = 0.01,p6Low = 1e-7, p6High = 1):
+
+    p1Var = RooRealVar('p1TripExpSumv2_'+self.suffix,'p1TripExpSumv2_'+self.suffix,p1,p1Low,p1High)
+    p2Var = RooRealVar('p2TripExpSumv2_'+self.suffix,'p2TripExpSumv2_'+self.suffix,p2,p2Low,p2High)
+    p3Var = RooRealVar('p3TripExpSumv2_'+self.suffix,'p3TripExpSumv2_'+self.suffix,p3,p3Low,p3High)
+    p4Var = RooRealVar('p4TripExpSumv2_'+self.suffix,'p4TripExpSumv2_'+self.suffix,p4,p4Low,p4High)
+    p5Var = RooRealVar('p5TripExpSumv2_'+self.suffix,'p5TripExpSumv2_'+self.suffix,p5,p5Low,p5High)
+    p6Var = RooRealVar('p6TripExpSumv2_'+self.suffix,'p6TripExpSumv2_'+self.suffix,p6,p6Low,p6High)
+    TripExpSumv2 = RooGenericPdf('TripExpSumv2_'+self.suffix,'TripExpSumv2_'+self.suffix,'@1*exp(-@4*@0)+@2*exp(-@5*@0)+@3*exp(-@6*@0)',
+        RooArgList(self.mzg,p1Var,p2Var,p3Var,p4Var,p5Var,p6Var))
+    SetOwnership(p1Var,0)
+    SetOwnership(p2Var,0)
+    SetOwnership(p3Var,0)
+    SetOwnership(p4Var,0)
+    SetOwnership(p5Var,0)
+    SetOwnership(p6Var,0)
+    return TripExpSumv2
 
   def BuildTripPowSum(self,p1 = 0.5, p1Low = 0.00001, p1High = 0.9999, p2 = 0.6, p2Low = 0.0001, p2High = 0.9999, p3 = 0.2, p3Low = 0.0001, p3High = 5,
       p4 = 0.2, p4Low = 0.00001, p4High = 8, p5 = 0.2, p5Low = 0.0001, p5High = 8):
@@ -866,14 +1105,14 @@ class FitBuilder:
       #nCB1 = 3, nCB1Low = 0.1, nCB1High = 10,
       #nCB2 = 2, nCB2Low = 0.1, nCB2High =10,
       #frac = 0.5, fracLow = 0.1, fracHigh = 0.9):
-      alphaCB1 = 2, alphaCB1Low = 0.001, alphaCB1High = 5,
-      alphaCB2 = -2, alphaCB2Low = -5, alphaCB2High = -0.001,
-      nCB1 = 10, nCB1Low = 0, nCB1High = 80,
-      nCB2 = 10, nCB2Low = 0, nCB2High =80,
-      frac = 0.5, fracLow = 0.1, fracHigh = 0.9):
+      alphaCB1 = 2, alphaCB1Low = 1e-6, alphaCB1High = 10,
+      alphaCB2 = -2, alphaCB2Low = -10, alphaCB2High = -1e-6,
+      nCB1 = 10, nCB1Low = 1e-6, nCB1High = 30,
+      nCB2 = 10, nCB2Low = 1e-6, nCB2High =30,
+      frac = 0.5, fracLow = 0.01, fracHigh = 0.99):
 
     if sigma > sigmaHigh:
-      sigmaHigh = sigma * 2
+      sigmaHigh = sigma * 2.2
       sigmaLow = sigma * 0.5
 
     suffix = self.suffix+'_'+piece
@@ -1025,13 +1264,10 @@ class FitBuilder:
       sigmaShift = '_'.join(['sig',self.sig,'sigmaShift',self.lepton,self.tev,'cat'+self.cat])
       ws.factory(mShift+'[1]')
       ws.factory(sigmaShift+'[1]')
-      #ws.factory('prod::'+meanGNew+'('+meanG+','+mShift+')')
       ws.factory('prod::'+meanCBNew+'('+meanCB+','+mShift+')')
       ws.factory('prod::'+sigmaCBNew+'('+sigmaCB+','+sigmaShift+')')
       ws.factory('prod::'+sigmaGNew+'('+sigmaG+','+sigmaShift+')')
-      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanG+'='+meanGNew+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
       ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+','+sigmaG+'='+sigmaGNew+')')
-      #ws.factory('EDIT::'+newFitName+'('+fitName+','+meanCB+'='+meanCBNew+','+sigmaCB+'='+sigmaCBNew+')')
 
     elif fitName == 'DCB':
 
@@ -1238,6 +1474,45 @@ class FitBuilder:
 
       ws.factory(editString)
 
+    elif fitName == 'TripExpSumv2':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+      p3Name = 'p3'+fitName+'_'+self.suffix
+      p3NameNew  = '_'.join(['bkg','p3',newSuffix])
+      p4Name = 'p4'+fitName+'_'+self.suffix
+      p4NameNew  = '_'.join(['bkg','p4',newSuffix])
+      p5Name = 'p5'+fitName+'_'+self.suffix
+      p5NameNew  = '_'.join(['bkg','p5',newSuffix])
+      p6Name = 'p6'+fitName+'_'+self.suffix
+      p6NameNew  = '_'.join(['bkg','p6',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(), ws.function(p4Name).getMax()))
+      ws.factory(p5NameNew+'[{0},{1},{2}]'.format(ws.function(p5Name).getVal(),ws.function(p5Name).getMin(), ws.function(p5Name).getMax()))
+      ws.factory(p6NameNew+'[{0},{1},{2}]'.format(ws.function(p6Name).getVal(),ws.function(p6Name).getMin(), ws.function(p6Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ','+p3Name+'='+p3NameNew
+      editString += ','+p4Name+'='+p4NameNew
+      editString += ','+p5Name+'='+p5NameNew
+      editString += ','+p6Name+'='+p6NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+
     elif fitName == 'ExpSum':
       if Ext:
         normName = 'norm'+fitName+'_'+self.suffix
@@ -1260,6 +1535,141 @@ class FitBuilder:
       editString += ','+p1Name+'='+p1NameNew
       editString += ','+p2Name+'='+p2NameNew
       editString += ','+p3Name+'='+p3NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'Dijet':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'BesselK1':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      kName = 'k'+fitName+'_'+self.suffix
+      kNameNew  = '_'.join(['bkg','k',newSuffix])
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(kNameNew+'[{0},{1},{2}]'.format(ws.function(kName).getVal(),ws.function(kName).getMin(), ws.function(kName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+kName+'='+kNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'Laguerre2':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      kName = 'k'+fitName+'_'+self.suffix
+      kNameNew  = '_'.join(['bkg','k',newSuffix])
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(kNameNew+'[{0},{1},{2}]'.format(ws.function(kName).getVal(),ws.function(kName).getMin(), ws.function(kName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+kName+'='+kNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+
+    elif fitName == 'Laguerre3':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      kName = 'k'+fitName+'_'+self.suffix
+      kNameNew  = '_'.join(['bkg','k',newSuffix])
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+      p3Name = 'p3'+fitName+'_'+self.suffix
+      p3NameNew  = '_'.join(['bkg','p3',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(kNameNew+'[{0},{1},{2}]'.format(ws.function(kName).getVal(),ws.function(kName).getMin(), ws.function(kName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+kName+'='+kNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ','+p3Name+'='+p3NameNew
+      editString += ')'
+
+      ws.factory(editString)
+
+    elif fitName == 'Laguerre4':
+      if Ext:
+        normName = 'norm'+fitName+'_'+self.suffix
+        normNameNew  = '_'.join(['bkg',newSuffix,'norm'])
+
+      kName = 'k'+fitName+'_'+self.suffix
+      kNameNew  = '_'.join(['bkg','k',newSuffix])
+      p1Name = 'p1'+fitName+'_'+self.suffix
+      p1NameNew  = '_'.join(['bkg','p1',newSuffix])
+      p2Name = 'p2'+fitName+'_'+self.suffix
+      p2NameNew  = '_'.join(['bkg','p2',newSuffix])
+      p3Name = 'p3'+fitName+'_'+self.suffix
+      p3NameNew  = '_'.join(['bkg','p3',newSuffix])
+      p4Name = 'p4'+fitName+'_'+self.suffix
+      p4NameNew  = '_'.join(['bkg','p4',newSuffix])
+
+      if Ext: ws.factory(normNameNew+'[{0},{1},{2}]'.format(ws.function(normName).getVal(),ws.function(normName).getMin(), ws.function(normName).getMax()))
+      ws.factory(kNameNew+'[{0},{1},{2}]'.format(ws.function(kName).getVal(),ws.function(kName).getMin(), ws.function(kName).getMax()))
+      ws.factory(p1NameNew+'[{0},{1},{2}]'.format(ws.function(p1Name).getVal(),ws.function(p1Name).getMin(), ws.function(p1Name).getMax()))
+      ws.factory(p2NameNew+'[{0},{1},{2}]'.format(ws.function(p2Name).getVal(),ws.function(p2Name).getMin(), ws.function(p2Name).getMax()))
+      ws.factory(p3NameNew+'[{0},{1},{2}]'.format(ws.function(p3Name).getVal(),ws.function(p3Name).getMin(), ws.function(p3Name).getMax()))
+      ws.factory(p4NameNew+'[{0},{1},{2}]'.format(ws.function(p4Name).getVal(),ws.function(p4Name).getMin(), ws.function(p4Name).getMax()))
+
+      editString = 'EDIT::'+fitExtNameNew+'('+fitExtName
+      if Ext: editString += ','+normName+'='+normNameNew
+      editString += ','+kName+'='+kNameNew
+      editString += ','+p1Name+'='+p1NameNew
+      editString += ','+p2Name+'='+p2NameNew
+      editString += ','+p3Name+'='+p3NameNew
+      editString += ','+p4Name+'='+p4NameNew
       editString += ')'
 
       ws.factory(editString)

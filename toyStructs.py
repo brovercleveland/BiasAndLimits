@@ -177,6 +177,26 @@ def makeToyStucts():
     Int_t numInvalidNLL;\
   };')
 
+  print 'making DIJET...'
+  gROOT.ProcessLine(
+  'struct DIJET{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
   print 'making EXP2...'
   gROOT.ProcessLine(
   'struct EXP2{\
@@ -261,6 +281,52 @@ def makeToyStucts():
     Int_t numInvalidNLL;\
   };')
 
+  print 'making LAGUERRE2...'
+  gROOT.ProcessLine(
+  'struct LAGUERRE2{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramK;\
+    Double_t paramKErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making LAGUERRE3...'
+  gROOT.ProcessLine(
+  'struct LAGUERRE3{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramK;\
+    Double_t paramKErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
   print 'making LAURENT...'
   gROOT.ProcessLine(
   'struct LAURENT{\
@@ -323,6 +389,28 @@ def makeToyStucts():
     Int_t numInvalidNLL;\
   };')
 
+  print 'making EXPSUM2...'
+  gROOT.ProcessLine(
+  'struct EXPSUM2{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
   print 'making TRIPEXPSUM...'
   gROOT.ProcessLine(
   'struct TRIPEXPSUM{\
@@ -340,6 +428,34 @@ def makeToyStucts():
     Double_t paramP4Err;\
     Double_t paramP5;\
     Double_t paramP5Err;\
+    Double_t edm;\
+    Double_t minNll;\
+    Int_t statusAll;\
+    Int_t statusMIGRAD;\
+    Int_t statusHESSE;\
+    Int_t covQual;\
+    Int_t numInvalidNLL;\
+  };')
+
+  print 'making TRIPEXPSUMV2...'
+  gROOT.ProcessLine(
+  'struct TRIPEXPSUMV2{\
+    Double_t yieldBkg;\
+    Double_t yieldBkgErr;\
+    Double_t yieldSig;\
+    Double_t yieldSigErr;\
+    Double_t paramP1;\
+    Double_t paramP1Err;\
+    Double_t paramP2;\
+    Double_t paramP2Err;\
+    Double_t paramP3;\
+    Double_t paramP3Err;\
+    Double_t paramP4;\
+    Double_t paramP4Err;\
+    Double_t paramP5;\
+    Double_t paramP5Err;\
+    Double_t paramP6;\
+    Double_t paramP6Err;\
     Double_t edm;\
     Double_t minNll;\
     Int_t statusAll;\

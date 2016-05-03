@@ -71,7 +71,7 @@ def doInitialFits():
     xmaxExt = cfl.bgRangeExt[1]
     xminExt = cfl.bgRangeExt[0]
   if highMass:
-    binning = (xmax-xmin)/8
+    binning = (xmax-xmin)/20
     if ext:
       binningExt = (xmaxExt-xminExt)/8
   else:
@@ -85,6 +85,13 @@ def doInitialFits():
   mzg.setRange('Blind2',cfl.blindRange[1],xmax)
   mzg.setBins((xmax-xmin)*4)
   mzg.setBins(50000,'cache')
+  mzg_boot  = RooRealVar('CMS_hzg_mass_boot','CMS_hzg_mass_boot',xmin,xmax)
+  mzg_boot.setRange('full',xmin,xmax)
+  mzg_boot.setRange('reduced',xmin,1400)
+  mzg_boot.setRange('Blind1',xmin,cfl.blindRange[0])
+  mzg_boot.setRange('Blind2',cfl.blindRange[1],xmax)
+  mzg_boot.setBins((xmax-xmin)*4)
+  mzg_boot.setBins(50000,'cache')
 
   if ext:
     mzgExt  = RooRealVar('CMS_hzg_mass_ext','CMS_hzg_mass_ext',xminExt,xmaxExt)
@@ -114,6 +121,8 @@ def doInitialFits():
         signalList = []
         signalListDH = []
         signalListPDF = []
+        signalListDH_boot = []
+        signalListPDF_boot = []
         if verbose: print 'top of loop',year,lepton,cat
 
 ###################################################
@@ -137,7 +146,7 @@ def doInitialFits():
             else:
               signalTree.SetBranchAddress('m_llgCAT'+cat+'_Signal'+year+sigNameListInput[j]+'M'+mass+narrow,tmpSigMass)
             signalTree.SetBranchAddress('unBinnedWeight_Signal'+year+sigNameListInput[j]+'M'+mass+narrow,tmpSigWeight)
-            tmpSigNumEvents = signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass+narrow).GetBinContent(1)
+            tmpSigNumEvents = signalDict[lepton+year+'_4cat'].Get('unskimmedEventsTotal_Signal'+year+sigNameListInput[j]+'M'+mass+narrow).GetBinContent(1)/3.0
             sig_argSW = RooArgSet(mzg,weight)
             sig_ds = RooDataSet(sigName,sigName,sig_argSW,'Weight')
             for i in range(0,signalTree.GetEntries()):
@@ -201,7 +210,7 @@ def doInitialFits():
               signalList.append(TH1F(histName, histName, xmax-xmin, xmin, xmax))
 
               signalList[-1].SetLineColor(kRed)
-              signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+'ggM'+mass)
+              signalTree = signalDict[lepton+year+'_4cat'].Get('m_llg_Signal'+year+'ggM'+mass+'Narrow')
 
               if verbose:
                 print histName
@@ -215,7 +224,7 @@ def doInitialFits():
                   signalTree.Draw('m_llgCAT'+cat+'_Signal'+year+'ggM'+mass+'+5.0>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
               else:
                 if cat is '0':
-                  signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
+                  signalTree.Draw('m_llg_Signal'+year+'ggM'+mass+'Narrow>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass+'Narrow')
                 else:
                   signalTree.Draw('m_llgCAT'+cat+'_Signal'+year+'ggM'+mass+'>>'+histName,'unBinnedWeight_Signal'+year+'ggM'+mass)
               signalList[-1].Scale(1/signalList[-1].Integral())
@@ -225,12 +234,18 @@ def doInitialFits():
               rangeLow = signalList[-1].GetMean()-1.0*signalList[-1].GetRMS()
               rangeHi = signalList[-1].GetMean()+1.0*signalList[-1].GetRMS()
               mzg.setRange(rangeName,rangeLow,rangeHi)
+              mzg_boot.setRange(rangeName,rangeLow,rangeHi)
 
               mzg_argL = RooArgList(mzg)
               mzg_argS = RooArgSet(mzg)
+              mzg_boot_argL = RooArgList(mzg_boot)
+              mzg_boot_argS = RooArgSet(mzg_boot)
               signalListDH.append(RooDataHist('dh_'+histName,'dh_'+histName,mzg_argL,signalList[-1]))
               signalListPDF.append(RooHistPdf('pdf_'+histName,'pdf_'+histName,mzg_argS,signalListDH[-1],2))
+              signalListDH_boot.append(RooDataHist('dh_boot_'+histName,'dh_boot_'+histName,mzg_boot_argL,signalList[-1]))
+              signalListPDF_boot.append(RooHistPdf('pdf_boot_'+histName,'pdf_boot_'+histName,mzg_boot_argS,signalListDH_boot[-1],2))
               getattr(ws,'import')(signalListPDF[-1])
+              getattr(ws,'import')(signalListPDF_boot[-1])
               if verbose: print 'finshed one mass', mass
 
             #if debugPlots and prod is 'gg':
@@ -343,9 +358,19 @@ def doInitialFits():
           color = fitBuilder.FitColorDict[fitName]
           ndof = fitBuilder.FitNdofDict[fitName]
           if highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 2000 and lepton == 'mu':
-            fit = fitBuilder.Build(fitName)
-          elif highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 2000 and lepton == 'el':
-            fit = fitBuilder.Build(fitName)
+            fit = fitBuilder.Build(fitName,p1=1e-03,p2=1e-03,p3=1e-03,p4=1e-03,p5=1e-03,
+                p1Low=1e-7,p2Low=1e-7,p3Low=1e-7,p4Low=1e-7,p5Low=1e-7, p1High=1,p2High=1,p3High=2,p4High=2,p5High=2)
+          elif highMass and fitName == 'TripExpSum' and cfl.bgRange[1] == 1600 and lepton == 'el':
+            fit = fitBuilder.Build(fitName,p1=2.93804e-03,p2=2.42103e-02,p3=2.47795e-02,p4=8.71725e-01,p5=7.68230e-03,
+                p1Low=1e-7,p2Low=1e-7,p3Low=1e-7,p4Low=1e-7,p5Low=1e-7, p1High=0.5,p2High=0.5,p3High=1,p4High=1,p5High=1)
+
+          elif highMass and fitName == 'TripExpSumv2' and lepton == 'mu':
+            fit = fitBuilder.Build(fitName,p1=1e-03,p2=1e-03,p3=1e-03,p4=1e-03,p5=1e-03,p6=1e-03,
+                p1Low=1e-6,p2Low=1e-6,p3Low=1e-6,p4Low=1e-6,p5Low=1e-6, p6Low=1e-6, p1High=0.5,p2High=0.5,p3High=0.5,p4High=0.1,p5High=0.1,p6High=0.1)
+          elif highMass and fitName == 'TripExpSumv2' and lepton == 'el':
+            fit = fitBuilder.Build(fitName,p1=1e-03,p2=1e-03,p3=1e-03,p4=1e-03,p5=1e-03,p6=1e-03,
+                p1Low=1e-6,p2Low=1e-6,p3Low=1e-6,p4Low=1e-6,p5Low=1e-6, p6Low=1e-6, p1High=0.5,p2High=0.5,p3High=0.5,p4High=0.1,p5High=0.1,p6High=0.1)
+
           elif highMass and fitName == 'TripExpSum' and cfl.bgRange[1]> 700 and lepton == 'mu':
             fit = fitBuilder.Build(fitName)
           else:
@@ -356,13 +381,11 @@ def doInitialFits():
           #if highMass and fitName in ['TripExpSum','Gamma']:
           #  fit.fitTo(data_ds, RooFit.Strategy(1),RooFit.SumW2Error(True))
           if highMass and fitName in ['TripExpSum','Gamma'] and lepton in ['el']:
-            fit.fitTo(data_ds, RooFit.Minos(False), RooFit.Strategy(0),RooFit.SumW2Error(False))
+            fit.fitTo(data_ds, RooFit.Strategy(1), RooFit.Minos(False), RooFit.InitialHesse(False), RooFit.SumW2Error(False))
           elif highMass and fitName in ['TripExpSum','Gamma'] and lepton in ['mu']:
-            fit.fitTo(data_ds, RooFit.Strategy(0), RooFit.Minos(True),RooFit.SumW2Error(False))
-          elif fitName in ['ExpSum']:
-            fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True),RooFit.SumW2Error(False))
+            fit.fitTo(data_ds, RooFit.Strategy(1), RooFit.Minos(False), RooFit.InitialHesse(False), RooFit.SumW2Error(False))
           else:
-            fit.fitTo(data_ds, RooFit.Strategy(1))
+            fit.fitTo(data_ds, RooFit.Strategy(2), RooFit.Minos(True))
 
           testFrame.SetMinimum(0.0001)
           fit.plotOn(testFrame, RooFit.LineColor(color), RooFit.Name(fitName),RooFit.Range("full"))

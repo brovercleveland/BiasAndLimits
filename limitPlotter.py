@@ -37,6 +37,8 @@ doObs = cfl.obs
 syst = cfl.syst
 
 
+FIXOLDPLOTS = False
+
 
 
 
@@ -48,7 +50,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   c.cd()
   c.SetTopMargin(0.075);
 
-  #if cfl.highMass: c.SetLogy()
+  if cfl.highMass and ('2000' in suffix or '1600' in suffix): c.SetLogy()
 
 
   colorList = [kRed,kBlue,kGreen+1]
@@ -89,13 +91,22 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
 
     count = 0
     for ev in t:
-      if count == 0: exp2SigLow.append(ev.limit)
-      elif count == 1: exp1SigLow.append(ev.limit)
-      elif count == 2: exp.append(ev.limit)
-      elif count == 3: exp1SigHi.append(ev.limit)
-      elif count == 4: exp2SigHi.append(ev.limit)
-      elif count == 5: obs.append(ev.limit)
-      count +=1
+      if FIXOLDPLOTS:
+        if count == 0: exp2SigLow.append(ev.limit*3.03)
+        elif count == 1: exp1SigLow.append(ev.limit*3.03)
+        elif count == 2: exp.append(ev.limit*3.03)
+        elif count == 3: exp1SigHi.append(ev.limit*3.03)
+        elif count == 4: exp2SigHi.append(ev.limit*3.03)
+        elif count == 5: obs.append(ev.limit*3.03)
+        count +=1
+      else:
+        if count == 0: exp2SigLow.append(ev.limit)
+        elif count == 1: exp1SigLow.append(ev.limit)
+        elif count == 2: exp.append(ev.limit)
+        elif count == 3: exp1SigHi.append(ev.limit)
+        elif count == 4: exp2SigHi.append(ev.limit)
+        elif count == 5: obs.append(ev.limit)
+        count +=1
     f.Close()
     if extraList:
       for i,extra in enumerate(extraList):
@@ -220,10 +231,13 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   if cfl.scale13TeV:
     mg.SetMinimum(0.001)
   elif 'Narrow' in suffix:
-    mg.SetMinimum(0.02)
+    mg.SetMinimum(0.05)
+    #mg.SetMinimum(0)
+    #mg.SetMaximum(6)
   else:
-    mg.SetMinimum(0.04)
-    mg.SetMaximum(3)
+    pass
+    #mg.SetMinimum(0.04)
+    #mg.SetMaximum(3)
     #mg.SetMinimum(0.15)
 
   mg.GetXaxis().SetTitleFont(42)
@@ -236,7 +250,7 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   else:
     mg.GetXaxis().SetTitle('m_{H} (GeV)')
   if cfl.modelIndependent:
-    mg.GetYaxis().SetTitle('#sigma(gg#rightarrowA)#timesBR(A#rightarrowZ#gamma#rightarrowll#gamma) (fb)')
+    mg.GetYaxis().SetTitle('#sigma(pp#rightarrowA)#timesBR(A#rightarrowZ#gamma#rightarrowll#gamma) (fb)')
   else:
     mg.GetYaxis().SetTitle('95% CL limit on #sigma/#sigma_{SM}')
   mg.GetXaxis().SetLimits(massList[0],massList[-1]);
@@ -287,12 +301,18 @@ def LimitPlot(CardOutput,AnalysisSuffix,cardName,extraSuffix):
   if cfl.scale13TeV: extraSuffix+='13TeVScale'
   global syst
   if syst == False: syst = 'nosyst'
-  saveNames = ['limitPlot']
-  for saveName in [CardOutput, suffix, YR, sigFit, extraSuffix, syst]:
+  #saveNames = ['limitPlot']
+  #for saveName in [CardOutput, suffix, YR, sigFit, extraSuffix, syst]:
+  #  if type(saveName) == str:
+  #    saveNames.append(saveName)
+
+  #c.Print('debugPlots/limitPlots/'+'_'.join(saveNames)+'.pdf')
+  saveNames = ['Paper','limitPlot']
+  for saveName in []:
     if type(saveName) == str:
       saveNames.append(saveName)
 
-  c.Print('debugPlots/limitPlots/'+'_'.join(saveNames)+'.pdf')
+  c.Print('debugPlots/paperPlots/'+'_'.join(saveNames)+'.pdf')
 
 
 if __name__=='__main__':

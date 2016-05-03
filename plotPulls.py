@@ -86,6 +86,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
     #cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<40.01'
     #cutStr = cutStr+'abs('+fitFunc+'.yieldSig)<12'
     #cutStr = cutStr+fitFunc+'.yieldSigErr<50'
+    #cutStr = cutStr+fitFunc+'.paramP3Err>0.0005'
     #cutStr = 'stat'+fitFunc+'==0&&covQual'+fitFunc+'>=1'
     #if (mass == '400') and (lepton == 'el') and ('TripExpSum' == fitFunc):
     #elif (mass == '450') and (lepton == 'el') and ('TripExpSum' == fitFunc):
@@ -104,9 +105,9 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
       if dist in ['sigPull','bgPull']:
         tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -8, 8)
       elif dist in ['sigErr','bgErr']:
-        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, 0, 50)
+        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, 0, 10)
       elif dist in ['nSig','nBG']:
-        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -50, 50)
+        tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -10, 10)
       elif dist == 'typeA':
         tmpHist = TH1F(dist+'_'+fitFunc, dist+'_'+fitFunc, 100, -10, 10)
 
@@ -122,13 +123,15 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
         toyTree.Draw('(('+fitFunc+'.yieldSig-toyData.sigWindowInject)/'+fitFunc+'.yieldSigErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nSig/#sigma(nSig)')
       elif dist == 'bgPull':
-        toyTree.Draw('(('+fitFunc+'.yieldBkg-toyData.sigWindowData)/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        toyTree.Draw('(('+fitFunc+'.yieldBkg-toyData.sigWindowData)/('+fitFunc+'.yieldBkgErr))>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        #toyTree.Draw('(('+fitFunc+'.yieldBkg)/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nBG/#sigma(nBG)')
       elif dist == 'nSig':
         toyTree.Draw('('+fitFunc+'.yieldSig)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nSig')
       elif dist == 'nBG':
-        toyTree.Draw('('+fitFunc+'.yieldBkg-toyData.sigWindowData)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        #toyTree.Draw('('+fitFunc+'.yieldBkg-toyData.sigWindowData)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        toyTree.Draw('('+fitFunc+'.yieldBkg)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nBG')
       elif dist == 'sigErr':
         toyTree.Draw('('+fitFunc+'.yieldSigErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
@@ -137,7 +140,7 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
         toyTree.Draw('('+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('#sigma(nBG)')
       elif dist == 'typeA':
-        toyTree.Draw('(('+fitFunc+'.yieldSig-toyData.sigWindowInject)/'+fitFunc+'.yieldBkgErr)>>'+dist+'_'+fitFunc ,cutStr,'goff')
+        toyTree.Draw('(('+fitFunc+'.yieldSig-toyData.sigWindowInject)/('+fitFunc+'.yieldBkgErr))>>'+dist+'_'+fitFunc ,cutStr,'goff')
         tmpHist.GetXaxis().SetTitle('nSig/#sigma(nBG)')
 
       tmpHist.GetYaxis().SetTitle('A.U.')
@@ -153,9 +156,9 @@ def makePullPlots(tev,lepton, cat, genFunc, mass):
   #make the plots
 
   if injectedSignalSize:
-    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/injSig'
+    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/'+suffix+'/injSig'
   else:
-    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/noSig'
+    plotDir = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/debugPlots/biasPulls/'+suffix+'/noSig'
   if not os.path.isdir(plotDir): os.makedirs(plotDir)
 
   #get a txt file ready for the latex

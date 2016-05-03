@@ -6,14 +6,18 @@ suffix = cfl.suffixPostFix
 mode = cfl.mode
 doMVA = cfl.doMVA
 
-massList = cfl.massListBig
-#massList = ['350.0']
+#massList = cfl.massListBig
+massList = ['1200.0']
 
 YR = cfl.YR
 
 sigFit = cfl.sigFit
 
 syst = cfl.syst
+if cfl.method == 'CLs':
+  limExe = 'limitExeCLs.py'
+else:
+  limExe = 'limitExe.py'
 
 for mass in massList:
   outPutFolder = '/tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/outputDir/'+suffix+'_'+YR+'_'+sigFit+'/'+mass
@@ -31,7 +35,7 @@ for mass in massList:
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
-Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/limitExe.py
+Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/{5}
 Arguments               = {0} {1} {2} {3} {4}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
@@ -44,7 +48,7 @@ should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = limitFiles.tgz
 Queue
-  '''.format(mass,suffix,cardName,outPutFolder+'/limitOutput/',syst))
+  '''.format(mass,suffix,cardName,outPutFolder+'/limitOutput/',syst,limExe))
     consub.close()
 
     os.system('condor_submit submit.cmd')
@@ -68,7 +72,7 @@ Queue
 Universe                = vanilla
 Notify_user             = brian.pollack@cern.ch
 Notification            = Error
-Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/limitExe.py
+Executable              = /tthome/bpollack/CMSSW_6_1_1/src/BiasAndLimits/{5}
 Arguments               = {0} {1} {2} {3} {4}
 Rank                    = Mips
 Requirements            = (OpSys == "LINUX") && (Disk >= DiskUsage) && ((Memory * 1024) >= ImageSize) && (HasFileTransfer)
@@ -81,7 +85,7 @@ should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
 transfer_input_files    = limitFiles.tgz
 Queue
-          '''.format(mass,suffix,cardName,outPutFolder+'/limitOutput/',syst))
+          '''.format(mass,suffix,cardName,outPutFolder+'/limitOutput/',syst,limExe))
           consub.close()
 
           os.system('condor_submit submit.cmd')

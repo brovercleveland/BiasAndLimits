@@ -1,3 +1,6 @@
+outputDir/
+SVN*
+For*
 roostats*
 res
 *.pyc
