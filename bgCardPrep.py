@@ -67,28 +67,21 @@ for tev in tevList:
                     legend = ROOT.TLegend(0.4,0.5,0.9,0.9)
                     ## legend = ROOT.TLegend(0.4,0.35,0.9,0.9)
 
-#canv.SetLeftMargin(0.2)
             canv.Divide(1,2)
 
-#canv.SetLeftMargin(0.12),canv.SetRightMargin(0.025),canv.SetTopMargin(0.085),canv.SetBottomMargin(0.12)
             canv.cd(1)
             ROOT.gPad.SetPad(0.,0.38,1.,0.95)
             ROOT.gPad.SetLeftMargin(0.12),ROOT.gPad.SetRightMargin(0.05),ROOT.gPad.SetTopMargin(0.0015),ROOT.gPad.SetBottomMargin(0.02)
-#ROOT.gPad.SetLeftMargin(0.12),ROOT.gPad.SetRightMargin(0.025),ROOT.gPad.SetTopMargin(0.0015),ROOT.gPad.SetBottomMargin(0.02)
             ROOT.gPad.SetLogy(logy)
-#ROOT.gPad.SetLogx(logx)
             ROOT.gPad.SetFillStyle(0)
             ROOT.gPad.SetTickx()
-# ROOT.gPad.SetTicky()
 
             canv.cd(2)
             ROOT.gPad.SetPad(0.,0.,1.,0.38)
             ROOT.gPad.SetFillStyle(0)
             ROOT.gPad.SetLeftMargin(0.12),ROOT.gPad.SetRightMargin(0.05),ROOT.gPad.SetTopMargin(0.0015),ROOT.gPad.SetBottomMargin(0.32)
-#ROOT.gPad.SetLeftMargin(0.12),ROOT.gPad.SetRightMargin(0.025),ROOT.gPad.SetTopMargin(0.0015),ROOT.gPad.SetBottomMargin(0.32)
             ROOT.gPad.SetFillStyle(0)
             ROOT.gPad.SetTickx()
-# ROOT.gPad.SetTicky()
 
             canv.cd(1)
 
@@ -202,9 +195,7 @@ for tev in tevList:
                 else:
                     data.plotOn(testFrame,RooFit.Binning(binning),RooFit.Range('reduced'),RooFit.Name('data'),RooFit.MarkerSize(1.1),RooFit.XErrorSize(0),RooFit.DataError(RooAbsData.Poisson),RooFit.Invisible())
 
-                linearInterp = False
-                #if lepton == 'mu': linearInterp = False
-
+                linearInterp = True
                 #fit_ext.plotOn(testFrame, RooFit.Name(fitExtName+"2sigma"),
                 #                     RooFit.VisualizeError(fit_res,2, linearInterp), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
                 #                     #RooFit.VisualizeError(fit_res,RooArgSet(p1,p4),2,False), RooFit.FillColor(kYellow),RooFit.LineColor(kBlack))
@@ -226,6 +217,71 @@ for tev in tevList:
                 #onesigma.Dump()
                 hist = testFrame.findObject('data')
                 ronesigma = TGraphAsymmErrors(hist.GetN())
+
+                ifit = 0
+                for idata in range(hist.GetN()):
+
+                    hx = hist.GetX()[idata]
+                    hy = hist.GetY()[idata]
+                    while(abs(central.GetX()[ifit]-hx)>0.2): ifit+=1
+                    px = central.GetX()[ifit]
+                    py = central.GetY()[ifit]
+                    ronesigma.SetPoint(idata,hx,0.)
+                    #raw_input()
+
+
+
+                    oerrp, oerrm = onesigma.GetY()[onesigma.GetN()-1-ifit]-py, py-onesigma.GetY()[ifit]
+                    herrp, herrm = hist.GetErrorYhigh(idata), hist.GetErrorYlow(idata)
+                    #oerrp = oerrm = onesigma.GetY()[onesigma.GetN()-1-ifit]-py
+                    #herrp = herrm = hist.GetErrorYhigh(idata)
+                    print 'idata', idata, 'ifit', ifit
+                    print 'datax', hx, 'fitx', px
+                    print 'datay', hy, 'fity', py
+                    print 'dataEH', herrp, 'fitEH',oerrp
+                    print 'dataEL', herrm, 'fitEL',oerrm
+                    #raw_input()
+
+                    #print oerrp, oerrm, herrp, herrm
+                    #raw_input()
+                    ## print oerrp, oerrm, herrp, herrm
+                    #if py > hy:
+                    #    if herrm == 0.: continue
+                    #    oerrp /= herrm
+                    #    oerrm /= herrm
+                    #else:
+                    #    if herrp == 0.: continue
+                    #    oerrp /= herrp
+                    #    oerrm /= herrp
+
+                    if py > hy:
+                        if herrm != 0.:
+                            oerrp /= herrm
+                            oerrm /= herrm
+                    else:
+                        if herrp != 0.:
+                            oerrp /= herrp
+                            oerrm /= herrp
+                    ## print oerrp, oerrm, herrp, herrm
+                    #print ip,oerrp,oerrm
+                    print px, oerrp,oerrm
+                    #raw_input()
+                    if idata==0:
+                        exl=0
+                    else:
+                        exl = (hx - hist.GetX()[idata-1])/2.0
+                    if idata == hist.GetN()-1:
+                        exh = 0
+                    else:
+                        exh = (hist.GetX()[idata+1]-hx)/2.0
+                    if exl==0: exl = exh
+                    if exh==0: exh = exl
+                    ronesigma.SetPointEYhigh(idata,max(oerrp,oerrm)),ronesigma.SetPointEYlow(idata,max(oerrm,oerrp))
+                    #ronesigma.SetPointEYhigh(idata,oerrp),ronesigma.SetPointEYlow(idata,oerrm)
+                    ronesigma.SetPointEXhigh(idata,exh),ronesigma.SetPointEXlow(idata,exl)
+                    #ronesigma.SetPointEYhigh(idata,1),ronesigma.SetPointEYlow(idata,1)
+
+                residHist = testFrame.residHist('data',fitExtName,True)
                 for ip in range(hist.GetN()):
                     # set 0 bins to 0 error bars, why i have to fucking do this by hand is beyond me
                     hy = hist.GetY()[ip]
@@ -233,58 +289,19 @@ for tev in tevList:
                         hist.SetPointEYhigh(ip,0)
                         hist.SetPointEYlow(ip,0)
 
-                ifit = 0
-                for idata in range(hist.GetN()):
 
-                    hx = hist.GetX()[idata]
-                    hy = hist.GetY()[idata]
-                    while(abs(central.GetX()[ifit]-hx)>0.24): ifit+=1
-                    px = central.GetX()[ifit]
-                    py = central.GetY()[ifit]
-                    ronesigma.SetPoint(idata,px,0.)
-                    #raw_input()
-
-
-
-                    oerrm, oerrp = py-onesigma.GetY()[onesigma.GetN()-1-ifit], onesigma.GetY()[ifit]-py
-                    herrp, herrm = hist.GetErrorYhigh(idata), hist.GetErrorYlow(idata)
-                    print 'idata', idata, 'ifit', ifit
-                    print 'datax', hx, 'fitx', px
-                    print 'datay', hy, 'fity', py
-                    print 'dataEH', herrp, 'fitEH',oerrp
-                    print 'dataEL', herrm, 'fitEL',oerrm
-
-                    #print oerrp, oerrm, herrp, herrm
-                    #raw_input()
-                    ## print oerrp, oerrm, herrp, herrm
-                    if py > hy:
-                        if herrm == 0.: continue
-                        oerrp /= herrm
-                        oerrm /= herrm
-                    else:
-                        if herrp == 0.: continue
-                        oerrp /= herrp
-                        oerrm /= herrp
-                    ## print oerrp, oerrm, herrp, herrm
-                    #print ip,oerrp,oerrm
-                    print px, oerrp,oerrm
-                    #raw_input()
-                    ronesigma.SetPointEYhigh(idata,oerrp),ronesigma.SetPointEYlow(idata,oerrm)
-                    #ronesigma.SetPointEYhigh(idata,1),ronesigma.SetPointEYlow(idata,1)
-
-
-                canv.SetLogy()
-                testFrame.GetXaxis().SetLabelSize( 1.2*testFrame.GetXaxis().GetLabelSize() )
+                testFrame.GetXaxis().SetLabelFont(42)
+                testFrame.GetXaxis().SetTitleFont(42)
+                testFrame.GetXaxis().SetLabelSize( 1.5*testFrame.GetXaxis().GetLabelSize() )
                 testFrame.GetXaxis().SetTitleSize( 1.2*testFrame.GetXaxis().GetTitleSize() )
-                testFrame.GetXaxis().SetTitleOffset( 1.15 )
-                #testFrame.GetYaxis().SetRangeUser(0.03,ymax)
-                #testFrame.GetYaxis().SetRangeUser(ymin,ymax)
-                #testFrame.GetXaxis().SetMoreLogLabels()
-                #testFrame.GetXaxis().SetNoExponent()
+                testFrame.GetXaxis().SetTitleOffset(0.8)
+
+                testFrame.GetYaxis().SetLabelFont(42)
+                testFrame.GetYaxis().SetTitleFont(42)
                 testFrame.GetYaxis().SetLabelSize( testFrame.GetXaxis().GetLabelSize() * canv.GetWh() / ROOT.gPad.GetWh() * 1.3 )
-                testFrame.GetYaxis().SetTitleSize( testFrame.GetXaxis().GetTitleSize() * canv.GetWh() / ROOT.gPad.GetWh() * 1.3 )
-                testFrame.GetYaxis().SetTitleOffset( 0.75 )
-                testFrame.GetXaxis().SetNdivisions(1006, False)
+                testFrame.GetYaxis().SetTitleSize( testFrame.GetXaxis().GetTitleSize() * canv.GetWh() / ROOT.gPad.GetWh() * 1.8 )
+                testFrame.GetYaxis().SetTitleOffset(0.75)
+                testFrame.GetXaxis().SetNdivisions(1005, False)
                 testFrame.SetMinimum(0.02)
                 testFrame.SetMaximum(1500)
                 testFrame.GetXaxis().SetTitle("")
@@ -311,17 +328,14 @@ for tev in tevList:
                     testFrame.SetTitle(";m_{#mu#mu#gamma} (GeV);Events / ( "+str(20)+" GeV )")
                 elif lepton=='el':
                     testFrame.SetTitle(";m_{ee#gamma} (GeV);Events / ( "+str(20)+" GeV )")
-                testFrame.GetYaxis().CenterTitle()
-                testFrame.GetXaxis().SetTitleOffset(0.8)
-                testFrame.GetYaxis().SetTitleOffset(0.85)
+                #testFrame.GetYaxis().CenterTitle()
 
-                residHist = testFrame.residHist('data',fitExtName,True)
                 ronesigma.SetMarkerStyle(21)
                 ronesigma.SetMarkerColor(4)
                 ronesigma.SetFillColor(17)
                 ronesigma.SetFillStyle(1001)
                 #ronesigma.SetDrawOption("2")
-                residFrame.addObject(ronesigma,"4")
+                residFrame.addObject(ronesigma,"2")
                 one = ROOT.TLine(150,0,1400,0)
                 one.SetLineColor(46)
                 one.SetLineWidth(2)
@@ -333,16 +347,20 @@ for tev in tevList:
                 ROOT.gPad.RedrawAxis()
 
                 residFrame.SetTitle('')
+                residFrame.GetXaxis().SetLabelFont(42)
+                residFrame.GetXaxis().SetTitleFont(42)
                 residFrame.GetXaxis().SetMoreLogLabels()
                 residFrame.GetXaxis().SetNoExponent()
                 #residFrame.GetXaxis().SetNdivisions(515)
                 residFrame.GetXaxis().SetNdivisions(1005, False)
                 residFrame.GetYaxis().SetNdivisions(505)
                 residFrame.GetYaxis().CenterTitle()
-                residFrame.GetYaxis().SetTitleSize    ( testFrame.GetYaxis().GetTitleSize() * 1.4 )
-                residFrame.GetYaxis().SetTitleOffset( testFrame.GetYaxis().GetTitleOffset() * 0.6    ) # not clear why the ratio should be upside down, but it does
+                residFrame.GetYaxis().SetTitleSize    ( testFrame.GetYaxis().GetTitleSize() * 1.5 )
+                residFrame.GetYaxis().SetTitleOffset( testFrame.GetYaxis().GetTitleOffset() * 0.5    ) # not clear why the ratio should be upside down, but it does
+                residFrame.GetYaxis().SetLabelFont(42)
+                residFrame.GetYaxis().SetTitleFont(42)
                 residFrame.GetYaxis().SetLabelSize( testFrame.GetYaxis().GetLabelSize() * 1.3 )
-                residFrame.GetXaxis().SetTitleSize( testFrame.GetXaxis().GetTitleSize() * 2. )
+                residFrame.GetXaxis().SetTitleSize( testFrame.GetXaxis().GetTitleSize() * 3. )
                 residFrame.GetXaxis().SetTitleOffset( testFrame.GetXaxis().GetTitleOffset()*1.2 )
                 residFrame.GetXaxis().SetLabelSize( testFrame.GetXaxis().GetLabelSize() * 6.5/3.5 )
                 if lepton=="el": residFrame.SetXTitle("M(e^{+}e^{-}#gamma) [GeV]")
@@ -390,7 +408,8 @@ for tev in tevList:
                 label_cms.SetTextAlign(11)
                 label_cms.SetTextFont(42)
                 #label_cms.SetTextFont(61)
-                label_cms.AddText( "CMS Preliminary" )
+                #label_cms.AddText( "CMS" )
+                label_cms.AddText( "CMS" )
                 label_cms.Draw("same")
 
                 #lat1 = TLatex()
@@ -419,6 +438,7 @@ for tev in tevList:
                     #c.Print('debugPlots/fancyPlots/'+'_'.join(['PAS','fit','partial3',suffixCard,tev,lepton,'cat'+cat])+'.pdf')
                     #canv.Print('debugPlots/fancyPlots/'+'_'.join(['PASCombo','fit',suffixCard,tev,lepton,'cat'+cat])+'.pdf')
                     canv.Print('debugPlots/paperPlots/'+'_'.join(['PaperCombo','fit',lepton])+'.pdf')
+                    #canv.Print('debugPlots/paperPlots/'+'_'.join(['PASCombo','fit',lepton])+'.pdf')
 
 card_ws.writeToFile('outputDir/'+suffixCard+'_'+YR+'_'+sigFit+'/CardBackground_'+suffixCard+'.root')
 outfile.Close()

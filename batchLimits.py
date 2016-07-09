@@ -6,8 +6,7 @@ suffix = cfl.suffixPostFix
 mode = cfl.mode
 doMVA = cfl.doMVA
 
-#massList = cfl.massListBig
-massList = ['1200.0']
+massList = cfl.massListBig
 
 YR = cfl.YR
 
